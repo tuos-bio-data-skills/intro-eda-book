@@ -1,10 +1,8 @@
 conventions-in-the-course-book
 different-ways-to-run-rstudio
 installing-r-and-rstudio-locally
-installing-r
-the-anatomy-of-rstudio
+a-quick-look-at-rstudio
 working-at-console
-working-with-learnr-tutorials
 quick-intro-to-r
 r-calculator
 basic-arithmetic

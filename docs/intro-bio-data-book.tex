@@ -159,22 +159,22 @@
 \chapter*{What you will learn}\label{what-you-will-learn}}
 \addcontentsline{toc}{chapter}{What you will learn}
 
-This is the online course book for the \textbf{Introduction to Exploratory Data Analysis with R} component of \href{https://www.sheffield.ac.uk/aps/currentug/level1/aps135}{APS 135}, a module taught by the Department and Animal and Plant Sciences at the University of Sheffield. You can view this book in any modern desktop browser, as well as on your phone or tablet device.
+This book provides a self-contained introduction to how to use R for exploratory data analysis. Think of it as a resource to be referred to when needed. There is no need to memorise everything in this book. Instead, aim to understand the key concepts and familiarise yourself with the content, so that you know where to look for information when you need it. The details will get easier with practise.
 
 \hypertarget{aims}{%
 \section*{Aims}\label{aims}}
 \addcontentsline{toc}{section}{Aims}
 
-This course has three related aims:
+This book has three related aims:
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
 \item
-  You will be introduced to the R ecosystem. R is widely used by biologists and environmental scientists to manipulate and clean data, produce high quality figures, and carry out statistical analyses. We will teach you some basic R programming so that you are in a position to address these needs in future if you need to. You don't have to become an expert programmer to have a successful career in science, but knowing a little bit of programming has almost become a prerequisite for doing biological research in the 21\textsuperscript{st} century.
+  Introduce the R ecosystem. R is widely used by biologists and environmental scientists to manipulate and clean data, produce high quality figures, and carry out statistical analyses. We will teach you some basic R programming so that you are in a position to address these needs in future if you need to. You don't have to become an expert programmer to have a successful career in biology but knowing a little bit of programming has almost become a prerequisite for doing research in the 21\textsuperscript{st} century.
 \item
-  You will learn how to use R to carry out data manipulation and visualisation. Designing good experiments, collecting data, and analysis are hard, and these activities often take a great deal time and money. If you want to effectively communicate your hard-won results, it is difficult to beat a good figure or diagram; conversely, if you want to be ignored, put everything into a boring table. R is really good at producing figures, so even if you end up just using it as a platform for visualising data, your time hasn't been wasted.
+  Demonstrate how to use R to carry out data manipulation and visualisation. Designing good experiments, collecting data, and analysis are hard, and these activities often take a great deal time and money. If you want to effectively communicate your hard-won results, it is difficult to beat a good figure or diagram; conversely, if you want to be ignored, put everything into a boring table. R is really good at producing figures, so even if you end up just using it as a platform for visualising data, your time hasn't been wasted.
 \item
-  This book provides a foundation for learning statistics later on. If you want to be a biologist, particularly one involved in research, there is really no way to avoid using statistics. You might be able to dodge it by becoming a theoretician, but if that really is your primary interest you should probably being studying for a mathematics degree. For the rest of us who collect and analyse data knowing about statistics is essential: it allows us to distinguish between real patterns (the ``signal'') and chance variation (the ``noise'').
+  Provides a foundation for learning statistics later on. If you want to be a biologist, particularly one involved in research, there is really no way to avoid using statistics. You might be able to dodge it by becoming a theoretician, but if that really is your primary interest you should probably being studying for a mathematics degree. For the rest of us who collect and analyse data knowing about statistics is essential: it allows us to distinguish between real patterns (the ``signal'') and chance variation (the ``noise'').
 \end{enumerate}
 
 \hypertarget{topics}{%
@@ -183,17 +183,15 @@ This course has three related aims:
 
 The topics we will cover are divided into three `blocks':
 
-The \textbf{Getting Started with R} block introduces the R language and the RStudio environment for working with R. Our aim is to run through much of what you need to know to start using R productively. This includes some basic terminology, how to use R packages, and how to access help. We are not trying to turn you into an expert programmer---though you may be surprised to discover that you do enjoy it. However, by the end of this block you will know enough about R to begin learning the practical material that follows.
+The \textbf{Getting Started with R} block introduces the R language and the RStudio environment. The aim is to quickly run through what you need to know to start using R productively. This includes some basic terminology, how to use R packages, and how to access help. We are not trying to turn you into an expert programmer---though you may be surprised to discover that you do enjoy it. However, by the end of this block you will know enough about R to begin learning the practical material that follows.
 
-The \textbf{Data Wrangling with R} block aims to show you how to manipulate your data with R. If you regularly work with data a large amount of time will inevitably be spent getting data into the format you need. The informal name for this is ``data wrangling''. This is a topic that is often not taught to undergraduates, which is a shame because mastering the art of data wrangling can save a lot of time in the long run. We'll learn how to get data into and out of R, makes subsets of important variables, create new variables, summarise your data, and so on.
+The \textbf{Data Wrangling} block aims to show you how to manipulate data with R. If you regularly work with data a large amount of time will inevitably be spent getting data into the format you need. The informal name for this is `data wrangling'. This topic that is often not taught to beginners, which is a shame because mastering the art of data wrangling saves time in the long run. We'll learn how to get data into and out of R, makes subsets of important variables, create new variables, summarise your data, and so on.
 
-The \textbf{Exploratory Data Analysis} block is all about using R to help you understand and describe your data. The first step in any analysis after you have managed to wrangle the data into shape almost always involves some kind of visualisation or numerical summary. In this block you will learn how to do this using one of the best plotting systems in R: \textbf{ggplot2}. We will review the different kinds of variables you might have to analyse, discuss the different ways you can describe them, both visually and with numbers, and then learn how to explore relationships between variables.
+The \textbf{Exploratory Data Analysis} block is all about using R to help you understand and describe your data. The first step in any analysis after you have managed to wrangle the data into shape should involve some kind of visualisation or numerical summary. You will learn how to do this using one of the best plotting systems in R: \textbf{ggplot2}. We will review the different kinds of `variables' you might have to analyse, discuss the different ways you can describe them, and then learn how to explore relationships between variables.
 
 \hypertarget{technologies}{%
 \section*{Technologies}\label{technologies}}
 \addcontentsline{toc}{section}{Technologies}
-
-COMPLETE ME
 
 \hypertarget{what-is-r}{%
 \subsection*{What is R?}\label{what-is-r}}
@@ -208,29 +206,31 @@ The answer to this question very much depends on who you ask. We could go on and
   Because R is such a good environment for data analysis, a very large \textbf{community of users} has grown up around it. The size of this community has increased steadily since R was created, but this growth has really increased up in the last 5-10 years or so. In the early 2000s there were very few books about R and the main way to access help online was through the widely-feared R mailing lists. Now, there are probably hundreds of books about different aspects of R, online tutorials written by enthusiasts, and many websites that exist solely to help people learn R. The resulting ecosystem is vast, and though it can be difficult to navigate at times, when we run into an R-related problem the chances are that the answer is already written down somewhere\footnote{The other big change is that R is finally starting to become part of the commercial landscape---learning how to use it can only improve your job prospects.}.
 \end{itemize}
 
-R is not just about data analysis. R is a fully-fledged programming language, meaning that once you become moderately proficient with it you can do things such as construct numerical simulation models, solve equations, query websites, send emails, \href{http://cran.r-project.org/web/packages/rfoaas/}{access the foaas web service}, and carry out many other tasks we don't have time to write down. We won't do any of this year or next but it is worth noting that R can do much more than just analyse data if we need it to.
-
-\begin{infobox}{information}
-
-\hypertarget{where-does-r-come-from}{%
-\subsubsection*{Where does R come from?}\label{where-does-r-come-from}}
-\addcontentsline{toc}{subsubsection}{Where does R come from?}
-
-R is a dialect of the S language, which was developed by John Chambers and colleagues at Bell Laboratories in the mid 1970s. It was designed to offer an interactive computing environment for statisticians and scientists to carry out data analysis. There are essentially two widely used versions of S (though others have started to appear), a commercial one called S-Plus, and the open source implementation known as R. S-Plus came first, and although it is still around, it is used less each year. Development of R was begun in the late 1990s by two academics, Ross Ihaka and Robert Gentleman, at the University of Auckland. Their motivation was to create an open source language to enable researchers in computational statistics to explore new ideas. That language quickly evolved into something that looked more and more S-like, which we now know as R (GNU R, to be overly precise).
-
-\end{infobox}
+R is not just about data analysis. R is a fully-fledged programming language, meaning that once you become proficient with it you can do things such as construct numerical simulation models, solve equations, query websites, send emails or carry out many other tasks we don't have time to write down. We won't do any of this year or next but it is worth noting that R can do much more than just analyse data if we need it to.
 
 \hypertarget{what-is-rstudio}{%
 \subsection*{What is RStudio?}\label{what-is-rstudio}}
 \addcontentsline{toc}{subsection}{What is RStudio?}
 
-R and RStudio are not the same thing. We can run R without RStudio if we need to, but we cannot run RStudio without R. Remember that! R is essentially just a computer program that sits there and waits for instructions in the form of text. Those instructions can be typed in by a user like you or me, or they can be sent to it from another program. This means you can run R in a variety of different environments. The job of RStudio is to provide an environment that makes R a more pleasant and productive tool. One way to get a sense of why RStudio is a Very Good Thing is to look at what running R without it is like. The simplest way to run it on a Linux or Unix-based machine (like a Mac) is to use something called the Terminal. It's well beyond the scope of this book to get into what this is, but in a nutshell, the Terminal provides a low-level, text-based way to interact with a computer. Here is what R looks like running inside a Terminal on a Mac:
+R is essentially just a computer program that sits there and waits for instructions in the form of text. Those instructions can be typed in by a user or they can be sent to it from another program. R also runs in a variety of different environments. The job of RStudio is to provide an environment that makes R a more pleasant and productive tool.
+
+\begin{infobox}{warning}
+
+\hypertarget{r-and-rstudio-are-not-the-same-thing.}{%
+\subsubsection*{R and RStudio are not the same thing.}\label{r-and-rstudio-are-not-the-same-thing.}}
+\addcontentsline{toc}{subsubsection}{R and RStudio are not the same thing.}
+
+RStudio is a different program from R---it is installed separately and occupies its own place in the Programs menu (Windows PC) or Applications folder (Mac). We can run R without RStudio if we need to, but we cannot run RStudio without R. Remember that!
+
+\end{infobox}
+
+One way to get a sense of why RStudio is a Very Good Thing is to look at what running R without it is like. The simplest way to run it on a Linux or Unix-based machine (like a Mac) is to use something called the Terminal. It's well beyond the scope of this book to get into what this is, but in a nutshell, the Terminal provides a low-level, text-based way to interact with a computer. Here is what R looks like running inside a Terminal on a Mac:
 
 \includegraphics{images/R-terminal.png}
 
 We can run R in much the same way on Windows using the ``Command Prompt'' if we need to. The key thing you need to take away from that screenshot is that running R like this is very ``bare bones''. We typed the letter ``R'' in the Terminal and hit Enter to start R. It printed a little information as it started up and then presented us with ``the prompt'' (\texttt{\textgreater{}}), waiting for input. This is where we type or paste in instructions telling R what to do. There is no other way to interact with it when we run R like this -- no menus or buttons, just a lonely prompt waiting for instructions.
 
-So what is RStudio? The first thing to note is that it is a different program from R. Remember that! RStudio is installed installed separately from R and occupies its own place in the Programs menu (Windows PC) or Applications folder (Mac). In one sense RStudio is just another Graphical User Interface for R which improves on the ``bare bones'' experience. However, it is a GUI on steroids. It is more accurate to describe it as an \href{http://en.wikipedia.org/wiki/Integrated_development_environment}{Integrated Development Environment} (IDE). There is no all-encompassing definition of an IDE, but they all exist to make programmer's lives easier by integrating various useful tools into a single piece of software. From the perspective of this book, there are four key features that we care about:
+So what is RStudio? In one sense RStudio is just another Graphical User Interface for R which improves on the ``bare bones'' experience. However, it is a GUI on steroids. It is more accurate to describe it as an \href{http://en.wikipedia.org/wiki/Integrated_development_environment}{Integrated Development Environment} (IDE). There is no all-encompassing definition of an IDE, but they all exist to make programmer's lives easier by integrating various useful tools into a single piece of software. From the perspective of this book, there are four key features that we care about:
 
 \begin{itemize}
 \item
@@ -243,23 +243,11 @@ So what is RStudio? The first thing to note is that it is a different program fr
   RStudio is cross-platform---it will run on a Windows PC, a Linux PC or a Mac. In terms of the appearance and the functionality it provides, RStudio is exactly the same on each of these platforms. If we learn to work with R via RStudio on a Windows PC, it's no problem migrating to a Mac or Linux PC later on if we need to. This is a big advantage for those of us who work on multiple platforms.
 \end{itemize}
 
-We're only going to scratch the surface of what RStudio can do and there are certainly alternative bits of software that could meet our immediate needs. The reason for introducing a powerful tool like RStudio is because one day you may need to access things like debugging facilities, package building tools, repository management. RStudio makes it easy to use these advanced tools.
-
-\begin{infobox}{warning}
-
-\hypertarget{gui-versions-of-r}{%
-\subsubsection*{GUI versions of R?}\label{gui-versions-of-r}}
-\addcontentsline{toc}{subsubsection}{GUI versions of R?}
-
-When we download and install R for either Windows or Mac, in addition to the basic R program discussed above, we also get another program that acts as a \href{http://en.wikipedia.org/wiki/Graphical_user_interface}{Graphical User Interface} (GUI) for R. This is the thing labelled ``R'' in the Programs menu on a Windows computer or the Applications folder on a Mac. When we launch the R GUI we're presented with something called the Console, which is where we can interact directly with R by typing things at the so-called prompt, \texttt{\textgreater{}}, and a few buttons and menus for managing common tasks. We will not go through the GUIs in any detail because we recommend using RStudio, but it's important to be aware they exist.
-
-\end{infobox}
+We'll only scratch the surface of what RStudio can do. The reason for introducing a powerful tool like RStudio is because one day you may need to access sophisticated features like debugging facilities, package build tools, and repository management. RStudio makes it easy to use these advanced tools.
 
 \hypertarget{get-up-and-running}{%
 \chapter*{Get up and running}\label{get-up-and-running}}
 \addcontentsline{toc}{chapter}{Get up and running}
-
-This book provides a self-contained introduction to how to use R for exploratory data analysis. Think of it as a resource that can be referred to when needed. There is certainly no need to memorise everything in this book. Instead, aim to understand the key concepts and familiarise yourself with the content so you know where to look for information when needed. The details will get easier with practise.
 
 \hypertarget{conventions-in-the-course-book}{%
 \section{Conventions in the course book}\label{conventions-in-the-course-book}}
@@ -268,7 +256,7 @@ This book provides a self-contained introduction to how to use R for exploratory
 \subsubsection*{Text, instructions, and explanations}\label{text-instructions-and-explanations}}
 \addcontentsline{toc}{subsubsection}{Text, instructions, and explanations}
 
-Normal text, instructions, explanations etc. are written in the same type as this document, we will tend to use bold for emphasis and italics to highlight specific technical terms when they are first introduced (italics will also crop up with Latin names from time to time, but this is unlikely to produce too much confusion!)
+Normal text---instructions, explanations and so on---are written in the same type as this document. We will tend to use bold for emphasis and italics to highlight specific technical terms when they are first introduced.
 
 At various points in the text you will come across text in different coloured boxes. These are designed to highlight stand-alone exercises or little pieces of supplementary information that might otherwise break the flow. There are three different kinds of boxes:
 
@@ -330,32 +318,52 @@ File names referred to in general text are given in upper case in the normal typ
 \hypertarget{different-ways-to-run-rstudio}{%
 \section{Different ways to run RStudio}\label{different-ways-to-run-rstudio}}
 
-COMPLETE ME
+We can run RStudio in a variety of different ways---
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Most people use the version of RStudio called \textbf{RStudio Desktop}, either in its free-to-use guise (Open Source Edition) or the commercial version (RStudio Desktop Pro). The desktop version of RStudio are stand-alone applications that run locally on a computer and have to be installed like any other piece of software. This is generally easy, but you can run into problems if you have an old computer or a Chromebook.
+\item
+  The second way to use RStudio is by accessing a version called \textbf{RStudio Server} through a web browser. RStudio Server is usually administered by professional IT people. Life is easy if you belong to an organisation that has set up RStudio Server, because all you need to get going is a user account, a semi-modern web browser and an internet connection.
+\item
+  Finally, the company that makes RStudio also runs a commercial cloud-based solution called \href{https://rstudio.com/products/cloud/}{RStudio Cloud}. This allows anyone web browser and an internet connection to use R and RStudio. Although there is a free version, this is fairly limited meaning you end up paying a monthly fee to do `real work'. However, RStudio Cloud can be a good backup option when all else fails.
+\end{enumerate}
+
+\begin{infobox}{information}
+
+\hypertarget{do-you-need-to-install-r-and-rstudio}{%
+\subsubsection*{Do you need to install R and RStudio?}\label{do-you-need-to-install-r-and-rstudio}}
+\addcontentsline{toc}{subsubsection}{Do you need to install R and RStudio?}
+
+If you're lucky enough to have access to RStudio Server or an RStudio Cloud account you don't need to install R and RStudio on your own computer. Just access those cloud service through a decent web browser. That said, it can be useful to have a local copy on your own computer, e.g.~because you don't have a reliable internet connection. Obviously, if you can't access those cloud services you'll have to install R and RStudio to use them!
+
+\end{infobox}
 
 \hypertarget{installing-r-and-rstudio-locally}{%
 \section{Installing R and RStudio locally}\label{installing-r-and-rstudio-locally}}
 
-COMPLETE ME
+It does not need to cost a penny to use R and RStudio. The source code for R is open source, meaning anyone with the time, energy and expertise is free to download it and alter it as they please. Open source does not necessarily mean free, as in it costs £0 to use, but luckily R \textbf{is} free in this sense. On the other hand, RStudio is developed and maintained by a for-profit company (called\ldots{} RStudio). Luckily, because they make their money selling professional software and services, the open source desktop version of RStudio is also free to use. This section will show you how to download and install R and RStudio.
 
 \hypertarget{installing-r}{%
-\subsection{Installing R}\label{installing-r}}
-
-R is open source, meaning anyone can download the source code -- the collection of computer instructions that define R -- and assuming they have enough time, energy and expertise, they are free to alter it as they please. Open source does not \emph{necessarily} mean free, as in it costs £0 to download and use, but luckily R \emph{is} free in this sense. If you're working on the University managed desktops it should already have been installed and is ready for you to use. We encourage you to install a copy on your own laptop so that you can work at home, in the library, at a café, or wherever else you find you are productive. Do not use R on its own though. Use it in combination with the RStudio IDE discussed in the next section.
+\subsubsection*{Installing R}\label{installing-r}}
+\addcontentsline{toc}{subsubsection}{Installing R}
 
 In order to install R you need to download the appropriate installer from the Comprehensive R Archive Network (\href{http://cran.r-project.org}{CRAN}). We are going to use the ``base distribution'' as this contains everything you need to use R under normal circumstances. There is a single \href{http://cran.r-project.org/bin/windows/base/}{installer} for Windows. On a Mac, it's important to match the \href{http://cran.r-project.org/bin/macosx/}{installer} to the version of OS X. In either case, R uses a the standard install mechanism that should be familiar to anyone who has installed an application on their machine. There is no need to change the default settings---doing so will probably lead to problems later on.
 
-After installing R it should be visible in the Programs menu on a Windows computer or in the Applications folder on a Mac. However, it would be a good idea to read the next section before launching R\ldots{}
+After installing R it should be visible in the Programs menu on a Windows computer or in the Applications folder on a Mac. In fact, that thing labelled `R' is very simple a \href{http://en.wikipedia.org/wiki/Graphical_user_interface}{Graphical User Interface} (GUI) for R. When we launch the R GUI we're presented with something called the Console, which is where we can interact directly with R by typing things at the so-called prompt, \texttt{\textgreater{}}, and a few buttons and menus for managing common tasks. We will not study the GUIs in any detail because we recommend using RStudio, but it's important to be aware they exist so that you don't accidentally use them instead of RStudio.
 
 \hypertarget{installing-rstudio}{%
 \subsection*{Installing RStudio}\label{installing-rstudio}}
 \addcontentsline{toc}{subsection}{Installing RStudio}
 
-RStudio is developed and maintained by a for-profit company called\ldots{} RStudio. The basic desktop version of RStudio is free to download and use. It can be downloaded from the RStudio \href{http://www.rstudio.com/products/RStudio/\#Desk}{download page}. The one to go for is the Open Source Edition of RStudio Desktop, \textbf{not} the commercial version of RStudio Desktop. RStudio installs like any other piece of software---just run the installer and follow the instructions. There's no need to configure after after installation.
+RStudio can be downloaded from the RStudio \href{http://www.rstudio.com/products/RStudio/\#Desk}{download page}. The one to go for is the Open Source Edition of RStudio Desktop, \textbf{not} the commercial version of RStudio Desktop called RStudio Desktop Pro. RStudio installs like any other piece of software---just run the installer and follow the instructions. There's no need to configure after after installation.
 
-\hypertarget{the-anatomy-of-rstudio}{%
-\section{The anatomy of RStudio}\label{the-anatomy-of-rstudio}}
+\hypertarget{a-quick-look-at-rstudio}{%
+\section{A quick look at RStudio}\label{a-quick-look-at-rstudio}}
 
-Once installed RStudio runs like any other stand-alone application, e.g.~via the Programs menu or the Applications folder on a Windows PC or Mac, respectively. We'll say this one last time---RStudio will only work if R is also installed. Here is how RStudio appears the first time it runs on a Mac:
+Once installed RStudio runs like any other stand-alone application via the Programs menu or the Applications folder on a Windows PC or Mac, respectively (though it will only work properly if R is also installed). Here is how RStudio appears the first time it runs on a Mac:
 
 \includegraphics{images/RStudio-3-pane.png}
 
@@ -364,22 +372,20 @@ There are three panes inside a single window, which we have labelled with red nu
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
 \item
-  The large window on the left is the Console. We have already told you what this is for---the Console lets you know what R is doing and provides a mechanism to interact with R by typing instructions. All this happens at the prompt, \texttt{\textgreater{}}. You will be working in the Console in the next chapter so we won't say any more about this here.
+  The large window on the left is the Console. This is basically where R lives inside RStudio. The Console lets you know what R is doing and provides a mechanism to interact with R by typing instructions. All this happens at the prompt, \texttt{\textgreater{}}. You will be working in the Console in the next chapter so we won't say any more about this here.
 \item
-  The window at the top right contains two tabs. The first of these, labelled \textbf{Environment}, allows us to see all the different R objects we can access. There are also some buttons that help us to get data into and out of R. The second, labelled \textbf{History}, allows us to see a list of instructions we've previously sent to R. The buttons in this tab allow us to reuse or save these instructions.
+  The window at the top right contains two or more tabs. One of these, labelled \textbf{Environment}, allows us to see all the R `objects' we can currently access. Another, labelled \textbf{History}, allows us to see a list of instructions we've previously sent to R. The buttons in this tab allow us to reuse or save these instructions.
 \item
-  The window at the bottom right contains five tabs. The first, labelled \textbf{Files}, gives us a way to interact with the files and folders. The next tab, labelled \textbf{Plots}, is where any figures we produce are displayed. This tab also allows you to save your figures to file. The \textbf{Packages} tab is where we view, install and update packages used to extend the functionality of R. The \textbf{Help} tab is where you can access and display various different help pages. The \textbf{Viewer} is essentially an embedded web browser for working with interactive output---we won't be using it in this course.
+  The window at the bottom right contains five tabs. The first, labelled \textbf{Files}, gives us a way to interact with the files and folders. The next tab, labelled \textbf{Plots}, is where any figures we produce are displayed. This tab also allows you to save your figures to file. The \textbf{Packages} tab is where we view, install and update packages used to extend the functionality of R. The \textbf{Help} tab is where you can access and display various different help pages. Finally, \textbf{Viewer} is an embedded web browser.
 \end{enumerate}
 
-Don't be alarmed if RStudio looks different on your computer. There are a couple of reasons why this might be the case. First, the appearance of RStudio is highly customisable. Take a quick look at the \texttt{Tools\ \textgreater{}\ Global\ Options...} window to see what we mean. Second, there is a fourth window that is sometimes be visible when we work with RStudio---the source code Editor we mentioned above. RStudio saves its state between different sessions, so if we have already messed about with RStudio's appearance or left a script open last time we used it you will see these changes.
+\begin{infobox}{information}
 
-\begin{infobox}{warning}
+\hypertarget{my-rstudio-looks-different}{%
+\subsubsection*{My RStudio looks different!}\label{my-rstudio-looks-different}}
+\addcontentsline{toc}{subsubsection}{My RStudio looks different!}
 
-\hypertarget{rstudio-will-change-over-time}{%
-\subsubsection*{RStudio will change over time}\label{rstudio-will-change-over-time}}
-\addcontentsline{toc}{subsubsection}{RStudio will change over time}
-
-Keep in mind that RStudio is very actively developed, which means features tend to appear or change over time. Consequently, if you update it regularly expect the odd thing to change here and there. This is generally a good thing---it usually means new features have been added---but it does require you to occasionally adjust to new additions.
+Don't be alarmed if RStudio looks different on your computer. RStudio saves its state between different sessions, so if you've have already messed about with it you will see these changes when you restart it. For example, there is a fourth pane that is often be visible in RStudio---the source code Editor we mentioned above.
 
 \end{infobox}
 
@@ -404,7 +410,7 @@ The first line above just reminds us what we typed into the Console. The line af
 
 What just happened? We can ignore the \texttt{{[}1{]}} bit for now (the meaning of this will become clear later in the course). What are we left with -- the number 2. The instruction we gave R was in effect ``evaluate the expression \texttt{1\ +\ 3}''. R read this in, decided it was a valid R expression, evaluated the expression, and then printed the result to the Console for us. Unsurprisingly, the expression \texttt{1\ +\ 3} is a request to add the numbers 1 and 3, and so R prints the number 4 to the Console.
 
-OK, that was not very exciting. In the next chapter we will start learning to use R to carry out more useful calculations. The important take-away from this is that this sequence of events---reading instructions, evaluating those instructions and printing their output---happens every time we type or paste something into the Console and hit Enter. The printing bit is optional by the way. Whether or not it happens depends on whether you decide to capture the output or not. Just remember, if R does not print anything to the Console it does not necessarily mean nothing has happened.
+OK\ldots{} that was not very exciting. In the next chapter we will start learning to use R to carry out more useful calculations. The important take-away from this is that this sequence of events---reading instructions, evaluating those instructions and printing their output (if there is any output)---happens every time we type or paste something into the Console and hit Enter.
 
 \begin{infobox}{information}
 
@@ -412,20 +418,15 @@ OK, that was not very exciting. In the next chapter we will start learning to us
 \subsubsection*{What does that word `expression' mean?}\label{what-does-that-word-expression-mean}}
 \addcontentsline{toc}{subsubsection}{What does that word `expression' mean?}
 
-Why do we keep using that word \emph{expression}? It has a very specific meaning in computer science. The \href{http://en.wikipedia.org/wiki/Expression_(computer_science)}{Wikipedia page} says:
+Why do we keep using that word \emph{expression}? Here is what the \href{http://en.wikipedia.org/wiki/Expression_(computer_science)}{Wikipedia page} says:
 
 \begin{quote}
 An expression in a programming language is a combination of explicit values, constants, variables, operators, and functions that are interpreted according to the particular rules of precedence and of association for a particular programming language, which computes and then produces another value.
 \end{quote}
 
-That probably doesn't make much sense but it does at least demonstrates why we don't let computer scientists teach biologists about programming! In simple terms, an R expression is a small set of instructions that tell R to do something. That's it. We could write ``instructions'' instead of ``expressions'' throughout this book but we may as well use the correct word. Whatever we call them, our aim is to learn how to combine sequences of expressions to Get Things Done in R. That's what this book is about.
+That probably doesn't make much sense! In simple terms, an R expression is a small set of instructions that tell R to do something. That's it. We could write `instructions' instead of `expressions' throughout this book but we may as well use the correct word.
 
 \end{infobox}
-
-\hypertarget{working-with-learnr-tutorials}{%
-\section{\texorpdfstring{Working with \textbf{learnr} tutorials}{Working with learnr tutorials}}\label{working-with-learnr-tutorials}}
-
-COMPLETE ME
 
 \hypertarget{part-introduction-to-r}{%
 \part{Introduction to R}\label{part-introduction-to-r}}
