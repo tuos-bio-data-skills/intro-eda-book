@@ -1,1 +1,1 @@
-# intro-eda-book
+# Introduction to exploratory data analysis in R
