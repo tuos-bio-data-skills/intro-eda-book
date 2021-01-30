@@ -1,0 +1,99 @@
+--- 
+title: "Exploratory Data Analysis with R"
+author: "Dylan Childs"
+date: "`r Sys.Date()`"
+site: bookdown::bookdown_site
+documentclass: book
+bibliography: [book.bib, packages.bib]
+biblio-style: apalike
+link-citations: yes
+description: "This is..."
+---
+
+```{r include=FALSE}
+# automatically create a bib database for R packages
+pckg_set <- c(.packages(), 'bookdown', 'knitr', 'rmarkdown', 'packages.bib', 'readr', 'dplyr', 'ggplot2')
+knitr::write_bib(pckg_set)
+# packages we'll use
+library("dplyr")
+library("nasaweather")
+```
+
+# What you will learn {-}
+
+This is the online course book for the __Introduction to Exploratory Data Analysis with R__ component of [APS 135](https://www.sheffield.ac.uk/aps/currentug/level1/aps135), a module taught by the Department and Animal and Plant Sciences at the University of Sheffield. You can view this book in any modern desktop browser, as well as on your phone or tablet device.
+
+## Aims {-}
+
+This course has three related aims:
+
+1. You will be introduced to the R ecosystem. R is widely used by biologists and environmental scientists to manipulate and clean data, produce high quality figures, and carry out statistical analyses. We will teach you some basic R programming so that you are in a position to address these needs in future if you need to. You don't have to become an expert programmer to have a successful career in science, but knowing a little bit of programming has almost become a prerequisite for doing biological research in the 21^st^ century.
+
+2. You will learn how to use R to carry out data manipulation and visualisation. Designing good experiments, collecting data, and analysis are hard, and these activities often take a great deal time and money. If you want to effectively communicate your hard-won results, it is difficult to beat a good figure or diagram; conversely, if you want to be ignored, put everything into a boring table. R is really good at producing figures, so even if you end up just using it as a platform for visualising data, your time hasn't been wasted.
+
+3. This book provides a foundation for learning statistics later on. If you want to be a biologist, particularly one involved in research, there is really no way to avoid using statistics. You might be able to dodge it by becoming a theoretician, but if that really is your primary interest you should probably being studying for a mathematics degree. For the rest of us who collect and analyse data knowing about statistics is essential: it allows us to distinguish between real patterns (the "signal") and chance variation (the "noise").
+
+## Topics {-}
+
+The topics we will cover are divided into three 'blocks':
+
+The __Getting Started with R__ block introduces the R language and the RStudio environment for working with R. Our aim is to run through much of what you need to know to start using R productively. This includes some basic terminology, how to use R packages, and how to access help. We are not trying to turn you into an expert programmer---though you may be surprised to discover that you do enjoy it. However, by the end of this block you will know enough about R to begin learning the practical material that follows.
+
+The __Data Wrangling with R__ block aims to show you how to manipulate your data with R. If you regularly work with data a large amount of time will inevitably be spent getting data into the format you need. The informal name for this is "data wrangling". This is a topic that is often not taught to undergraduates, which is a shame because mastering the art of data wrangling can save a lot of time in the long run. We'll learn how to get data into and out of R, makes subsets of important variables, create new variables, summarise your data, and so on.
+
+The __Exploratory Data Analysis__ block is all about using R to help you understand and describe your data. The first step in any analysis after you have managed to wrangle the data into shape almost always involves some kind of visualisation or numerical summary. In this block you will learn how to do this using one of the best plotting systems in R: __ggplot2__. We will review the different kinds of variables you might have to analyse, discuss the different ways you can describe them, both visually and with numbers, and then learn how to explore relationships between variables.
+
+## Technologies {-}
+
+COMPLETE ME
+
+### What is R? {-}
+
+The answer to this question very much depends on who you ask. We could go on and on about the various features that R possesses. R is a functional programming language, it supports object orientation, etc etc... but these kinds of explanations are only helpful to someone who already knows about computer languages. Here's what you need to know... When a typical R user talks about "R" they are often referring to two things at once, the GNU R language and the ecosystem that exists around the language:
+
+* R is all about **data analysis**. We can carry out any standard statistical analysis in R, as well as access a huge array of more sophisticated tools with impressive names like "structural equation model", "random forests" and "penalized regression". These days, when statisticians and computer scientists develop a new analysis tool, they often implement it in R first. This means a competent R user can always access the latest, cutting edge analysis tools. R also has the best graphics and plotting facilities of any platform. With sufficient expertise, we can make pretty much any type of figure we need (e.g. scatter plots, phylogenetic trees, spatial maps, or even [volcanoes](http://www.r-project.org/screenshots/volcano-image.jpg)). In short, R is a very productive environment for doing data analysis.
+
+* Because R is such a good environment for data analysis, a very large **community of users** has grown up around it. The size of this community has increased steadily since R was created, but this growth has really increased up in the last 5-10 years or so. In the early 2000s there were very few books about R and the main way to access help online was through the widely-feared R mailing lists. Now, there are probably hundreds of books about different aspects of R, online tutorials written by enthusiasts, and many websites that exist solely to help people learn R. The resulting ecosystem is vast, and though it can be difficult to navigate at times, when we run into an R-related problem the chances are that the answer is already written down somewhere^[The other big change is that R is finally starting to become part of the commercial landscape---learning how to use it can only improve your job prospects.].
+
+R is not just about data analysis. R is a fully-fledged programming language, meaning that once you become moderately proficient with it you can do things such as construct numerical simulation models, solve equations, query websites, send emails, [access the foaas web service](http://cran.r-project.org/web/packages/rfoaas/), and carry out many other tasks we don't have time to write down. We won't do any of this year or next but it is worth noting that R can do much more than just analyse data if we need it to.
+
+::: {.infobox .information data-latex="{information}"}
+
+#### Where does R come from? {-}
+
+R is a dialect of the S language, which was developed by John Chambers and colleagues at Bell Laboratories in the mid 1970s. It was designed to offer an interactive  computing environment for statisticians and scientists to carry out data analysis. There are essentially two widely used versions of S (though others have started to appear), a commercial one called S-Plus, and the open source implementation known as R. S-Plus came first, and although it is still around, it is used less each year. Development of R was begun in the late 1990s by two academics, Ross Ihaka and Robert Gentleman, at the University of Auckland. Their motivation was to create an open source language to enable researchers in computational statistics to explore new ideas. That language quickly evolved into something that looked more and more S-like, which we now know as R (GNU R, to be overly precise).
+
+:::
+
+### What is RStudio? {-}
+
+R and RStudio are not the same thing. We can run R without RStudio if we need to, but we cannot run RStudio without R. Remember that! R is essentially just a computer program that sits there and waits for instructions in the form of text. Those instructions can be typed in by a user like you or me, or they can be sent to it from another program. This means you can run R in a variety of different environments. The job of RStudio is to provide an environment that makes R a more pleasant and productive tool. One way to get a sense of why RStudio is a Very Good Thing is to look at what running R without it is like. The simplest way to run it on a Linux or Unix-based machine (like a Mac) is to use something called the Terminal. It's well beyond the scope of this book to get into what this is, but in a nutshell, the Terminal provides a low-level, text-based way to interact with a computer. Here is what R looks like running inside a Terminal on a Mac:
+
+```{r, echo=FALSE}
+knitr::include_graphics("images/R-terminal.png")
+```
+
+We can run R in much the same way on Windows using the "Command Prompt" if we need to. The key thing you need to take away from that screenshot is that running R like this is very "bare bones". We typed the letter "R" in the Terminal and hit Enter to start R. It printed a little information as it started up and then presented us with "the prompt" (`> `), waiting for input. This is where we type or paste in instructions telling R what to do. There is no other way to interact with it when we run R like this -- no menus or buttons, just a lonely prompt waiting for instructions.
+
+So what is RStudio? The first thing to note is that it is a different program from R. Remember that! RStudio is installed installed separately from R and occupies its own place in the Programs menu (Windows PC) or Applications folder (Mac). In one sense RStudio is just another Graphical User Interface for R which improves on the "bare bones" experience. However, it is a GUI on steroids. It is more accurate to describe it as an [Integrated Development Environment](http://en.wikipedia.org/wiki/Integrated_development_environment) (IDE). There is no all-encompassing definition of an IDE, but they all exist to make programmer's lives easier by integrating various useful tools into a single piece of software. From the perspective of this book, there are four key features that we care about:
+
+* The R interpreter---the thing that was running in the Terminal above---runs inside RStudio. It's accessed via a window labelled Console. This is where we type in instructions we want to execute when we are working directly with R. The Console also shows us any output that R prints in response to these instructions. So if we just want the "bare bones" experience, we can still have it.  
+
+* RStudio provides facilities for working with R programs using something called a Source Code Editor. An R program ( also called a "script")" is just is a collection of instructions in the R language that have been saved to a text file. Nothing more! However, it is much easier to work with a script using a proper Source Code Editor than an ordinary text editor like Notepad.
+
+* An good IDE like RStudio also gives you a visual, point-and-click means of accessing various language-specific features. This is a bit difficult to explain until we have have actually used some of these, but trust us, being able to do things like manage packages, set working directories, or inspect objects we've made simplifies day-to-day use of R. This especially true for new users.
+
+* RStudio is cross-platform---it will run on a Windows PC, a Linux PC or a Mac. In terms of the appearance and the functionality it provides, RStudio is exactly the same on each of these platforms. If we learn to work with R via RStudio on a Windows PC, it's no problem migrating to a Mac or Linux PC later on if we need to. This is a big advantage for those of us who work on multiple platforms.
+
+We're only going to scratch the surface of what RStudio can do and there are certainly alternative bits of software that could meet our immediate needs. The reason for introducing a powerful tool like RStudio is because one day you may need to access things like debugging facilities, package building tools, repository management. RStudio makes it easy to use these advanced tools.
+
+::: {.infobox .warning data-latex="{warning}"}
+#### GUI versions of R? {-}
+When we download and install R for either Windows or Mac, in addition to the basic R program discussed above, we also get another program that acts as a [Graphical User Interface](http://en.wikipedia.org/wiki/Graphical_user_interface) (GUI) for R. This is the thing labelled "R" in the Programs menu on a Windows computer or the Applications folder on a Mac. When we launch the R GUI we're presented with something called the Console, which is where we can interact directly with R by typing things at the so-called prompt, `> `, and a few buttons and menus for managing common tasks. We will not go through the GUIs in any detail because we recommend using RStudio, but it's important to be aware they exist.
+:::
+
+
+
+
+
+

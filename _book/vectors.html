@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 3 Vectors | Exploratory Data Analysis with R</title>
+  <meta name="description" content="This is…" />
+  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 3 Vectors | Exploratory Data Analysis with R" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="This is…" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 3 Vectors | Exploratory Data Analysis with R" />
+  
+  <meta name="twitter:description" content="This is…" />
+  
+
+<meta name="author" content="Dylan Childs" />
+
+
+<meta name="date" content="2021-01-30" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="using-functions.html"/>
+<link rel="next" href="data-frames.html"/>
+<script src="libs/header-attrs-2.5/header-attrs.js"></script>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Exploratory Data Analysis with R</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>What you will learn</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#aims"><i class="fa fa-check"></i>Aims</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#topics"><i class="fa fa-check"></i>Topics</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#technologies"><i class="fa fa-check"></i>Technologies</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#what-is-r"><i class="fa fa-check"></i>What is R?</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#what-is-rstudio"><i class="fa fa-check"></i>What is RStudio?</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="get-up-and-running.html"><a href="get-up-and-running.html"><i class="fa fa-check"></i>Get up and running</a>
+<ul>
+<li class="chapter" data-level="0.1" data-path="get-up-and-running.html"><a href="get-up-and-running.html#conventions-in-the-course-book"><i class="fa fa-check"></i><b>0.1</b> Conventions in the course book</a></li>
+<li class="chapter" data-level="0.2" data-path="get-up-and-running.html"><a href="get-up-and-running.html#different-ways-to-run-rstudio"><i class="fa fa-check"></i><b>0.2</b> Different ways to run RStudio</a></li>
+<li class="chapter" data-level="0.3" data-path="get-up-and-running.html"><a href="get-up-and-running.html#installing-r-and-rstudio-locally"><i class="fa fa-check"></i><b>0.3</b> Installing R and RStudio locally</a>
+<ul>
+<li class="chapter" data-level="0.3.1" data-path="get-up-and-running.html"><a href="get-up-and-running.html#installing-r"><i class="fa fa-check"></i><b>0.3.1</b> Installing R</a></li>
+<li class="chapter" data-level="" data-path="get-up-and-running.html"><a href="get-up-and-running.html#installing-rstudio"><i class="fa fa-check"></i>Installing RStudio</a></li>
+</ul></li>
+<li class="chapter" data-level="0.4" data-path="get-up-and-running.html"><a href="get-up-and-running.html#the-anatomy-of-rstudio"><i class="fa fa-check"></i><b>0.4</b> The anatomy of RStudio</a></li>
+<li class="chapter" data-level="0.5" data-path="get-up-and-running.html"><a href="get-up-and-running.html#working-at-console"><i class="fa fa-check"></i><b>0.5</b> Working at the Console in RStudio</a></li>
+<li class="chapter" data-level="0.6" data-path="get-up-and-running.html"><a href="get-up-and-running.html#working-with-learnr-tutorials"><i class="fa fa-check"></i><b>0.6</b> Working with <strong>learnr</strong> tutorials</a></li>
+</ul></li>
+<li class="part"><span><b>I Introduction to R</b></span></li>
+<li class="chapter" data-level="1" data-path="quick-intro-to-r.html"><a href="quick-intro-to-r.html"><i class="fa fa-check"></i><b>1</b> A quick introduction to R</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="quick-intro-to-r.html"><a href="quick-intro-to-r.html#r-calculator"><i class="fa fa-check"></i><b>1.1</b> Using R as a big calculator</a>
+<ul>
+<li class="chapter" data-level="1.1.1" data-path="quick-intro-to-r.html"><a href="quick-intro-to-r.html#basic-arithmetic"><i class="fa fa-check"></i><b>1.1.1</b> Basic arithmetic</a></li>
+<li class="chapter" data-level="1.1.2" data-path="quick-intro-to-r.html"><a href="quick-intro-to-r.html#combining-arithmetic-operations"><i class="fa fa-check"></i><b>1.1.2</b> Combining arithmetic operations</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="quick-intro-to-r.html"><a href="quick-intro-to-r.html#problematic-calculations"><i class="fa fa-check"></i><b>1.2</b> Problematic calculations</a></li>
+<li class="chapter" data-level="1.3" data-path="quick-intro-to-r.html"><a href="quick-intro-to-r.html#assignment"><i class="fa fa-check"></i><b>1.3</b> Storing and reusing results</a></li>
+<li class="chapter" data-level="1.4" data-path="quick-intro-to-r.html"><a href="quick-intro-to-r.html#how-does-assignment-work"><i class="fa fa-check"></i><b>1.4</b> How does assignment work?</a></li>
+<li class="chapter" data-level="1.5" data-path="quick-intro-to-r.html"><a href="quick-intro-to-r.html#global-environment"><i class="fa fa-check"></i><b>1.5</b> Global environment</a></li>
+<li class="chapter" data-level="1.6" data-path="quick-intro-to-r.html"><a href="quick-intro-to-r.html#naming-rules-and-conventions"><i class="fa fa-check"></i><b>1.6</b> Naming rules and conventions</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="using-functions.html"><a href="using-functions.html"><i class="fa fa-check"></i><b>2</b> Using functions</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="using-functions.html"><a href="using-functions.html#intro-functions"><i class="fa fa-check"></i><b>2.1</b> Introduction</a></li>
+<li class="chapter" data-level="2.2" data-path="using-functions.html"><a href="using-functions.html#functions-and-arguments"><i class="fa fa-check"></i><b>2.2</b> Functions and arguments</a></li>
+<li class="chapter" data-level="2.3" data-path="using-functions.html"><a href="using-functions.html#evaluating-arguments-and-returning-results"><i class="fa fa-check"></i><b>2.3</b> Evaluating arguments and returning results</a></li>
+<li class="chapter" data-level="2.4" data-path="using-functions.html"><a href="using-functions.html#functions-do-not-have-side-effects"><i class="fa fa-check"></i><b>2.4</b> Functions do not have ‘side effects’</a></li>
+<li class="chapter" data-level="2.5" data-path="using-functions.html"><a href="using-functions.html#combining-functions"><i class="fa fa-check"></i><b>2.5</b> Combining functions</a></li>
+<li class="chapter" data-level="2.6" data-path="using-functions.html"><a href="using-functions.html#function-arguments"><i class="fa fa-check"></i><b>2.6</b> Specifying function arguments</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="vectors.html"><a href="vectors.html"><i class="fa fa-check"></i><b>3</b> Vectors</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="vectors.html"><a href="vectors.html#introduction"><i class="fa fa-check"></i><b>3.1</b> Introduction</a></li>
+<li class="chapter" data-level="3.2" data-path="vectors.html"><a href="vectors.html#atomic-vectors"><i class="fa fa-check"></i><b>3.2</b> Atomic vectors</a></li>
+<li class="chapter" data-level="3.3" data-path="vectors.html"><a href="vectors.html#intro-vectors"><i class="fa fa-check"></i><b>3.3</b> Numeric vectors</a></li>
+<li class="chapter" data-level="3.4" data-path="vectors.html"><a href="vectors.html#constructing-numeric-vectors"><i class="fa fa-check"></i><b>3.4</b> Constructing numeric vectors</a></li>
+<li class="chapter" data-level="3.5" data-path="vectors.html"><a href="vectors.html#named-vectors"><i class="fa fa-check"></i><b>3.5</b> Named vectors</a></li>
+<li class="chapter" data-level="3.6" data-path="vectors.html"><a href="vectors.html#vectorised-operations"><i class="fa fa-check"></i><b>3.6</b> Vectorised operations</a></li>
+<li class="chapter" data-level="3.7" data-path="vectors.html"><a href="vectors.html#other-vectors"><i class="fa fa-check"></i><b>3.7</b> Other kinds of atomic vectors</a>
+<ul>
+<li class="chapter" data-level="3.7.1" data-path="vectors.html"><a href="vectors.html#character-vectors"><i class="fa fa-check"></i><b>3.7.1</b> Character vectors</a></li>
+<li class="chapter" data-level="3.7.2" data-path="vectors.html"><a href="vectors.html#logical-vectors"><i class="fa fa-check"></i><b>3.7.2</b> Logical vectors</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="data-frames.html"><a href="data-frames.html"><i class="fa fa-check"></i><b>4</b> Data frames</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="data-frames.html"><a href="data-frames.html#introduction-1"><i class="fa fa-check"></i><b>4.1</b> Introduction</a></li>
+<li class="chapter" data-level="4.2" data-path="data-frames.html"><a href="data-frames.html#data-frames-intro"><i class="fa fa-check"></i><b>4.2</b> Data frames</a></li>
+<li class="chapter" data-level="4.3" data-path="data-frames.html"><a href="data-frames.html#exploring-data-frames"><i class="fa fa-check"></i><b>4.3</b> Exploring data frames</a></li>
+<li class="chapter" data-level="4.4" data-path="data-frames.html"><a href="data-frames.html#extracting-and-adding-a-single-variable"><i class="fa fa-check"></i><b>4.4</b> Extracting and adding a single variable</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="packages.html"><a href="packages.html"><i class="fa fa-check"></i><b>5</b> Packages</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="packages.html"><a href="packages.html#package-system"><i class="fa fa-check"></i><b>5.1</b> The R package system</a></li>
+<li class="chapter" data-level="5.2" data-path="packages.html"><a href="packages.html#task-views"><i class="fa fa-check"></i><b>5.2</b> Task views</a></li>
+<li class="chapter" data-level="5.3" data-path="packages.html"><a href="packages.html#use-packages"><i class="fa fa-check"></i><b>5.3</b> Using packages</a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="packages.html"><a href="packages.html#viewing-installed-packages"><i class="fa fa-check"></i><b>5.3.1</b> Viewing installed packages</a></li>
+<li class="chapter" data-level="5.3.2" data-path="packages.html"><a href="packages.html#installing-packages"><i class="fa fa-check"></i><b>5.3.2</b> Installing packages</a></li>
+<li class="chapter" data-level="5.3.3" data-path="packages.html"><a href="packages.html#loading-and-attaching-packages"><i class="fa fa-check"></i><b>5.3.3</b> Loading and attaching packages</a></li>
+<li class="chapter" data-level="5.3.4" data-path="packages.html"><a href="packages.html#dont-use-rstudio-for-loading-packages"><i class="fa fa-check"></i><b>5.3.4</b> Don’t use RStudio for loading packages!</a></li>
+<li class="chapter" data-level="5.3.5" data-path="packages.html"><a href="packages.html#an-analogy"><i class="fa fa-check"></i><b>5.3.5</b> An analogy</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="packages.html"><a href="packages.html#the-tidyverse-ecosystem-of-packages"><i class="fa fa-check"></i><b>5.4</b> The tidyverse ecosystem of packages</a></li>
+<li class="chapter" data-level="5.5" data-path="packages.html"><a href="packages.html#package-data"><i class="fa fa-check"></i><b>5.5</b> Package data</a></li>
+</ul></li>
+<li class="part"><span><b>II Data Wrangling</b></span></li>
+<li class="chapter" data-level="6" data-path="data-wrangling-with-dplyr.html"><a href="data-wrangling-with-dplyr.html"><i class="fa fa-check"></i><b>6</b> Data wrangling with <strong>dplyr</strong></a></li>
+<li class="part"><span><b>III Exporing Data</b></span></li>
+<li class="chapter" data-level="7" data-path="exploratory-data-analysis-with-ggplot2.html"><a href="exploratory-data-analysis-with-ggplot2.html"><i class="fa fa-check"></i><b>7</b> Exploratory data analysis with <strong>ggplot2</strong></a></li>
+<li class="appendix"><span><b>Supplementary Material</b></span></li>
+<li class="chapter" data-level="A" data-path="using-r-with-rstudio.html"><a href="using-r-with-rstudio.html"><i class="fa fa-check"></i><b>A</b> Using R with RStudio</a>
+<ul>
+<li class="chapter" data-level="A.1" data-path="using-r-with-rstudio.html"><a href="using-r-with-rstudio.html#working-with-scripts"><i class="fa fa-check"></i><b>A.1</b> Working with scripts</a>
+<ul>
+<li class="chapter" data-level="A.1.1" data-path="using-r-with-rstudio.html"><a href="using-r-with-rstudio.html#writing-scripts-in-rstudio"><i class="fa fa-check"></i><b>A.1.1</b> Writing scripts in RStudio</a></li>
+<li class="chapter" data-level="A.1.2" data-path="using-r-with-rstudio.html"><a href="using-r-with-rstudio.html#running-scripts-in-rstudio"><i class="fa fa-check"></i><b>A.1.2</b> Running scripts in RStudio</a></li>
+</ul></li>
+<li class="chapter" data-level="A.2" data-path="using-r-with-rstudio.html"><a href="using-r-with-rstudio.html#using-projects-in-rstudio"><i class="fa fa-check"></i><b>A.2</b> Using projects in RStudio</a></li>
+<li class="chapter" data-level="A.3" data-path="using-r-with-rstudio.html"><a href="using-r-with-rstudio.html#spotting-problems"><i class="fa fa-check"></i><b>A.3</b> Spotting problems</a>
+<ul>
+<li class="chapter" data-level="A.3.1" data-path="using-r-with-rstudio.html"><a href="using-r-with-rstudio.html#the-dreaded"><i class="fa fa-check"></i><b>A.3.1</b> The dreaded <code>+</code></a></li>
+<li class="chapter" data-level="A.3.2" data-path="using-r-with-rstudio.html"><a href="using-r-with-rstudio.html#errors"><i class="fa fa-check"></i><b>A.3.2</b> Errors</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="B" data-path="getting-help.html"><a href="getting-help.html"><i class="fa fa-check"></i><b>B</b> Getting help</a>
+<ul>
+<li class="chapter" data-level="B.1" data-path="getting-help.html"><a href="getting-help.html#console-help"><i class="fa fa-check"></i><b>B.1</b> Introduction</a></li>
+<li class="chapter" data-level="B.2" data-path="getting-help.html"><a href="getting-help.html#browsing-the-help-system"><i class="fa fa-check"></i><b>B.2</b> Browsing the help system</a></li>
+<li class="chapter" data-level="B.3" data-path="getting-help.html"><a href="getting-help.html#searching-for-help-files"><i class="fa fa-check"></i><b>B.3</b> Searching for help files</a></li>
+<li class="chapter" data-level="B.4" data-path="getting-help.html"><a href="getting-help.html#nav-help"><i class="fa fa-check"></i><b>B.4</b> Navigating help files</a></li>
+<li class="chapter" data-level="B.5" data-path="getting-help.html"><a href="getting-help.html#vignettes"><i class="fa fa-check"></i><b>B.5</b> Vignettes and demos</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Exploratory Data Analysis with R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="vectors" class="section level1" number="3">
+<h1><span class="header-section-number">Chapter 3</span> Vectors</h1>
+<div id="introduction" class="section level2" number="3.1">
+<h2><span class="header-section-number">3.1</span> Introduction</h2>
+<p>This chapter has three goals. First, we want to learn how to work with something called a <strong>vector</strong>, one of the basic structures used to represent data in R-land. Second, we’ll learn how to work with vectors by using <strong>numeric</strong> vectors to perform simple calculations. Finally, we’ll introduce a couple of different kinds of vectors—<strong>character</strong> vectors and <strong>logical</strong> vectors. This will provide a foundation for working with real data sets in the next block.</p>
+<div id="data-structures" class="section level4 unnumbered infobox information">
+<h4>Data structures?</h4>
+<p>The term ‘data structure’ is used to describe conventions or rules for organising and storing data on a computer. Computer languages use many different kinds of data structures. Fortunately, we only need to learn about a couple of relatively simple ones to use R for data analysis: ‘vectors’ and ‘data frames.’ This chapter will consider vectors. The next chapter will look at collections of vectors (a.k.a. data frames).</p>
+</div>
+</div>
+<div id="atomic-vectors" class="section level2" number="3.2">
+<h2><span class="header-section-number">3.2</span> Atomic vectors</h2>
+<p>We’ll start with a definition, even though it probably won’t make much sense initially: a <strong>vector</strong> is a 1-dimensional data structure for storing a set of values, each accessible by its position in the vector. The simplest kind of vectors in R are called <strong>atomic vectors</strong><a href="#fn4" class="footnote-ref" id="fnref4"><sup>4</sup></a>.</p>
+<p>There are a few different kinds of atomic vector, but the defining feature of each one is that it can only contain data of one ‘type.’ An atomic vector might contain all integers (e.g. 2, 4, 6, …) or all characters (e.g. “A,” “B,” “C”), but it can’t mix and match integers and characters (e.g. “A,” 2, “C,” 5).</p>
+<p>The word “atomic” in the name refers to the fact that an atomic vector can’t be broken down into anything simpler—they are the simplest kind of data structure R knows about. Even if we’re working with a single number we’re actually dealing with an atomic vector of length one. Here’s the very first expression we evaluated in the <a href="quick-intro-to-r.html#r-calculator">Introduction to R chapter</a>:</p>
+<div class="sourceCode" id="cb95"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb95-1"><a href="vectors.html#cb95-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="sc">+</span> <span class="dv">1</span></span></code></pre></div>
+<pre><code>## [1] 2</code></pre>
+<p>Look at the output. What is that <code>[1]</code> at the beginning? It’s actually a clue that the output resulting from <code>1 + 1</code> is an atomic vector. We can verify this with the <code>is.atomic</code> functions. First we make a variable called <code>x</code> with the result of the <code>1 + 1</code> calculation:</p>
+<div class="sourceCode" id="cb97"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb97-1"><a href="vectors.html#cb97-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">+</span> <span class="dv">1</span></span>
+<span id="cb97-2"><a href="vectors.html#cb97-2" aria-hidden="true" tabindex="-1"></a>x</span></code></pre></div>
+<pre><code>## [1] 2</code></pre>
+<p>Then verify to see if <code>x</code> is ‘atomic’:</p>
+<div class="sourceCode" id="cb99"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb99-1"><a href="vectors.html#cb99-1" aria-hidden="true" tabindex="-1"></a><span class="fu">is.atomic</span>(x)</span></code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
+<p>Atomic vectors really are the simplest kind of data structure in R. Unlike many other languages there is simply no way to represent just a number. Instead, a single number must be stored as a vector of length one<a href="#fn5" class="footnote-ref" id="fnref5"><sup>5</sup></a>.</p>
+</div>
+<div id="intro-vectors" class="section level2" number="3.3">
+<h2><span class="header-section-number">3.3</span> Numeric vectors</h2>
+<p>A lot of work in R involves <strong>numeric vectors</strong>. After all, data analysis is all about numbers. Here’s one simple way to construct a numeric vector (and print it out):</p>
+<div class="sourceCode" id="cb101"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb101-1"><a href="vectors.html#cb101-1" aria-hidden="true" tabindex="-1"></a>numvec <span class="ot">&lt;-</span> <span class="fu">numeric</span>(<span class="at">length =</span> <span class="dv">50</span>)</span>
+<span id="cb101-2"><a href="vectors.html#cb101-2" aria-hidden="true" tabindex="-1"></a>numvec</span></code></pre></div>
+<pre><code>##  [1] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+## [39] 0 0 0 0 0 0 0 0 0 0 0 0</code></pre>
+<p>What happened? We made a numeric vector with 50 <strong>elements</strong>, each of which is the number 0. The word “element” is used to reference an object (a number in this case) that resides at a particular position in a vector.</p>
+<p>When we create a vector but don’t assign it to a name using <code>&lt;-</code> R just prints it for us. Notice what happens when a vector is printed to the screen. Since a length-50 vector can’t fit on one line, it was printed over two. At the beginning of each line there is a <code>[X]</code>: the <code>X</code> gives the position of the element shown at the beginning of a particular line.</p>
+<p>If we need to check that we really have made a numeric vector we can use the <code>is.numeric</code><a href="#fn6" class="footnote-ref" id="fnref6"><sup>6</sup></a> function to do this:</p>
+<div class="sourceCode" id="cb103"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb103-1"><a href="vectors.html#cb103-1" aria-hidden="true" tabindex="-1"></a><span class="fu">is.numeric</span>(numvec)</span></code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
+<p>This confirms <code>numvec</code> is numeric by returning <code>TRUE</code> (a value of <code>FALSE</code> would mean that <code>numvec</code> is some other kind of object).</p>
+<p>Keep in mind that R won’t always print the exact values of the elements of a vector. For example, when we print a numeric vector it only prints the elements to 7 significant figures by default. We can see this by printing the built in constant <code>pi</code> to the Console:</p>
+<div class="sourceCode" id="cb105"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb105-1"><a href="vectors.html#cb105-1" aria-hidden="true" tabindex="-1"></a>pi</span></code></pre></div>
+<pre><code>## [1] 3.141593</code></pre>
+<p>The actual value stored in <code>pi</code> is much more precise than this. We can see this by printing <code>pi</code> again using the <code>print</code> function:</p>
+<div class="sourceCode" id="cb107"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb107-1"><a href="vectors.html#cb107-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(pi, <span class="at">digits =</span> <span class="dv">16</span>)</span></code></pre></div>
+<pre><code>## [1] 3.141592653589793</code></pre>
+<div id="different-kinds-of-numbers" class="section level4 unnumbered infobox information">
+<h4>Different kinds of numbers</h4>
+<p>Roughly speaking, R stores numbers in two different ways depending of whether they are whole numbers (“integers”) or numbers containing decimal points (“doubles” – don’t ask). We’re not going to worry about this difference. Most of the time the distinction is invisible to users so it is easier to just think in terms of numeric vectors. We can mix and match integers and doubles in R without having to worry too much about how R is storing the numbers.</p>
+</div>
+</div>
+<div id="constructing-numeric-vectors" class="section level2" number="3.4">
+<h2><span class="header-section-number">3.4</span> Constructing numeric vectors</h2>
+<p>We just saw to make a numeric vector of zeros using the <code>numeric</code> function. This is arguably not a particularly useful skill because we usually need to work vectors of particular values (not just 0). A useful function for creating custom vectors is the <code>c</code> function. Take a look at this example:</p>
+<div class="sourceCode" id="cb109"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb109-1"><a href="vectors.html#cb109-1" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(<span class="fl">1.1</span>, <span class="fl">2.3</span>, <span class="fl">4.0</span>, <span class="fl">5.7</span>)</span></code></pre></div>
+<pre><code>## [1] 1.1 2.3 4.0 5.7</code></pre>
+<p>The ‘c’ in the function name stands for ‘combine.’ The <code>c</code> function takes a variable number of arguments, each of which must be a vector of some kind, and combines these into a single vector. We supplied the <code>c</code> function with four arguments, each of which was a vector of length 1 (remember: a single number is treated as a length-one vector). The <code>c</code> function combines these to generate a vector of length 4. Simple.</p>
+<p>Now look at this example:</p>
+<div class="sourceCode" id="cb111"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb111-1"><a href="vectors.html#cb111-1" aria-hidden="true" tabindex="-1"></a>vec1 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">1.1</span>, <span class="fl">2.3</span>)</span>
+<span id="cb111-2"><a href="vectors.html#cb111-2" aria-hidden="true" tabindex="-1"></a>vec2 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">4.0</span>, <span class="fl">5.7</span>, <span class="fl">3.6</span>)</span>
+<span id="cb111-3"><a href="vectors.html#cb111-3" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(vec1, vec2)</span></code></pre></div>
+<pre><code>## [1] 1.1 2.3 4.0 5.7 3.6</code></pre>
+<p>This shows that we can use the <code>c</code> function to combine two or more vectors of any length. We combined a length-2 vector with a length-3 vector to produce a new length-5 vector.</p>
+<div id="the-c-function-is-odd" class="section level4 unnumbered infobox information">
+<h4>The <code>c</code> function is odd</h4>
+<p>Notice that we did not have to name the arguments in those two examples—there were no <code>=</code> involved. The <code>c</code> function is an example of one of those flexible functions that breaks the simple rules of thumb for using arguments that we set out earlier: it can take a variable number of arguments and these arguments do not have predefined names. This behaviour is necessary for <code>c</code> to be of any use: in order to be useful it needs to be flexible enough to take any combination of arguments.</p>
+</div>
+</div>
+<div id="named-vectors" class="section level2" number="3.5">
+<h2><span class="header-section-number">3.5</span> Named vectors</h2>
+<p>What happens if use named arguments with <code>c</code>? Take a look at this:</p>
+<div class="sourceCode" id="cb113"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb113-1"><a href="vectors.html#cb113-1" aria-hidden="true" tabindex="-1"></a>namedv <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="at">a =</span> <span class="dv">1</span>, <span class="at">b =</span> <span class="dv">2</span>, <span class="at">c =</span> <span class="dv">3</span>)</span>
+<span id="cb113-2"><a href="vectors.html#cb113-2" aria-hidden="true" tabindex="-1"></a>namedv</span></code></pre></div>
+<pre><code>## a b c 
+## 1 2 3</code></pre>
+<p>What happened? The argument names were used to define the names of each element in the vector we made. The resulting vector is still a 1-dimensional data structure. When it is printed to the Console the value of each element is printed along with its associated name above it. We can extract the names from a named vector using the <code>names</code> function:</p>
+<div class="sourceCode" id="cb115"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb115-1"><a href="vectors.html#cb115-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(namedv)</span></code></pre></div>
+<pre><code>## [1] &quot;a&quot; &quot;b&quot; &quot;c&quot;</code></pre>
+<p>Being able to name the elements of a vector is very useful because it allows us to more easily identify relevant information and extract the bits we need—we’ll see how this works in the next chapter.</p>
+</div>
+<div id="vectorised-operations" class="section level2" number="3.6">
+<h2><span class="header-section-number">3.6</span> Vectorised operations</h2>
+<p>All the simple arithmetic operators (e.g. <code>+</code> and <code>-</code>) and many mathematical functions are <strong>vectorised</strong> in R. When we use a vectorised function it operates on vectors on an element-by-element basis. We’ll make a couple of simple vectors to illustrate what we mean:</p>
+<div class="sourceCode" id="cb117"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb117-1"><a href="vectors.html#cb117-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">7</span>, <span class="dv">8</span>, <span class="dv">9</span>, <span class="dv">10</span>)</span>
+<span id="cb117-2"><a href="vectors.html#cb117-2" aria-hidden="true" tabindex="-1"></a>x</span></code></pre></div>
+<pre><code>##  [1]  1  2  3  4  5  6  7  8  9 10</code></pre>
+<div class="sourceCode" id="cb119"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb119-1"><a href="vectors.html#cb119-1" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">0.1</span>, <span class="fl">0.2</span>, <span class="fl">0.3</span>, <span class="fl">0.4</span>, <span class="fl">0.5</span>, <span class="fl">0.6</span>, <span class="fl">0.7</span>, <span class="fl">0.8</span>, <span class="fl">0.9</span>, <span class="fl">1.0</span>)</span>
+<span id="cb119-2"><a href="vectors.html#cb119-2" aria-hidden="true" tabindex="-1"></a>y</span></code></pre></div>
+<pre><code>##  [1] 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0</code></pre>
+<p>This constructed two length-10 numeric vectors, called <code>x</code> and <code>y</code>, where <code>x</code> is a sequence from 1 to 6 and <code>y</code> is a sequence from 0.1 to 0.6. <code>x</code> and <code>y</code> are the same length. Now look at what happens when we add these using <code>+</code>:</p>
+<div class="sourceCode" id="cb121"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb121-1"><a href="vectors.html#cb121-1" aria-hidden="true" tabindex="-1"></a>x <span class="sc">+</span> y</span></code></pre></div>
+<pre><code>##  [1]  1.1  2.2  3.3  4.4  5.5  6.6  7.7  8.8  9.9 11.0</code></pre>
+<p>When R evaluates the expression <code>x + y</code> it does this by adding the first element of <code>x</code> to the first element of <code>y</code>, the second element of <code>x</code> to the second element of <code>y</code>, and so on, working through all 10 elements of <code>x</code> and <code>y</code>. That’s what is meant by a <strong>vectorised</strong> operation.</p>
+<p>Vectorisation is implemented in all the standard mathematical functions. For example, our friend the <code>round</code> function will round each element of a numeric vector to the nearest integer by default:</p>
+<div class="sourceCode" id="cb123"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb123-1"><a href="vectors.html#cb123-1" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(y)</span></code></pre></div>
+<pre><code>##  [1] 0 0 0 0 0 1 1 1 1 1</code></pre>
+<p>The same behaviour is seen with other mathematical functions like <code>sin</code>, <code>cos</code>, <code>exp</code>, and <code>log</code>—they apply the relevant function to each element of a numeric vector.</p>
+<p>It is important to realise that not all functions are vectorised. For example, the <code>sum</code> function takes a vector of numbers and adds them up:</p>
+<div class="sourceCode" id="cb125"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb125-1"><a href="vectors.html#cb125-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(y)</span></code></pre></div>
+<pre><code>## [1] 5.5</code></pre>
+<p>Although <code>sum</code> obviously works on a numeric vector it is not “vectorised” in the sense that it works element-by-element to return an output vector of the same length as its main argument. It just returns a single number–the sum total of the elements of its input.</p>
+<div id="vectorisation-is-not-the-norm" class="section level4 unnumbered infobox information">
+<h4>Vectorisation is not the norm</h4>
+<p>R’s vectorised behaviour may seem like the “obvious” thing to do, but most computer languages do not work like this. In other languages we typically have to write a much more complicated expression to do something so simple. This is one of the reasons R is such a data analysis language: vectorisation allows us to express repetitious calculations in a simple, intuitive way. This behaviour can save us a lot of time. However, not every function treats its arguments in a vectorised way, so we always need to check (most easily, by experimenting) whether this behaviour is available before relying on it.</p>
+</div>
+</div>
+<div id="other-vectors" class="section level2" number="3.7">
+<h2><span class="header-section-number">3.7</span> Other kinds of atomic vectors</h2>
+<p>The data we collect and analyse are often in the form of numbers, so it comes as no surprise that we work with numeric vectors a lot in R. Nonetheless, we also sometimes need to represent other kinds of vectors, either to represent different types of data, or to help us manipulate our data. This chapter introduces two new types of atomic vector to help us do this: character vectors and logical vectors.</p>
+<div id="character-vectors" class="section level3" number="3.7.1">
+<h3><span class="header-section-number">3.7.1</span> Character vectors</h3>
+<p>The elements of <strong>character vectors</strong> are what are known as a “character string” (or “string” if we are feeling lazy). The term “character string” refers a sequence of characters, such as “Treatment 1,” “University of Sheffield,” “Population Density.” A character vector is an atomic vector that stores an ordered collection of one or more character strings.</p>
+<p>If we want to construct a character vector in R we have to place double (<code>"</code>) or single (<code>'</code>) quotation marks around the characters. For example, we can print the name “Dylan” to the Console like this:</p>
+<div class="sourceCode" id="cb127"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb127-1"><a href="vectors.html#cb127-1" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;Dylan&quot;</span></span></code></pre></div>
+<pre><code>## [1] &quot;Dylan&quot;</code></pre>
+<p>Notice the <code>[1]</code>. This shows that what we just printed is an atomic vector of some kind. We know it’s a character vector because the output is printed with double quotes around the value. We often need to make simple character vectors containing only one value—for example, to set the values of arguments to a function.</p>
+<p>The quotation marks are not optional—they tell R we want to treat whatever is inside them as a literal value. The quoting is important. If we try to do the same thing as above without the quotes we end up with an error:</p>
+<div class="sourceCode" id="cb129"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb129-1"><a href="vectors.html#cb129-1" aria-hidden="true" tabindex="-1"></a>Dylan</span></code></pre></div>
+<pre><code>## Error in eval(expr, envir, enclos): object &#39;Dylan&#39; not found</code></pre>
+<p>What happened? When the interpreter sees the word <code>Dylan</code> without quotes it assumes that this must be the name of a variable, so it goes in search of it in the global environment. We haven’t made a variable called Dylan, so there is no way to evaluate the expression and R spits out an error to let us know there’s a problem.</p>
+<p>Longer character vectors are typically constructed to represent data of some kind. The <code>c</code> function is often a good starting point for this kind of thing:</p>
+<div class="sourceCode" id="cb131"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb131-1"><a href="vectors.html#cb131-1" aria-hidden="true" tabindex="-1"></a><span class="co"># make a length-3 character vector</span></span>
+<span id="cb131-2"><a href="vectors.html#cb131-2" aria-hidden="true" tabindex="-1"></a>my_name <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Dylan&quot;</span>, <span class="st">&quot;Zachary&quot;</span>, <span class="st">&quot;Childs&quot;</span>)</span>
+<span id="cb131-3"><a href="vectors.html#cb131-3" aria-hidden="true" tabindex="-1"></a>my_name</span></code></pre></div>
+<pre><code>## [1] &quot;Dylan&quot;   &quot;Zachary&quot; &quot;Childs&quot;</code></pre>
+<p>Here we made a length-3 character vector, with elements corresponding to a first name, middle name, and last name. If we want to extract one or more elements from a character vector by their position</p>
+<p>Take note, this is <strong>not</strong> equivalent to the above :</p>
+<div class="sourceCode" id="cb133"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb133-1"><a href="vectors.html#cb133-1" aria-hidden="true" tabindex="-1"></a>my_name <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Dylan Zachary Childs&quot;</span>)</span>
+<span id="cb133-2"><a href="vectors.html#cb133-2" aria-hidden="true" tabindex="-1"></a>my_name</span></code></pre></div>
+<pre><code>## [1] &quot;Dylan Zachary Childs&quot;</code></pre>
+<p>The only element of this character vector is a single character string containing the first, middle and last name separated by spaces. We didn’t even need to use the the <code>c</code> function here because we were only ever working with a length-1 character vector. i.e. we could have typed <code>"Dylan Zachary Childs"</code> and we would have ended up with exactly the same text printed at the Console.</p>
+</div>
+<div id="logical-vectors" class="section level3" number="3.7.2">
+<h3><span class="header-section-number">3.7.2</span> Logical vectors</h3>
+<p>The elements of <strong>logical vectors</strong> only take two values: <code>TRUE</code> or <code>FALSE</code>. Don’t let the simplicity of logical vectors fool you. They’re very useful. As with other kinds of atomic vectors the <code>c</code> function can be used to construct a logical vector:</p>
+<div class="sourceCode" id="cb135"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb135-1"><a href="vectors.html#cb135-1" aria-hidden="true" tabindex="-1"></a>l_vec <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="cn">TRUE</span>, <span class="cn">FALSE</span>)</span>
+<span id="cb135-2"><a href="vectors.html#cb135-2" aria-hidden="true" tabindex="-1"></a>l_vec</span></code></pre></div>
+<pre><code>## [1]  TRUE FALSE</code></pre>
+<p>So why are logical vectors useful? Their allow us to represent the results of questions such as, “is x greater than y” or “is x equal to y.” The results of such comparisons may then be used to carry out various kinds of subsetting operations.</p>
+<p>Let’s first look at how we use logical vectors to evaluate comparisons. Before we can do that though we need to introduce <strong>relational operators</strong>. These sound fancy, but they are very simple: we use relational operators to evaluate the relative value of vector elements. Six are available in R:</p>
+<ul>
+<li><code>x &lt; y</code>: is x less than y?</li>
+<li><code>x &gt; y</code>: is x greater than y?</li>
+<li><code>x &lt;= y</code>: is x less than or equal to y?</li>
+<li><code>x &gt;= y</code>: is x greater than or equal to y?</li>
+<li><code>x == y</code>: is x equal to y?</li>
+<li><code>x != y</code>: is x not equal to y?</li>
+</ul>
+<p>The easiest way to understand how these work is to simply use them. We need a couple of numeric variables first:</p>
+<div class="sourceCode" id="cb137"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb137-1"><a href="vectors.html#cb137-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">11</span>, <span class="dv">12</span>, <span class="dv">13</span>, <span class="dv">14</span>, <span class="dv">15</span>, <span class="dv">16</span>, <span class="dv">17</span>, <span class="dv">18</span>, <span class="dv">19</span>, <span class="dv">20</span>)</span>
+<span id="cb137-2"><a href="vectors.html#cb137-2" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">6</span>, <span class="dv">9</span>, <span class="dv">12</span>, <span class="dv">15</span>, <span class="dv">18</span>, <span class="dv">21</span>, <span class="dv">24</span>, <span class="dv">27</span>, <span class="dv">30</span>)</span>
+<span id="cb137-3"><a href="vectors.html#cb137-3" aria-hidden="true" tabindex="-1"></a>x</span></code></pre></div>
+<pre><code>##  [1] 11 12 13 14 15 16 17 18 19 20</code></pre>
+<div class="sourceCode" id="cb139"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb139-1"><a href="vectors.html#cb139-1" aria-hidden="true" tabindex="-1"></a>y</span></code></pre></div>
+<pre><code>##  [1]  3  6  9 12 15 18 21 24 27 30</code></pre>
+<p>Now, if we need to evaluate and represent a question like, “is x greater than than y,” we can use either <code>&lt;</code> or <code>&gt;</code>:</p>
+<div class="sourceCode" id="cb141"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb141-1"><a href="vectors.html#cb141-1" aria-hidden="true" tabindex="-1"></a>x <span class="sc">&gt;</span> y</span></code></pre></div>
+<pre><code>##  [1]  TRUE  TRUE  TRUE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE</code></pre>
+<p>The <code>x &gt; y</code> expression produces a logical vector, with <code>TRUE</code> values associated with elements in <code>x</code> are less than <code>y</code>, and <code>FALSE</code> otherwise. In this example, x is less than y until we reach the value of 15 in each sequence. Notice too that relational operators are vectorised: they work on an element by element basis.</p>
+<p>What does the <code>==</code> operator do? It compares the elements of two vectors to determine if they are exactly equal:</p>
+<div class="sourceCode" id="cb143"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb143-1"><a href="vectors.html#cb143-1" aria-hidden="true" tabindex="-1"></a>x <span class="sc">==</span> y</span></code></pre></div>
+<pre><code>##  [1] FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE</code></pre>
+<p>The output of this comparison is true only for one element, the number 15, which is at the 5<sup>th</sup> position in both <code>x</code> and <code>y</code>. The <code>!=</code> operator is essentially the opposite of <code>==</code>. It identifies cases where two elements are not exactly equal. We could step through each of the different the other relational operators, but hopefully they are self-explanatory at this point (if not, experiment with them).</p>
+<div id="and-are-not-the-same" class="section level4 unnumbered infobox warning">
+<h4><code>=</code> and <code>==</code> are not the same</h4>
+<p>If we want to test for equivalence between the elements of two vectors we must use double equals (<code>==</code>), not single equals (<code>=</code>). Forgetting to do this <code>==</code> instead of <code>=</code> is a very common source of mistakes. The <code>=</code> symbol already has a use in R—assigning name-value pairs—so it can’t also be used to compare vectors because this would lead to ambiguity in our R scripts. Using <code>=</code> when you meant to use <code>==</code> is a very common mistake. If you make it, this will lead to all kinds of difficult-to-comprehend problems with your scripts. Try to remember the difference!</p>
+</div>
+
+</div>
+</div>
+</div>
+<div class="footnotes">
+<hr />
+<ol start="4">
+<li id="fn4"><p>The other common vector is called a “list.” Lists are very useful but we won’t cover them in this book.<a href="vectors.html#fnref4" class="footnote-back">↩︎</a></p></li>
+<li id="fn5"><p>The same is true for things like sets of characters (<code>"dog"</code>, <code>"cat"</code>, <code>"fish"</code>, …) and logical values (<code>TRUE</code> or <code>FALSE</code>) discussed in the next two chapters.<a href="vectors.html#fnref5" class="footnote-back">↩︎</a></p></li>
+<li id="fn6"><p>This may not look like the most useful function in the world, but sometimes we need functions like <code>is.numeric</code> to understand what R is doing or root out mistakes in our scripts.<a href="vectors.html#fnref6" class="footnote-back">↩︎</a></p></li>
+</ol>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="using-functions.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="data-frames.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["intro-bio-data-book.pdf", "intro-bio-data-book.epub"],
+"toc": {
+"collapse": "section"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

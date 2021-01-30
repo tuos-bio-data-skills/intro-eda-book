@@ -1,0 +1,160 @@
+# Data frames
+
+## Introduction
+
+The [quick introduction to R](#quick-intro-to-r) chapter introduced the word 'variable' as a short hand for any kind of named object. For example, we can make a variable called `num_vec` that refers to a simple numeric vector using:
+
+```{r}
+num_vec <- c(1.1, 2.3, 4.0, 5.7)
+num_vec
+```
+
+When an computer scientist talks about variables they're usually referring to these sorts of name-value associations.
+
+The word "variable" has a second, more abstract meaning in the world of statistics: it refers to anything we can control or measure. For example, data from an experiment will typically involve variables whose values describe the experimental conditions (e.g. low temperature vs. high temperature) and the quantities we chose to measure (e.g. enzyme activity). These kinds of variables are "statistical variables".
+
+We'll discuss these statistical variables later on. The reason we're pointing out the dual meaning of the word 'variable' is because we need to work with both interpretations. The dual meaning can be confusing, but both meanings are in widespread use so we just have to get used to them. We try to minimise confusion by using the phrase "statistical variable" when we are referring to data, rather than R objects.
+
+We're introducing these ideas now because we're going to consider a new type of data object in R---the **data frame**. Real world data analysis involves collections of related statistical variables. How should we keep a large collection of variables organised? We could work with them individually but this tends to be error prone. Instead, we need a way to keep related variables together. This is the problem that **data frames** are designed to manage.
+
+## Data frames {#data-frames-intro}
+
+Data frames are one of those features of R that mark it out as particularly good for data analysis. We can think of a data frame as table-like object with rows and columns. A data frame collects together different statistical variables, storing each of them as a seperate column. Related observations are all found in the same row. We'll think about the columns first...
+
+Each column of a data frame is a vector of some kind. These are usually simple atomic vectors containing numbers or character strings, but it is possible to include more complicated vectors. The important constraint that a data frame applies is that each vector within it must have the same length. This is what gives a data frame it table-like structure.
+
+The simplest way to get a feel for data frames is to make one. We'll make one 'by hand' using some artificial data describing an experiment. Imagine that we conducted a small experiment to examine biomass and community diversity in six field plots. Three plots were subjected to fertiliser enrichment. The other three plots act as experimental controls.
+
+We could store the data describing this experiment in three vectors:
+
+-   `trt` (short for "treatment") shows which experimental manipulation was used in a given plot.
+-   `bms` (short for "biomass") shows the total biomass measured at the end of the experiment.
+-   `div` (short for "diversity") shows the number of species present at the end of the experiment.
+
+Here's some R code to generate these three vectors (it doesn't matter what the actual values are, they're made up):
+
+```{r}
+trt <- rep(c("Control","Fertilser"), each = 3) 
+bms <- c(284, 328, 291, 956, 954, 685)
+div <- c(8, 12, 11, 8, 4, 5)
+```
+
+```{r}
+trt
+bms
+div
+```
+
+Notice that the information about different observations are linked by their positions in these vectors. For example, the third control plot had a biomass of '291' and a species diversity '11'.
+
+We use the `data.frame` function to construct a data frame from one or more vectors, i.e. to build a data frame from the three vectors we just created:
+
+```{r}
+experim.data <- data.frame(trt, bms, div)
+experim.data
+```
+
+Notice what happens when we print the data frame: it is displayed as though it has rows and columns. That's what we meant when we said a data frame is a table-like structure.
+
+The `data.frame` function takes a variable number of arguments. We used the `trt`, `bms` and `div` vectors, resulting in a data frame with three columns. Each of these vectors has 6 elements, so the resulting data frame has 6 rows. The names of the vectors were used to name its columns. The rows do not have names, but they are numbered to reflect their position.
+
+The words `trt`, `bms` and `div` are not very informative. If we prefer to work with more meaningful column names---which is always a good idea---then we can name the `data.frame` arguments:
+
+```{r}
+experim.data <- data.frame(Treatment = trt, Biomass = bms, Diversity = div)
+experim.data
+```
+
+The new data frame contains the same data as the previous one but now the column names correspond to the human-readable words we chose.
+
+::: {.infobox .warning data-latex="{warning}"}
+#### Don't bother with row names {.unnumbered}
+
+We can also name the rows of a data frame using the `row.names` argument of the `data.frame` function. We won't bother to show an example of this though. Why? We can't easily work with the information in row names which means there's not much point adding it. If we need to include row-specific information in a data frame it's best to include an additional variable, i.e. an extra column.
+:::
+
+## Exploring data frames
+
+The first things to do when presented with a new data set is explore its structure to understand what we're dealing with. There are plenty of options for doing this when the data is stored in a data frame. For example, the `head` and `tail` functions extract the first and last few rows of a data set:
+
+```{r}
+head(experim.data, n = 3)
+tail(experim.data, n = 3)
+```
+
+Notice that the `n` argument controls the number of rows printed. The `View` function can be used to open up the whole data set in a table- or spreadsheet-like like view:
+
+```{r, eval=FALSE}
+View(experim.data)
+```
+
+Exactly what happens when we use `View` depends on how we're interacting with R. When we run it in RStudio a new tab opens up with the data shown inside it.
+
+::: {.infobox .warning data-latex="{warning}"}
+#### `View` only displays the data {.unnumbered}
+
+The `View` function is designed to allow us to display the data in a data frame as a table of rows and columns. We can't change the data in any way with the `View` function. We can reorder the way the data are presented, but keep in mind that this won't alter the underlying data.
+:::
+
+There are quite a few different R functions that will extract information about a data frame. The `nrow` and `ncol` functions return the number of rows and columns, respectively:
+
+```{r}
+nrow(experim.data)
+ncol(experim.data)
+```
+
+The `names` function is used to extract the column names from a data frame:
+
+```{r}
+colnames(experim.data)
+```
+
+The `experim.data` data frame has three columns, so `names` returns a character vector of length three, where each element corresponds to a column name.
+
+## Extracting and adding a single variable
+
+Remember, each column of a data frame can be thought of as a variable. Data frames would not be much use if we could not extract and modify the variables they contain. In this section we will briefly review how to extract a variable. We'll examine ways to manipulate the data within a data frame in later chapters. 
+
+One way of extracting a variable from a data frame uses a double square brackets construct, `[[`. For example, we extract the `Biomass` variable from our example data frame with the double square brackets like this:
+
+```{r}
+experim.data[["Biomass"]]
+```
+
+This prints whatever is in the `Biomass` column to the Console. What kind of object is this? It's a numeric vector:
+
+```{r}
+is.numeric(experim.data[["Biomass"]])
+```
+
+See? A data frame really is a collection of vectors. Notice that all we did was print the resulting vector to the Console. If we want to actually do something with this numeric vector we need to assign the result:
+
+```{r}
+bmass <- experim.data$Biomass
+bmass^2
+```
+
+Here, we extracted the `Biomass` variable, assigned it to `bmass`, and then squared this.
+
+Notice that we used `"Biomass"` instead of `Biomass` inside the double square brackets, i.e. we quoted the name of the variable. This is because we want R to treat the word "Biomass" as a literal value. This little detail is important! If we don't quote the name then R will assume that `Biomass` is the name of an object and go in search of it in the global environment. Since we haven't created something called `Biomass`, leaving out the quotes would generate an error:
+
+```{r, error=TRUE}
+experim.data[[Biomass]]
+```
+
+The error message is telling us that R can't find a variable called `Biomass`.
+
+The second method for extracting a variable uses the `$` operator. For example, to extract the `Biomass` column from `experim.data`, we use:
+
+```{r}
+experim.data$Biomass
+```
+
+We use the `$` operator by placing the name of the data frame we want to work with on the left hand side and and the name of the column (i.e. the variable) we want to extract on the right hand side. Notice that this time we didn't have to put quotes around the variable name when using the `$` operator. We can do this if we want to---i.e. `experim.data$"Biomass"` also works---but `$` doesn't require it.
+
+::: {.infobox .warning data-latex="{warning}"}
+#### Why is there more than one way to extract variables? {-}
+There's no simple way to answer this question without getting into the details of how R represents data frames. The simple answer is that `$` and `[[` are not actually equivalent, even though they appear to do much the same thing. The `$` method is a bit easier to read and people tend to prefer it for interactive data analysis tasks, whereas the `[[` construct tends to be used when we need a bit more flexibility for programming.
+:::
+
+

@@ -1,0 +1,2559 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{book}
+\usepackage{lmodern}
+\usepackage{amsmath}
+\usepackage{ifxetex,ifluatex}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+  \usepackage{amssymb}
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  pdftitle={Exploratory Data Analysis with R},
+  pdfauthor={Dylan Childs},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{longtable,booktabs}
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{5}
+\usepackage{booktabs}
+
+\usepackage{color}
+\usepackage{framed}
+\setlength{\fboxsep}{.8em}
+
+\newenvironment{greybox}{
+  \definecolor{shadecolor}{rgb}{0.95,0.95,0.95}  % grey
+  \color{black}
+  \begin{shaded}}
+ {\end{shaded}}
+ 
+ \newenvironment{infobox}[1]
+  {
+  \begin{itemize}
+  \renewcommand{\labelitemi}{
+    \raisebox{-.7\height}[0pt][0pt]{
+      {\setkeys{Gin}{width=3em,keepaspectratio}
+        \includegraphics{images/#1}}
+    }
+  }
+  \setlength{\fboxsep}{1em}
+  \begin{greybox}
+  \item
+  }
+  {
+  \end{greybox}
+  \end{itemize}
+  }
+\ifluatex
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\usepackage[]{natbib}
+\bibliographystyle{apalike}
+
+\title{Exploratory Data Analysis with R}
+\author{Dylan Childs}
+\date{2021-01-30}
+
+\begin{document}
+\maketitle
+
+{
+\setcounter{tocdepth}{1}
+\tableofcontents
+}
+\hypertarget{what-you-will-learn}{%
+\chapter*{What you will learn}\label{what-you-will-learn}}
+\addcontentsline{toc}{chapter}{What you will learn}
+
+This is the online course book for the \textbf{Introduction to Exploratory Data Analysis with R} component of \href{https://www.sheffield.ac.uk/aps/currentug/level1/aps135}{APS 135}, a module taught by the Department and Animal and Plant Sciences at the University of Sheffield. You can view this book in any modern desktop browser, as well as on your phone or tablet device.
+
+\hypertarget{aims}{%
+\section*{Aims}\label{aims}}
+\addcontentsline{toc}{section}{Aims}
+
+This course has three related aims:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  You will be introduced to the R ecosystem. R is widely used by biologists and environmental scientists to manipulate and clean data, produce high quality figures, and carry out statistical analyses. We will teach you some basic R programming so that you are in a position to address these needs in future if you need to. You don't have to become an expert programmer to have a successful career in science, but knowing a little bit of programming has almost become a prerequisite for doing biological research in the 21\textsuperscript{st} century.
+\item
+  You will learn how to use R to carry out data manipulation and visualisation. Designing good experiments, collecting data, and analysis are hard, and these activities often take a great deal time and money. If you want to effectively communicate your hard-won results, it is difficult to beat a good figure or diagram; conversely, if you want to be ignored, put everything into a boring table. R is really good at producing figures, so even if you end up just using it as a platform for visualising data, your time hasn't been wasted.
+\item
+  This book provides a foundation for learning statistics later on. If you want to be a biologist, particularly one involved in research, there is really no way to avoid using statistics. You might be able to dodge it by becoming a theoretician, but if that really is your primary interest you should probably being studying for a mathematics degree. For the rest of us who collect and analyse data knowing about statistics is essential: it allows us to distinguish between real patterns (the ``signal'') and chance variation (the ``noise'').
+\end{enumerate}
+
+\hypertarget{topics}{%
+\section*{Topics}\label{topics}}
+\addcontentsline{toc}{section}{Topics}
+
+The topics we will cover are divided into three `blocks':
+
+The \textbf{Getting Started with R} block introduces the R language and the RStudio environment for working with R. Our aim is to run through much of what you need to know to start using R productively. This includes some basic terminology, how to use R packages, and how to access help. We are not trying to turn you into an expert programmer---though you may be surprised to discover that you do enjoy it. However, by the end of this block you will know enough about R to begin learning the practical material that follows.
+
+The \textbf{Data Wrangling with R} block aims to show you how to manipulate your data with R. If you regularly work with data a large amount of time will inevitably be spent getting data into the format you need. The informal name for this is ``data wrangling''. This is a topic that is often not taught to undergraduates, which is a shame because mastering the art of data wrangling can save a lot of time in the long run. We'll learn how to get data into and out of R, makes subsets of important variables, create new variables, summarise your data, and so on.
+
+The \textbf{Exploratory Data Analysis} block is all about using R to help you understand and describe your data. The first step in any analysis after you have managed to wrangle the data into shape almost always involves some kind of visualisation or numerical summary. In this block you will learn how to do this using one of the best plotting systems in R: \textbf{ggplot2}. We will review the different kinds of variables you might have to analyse, discuss the different ways you can describe them, both visually and with numbers, and then learn how to explore relationships between variables.
+
+\hypertarget{technologies}{%
+\section*{Technologies}\label{technologies}}
+\addcontentsline{toc}{section}{Technologies}
+
+COMPLETE ME
+
+\hypertarget{what-is-r}{%
+\subsection*{What is R?}\label{what-is-r}}
+\addcontentsline{toc}{subsection}{What is R?}
+
+The answer to this question very much depends on who you ask. We could go on and on about the various features that R possesses. R is a functional programming language, it supports object orientation, etc etc\ldots{} but these kinds of explanations are only helpful to someone who already knows about computer languages. Here's what you need to know\ldots{} When a typical R user talks about ``R'' they are often referring to two things at once, the GNU R language and the ecosystem that exists around the language:
+
+\begin{itemize}
+\item
+  R is all about \textbf{data analysis}. We can carry out any standard statistical analysis in R, as well as access a huge array of more sophisticated tools with impressive names like ``structural equation model'', ``random forests'' and ``penalized regression''. These days, when statisticians and computer scientists develop a new analysis tool, they often implement it in R first. This means a competent R user can always access the latest, cutting edge analysis tools. R also has the best graphics and plotting facilities of any platform. With sufficient expertise, we can make pretty much any type of figure we need (e.g.~scatter plots, phylogenetic trees, spatial maps, or even \href{http://www.r-project.org/screenshots/volcano-image.jpg}{volcanoes}). In short, R is a very productive environment for doing data analysis.
+\item
+  Because R is such a good environment for data analysis, a very large \textbf{community of users} has grown up around it. The size of this community has increased steadily since R was created, but this growth has really increased up in the last 5-10 years or so. In the early 2000s there were very few books about R and the main way to access help online was through the widely-feared R mailing lists. Now, there are probably hundreds of books about different aspects of R, online tutorials written by enthusiasts, and many websites that exist solely to help people learn R. The resulting ecosystem is vast, and though it can be difficult to navigate at times, when we run into an R-related problem the chances are that the answer is already written down somewhere\footnote{The other big change is that R is finally starting to become part of the commercial landscape---learning how to use it can only improve your job prospects.}.
+\end{itemize}
+
+R is not just about data analysis. R is a fully-fledged programming language, meaning that once you become moderately proficient with it you can do things such as construct numerical simulation models, solve equations, query websites, send emails, \href{http://cran.r-project.org/web/packages/rfoaas/}{access the foaas web service}, and carry out many other tasks we don't have time to write down. We won't do any of this year or next but it is worth noting that R can do much more than just analyse data if we need it to.
+
+\begin{infobox}{information}
+
+\hypertarget{where-does-r-come-from}{%
+\subsubsection*{Where does R come from?}\label{where-does-r-come-from}}
+\addcontentsline{toc}{subsubsection}{Where does R come from?}
+
+R is a dialect of the S language, which was developed by John Chambers and colleagues at Bell Laboratories in the mid 1970s. It was designed to offer an interactive computing environment for statisticians and scientists to carry out data analysis. There are essentially two widely used versions of S (though others have started to appear), a commercial one called S-Plus, and the open source implementation known as R. S-Plus came first, and although it is still around, it is used less each year. Development of R was begun in the late 1990s by two academics, Ross Ihaka and Robert Gentleman, at the University of Auckland. Their motivation was to create an open source language to enable researchers in computational statistics to explore new ideas. That language quickly evolved into something that looked more and more S-like, which we now know as R (GNU R, to be overly precise).
+
+\end{infobox}
+
+\hypertarget{what-is-rstudio}{%
+\subsection*{What is RStudio?}\label{what-is-rstudio}}
+\addcontentsline{toc}{subsection}{What is RStudio?}
+
+R and RStudio are not the same thing. We can run R without RStudio if we need to, but we cannot run RStudio without R. Remember that! R is essentially just a computer program that sits there and waits for instructions in the form of text. Those instructions can be typed in by a user like you or me, or they can be sent to it from another program. This means you can run R in a variety of different environments. The job of RStudio is to provide an environment that makes R a more pleasant and productive tool. One way to get a sense of why RStudio is a Very Good Thing is to look at what running R without it is like. The simplest way to run it on a Linux or Unix-based machine (like a Mac) is to use something called the Terminal. It's well beyond the scope of this book to get into what this is, but in a nutshell, the Terminal provides a low-level, text-based way to interact with a computer. Here is what R looks like running inside a Terminal on a Mac:
+
+\includegraphics{images/R-terminal.png}
+
+We can run R in much the same way on Windows using the ``Command Prompt'' if we need to. The key thing you need to take away from that screenshot is that running R like this is very ``bare bones''. We typed the letter ``R'' in the Terminal and hit Enter to start R. It printed a little information as it started up and then presented us with ``the prompt'' (\texttt{\textgreater{}}), waiting for input. This is where we type or paste in instructions telling R what to do. There is no other way to interact with it when we run R like this -- no menus or buttons, just a lonely prompt waiting for instructions.
+
+So what is RStudio? The first thing to note is that it is a different program from R. Remember that! RStudio is installed installed separately from R and occupies its own place in the Programs menu (Windows PC) or Applications folder (Mac). In one sense RStudio is just another Graphical User Interface for R which improves on the ``bare bones'' experience. However, it is a GUI on steroids. It is more accurate to describe it as an \href{http://en.wikipedia.org/wiki/Integrated_development_environment}{Integrated Development Environment} (IDE). There is no all-encompassing definition of an IDE, but they all exist to make programmer's lives easier by integrating various useful tools into a single piece of software. From the perspective of this book, there are four key features that we care about:
+
+\begin{itemize}
+\item
+  The R interpreter---the thing that was running in the Terminal above---runs inside RStudio. It's accessed via a window labelled Console. This is where we type in instructions we want to execute when we are working directly with R. The Console also shows us any output that R prints in response to these instructions. So if we just want the ``bare bones'' experience, we can still have it.
+\item
+  RStudio provides facilities for working with R programs using something called a Source Code Editor. An R program ( also called a ``script'')" is just is a collection of instructions in the R language that have been saved to a text file. Nothing more! However, it is much easier to work with a script using a proper Source Code Editor than an ordinary text editor like Notepad.
+\item
+  An good IDE like RStudio also gives you a visual, point-and-click means of accessing various language-specific features. This is a bit difficult to explain until we have have actually used some of these, but trust us, being able to do things like manage packages, set working directories, or inspect objects we've made simplifies day-to-day use of R. This especially true for new users.
+\item
+  RStudio is cross-platform---it will run on a Windows PC, a Linux PC or a Mac. In terms of the appearance and the functionality it provides, RStudio is exactly the same on each of these platforms. If we learn to work with R via RStudio on a Windows PC, it's no problem migrating to a Mac or Linux PC later on if we need to. This is a big advantage for those of us who work on multiple platforms.
+\end{itemize}
+
+We're only going to scratch the surface of what RStudio can do and there are certainly alternative bits of software that could meet our immediate needs. The reason for introducing a powerful tool like RStudio is because one day you may need to access things like debugging facilities, package building tools, repository management. RStudio makes it easy to use these advanced tools.
+
+\begin{infobox}{warning}
+
+\hypertarget{gui-versions-of-r}{%
+\subsubsection*{GUI versions of R?}\label{gui-versions-of-r}}
+\addcontentsline{toc}{subsubsection}{GUI versions of R?}
+
+When we download and install R for either Windows or Mac, in addition to the basic R program discussed above, we also get another program that acts as a \href{http://en.wikipedia.org/wiki/Graphical_user_interface}{Graphical User Interface} (GUI) for R. This is the thing labelled ``R'' in the Programs menu on a Windows computer or the Applications folder on a Mac. When we launch the R GUI we're presented with something called the Console, which is where we can interact directly with R by typing things at the so-called prompt, \texttt{\textgreater{}}, and a few buttons and menus for managing common tasks. We will not go through the GUIs in any detail because we recommend using RStudio, but it's important to be aware they exist.
+
+\end{infobox}
+
+\hypertarget{get-up-and-running}{%
+\chapter*{Get up and running}\label{get-up-and-running}}
+\addcontentsline{toc}{chapter}{Get up and running}
+
+This book provides a self-contained introduction to how to use R for exploratory data analysis. Think of it as a resource that can be referred to when needed. There is certainly no need to memorise everything in this book. Instead, aim to understand the key concepts and familiarise yourself with the content so you know where to look for information when needed. The details will get easier with practise.
+
+\hypertarget{conventions-in-the-course-book}{%
+\section{Conventions in the course book}\label{conventions-in-the-course-book}}
+
+\hypertarget{text-instructions-and-explanations}{%
+\subsubsection*{Text, instructions, and explanations}\label{text-instructions-and-explanations}}
+\addcontentsline{toc}{subsubsection}{Text, instructions, and explanations}
+
+Normal text, instructions, explanations etc. are written in the same type as this document, we will tend to use bold for emphasis and italics to highlight specific technical terms when they are first introduced (italics will also crop up with Latin names from time to time, but this is unlikely to produce too much confusion!)
+
+At various points in the text you will come across text in different coloured boxes. These are designed to highlight stand-alone exercises or little pieces of supplementary information that might otherwise break the flow. There are three different kinds of boxes:
+
+\begin{infobox}{action}
+
+\hypertarget{action}{%
+\subsubsection*{Action!}\label{action}}
+\addcontentsline{toc}{subsubsection}{Action!}
+
+This is an \textbf{action} box. We use these when we want you to do something. Do not ignore these boxes.
+
+\end{infobox}
+
+\begin{infobox}{information}
+
+\hypertarget{information}{%
+\subsubsection*{Information!}\label{information}}
+\addcontentsline{toc}{subsubsection}{Information!}
+
+This is an \textbf{information} box. These aim to offer a discussion of why something works the way it does.
+
+\end{infobox}
+
+\begin{infobox}{warning}
+
+\hypertarget{warning}{%
+\subsubsection*{Warning!}\label{warning}}
+\addcontentsline{toc}{subsubsection}{Warning!}
+
+This is a \textbf{warning} box. These usually highlight a common `gotcha' that might trip up new users.
+
+\end{infobox}
+
+\hypertarget{r-code-and-output-in-this-book}{%
+\subsubsection*{R code and output in this book}\label{r-code-and-output-in-this-book}}
+\addcontentsline{toc}{subsubsection}{R code and output in this book}
+
+We try to illustrate as many ideas as we can using snippets of real R code. It's a good idea to run these when working through a topic. The best way to learn something is to use it. Of course, in order to do that we need to know what we're looking at\ldots{} Stand alone snippets will be formatted like this:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{tmp }\OtherTok{\textless{}{-}} \DecValTok{1}
+\FunctionTok{print}\NormalTok{(tmp)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1
+\end{verbatim}
+
+At this point it does not matter what the above actually means. You just need to understand how the formatting of R code in this book works. The lines that start with \texttt{\#\#} show us what R prints to the screen after it evaluates an instruction and does whatever was asked of it, that is, they show the output. The lines that \textbf{do not} start with \texttt{\#\#} show us the instructions, that is, they show us the input. So remember, the absence of \texttt{\#\#} shows us what we are asking R to do, otherwise we are looking at something R prints in response to these instructions.
+
+\texttt{This\ typeface} is used to distinguish R code within a sentence of text: e.g.~``We use the \texttt{mutate} function to change or add new variables.''
+
+A sequence of selections from an RStudio menu is indicated as follows: e.g.~\textbf{File ▶ New File ▶ R Script}
+
+File names referred to in general text are given in upper case in the normal typeface: e.g.~MYFILE.CSV.
+
+\hypertarget{different-ways-to-run-rstudio}{%
+\section{Different ways to run RStudio}\label{different-ways-to-run-rstudio}}
+
+COMPLETE ME
+
+\hypertarget{installing-r-and-rstudio-locally}{%
+\section{Installing R and RStudio locally}\label{installing-r-and-rstudio-locally}}
+
+COMPLETE ME
+
+\hypertarget{installing-r}{%
+\subsection{Installing R}\label{installing-r}}
+
+R is open source, meaning anyone can download the source code -- the collection of computer instructions that define R -- and assuming they have enough time, energy and expertise, they are free to alter it as they please. Open source does not \emph{necessarily} mean free, as in it costs £0 to download and use, but luckily R \emph{is} free in this sense. If you're working on the University managed desktops it should already have been installed and is ready for you to use. We encourage you to install a copy on your own laptop so that you can work at home, in the library, at a café, or wherever else you find you are productive. Do not use R on its own though. Use it in combination with the RStudio IDE discussed in the next section.
+
+In order to install R you need to download the appropriate installer from the Comprehensive R Archive Network (\href{http://cran.r-project.org}{CRAN}). We are going to use the ``base distribution'' as this contains everything you need to use R under normal circumstances. There is a single \href{http://cran.r-project.org/bin/windows/base/}{installer} for Windows. On a Mac, it's important to match the \href{http://cran.r-project.org/bin/macosx/}{installer} to the version of OS X. In either case, R uses a the standard install mechanism that should be familiar to anyone who has installed an application on their machine. There is no need to change the default settings---doing so will probably lead to problems later on.
+
+After installing R it should be visible in the Programs menu on a Windows computer or in the Applications folder on a Mac. However, it would be a good idea to read the next section before launching R\ldots{}
+
+\hypertarget{installing-rstudio}{%
+\subsection*{Installing RStudio}\label{installing-rstudio}}
+\addcontentsline{toc}{subsection}{Installing RStudio}
+
+RStudio is developed and maintained by a for-profit company called\ldots{} RStudio. The basic desktop version of RStudio is free to download and use. It can be downloaded from the RStudio \href{http://www.rstudio.com/products/RStudio/\#Desk}{download page}. The one to go for is the Open Source Edition of RStudio Desktop, \textbf{not} the commercial version of RStudio Desktop. RStudio installs like any other piece of software---just run the installer and follow the instructions. There's no need to configure after after installation.
+
+\hypertarget{the-anatomy-of-rstudio}{%
+\section{The anatomy of RStudio}\label{the-anatomy-of-rstudio}}
+
+Once installed RStudio runs like any other stand-alone application, e.g.~via the Programs menu or the Applications folder on a Windows PC or Mac, respectively. We'll say this one last time---RStudio will only work if R is also installed. Here is how RStudio appears the first time it runs on a Mac:
+
+\includegraphics{images/RStudio-3-pane.png}
+
+There are three panes inside a single window, which we have labelled with red numbers. Each of these has a well-defined purpose. Let's take a quick look at these:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  The large window on the left is the Console. We have already told you what this is for---the Console lets you know what R is doing and provides a mechanism to interact with R by typing instructions. All this happens at the prompt, \texttt{\textgreater{}}. You will be working in the Console in the next chapter so we won't say any more about this here.
+\item
+  The window at the top right contains two tabs. The first of these, labelled \textbf{Environment}, allows us to see all the different R objects we can access. There are also some buttons that help us to get data into and out of R. The second, labelled \textbf{History}, allows us to see a list of instructions we've previously sent to R. The buttons in this tab allow us to reuse or save these instructions.
+\item
+  The window at the bottom right contains five tabs. The first, labelled \textbf{Files}, gives us a way to interact with the files and folders. The next tab, labelled \textbf{Plots}, is where any figures we produce are displayed. This tab also allows you to save your figures to file. The \textbf{Packages} tab is where we view, install and update packages used to extend the functionality of R. The \textbf{Help} tab is where you can access and display various different help pages. The \textbf{Viewer} is essentially an embedded web browser for working with interactive output---we won't be using it in this course.
+\end{enumerate}
+
+Don't be alarmed if RStudio looks different on your computer. There are a couple of reasons why this might be the case. First, the appearance of RStudio is highly customisable. Take a quick look at the \texttt{Tools\ \textgreater{}\ Global\ Options...} window to see what we mean. Second, there is a fourth window that is sometimes be visible when we work with RStudio---the source code Editor we mentioned above. RStudio saves its state between different sessions, so if we have already messed about with RStudio's appearance or left a script open last time we used it you will see these changes.
+
+\begin{infobox}{warning}
+
+\hypertarget{rstudio-will-change-over-time}{%
+\subsubsection*{RStudio will change over time}\label{rstudio-will-change-over-time}}
+\addcontentsline{toc}{subsubsection}{RStudio will change over time}
+
+Keep in mind that RStudio is very actively developed, which means features tend to appear or change over time. Consequently, if you update it regularly expect the odd thing to change here and there. This is generally a good thing---it usually means new features have been added---but it does require you to occasionally adjust to new additions.
+
+\end{infobox}
+
+\hypertarget{working-at-console}{%
+\section{Working at the Console in RStudio}\label{working-at-console}}
+
+R was designed to be used interactively---it is what is known as an \textbf{interpreted language}, which we can interact with via something called a Command Line Interface (CLI). This is just a fancy way of saying that we can type an instructions to ``do something'' directly into the Console and those instructions will then be interpreted when we hit the Enter key. If our R expression does not contain any errors, R will then do something like read in some data, perform a calculation, make a figure, and so on. What actually happens obviously depends on what we ask it to do.
+
+Let's briefly see what all this means by doing something very simple with R. Type \texttt{1\ +\ 3} at the Console and hit the Enter key:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DecValTok{1}\SpecialCharTok{+}\DecValTok{3}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 4
+\end{verbatim}
+
+The first line above just reminds us what we typed into the Console. The line after that beginning with \texttt{\#\#} shows us what R printed to the Console after reading and evaluating our instructions.
+
+What just happened? We can ignore the \texttt{{[}1{]}} bit for now (the meaning of this will become clear later in the course). What are we left with -- the number 2. The instruction we gave R was in effect ``evaluate the expression \texttt{1\ +\ 3}''. R read this in, decided it was a valid R expression, evaluated the expression, and then printed the result to the Console for us. Unsurprisingly, the expression \texttt{1\ +\ 3} is a request to add the numbers 1 and 3, and so R prints the number 4 to the Console.
+
+OK, that was not very exciting. In the next chapter we will start learning to use R to carry out more useful calculations. The important take-away from this is that this sequence of events---reading instructions, evaluating those instructions and printing their output---happens every time we type or paste something into the Console and hit Enter. The printing bit is optional by the way. Whether or not it happens depends on whether you decide to capture the output or not. Just remember, if R does not print anything to the Console it does not necessarily mean nothing has happened.
+
+\begin{infobox}{information}
+
+\hypertarget{what-does-that-word-expression-mean}{%
+\subsubsection*{What does that word `expression' mean?}\label{what-does-that-word-expression-mean}}
+\addcontentsline{toc}{subsubsection}{What does that word `expression' mean?}
+
+Why do we keep using that word \emph{expression}? It has a very specific meaning in computer science. The \href{http://en.wikipedia.org/wiki/Expression_(computer_science)}{Wikipedia page} says:
+
+\begin{quote}
+An expression in a programming language is a combination of explicit values, constants, variables, operators, and functions that are interpreted according to the particular rules of precedence and of association for a particular programming language, which computes and then produces another value.
+\end{quote}
+
+That probably doesn't make much sense but it does at least demonstrates why we don't let computer scientists teach biologists about programming! In simple terms, an R expression is a small set of instructions that tell R to do something. That's it. We could write ``instructions'' instead of ``expressions'' throughout this book but we may as well use the correct word. Whatever we call them, our aim is to learn how to combine sequences of expressions to Get Things Done in R. That's what this book is about.
+
+\end{infobox}
+
+\hypertarget{working-with-learnr-tutorials}{%
+\section{\texorpdfstring{Working with \textbf{learnr} tutorials}{Working with learnr tutorials}}\label{working-with-learnr-tutorials}}
+
+COMPLETE ME
+
+\hypertarget{part-introduction-to-r}{%
+\part{Introduction to R}\label{part-introduction-to-r}}
+
+\hypertarget{quick-intro-to-r}{%
+\chapter{A quick introduction to R}\label{quick-intro-to-r}}
+
+\hypertarget{r-calculator}{%
+\section{Using R as a big calculator}\label{r-calculator}}
+
+\hypertarget{basic-arithmetic}{%
+\subsection{Basic arithmetic}\label{basic-arithmetic}}
+
+The \protect\hyperlink{working-at-console}{Get up and running chapter} showed that R can handle familiar arithmetic operations: division, multiplication, addition and subtraction. If we want to add or subtract two numbers we place the \texttt{+} or \texttt{-} symbol in between two numbers and hit Enter. R will read the arithmetic expression, evaluate it, and print the result to the Console. This works exactly as you'd expect:
+
+\emph{Addition}--
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DecValTok{3} \SpecialCharTok{+} \DecValTok{2}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 5
+\end{verbatim}
+
+\emph{Subtraction}--
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DecValTok{5} \SpecialCharTok{{-}} \DecValTok{1}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 4
+\end{verbatim}
+
+Multiplication and division are no different, However, we can't use \texttt{x} or \texttt{÷} symbols for these operations. Instead, use \texttt{*} and \texttt{/} to multiply and divide:
+
+\emph{Multiplication}--
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DecValTok{7} \SpecialCharTok{*} \DecValTok{2}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 14
+\end{verbatim}
+
+\emph{Division}--
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DecValTok{3} \SpecialCharTok{/} \DecValTok{2}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1.5
+\end{verbatim}
+
+We can also exponentiate numbers, i.e.~raise one number to the power of another. Use the \texttt{\^{}} operator to do this:
+
+\emph{Exponentiation}--
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DecValTok{4}\SpecialCharTok{\^{}}\DecValTok{2}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 16
+\end{verbatim}
+
+This raises 4 to the power of 2 (i.e.~we squared it). In general, we can raise a number \texttt{x} to the power of \texttt{y} using \texttt{x\^{}y}. Neither \texttt{x} or \texttt{y} need to be a whole numbers either.
+
+\begin{infobox}{information}
+
+\hypertarget{operators}{%
+\subsubsection*{Operators?}\label{operators}}
+\addcontentsline{toc}{subsubsection}{Operators?}
+
+What does `operator' mean? An operator is simply a symbol, or a particular sequence of symbols that does something specific with one or more inputs (typically numbers). For example, operators like \texttt{/}, \texttt{*}, \texttt{+} and \texttt{-} carry out arithmetic calculations with pairs of numbers. Operators are one of the basic building blocks of a programming language like R.
+
+\end{infobox}
+
+\hypertarget{combining-arithmetic-operations}{%
+\subsection{Combining arithmetic operations}\label{combining-arithmetic-operations}}
+
+Arithmetic operations can be combined. Assume we want to subtract 6 from 2\textsuperscript{3}. The expression to perform this calculation is:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DecValTok{2}\SpecialCharTok{\^{}}\DecValTok{3} \SpecialCharTok{{-}} \DecValTok{6}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 2
+\end{verbatim}
+
+Simple enough, but what if we had wanted to carry out a slightly longer calculation that required the last answer to then be divided by 2? This is the \textbf{wrong} the way to do this:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DecValTok{2}\SpecialCharTok{\^{}}\DecValTok{3} \SpecialCharTok{{-}} \DecValTok{6} \SpecialCharTok{/} \DecValTok{2}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 5
+\end{verbatim}
+
+The answer we expect here is \(1\). So what happened? R evaluated \(6/2\) first and then subtracted this answer from \(2^3\).
+
+If that's obvious, great. If not, it's time to learn about \textbf{order of precendence}. R uses a standard set of rules to decide the order in which calculations feed into one another so that it can unambiguously evaluate any expression. It uses the same order as every other computer language, which thankfully is the same one we all learn in mathematics classes at school. The order of precedence is:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  exponents and roots (also, ``powers'' or ``orders'')
+\item
+  division and then multiplication
+\item
+  additional and then subtraction
+\end{enumerate}
+
+\begin{infobox}{information}
+
+\hypertarget{bodmas-and-friends}{%
+\subsubsection*{BODMAS and friends}\label{bodmas-and-friends}}
+\addcontentsline{toc}{subsubsection}{BODMAS and friends}
+
+If you find it difficult to remember the standard order of precedence there are a load of \href{http://en.wikipedia.org/wiki/Order_of_operations\#Mnemonics}{mnemonics} that can to help.
+
+\end{infobox}
+
+To arrive at the answer we were looking for in the above example we need to control the order of evaluation. Do this by grouping together calculations inside parentheses, i.e.~`round brackets' \texttt{(} and \texttt{)}. Here's the expression we should have used:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{(}\DecValTok{2}\SpecialCharTok{\^{}}\DecValTok{3} \SpecialCharTok{{-}} \DecValTok{6}\NormalTok{) }\SpecialCharTok{/} \DecValTok{2}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1
+\end{verbatim}
+
+We can use more than one pair of parentheses to control the order of evaluation in more complex calculations. The order in which expressions inside different pairs of parentheses are evaluated then happens `inside-out'. For example, if we want to find the cube root of 2 (i.e.~2\textsuperscript{1/3}) rather than 2\textsuperscript{3} in that last calculation we would instead write:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{(}\DecValTok{2}\SpecialCharTok{\^{}}\NormalTok{(}\DecValTok{1}\SpecialCharTok{/}\DecValTok{3}\NormalTok{) }\SpecialCharTok{{-}} \DecValTok{6}\NormalTok{) }\SpecialCharTok{/} \DecValTok{2}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] -2.370039
+\end{verbatim}
+
+The parentheses around the \texttt{1/3} in the exponent are needed to ensure this is evaluated prior to being used as the exponent.
+
+\begin{infobox}{action}
+
+\hypertarget{working-efficiently-at-the-console}{%
+\subsubsection*{Working efficiently at the Console}\label{working-efficiently-at-the-console}}
+\addcontentsline{toc}{subsubsection}{Working efficiently at the Console}
+
+Working at the Console soon gets tedious if we have to retype similar things over and over again. There is no need to do this though. Place the cursor at the prompt and hit the up arrow. What happens? This brings back the last expression sent to R's interpreter. Hit the up arrow again to see the last-but-one expression, and so on. We go back down the list using the down arrow. Once we're at the line we need, we use the left and right arrows to move around the expression and the delete key to remove the parts we want to change. Once an expression has been edited like this we hit Enter to send it to R again. Try it!
+
+\end{infobox}
+
+\hypertarget{problematic-calculations}{%
+\section{Problematic calculations}\label{problematic-calculations}}
+
+Now is a good time to highlight how R handles certain kinds of awkward numerical calculations. One of these involves division of a non-zero by 0. Mathematically, division of a finite number by \texttt{0} equals A Very Large Number: infinity. Some programming languages will respond to an attempt to do this with an error. R is a bit more forgiving:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DecValTok{1} \SpecialCharTok{/} \DecValTok{0}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] Inf
+\end{verbatim}
+
+R has a special built in value that allows it to handle this kind of result. This is \texttt{Inf}, which of course, stands for ``infinity''.
+
+The other special kind of value we sometimes run into can be generated by numerical calculations that don't have a well-defined result. For example, this arises when we try to divide 0 by 0:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DecValTok{0} \SpecialCharTok{/} \DecValTok{0}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] NaN
+\end{verbatim}
+
+The \texttt{NaN} in this result stands for Not a Number. R produces \texttt{NaN} because \(0 / 0\) is not defined mathematically: it produces something that is Not a Number.
+
+The reason we are pointing out \texttt{Inf} and \texttt{NaN} is not because we expect to use them. It's important to know what they represent because they often arise as a result of a mistake somewhere in a program. It's hard to track down such mistakes if we don't know how \texttt{Inf} and \texttt{NaN} arise.
+
+\begin{infobox}{information}
+
+\hypertarget{r-as-a-fancy-calculator}{%
+\subsubsection*{R as a fancy calculator}\label{r-as-a-fancy-calculator}}
+\addcontentsline{toc}{subsubsection}{R as a fancy calculator}
+
+What we've seen so far is that we can interact with R via the so-called REPL: the read-evaluate-print loop. R takes user input (e.g.~\texttt{1\ /\ 0}), evaluates it (\texttt{1\ /\ 0\ =\ Inf}), prints the results (\texttt{\#\#\ {[}1{]}\ Inf}), and then waits for the next input (e.g.~\texttt{0\ /\ 0}). This facility is handy because it means we can use R interactively, working through a set of calculations line-by-line.
+
+\end{infobox}
+
+\hypertarget{assignment}{%
+\section{Storing and reusing results}\label{assignment}}
+
+We've not yet tried to do anything remotely complicated or interesting beyond using parentheses to construct longer calculations. This approach is fine when a calculation is very simple but it quickly becomes unwieldy for dealing with anything more complicated.
+
+The best way to see what we mean is by working through a simple example---solving a quadratic equation. You probably remember these from school. A quadratic equation looks like this:
+
+\[a + bx + cx^2 = 0\] If we know the values of \(a\), \(b\) and \(c\) then we can solve this equation to find the values of \(x\) that satisfy this equation. Here's the well-known formula for these solutions: \[
+x = \frac{-b\pm\sqrt{b^2-4ac}}{2a}
+\] We can use R to calculate these solutions for us. Say that we want to find the solutions to the quadratic equation when \(a=1\), \(b=6\) and \(c=5\). We just have to turn the above equation into a pair of R expressions:
+
+\emph{Solution 1}--
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{(}\SpecialCharTok{{-}}\DecValTok{6} \SpecialCharTok{+}\NormalTok{ (}\DecValTok{6}\SpecialCharTok{\^{}}\DecValTok{2} \SpecialCharTok{{-}}\DecValTok{4} \SpecialCharTok{*} \DecValTok{1} \SpecialCharTok{*} \DecValTok{5}\NormalTok{)}\SpecialCharTok{\^{}}\NormalTok{(}\DecValTok{1}\SpecialCharTok{/}\DecValTok{2}\NormalTok{)) }\SpecialCharTok{/}\NormalTok{ (}\DecValTok{2} \SpecialCharTok{*} \DecValTok{1}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] -1
+\end{verbatim}
+
+\emph{Solution 2}--
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{(}\SpecialCharTok{{-}}\DecValTok{6} \SpecialCharTok{{-}}\NormalTok{ (}\DecValTok{6}\SpecialCharTok{\^{}}\DecValTok{2} \SpecialCharTok{{-}}\DecValTok{4} \SpecialCharTok{*} \DecValTok{1} \SpecialCharTok{*} \DecValTok{5}\NormalTok{)}\SpecialCharTok{\^{}}\NormalTok{(}\DecValTok{1}\SpecialCharTok{/}\DecValTok{2}\NormalTok{)) }\SpecialCharTok{/}\NormalTok{ (}\DecValTok{2} \SpecialCharTok{*} \DecValTok{1}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] -5
+\end{verbatim}
+
+The output tells us that the two values of \(x\) that satisfy this particular quadratic equation are -1 and -5.
+
+But what should we do if we now need to solve a different quadratic equation? Working at the Console, we could bring up the expressions we typed (using the up arrow) and change the numbers to match the new values of \(a\), \(b\) and \(c\). However, editing expressions like this is tedious, and more importantly, it's error prone because we have to make sure we substitute the new numbers into exactly the right positions.
+
+A partial solution to this problem is to store the values of \(a\), \(b\) and \(c\) in some way so that we only have to change them one. We'll see why this is useful in a moment.
+
+First, we need to learn how to store results in R. The key to this is to use the \textbf{assignment operator}, which is written as an arrow pointing to the left, \texttt{\textless{}-}. Sticking with the current example, we need to store the numbers 1, 6 and 5. We do this by typing out three expressions, one after the another, each time hitting enter to get R to evaluate it:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{a }\OtherTok{\textless{}{-}} \DecValTok{1}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{b }\OtherTok{\textless{}{-}} \DecValTok{6}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{c }\OtherTok{\textless{}{-}} \DecValTok{5}
+\end{Highlighting}
+\end{Shaded}
+
+The assignment operator is defined by the sequence \texttt{\textless{}-} without a space between the \texttt{\textless{}} and \texttt{-} symbols. R won't recognise it as assignment if we try to include a space.
+
+Notice that R didn't print anything to screen. So what actually happened? We asked R to first evaluate the expression on the right hand side of each \texttt{\textless{}-} (just a number in this case) and then \textbf{assigns the result} of that evaluation instead of printing it. Each result has a name associated with it, which appears on the left hand side of the \texttt{\textless{}-}.
+
+The net result of all this is that we have stored the numbers 1, 6 and 5 somewhere in R and associated them with the letters \texttt{a}, \texttt{b} and \texttt{c}, respectively. We can check whether this assignment business has worked by looking at the \textbf{Environment} tab in the top right RStudio window. There should be three `names' listed in that tab now (\texttt{a}, \texttt{b} and \texttt{c}) along with the associated numbers 1, 6 and 5.
+
+What does this actually mean in practical terms? Look at what happens if we now type the letter \texttt{a} into the Console and hit Enter:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{a}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1
+\end{verbatim}
+
+It looks the same as if we had typed the number \texttt{1} directly into the Console. What we just did was to store the output that results from evaluating three separate R expressions, associating each a name so that we can access them again\footnote{Technically, this is called \textbf{binding} the name to a value. You don't need to remember this.}. Whenever we use the assignment operator \texttt{\textless{}-} we are telling R to keep whatever kind of value results from the calculation on the right hand side of \texttt{\textless{}-}, giving it the name on the left hand side so that we can access it later.
+
+Why is this useful? Let's imagine we want to do more than one thing with our three numbers. If we want to know their sum or their product we can now use:
+
+\emph{Sum}--
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{a }\SpecialCharTok{+}\NormalTok{ b }\SpecialCharTok{+}\NormalTok{ c}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 12
+\end{verbatim}
+
+\emph{Product}--
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{a }\SpecialCharTok{*}\NormalTok{ b }\SpecialCharTok{*}\NormalTok{ c}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 30
+\end{verbatim}
+
+So\ldots{} once we've stored a result and associated it with a name we can reuse it whenever it's needed. Returning to our example, we can now calculate the solutions to the quadratic equation by typing these two expressions into the Console:
+
+\emph{Solution 1}--
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{b }\SpecialCharTok{+}\NormalTok{ (b}\SpecialCharTok{\^{}}\DecValTok{2} \SpecialCharTok{{-}}\DecValTok{4} \SpecialCharTok{*}\NormalTok{ a }\SpecialCharTok{*}\NormalTok{ c)}\SpecialCharTok{\^{}}\NormalTok{(}\DecValTok{1}\SpecialCharTok{/}\DecValTok{2}\NormalTok{)) }\SpecialCharTok{/}\NormalTok{ (}\DecValTok{2} \SpecialCharTok{*}\NormalTok{ a)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] -1
+\end{verbatim}
+
+\emph{Solution 2}--
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{b }\SpecialCharTok{{-}}\NormalTok{ (b}\SpecialCharTok{\^{}}\DecValTok{2} \SpecialCharTok{{-}}\DecValTok{4} \SpecialCharTok{*}\NormalTok{ a }\SpecialCharTok{*}\NormalTok{ c)}\SpecialCharTok{\^{}}\NormalTok{(}\DecValTok{1}\SpecialCharTok{/}\DecValTok{2}\NormalTok{)) }\SpecialCharTok{/}\NormalTok{ (}\DecValTok{2} \SpecialCharTok{*}\NormalTok{ a)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] -5
+\end{verbatim}
+
+Now imagine we'd like to find the solutions to a different quadratic equation where \(a=1\), \(b=5\) and \(c=5\). We only changed the value of \(b\) here. To find the new solutions we have to do two things. First we change the value of the number associated with \texttt{b}\ldots{}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{b }\OtherTok{\textless{}{-}} \DecValTok{5}
+\end{Highlighting}
+\end{Shaded}
+
+\ldots then we bring up those lines that calculate the solutions to the quadratic equation and run them, one after the other:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{b }\SpecialCharTok{+}\NormalTok{ (b}\SpecialCharTok{\^{}}\DecValTok{2} \SpecialCharTok{{-}}\DecValTok{4} \SpecialCharTok{*}\NormalTok{ a }\SpecialCharTok{*}\NormalTok{ c)}\SpecialCharTok{\^{}}\NormalTok{(}\DecValTok{1}\SpecialCharTok{/}\DecValTok{2}\NormalTok{)) }\SpecialCharTok{/}\NormalTok{ (}\DecValTok{2} \SpecialCharTok{*}\NormalTok{ a)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] -1.381966
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{b }\SpecialCharTok{{-}}\NormalTok{ (b}\SpecialCharTok{\^{}}\DecValTok{2} \SpecialCharTok{{-}}\DecValTok{4} \SpecialCharTok{*}\NormalTok{ a }\SpecialCharTok{*}\NormalTok{ c)}\SpecialCharTok{\^{}}\NormalTok{(}\DecValTok{1}\SpecialCharTok{/}\DecValTok{2}\NormalTok{)) }\SpecialCharTok{/}\NormalTok{ (}\DecValTok{2} \SpecialCharTok{*}\NormalTok{ a)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] -3.618034
+\end{verbatim}
+
+We don't have to retype those expressions. We can use the up arrow to bring each one back to the prompt and hit Enter. This is much simpler than editing the expressions.
+
+More importantly, we are beginning to see the benefits of using something like R---we can break down complex calculations into a series of steps, storing and reusing intermediate results as required.
+
+\begin{infobox}{action}
+
+\hypertarget{rstudio-shortcut}{%
+\subsubsection*{RStudio shortcut}\label{rstudio-shortcut}}
+\addcontentsline{toc}{subsubsection}{RStudio shortcut}
+
+We use the assignment operator \texttt{\textless{}-} all the time when working with R. Because it's inefficient to type the \texttt{\textless{}} and \texttt{-} characters over and over again, RStudio has a built in shortcut for typing the assignment operator.
+
+The shortcut is `Alt + \texttt{-}' . Try it now. Move the curser to the Console, hold down the Alt key (`Option' on a Mac), and press the \texttt{-} sign key. RStudio will auto-magically add insert \texttt{\textless{}-}. \textbf{If you only learn one RStudio shortcut, learn this one!} It will save you a lot of time in he long run.
+
+\end{infobox}
+
+\hypertarget{how-does-assignment-work}{%
+\section{How does assignment work?}\label{how-does-assignment-work}}
+
+When we use the assignment operator \texttt{\textless{}-} to associate names and values, we refer to this as creating or modifying \textbf{a variable}. This is much less tedious than using words like ``bind'', ``associate'', value``, and''name" all the time. Why is it called a variable? What happens when we run these lines:
+
+\emph{Create} \texttt{myvar} \emph{and print out its value}--
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{myvar }\OtherTok{\textless{}{-}} \DecValTok{1}
+\NormalTok{myvar}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1
+\end{verbatim}
+
+\emph{Modify} \texttt{myvar} and \emph{and print out its new value} --
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{myvar }\OtherTok{\textless{}{-}} \DecValTok{7}
+\NormalTok{myvar}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 7
+\end{verbatim}
+
+The first time we used \texttt{\textless{}-} with \texttt{myvar} on the left hand side we \textbf{created} a variable \texttt{myvar} associated with the value 1. We then printed out the value associated with \texttt{myvar}. The second line \texttt{myvar\ \textless{}-\ 7} \textbf{modified} the value of \texttt{myvar} to be 7 (and printed this out again). This is why we refer to \texttt{myvar} as a variable: we can change the its value as we please.
+
+What happened to the old value associated with \texttt{myvar}? In short, it is gone, kaput, lost\ldots{} forever. The moment we assign a new value to \texttt{myvar} the old one is destroyed and can no longer be accessed. Remember this.
+
+Keep in mind that the expression on the right hand side of \texttt{\textless{}-} can be any kind of calculation and the variable can have any (valid) name we like. For example, if we want to perform the calculation \texttt{(1\ +\ 2\^{}3)\ /\ (2\ +\ 7)} and associate the result with the word \texttt{answer}, we would do this:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{answer }\OtherTok{\textless{}{-}}\NormalTok{ (}\DecValTok{1} \SpecialCharTok{+} \DecValTok{2}\SpecialCharTok{\^{}}\DecValTok{3}\NormalTok{) }\SpecialCharTok{/}\NormalTok{ (}\DecValTok{2} \SpecialCharTok{+} \DecValTok{7}\NormalTok{)}
+\NormalTok{answer}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1
+\end{verbatim}
+
+As along as the expression on the right hand side of \texttt{\textless{}-} generates an output of some kind it can be used with the assignment operator. For example, we can create new variables from others:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{newvar }\OtherTok{\textless{}{-}} \DecValTok{2} \SpecialCharTok{*}\NormalTok{ answer}
+\end{Highlighting}
+\end{Shaded}
+
+What happened here? Start at the right hand side of \texttt{\textless{}-}. The expression on this side contained the variable \texttt{answer} so R went to see if \texttt{answer} actually exists. It does, so it then substituted the value associated with \texttt{answer} into the calculation and assigned the resulting value of 2 to \texttt{newvar}.
+
+Finally, look at what happens if we copy a variable using the assignment operator:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{myvar }\OtherTok{\textless{}{-}} \DecValTok{7}
+\NormalTok{mycopy }\OtherTok{\textless{}{-}}\NormalTok{ myvar}
+\end{Highlighting}
+\end{Shaded}
+
+We now have a pair of variables, \texttt{myvar} and \texttt{mycopy}, associated with the number 7. Each of these is associated with a \textbf{different copy} of this number. If we change the value associated with one of these variables it does not change the value of the other, as this shows:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{myvar }\OtherTok{\textless{}{-}} \DecValTok{10}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{myvar}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 10
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mycopy}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 7
+\end{verbatim}
+
+R always behaves like this unless we work hard to alter this behaviour. So remember, every time we assign one variable to another, we actually make a completely new, independent copy of its associated value. For our purposes this is a good thing because it makes it much easier to understand what a long sequence of R expressions will do.
+
+That probably doesn't seem like an obvious or important point, but trust us, it is. It will be particularly important to understand this behaviour when we start learning how to manipulate data sets.
+
+\hypertarget{global-environment}{%
+\section{Global environment}\label{global-environment}}
+
+Whenever we associate a name with a value we create a copy of both these things somewhere in the computer's memory. In R the ``somewhere'' is called an environment. We aren't going to get into a discussion of R's many different kinds of environments---that's an advanced topic well beyond the scope of this book. The one environment we do need to be aware of though is the \textbf{Global Environment}.
+
+Whenever we perform an assignment in the Console the variable we create is placed into the Global Environment. The set of variables currently in existence are listed in the \textbf{Environment} tab in RStudio. Take a look. There are two columns in the \textbf{Environment} tab: the first shows the names of the variables, the second summarises their values.
+
+\begin{infobox}{warning}
+
+\hypertarget{the-global-environment-is-temporary}{%
+\subsubsection*{The Global Environment is temporary}\label{the-global-environment-is-temporary}}
+\addcontentsline{toc}{subsubsection}{The Global Environment is temporary}
+
+By default, R will try to save everything in the Global Environment when we close it down and then restore everything when we start the next R session. It does this by writing a copy of the Global Environment to disk. In theory this means we can close down R, reopen it, and pick things up from where we left off. \textbf{Don't rely on this behaviour!} It just increases the risk of making a serious mistake.
+
+\end{infobox}
+
+\hypertarget{naming-rules-and-conventions}{%
+\section{Naming rules and conventions}\label{naming-rules-and-conventions}}
+
+We don't have to use a single letter to name things in R. The words \texttt{tom}, \texttt{dick} and \texttt{harry} could be used in place of \texttt{a}, \texttt{b} and \texttt{c}. It might be confusing to use them, but \texttt{tom}, \texttt{dick} and \texttt{harry} are all legal names as far as to R is concerned:
+
+\begin{itemize}
+\item
+  A legal name in R is any sequence of letters, numbers, \texttt{.}, or \texttt{\_}, but the sequence of characters we use must begin with a letter. Both upper and lower case letters are allowed. For example, \texttt{num\_1}, \texttt{num.1}, \texttt{num1}, \texttt{NUM1}, \texttt{myNum1} are all legal names, but \texttt{1num} and \texttt{\_num1} are not because they begin with \texttt{1} and \texttt{\_}.
+\item
+  R is case sensitive---it treats upper and lower case letters as different characters. This means that \texttt{num} and \texttt{Num} are treated as distinct names. Forgetting about case sensitivity is a good way to create errors when using R. Try to remember that.
+\end{itemize}
+
+\begin{infobox}{warning}
+
+\hypertarget{dont-begin-a-name-with-.}{%
+\subsubsection*{\texorpdfstring{Don't begin a name with \texttt{.}}{Don't begin a name with .}}\label{dont-begin-a-name-with-.}}
+\addcontentsline{toc}{subsubsection}{Don't begin a name with \texttt{.}}
+
+We are allowed to begin a name with a \texttt{.}, but this usually is A Bad Idea. Why? Because variable names that begin with \texttt{.} are hidden from view in the Global Environment---the value it refers to exists but it's invisible. This behaviour exists to allow R to create invisible variables that control how it behaves. This is useful, but it isn't really meant to be used by the average user.
+
+\end{infobox}
+
+\hypertarget{using-functions}{%
+\chapter{Using functions}\label{using-functions}}
+
+\hypertarget{intro-functions}{%
+\section{Introduction}\label{intro-functions}}
+
+Functions are a basic building block of any programming language. The job of a function in R is to carry out some kind of calculation or computation that would typically require many lines of R code to do `from scratch'. Functions allow us to reuse common computations while offering some control over the precise details of what actually happens. To use R effectively---even if our needs are very simple---we need to understand how to use functions. The aim of this chapter is to explain what functions are for, how to use them, and how to avoid mistakes when doing so, without getting lost in the detail of how they actually work.
+
+\hypertarget{functions-and-arguments}{%
+\section{Functions and arguments}\label{functions-and-arguments}}
+
+Functions allow us to reuse a calculation. The best way to see what we mean by this is to see one in action. The \texttt{round} function is used to round numbers to a significant number of digits. To use it, we could type this into the Console and hit Enter:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{round}\NormalTok{(}\AttributeTok{x =} \FloatTok{3.141593}\NormalTok{, }\AttributeTok{digits =} \DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+We have suppressed the output so that we can unpack things a bit first. We rely on the same basic construct every time we use a function. This starts with the name of the function as the prefix. In the example above, the function name is \texttt{round}. After the function name, we need a pair of opening and closing parentheses. It is this combination of name and parentheses that that alerts R to fact that we are using a function.
+
+What about the bits inside the parentheses? These are called the \textbf{arguments} of the function. That's a horrible name, but it is the one that everyone uses so we have to get used to it. Depending on how it was defined, a function can take zero, one, or more arguments. We will discuss this idea in more detail later in this section. In simple terms, the arguments control the behaviour of a function.
+
+We used the \texttt{round} function with two arguments. Each of these was supplied as a name-value pair, separated by a comma. When working with arguments, name-value pairs occur either side of the equals sign (\texttt{=}), with the \textbf{name} of the argument on the left hand side and the \textbf{value} it takes on the right hand side. The name serves to identify which argument we are working with, and the value is the thing that controls what that argument does.
+
+The process of associating argument names and values is called `setting the arguments' of the function (or `supplying the arguments'). Notice the similarity between supplying function arguments and the assignment operation discussed in the last topic. The difference is that name-value pairs have to associated with the \texttt{=} symbol when involved in arguments.
+
+\begin{infobox}{warning}
+
+\hypertarget{use-to-assign-arguments}{%
+\subsubsection*{\texorpdfstring{Use \texttt{=} to assign arguments}{Use = to assign arguments}}\label{use-to-assign-arguments}}
+\addcontentsline{toc}{subsubsection}{Use \texttt{=} to assign arguments}
+
+\textbf{Do not} use the assignment operator \texttt{\textless{}-} inside the parentheses when working with functions. This is a ``trust us'' situation---you will end up in all kinds of difficulty if you do this!
+
+\end{infobox}
+
+The names of the arguments we're allowed to use are typically determined by the function. That is, we are not free to choose whatever name we like\footnote{We say ``typically'', because R is a very flexible language and so there are certain exceptions to this simple rule of thumb. For now it is simpler to think of the names as constrained by the particular function we're using.}. The arguments control the behaviour of a function. Our job as users is to set the values of these to get the behaviour we want.
+
+By now it is probably obvious what is going to happen when we used the \texttt{round} function like this at the Console:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{round}\NormalTok{(}\AttributeTok{x =} \FloatTok{3.141593}\NormalTok{, }\AttributeTok{digits =} \DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 3.14
+\end{verbatim}
+
+The \texttt{round} function rounds one or more numbers to a number of significant digits. The argument that specifies the number(s) to round is \texttt{x}; the second argument, \texttt{digits}, specifies the number of decimal places we require. Based on the supplied values of these arguments, \texttt{3.141593} and \texttt{2}, respectively, the \texttt{round} function spits out a value of \texttt{3.14}, which is then printed to the Console.
+
+What if we had wanted to the answer to 3 significant digits? We would set the \texttt{digits} argument to 3:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{round}\NormalTok{(}\AttributeTok{x =} \FloatTok{3.141593}\NormalTok{, }\AttributeTok{digits =} \DecValTok{3}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 3.142
+\end{verbatim}
+
+This illustrates what we mean when we say the values of the supplied arguments control the behaviour of the function.
+
+\hypertarget{evaluating-arguments-and-returning-results}{%
+\section{Evaluating arguments and returning results}\label{evaluating-arguments-and-returning-results}}
+
+Whenever R evaluates a function we refer to this action as `calling the function'. In our simple example, we called the \texttt{round} function with arguments \texttt{x} and \texttt{digits}. That said, we often just say `use the function' because that is more natural to most users.
+
+Several things happen when we call functions: first they \textbf{evaluate} their arguments, then they perform some kind of action, and finally (optionally) \textbf{return} a value to us. Let's work through what all that means\ldots{}
+
+What do we mean by the word `evaluate'? When we call a function, what typically happens is that everything on the right hand side of an \texttt{=} is first evaluated, the result of this evaluation becomes associated with the corresponding argument name, and then the function does its calculations using the resulting name-value pairs. We say `typically' because other kinds of behaviours are possible if we really want them. To see how the evaluation step works, take a look at a new example using \texttt{round}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{round}\NormalTok{(}\AttributeTok{x =} \FloatTok{2.3} \SpecialCharTok{+} \FloatTok{1.4}\NormalTok{, }\AttributeTok{digits =} \DecValTok{0}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 4
+\end{verbatim}
+
+What happened above is that R evaluated \texttt{2.3\ +\ 1.4}, resulting in the number \texttt{3.7}, which was then associated with the argument \texttt{x}. We set \texttt{digits} to \texttt{0} this time so that \texttt{round} just returns a whole number, \texttt{4}.
+
+The important thing to realise is that the expression(s) on the right hand side of the \texttt{=} can be anything we like. This third example essentially equivalent to the last one:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{myvar }\OtherTok{\textless{}{-}} \FloatTok{2.3} \SpecialCharTok{+} \FloatTok{1.4}
+\FunctionTok{round}\NormalTok{(}\AttributeTok{x =}\NormalTok{ myvar, }\AttributeTok{digits =} \DecValTok{0}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 4
+\end{verbatim}
+
+This time we created a new variable called \texttt{myvar} and then supplied this as the value of the \texttt{x} argument. When we call the \texttt{round} function like this, the R interpreter spots the fact that something on the right hand side of an \texttt{=} is a variable and associates the value of this variable with \texttt{x} argument. As long as we have actually defined the numeric variable \texttt{myvar} at some point we can use it as the value of an argument.
+
+We said at the beginning of this section that a function may optionally \textbf{return} a value to us when it completes its task. That word `return' is jargon that refers to the process by which a function outputs a value. If we use a function at the Console the returned value is printed out. However, we can use this value in other ways. For example, there is nothing to stop us combining function calls with the arithmetic operations:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DecValTok{2} \SpecialCharTok{*} \FunctionTok{round}\NormalTok{(}\AttributeTok{x =} \FloatTok{2.64}\NormalTok{, }\AttributeTok{digits =} \DecValTok{0}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 6
+\end{verbatim}
+
+Here the R interpreter first evaluates the function call, and then multiplies the value it returns by 2. If we want to reuse this value we have to assign the result of function call, for example:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{roundnum }\OtherTok{\textless{}{-}} \DecValTok{2} \SpecialCharTok{*} \FunctionTok{round}\NormalTok{(}\AttributeTok{x =} \FloatTok{2.64}\NormalTok{, }\AttributeTok{digits =} \DecValTok{0}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Using a function with \texttt{\textless{}-} is really no different from the examples using multiple arithmetic operations in the last topic. The R interpreter starts on the right hand side of the \texttt{\textless{}-}, evaluates the function call there, and only then assigns the value to \texttt{roundnum}.
+
+\begin{infobox}{information}
+
+\hypertarget{argument-names-vs-variable-names}{%
+\subsubsection*{Argument names vs variable names}\label{argument-names-vs-variable-names}}
+\addcontentsline{toc}{subsubsection}{Argument names vs variable names}
+
+Keeping in mind what we've just learned, take a careful look at this example:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x }\OtherTok{\textless{}{-}} \DecValTok{0}
+\FunctionTok{round}\NormalTok{(}\AttributeTok{x =} \FloatTok{3.7}\NormalTok{, }\AttributeTok{digits =}\NormalTok{ x)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 4
+\end{verbatim}
+
+What is going on here? The key to understanding this is to realise that the symbol \texttt{x} is used in two different ways here. When it appears on the left hand side of the \texttt{=} it represents an argument name. When it appears on the right hand side it is treated as a variable name, which must have a value associated with it for the above to be valid. This is admittedly a slightly confusing way to use this function, but it is perfectly valid.
+
+The message here is that what matters is where things appear relative to the \texttt{=}, not the symbols used to represent them.
+
+\end{infobox}
+
+\hypertarget{functions-do-not-have-side-effects}{%
+\section{Functions do not have `side effects'}\label{functions-do-not-have-side-effects}}
+
+There is one idea about functions that every R user needs to understand if they are to avoid confusion. It relates to how functions modify their arguments, or more accurately, how they \textbf{do not} modify their arguments. Take a look at this example:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{myvar }\OtherTok{\textless{}{-}} \FloatTok{3.7}
+\FunctionTok{round}\NormalTok{(}\AttributeTok{x =}\NormalTok{ myvar, }\AttributeTok{digits =} \DecValTok{0}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 4
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{myvar}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 3.7
+\end{verbatim}
+
+We created a variable \texttt{myvar} with the value 3.7, rounded this to a whole number with \texttt{round}, printed out the result, and then printed the value of \texttt{myvar}. Notice that \textbf{the value of \texttt{myvar} has not changed} after using it as an argument to \texttt{round}.
+
+This is important. R functions do not typically alter the values of their arguments (we say `typically' because there are ways to alter this behaviour if we really want to). The standard behaviour---that functions do not alter their arguments---is captured by the phrase `functions do not have side effects'.
+
+If we had intended to round the value of \texttt{myvar} so that we can use this new value later on, we have to assign the result of function evaluation, like this:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{myvar }\OtherTok{\textless{}{-}} \FloatTok{3.7}
+\NormalTok{myvar }\OtherTok{\textless{}{-}} \FunctionTok{round}\NormalTok{(}\AttributeTok{x =}\NormalTok{ myvar, }\AttributeTok{digits =} \DecValTok{0}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+The reason for pointing out this behaviour is because new R users sometimes assume a function will change its arguments. R functions do not typically do this. If we want to make use of changes, rather than simply print them to the Console, we need to assign the result a name, either by creating a new variable or overwriting the old one. So\ldots. remember---functions do not have side effects! Forgetting this creates all kinds of headaches.
+
+\hypertarget{combining-functions}{%
+\section{Combining functions}\label{combining-functions}}
+
+Using R to do `real work' usually involves linked steps, each facilitated by a different function. There is more than one way to achieve this. Here's a simple example that uses an approach we already know about:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{myvar }\OtherTok{\textless{}{-}} \FunctionTok{sqrt}\NormalTok{(}\AttributeTok{x =} \DecValTok{10}\NormalTok{)}
+\FunctionTok{round}\NormalTok{(}\AttributeTok{x =}\NormalTok{ myvar, }\AttributeTok{digits =} \DecValTok{0}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 3
+\end{verbatim}
+
+These two lines calculate the square root of the number 10 and assigned the result to \texttt{myvar}, then round this to a whole number and print the result. This method of linking steps together assigns a name to the result at each step, and then uses this as the argument to a function in the next step.
+
+Here is another way to replicate the same calculation:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{round}\NormalTok{(}\AttributeTok{x =} \FunctionTok{sqrt}\NormalTok{(}\AttributeTok{x =} \DecValTok{10}\NormalTok{), }\AttributeTok{digits =} \DecValTok{0}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 3
+\end{verbatim}
+
+The technical name for this is \textbf{function composition} or \textbf{function nesting}: the \texttt{sqrt} function is `nested inside' the \texttt{round} function. The way we have to read these constructs is \textbf{from the inside out}. The \texttt{sqrt(x\ =\ 10)} expression is on the right hand side of an \texttt{=} symbol, so this is evaluated first, the result is associated with the \texttt{x} argument of the \texttt{round} function, and only then does the \texttt{round} function do its job.
+
+Notive that there aren't really any new ideas here. We have already seen that the R interpreter evaluates whatever is on the right hand side of the \texttt{=} symbol first before associating the resulting value with the appropriate argument name.
+
+We can extend this nesting idea to do more complicated calculations, i.e.~there's nothing to stop us using multiple levels of nesting either. Take a look at this example:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{round}\NormalTok{(}\AttributeTok{x =} \FunctionTok{sqrt}\NormalTok{(}\AttributeTok{x =} \FunctionTok{abs}\NormalTok{(}\AttributeTok{x =} \SpecialCharTok{{-}}\DecValTok{10}\NormalTok{)), }\AttributeTok{digits =} \DecValTok{0}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 3
+\end{verbatim}
+
+The \texttt{abs} function takes the absolute value of a number, i.e.~removes the \texttt{-} sign if it is there. Remember, read nested calls from the inside out:
+
+\begin{itemize}
+\tightlist
+\item
+  first we find the absolute value of -10,
+\item
+  we calculation the square root of the resulting number (10), and
+\item
+  then we rounded this to a whole number.
+\end{itemize}
+
+Nested function calls can be useful because they make R code less verbose (we write less) but this comes at a significant cost of reduced readability. No reasonable person would say that \texttt{round(x\ =\ sqrt(x\ =\ abs(x\ =\ -10)),\ digits\ =\ 0)} is easy to read! For this reason, we aim to keep function nesting to a minimum in this book. We will occasionally have to work with the nesting construct though, so it is important to understand how it works even if we don't like using it.
+
+The good news is that we'll see a much-easier-to-read method for applying a series of functions in the Data Wrangling block.
+
+\hypertarget{function-arguments}{%
+\section{Specifying function arguments}\label{function-arguments}}
+
+So far, we have been concentrating on functions that carry out mathematical calculations with numbers. Functions can do all kinds of things. For example, some functions are designed to extract information about other functions. Take a look at the \texttt{args} function:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{args}\NormalTok{(}\AttributeTok{name =}\NormalTok{ round)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## function (x, digits = 0) 
+## NULL
+\end{verbatim}
+
+\texttt{args} prints a summary of the main arguments of a function. What can we learn from the summary of the arguments of \texttt{round}? Notice that the first one, \texttt{x}, is shown without an associated value, whereas the \texttt{digits} part of the summary is printed as \texttt{digits\ =\ 0}.
+
+\textbf{The significance of this is that} \texttt{digits} \textbf{has a default value} (0 in this case). This means that we can leave out \texttt{digits} when using the round function:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{round}\NormalTok{(}\AttributeTok{x =} \FloatTok{3.7}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 4
+\end{verbatim}
+
+This is the same result as we would get using \texttt{round(x\ =\ 3.7,\ digits\ =\ 0)}. This `default value' behaviour is a useful feature of R because it allows us keep our R code concise. Some functions take a large number of arguments, many of which are defined with sensible defaults. Unless we need to change these default arguments, we can just ignore them when we call such functions.
+
+Notice that the \texttt{x} argument of \texttt{round} does not have a default, which means we have to supply a value. This is sensible, as the whole purpose of \texttt{round} is to round any number we give it.
+
+There is another way to simplify our use of functions. Take a look at this example:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{round}\NormalTok{(}\FloatTok{3.72}\NormalTok{, }\AttributeTok{digits =} \DecValTok{1}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 3.7
+\end{verbatim}
+
+What does this demonstrate? \textbf{We do not have to specify argument names}. In the absence of an name the R interpreter uses the position of the supplied argument to work out which name to associate it with. In this example we left out the name of the argument at position 1. This is where \texttt{x} belongs, so we end up rounding 3.71 to 1 decimal place.
+
+R is even more flexible than this. \textbf{We don't necessarily have to use the full name of an argument,} because R can use partial matching on argument names:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{round}\NormalTok{(}\FloatTok{3.72}\NormalTok{, }\AttributeTok{dig =} \DecValTok{1}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 3.7
+\end{verbatim}
+
+This also works because R can unambiguously match the argument we named \texttt{dig} to \texttt{digits}.
+
+\begin{infobox}{warning}
+
+\hypertarget{be-careful-with-your-arguments}{%
+\subsubsection*{Be careful with your arguments}\label{be-careful-with-your-arguments}}
+\addcontentsline{toc}{subsubsection}{Be careful with your arguments}
+
+Here is some advice. Do not rely on partial matching of function names. It just leads to confusion and the odd error. If you use it a lot you end up forgetting the true name of arguments, and if you abbreviate too much you create name matching conflicts. For example, if a function has arguments \texttt{arg1} and \texttt{arg2} and you use the partial name \texttt{a} for an argument, there is no way to know which argument you meant. We are pointing out partial matching so that you are aware of the behaviour. It is not worth the hassle of getting it wrong just to save on a little typing, so do not use it.
+
+What about position matching? This can also cause problems if we're not paying attention. For example, if you forget the order of the arguments to a function and then place your arguments in the wrong place, you will either generate an error or produce a nonsensical result. It is nice not to have to type out the \texttt{name\ =\ value} construct all the time though, so our advice is to rely positional matching only for the first argument. This is a common convention in R, and it makes sense because it is often obvious what kind of information or data the first argument should carry, so the its name is redundant.
+
+\end{infobox}
+
+\hypertarget{vectors}{%
+\chapter{Vectors}\label{vectors}}
+
+\hypertarget{introduction}{%
+\section{Introduction}\label{introduction}}
+
+This chapter has three goals. First, we want to learn how to work with something called a \textbf{vector}, one of the basic structures used to represent data in R-land. Second, we'll learn how to work with vectors by using \textbf{numeric} vectors to perform simple calculations. Finally, we'll introduce a couple of different kinds of vectors---\textbf{character} vectors and \textbf{logical} vectors. This will provide a foundation for working with real data sets in the next block.
+
+\begin{infobox}{information}
+
+\hypertarget{data-structures}{%
+\subsubsection*{Data structures?}\label{data-structures}}
+\addcontentsline{toc}{subsubsection}{Data structures?}
+
+The term `data structure' is used to describe conventions or rules for organising and storing data on a computer. Computer languages use many different kinds of data structures. Fortunately, we only need to learn about a couple of relatively simple ones to use R for data analysis: `vectors' and `data frames'. This chapter will consider vectors. The next chapter will look at collections of vectors (a.k.a. data frames).
+
+\end{infobox}
+
+\hypertarget{atomic-vectors}{%
+\section{Atomic vectors}\label{atomic-vectors}}
+
+We'll start with a definition, even though it probably won't make much sense initially: a \textbf{vector} is a 1-dimensional data structure for storing a set of values, each accessible by its position in the vector. The simplest kind of vectors in R are called \textbf{atomic vectors}\footnote{The other common vector is called a ``list''. Lists are very useful but we won't cover them in this book.}.
+
+There are a few different kinds of atomic vector, but the defining feature of each one is that it can only contain data of one `type'. An atomic vector might contain all integers (e.g.~2, 4, 6, \ldots) or all characters (e.g.~``A'', ``B'', ``C''), but it can't mix and match integers and characters (e.g.~``A'', 2, ``C'', 5).
+
+The word ``atomic'' in the name refers to the fact that an atomic vector can't be broken down into anything simpler---they are the simplest kind of data structure R knows about. Even if we're working with a single number we're actually dealing with an atomic vector of length one. Here's the very first expression we evaluated in the \protect\hyperlink{r-calculator}{Introduction to R chapter}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DecValTok{1} \SpecialCharTok{+} \DecValTok{1}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 2
+\end{verbatim}
+
+Look at the output. What is that \texttt{{[}1{]}} at the beginning? It's actually a clue that the output resulting from \texttt{1\ +\ 1} is an atomic vector. We can verify this with the \texttt{is.atomic} functions. First we make a variable called \texttt{x} with the result of the \texttt{1\ +\ 1} calculation:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x }\OtherTok{\textless{}{-}} \DecValTok{1} \SpecialCharTok{+} \DecValTok{1}
+\NormalTok{x}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 2
+\end{verbatim}
+
+Then verify to see if \texttt{x} is `atomic':
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{is.atomic}\NormalTok{(x)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] TRUE
+\end{verbatim}
+
+Atomic vectors really are the simplest kind of data structure in R. Unlike many other languages there is simply no way to represent just a number. Instead, a single number must be stored as a vector of length one\footnote{The same is true for things like sets of characters (\texttt{"dog"}, \texttt{"cat"}, \texttt{"fish"}, \ldots) and logical values (\texttt{TRUE} or \texttt{FALSE}) discussed in the next two chapters.}.
+
+\hypertarget{intro-vectors}{%
+\section{Numeric vectors}\label{intro-vectors}}
+
+A lot of work in R involves \textbf{numeric vectors}. After all, data analysis is all about numbers. Here's one simple way to construct a numeric vector (and print it out):
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{numvec }\OtherTok{\textless{}{-}} \FunctionTok{numeric}\NormalTok{(}\AttributeTok{length =} \DecValTok{50}\NormalTok{)}
+\NormalTok{numvec}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+## [39] 0 0 0 0 0 0 0 0 0 0 0 0
+\end{verbatim}
+
+What happened? We made a numeric vector with 50 \textbf{elements}, each of which is the number 0. The word ``element'' is used to reference an object (a number in this case) that resides at a particular position in a vector.
+
+When we create a vector but don't assign it to a name using \texttt{\textless{}-} R just prints it for us. Notice what happens when a vector is printed to the screen. Since a length-50 vector can't fit on one line, it was printed over two. At the beginning of each line there is a \texttt{{[}X{]}}: the \texttt{X} gives the position of the element shown at the beginning of a particular line.
+
+If we need to check that we really have made a numeric vector we can use the \texttt{is.numeric}\footnote{This may not look like the most useful function in the world, but sometimes we need functions like \texttt{is.numeric} to understand what R is doing or root out mistakes in our scripts.} function to do this:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{is.numeric}\NormalTok{(numvec)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] TRUE
+\end{verbatim}
+
+This confirms \texttt{numvec} is numeric by returning \texttt{TRUE} (a value of \texttt{FALSE} would mean that \texttt{numvec} is some other kind of object).
+
+Keep in mind that R won't always print the exact values of the elements of a vector. For example, when we print a numeric vector it only prints the elements to 7 significant figures by default. We can see this by printing the built in constant \texttt{pi} to the Console:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{pi}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 3.141593
+\end{verbatim}
+
+The actual value stored in \texttt{pi} is much more precise than this. We can see this by printing \texttt{pi} again using the \texttt{print} function:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{print}\NormalTok{(pi, }\AttributeTok{digits =} \DecValTok{16}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 3.141592653589793
+\end{verbatim}
+
+\begin{infobox}{information}
+
+\hypertarget{different-kinds-of-numbers}{%
+\subsubsection*{Different kinds of numbers}\label{different-kinds-of-numbers}}
+\addcontentsline{toc}{subsubsection}{Different kinds of numbers}
+
+Roughly speaking, R stores numbers in two different ways depending of whether they are whole numbers (``integers'') or numbers containing decimal points (``doubles'' -- don't ask). We're not going to worry about this difference. Most of the time the distinction is invisible to users so it is easier to just think in terms of numeric vectors. We can mix and match integers and doubles in R without having to worry too much about how R is storing the numbers.
+
+\end{infobox}
+
+\hypertarget{constructing-numeric-vectors}{%
+\section{Constructing numeric vectors}\label{constructing-numeric-vectors}}
+
+We just saw to make a numeric vector of zeros using the \texttt{numeric} function. This is arguably not a particularly useful skill because we usually need to work vectors of particular values (not just 0). A useful function for creating custom vectors is the \texttt{c} function. Take a look at this example:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{c}\NormalTok{(}\FloatTok{1.1}\NormalTok{, }\FloatTok{2.3}\NormalTok{, }\FloatTok{4.0}\NormalTok{, }\FloatTok{5.7}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1.1 2.3 4.0 5.7
+\end{verbatim}
+
+The `c' in the function name stands for `combine'. The \texttt{c} function takes a variable number of arguments, each of which must be a vector of some kind, and combines these into a single vector. We supplied the \texttt{c} function with four arguments, each of which was a vector of length 1 (remember: a single number is treated as a length-one vector). The \texttt{c} function combines these to generate a vector of length 4. Simple.
+
+Now look at this example:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{vec1 }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\FloatTok{1.1}\NormalTok{, }\FloatTok{2.3}\NormalTok{)}
+\NormalTok{vec2 }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\FloatTok{4.0}\NormalTok{, }\FloatTok{5.7}\NormalTok{, }\FloatTok{3.6}\NormalTok{)}
+\FunctionTok{c}\NormalTok{(vec1, vec2)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1.1 2.3 4.0 5.7 3.6
+\end{verbatim}
+
+This shows that we can use the \texttt{c} function to combine two or more vectors of any length. We combined a length-2 vector with a length-3 vector to produce a new length-5 vector.
+
+\begin{infobox}{information}
+
+\hypertarget{the-c-function-is-odd}{%
+\subsubsection*{\texorpdfstring{The \texttt{c} function is odd}{The c function is odd}}\label{the-c-function-is-odd}}
+\addcontentsline{toc}{subsubsection}{The \texttt{c} function is odd}
+
+Notice that we did not have to name the arguments in those two examples---there were no \texttt{=} involved. The \texttt{c} function is an example of one of those flexible functions that breaks the simple rules of thumb for using arguments that we set out earlier: it can take a variable number of arguments and these arguments do not have predefined names. This behaviour is necessary for \texttt{c} to be of any use: in order to be useful it needs to be flexible enough to take any combination of arguments.
+
+\end{infobox}
+
+\hypertarget{named-vectors}{%
+\section{Named vectors}\label{named-vectors}}
+
+What happens if use named arguments with \texttt{c}? Take a look at this:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{namedv }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\AttributeTok{a =} \DecValTok{1}\NormalTok{, }\AttributeTok{b =} \DecValTok{2}\NormalTok{, }\AttributeTok{c =} \DecValTok{3}\NormalTok{)}
+\NormalTok{namedv}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## a b c 
+## 1 2 3
+\end{verbatim}
+
+What happened? The argument names were used to define the names of each element in the vector we made. The resulting vector is still a 1-dimensional data structure. When it is printed to the Console the value of each element is printed along with its associated name above it. We can extract the names from a named vector using the \texttt{names} function:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{names}\NormalTok{(namedv)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "a" "b" "c"
+\end{verbatim}
+
+Being able to name the elements of a vector is very useful because it allows us to more easily identify relevant information and extract the bits we need---we'll see how this works in the next chapter.
+
+\hypertarget{vectorised-operations}{%
+\section{Vectorised operations}\label{vectorised-operations}}
+
+All the simple arithmetic operators (e.g.~\texttt{+} and \texttt{-}) and many mathematical functions are \textbf{vectorised} in R. When we use a vectorised function it operates on vectors on an element-by-element basis. We'll make a couple of simple vectors to illustrate what we mean:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{, }\DecValTok{4}\NormalTok{, }\DecValTok{5}\NormalTok{, }\DecValTok{6}\NormalTok{, }\DecValTok{7}\NormalTok{, }\DecValTok{8}\NormalTok{, }\DecValTok{9}\NormalTok{, }\DecValTok{10}\NormalTok{)}
+\NormalTok{x}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1]  1  2  3  4  5  6  7  8  9 10
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{y }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\FloatTok{0.1}\NormalTok{, }\FloatTok{0.2}\NormalTok{, }\FloatTok{0.3}\NormalTok{, }\FloatTok{0.4}\NormalTok{, }\FloatTok{0.5}\NormalTok{, }\FloatTok{0.6}\NormalTok{, }\FloatTok{0.7}\NormalTok{, }\FloatTok{0.8}\NormalTok{, }\FloatTok{0.9}\NormalTok{, }\FloatTok{1.0}\NormalTok{)}
+\NormalTok{y}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1] 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0
+\end{verbatim}
+
+This constructed two length-10 numeric vectors, called \texttt{x} and \texttt{y}, where \texttt{x} is a sequence from 1 to 6 and \texttt{y} is a sequence from 0.1 to 0.6. \texttt{x} and \texttt{y} are the same length. Now look at what happens when we add these using \texttt{+}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x }\SpecialCharTok{+}\NormalTok{ y}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1]  1.1  2.2  3.3  4.4  5.5  6.6  7.7  8.8  9.9 11.0
+\end{verbatim}
+
+When R evaluates the expression \texttt{x\ +\ y} it does this by adding the first element of \texttt{x} to the first element of \texttt{y}, the second element of \texttt{x} to the second element of \texttt{y}, and so on, working through all 10 elements of \texttt{x} and \texttt{y}. That's what is meant by a \textbf{vectorised} operation.
+
+Vectorisation is implemented in all the standard mathematical functions. For example, our friend the \texttt{round} function will round each element of a numeric vector to the nearest integer by default:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{round}\NormalTok{(y)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1] 0 0 0 0 0 1 1 1 1 1
+\end{verbatim}
+
+The same behaviour is seen with other mathematical functions like \texttt{sin}, \texttt{cos}, \texttt{exp}, and \texttt{log}---they apply the relevant function to each element of a numeric vector.
+
+It is important to realise that not all functions are vectorised. For example, the \texttt{sum} function takes a vector of numbers and adds them up:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{sum}\NormalTok{(y)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 5.5
+\end{verbatim}
+
+Although \texttt{sum} obviously works on a numeric vector it is not ``vectorised'' in the sense that it works element-by-element to return an output vector of the same length as its main argument. It just returns a single number--the sum total of the elements of its input.
+
+\begin{infobox}{information}
+
+\hypertarget{vectorisation-is-not-the-norm}{%
+\subsubsection*{Vectorisation is not the norm}\label{vectorisation-is-not-the-norm}}
+\addcontentsline{toc}{subsubsection}{Vectorisation is not the norm}
+
+R's vectorised behaviour may seem like the ``obvious'' thing to do, but most computer languages do not work like this. In other languages we typically have to write a much more complicated expression to do something so simple. This is one of the reasons R is such a data analysis language: vectorisation allows us to express repetitious calculations in a simple, intuitive way. This behaviour can save us a lot of time. However, not every function treats its arguments in a vectorised way, so we always need to check (most easily, by experimenting) whether this behaviour is available before relying on it.
+
+\end{infobox}
+
+\hypertarget{other-vectors}{%
+\section{Other kinds of atomic vectors}\label{other-vectors}}
+
+The data we collect and analyse are often in the form of numbers, so it comes as no surprise that we work with numeric vectors a lot in R. Nonetheless, we also sometimes need to represent other kinds of vectors, either to represent different types of data, or to help us manipulate our data. This chapter introduces two new types of atomic vector to help us do this: character vectors and logical vectors.
+
+\hypertarget{character-vectors}{%
+\subsection{Character vectors}\label{character-vectors}}
+
+The elements of \textbf{character vectors} are what are known as a ``character string'' (or ``string'' if we are feeling lazy). The term ``character string'' refers a sequence of characters, such as ``Treatment 1'', ``University of Sheffield'', ``Population Density''. A character vector is an atomic vector that stores an ordered collection of one or more character strings.
+
+If we want to construct a character vector in R we have to place double (\texttt{"}) or single (\texttt{\textquotesingle{}}) quotation marks around the characters. For example, we can print the name ``Dylan'' to the Console like this:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\StringTok{"Dylan"}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "Dylan"
+\end{verbatim}
+
+Notice the \texttt{{[}1{]}}. This shows that what we just printed is an atomic vector of some kind. We know it's a character vector because the output is printed with double quotes around the value. We often need to make simple character vectors containing only one value---for example, to set the values of arguments to a function.
+
+The quotation marks are not optional---they tell R we want to treat whatever is inside them as a literal value. The quoting is important. If we try to do the same thing as above without the quotes we end up with an error:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Dylan}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Error in eval(expr, envir, enclos): object 'Dylan' not found
+\end{verbatim}
+
+What happened? When the interpreter sees the word \texttt{Dylan} without quotes it assumes that this must be the name of a variable, so it goes in search of it in the global environment. We haven't made a variable called Dylan, so there is no way to evaluate the expression and R spits out an error to let us know there's a problem.
+
+Longer character vectors are typically constructed to represent data of some kind. The \texttt{c} function is often a good starting point for this kind of thing:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# make a length{-}3 character vector}
+\NormalTok{my\_name }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"Dylan"}\NormalTok{, }\StringTok{"Zachary"}\NormalTok{, }\StringTok{"Childs"}\NormalTok{)}
+\NormalTok{my\_name}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "Dylan"   "Zachary" "Childs"
+\end{verbatim}
+
+Here we made a length-3 character vector, with elements corresponding to a first name, middle name, and last name. If we want to extract one or more elements from a character vector by their position
+
+Take note, this is \textbf{not} equivalent to the above :
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{my\_name }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"Dylan Zachary Childs"}\NormalTok{)}
+\NormalTok{my\_name}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "Dylan Zachary Childs"
+\end{verbatim}
+
+The only element of this character vector is a single character string containing the first, middle and last name separated by spaces. We didn't even need to use the the \texttt{c} function here because we were only ever working with a length-1 character vector. i.e.~we could have typed \texttt{"Dylan\ Zachary\ Childs"} and we would have ended up with exactly the same text printed at the Console.
+
+\hypertarget{logical-vectors}{%
+\subsection{Logical vectors}\label{logical-vectors}}
+
+The elements of \textbf{logical vectors} only take two values: \texttt{TRUE} or \texttt{FALSE}. Don't let the simplicity of logical vectors fool you. They're very useful. As with other kinds of atomic vectors the \texttt{c} function can be used to construct a logical vector:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{l\_vec }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\ConstantTok{TRUE}\NormalTok{, }\ConstantTok{FALSE}\NormalTok{)}
+\NormalTok{l\_vec}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1]  TRUE FALSE
+\end{verbatim}
+
+So why are logical vectors useful? Their allow us to represent the results of questions such as, ``is x greater than y'' or ``is x equal to y''. The results of such comparisons may then be used to carry out various kinds of subsetting operations.
+
+Let's first look at how we use logical vectors to evaluate comparisons. Before we can do that though we need to introduce \textbf{relational operators}. These sound fancy, but they are very simple: we use relational operators to evaluate the relative value of vector elements. Six are available in R:
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{x\ \textless{}\ y}: is x less than y?
+\item
+  \texttt{x\ \textgreater{}\ y}: is x greater than y?
+\item
+  \texttt{x\ \textless{}=\ y}: is x less than or equal to y?
+\item
+  \texttt{x\ \textgreater{}=\ y}: is x greater than or equal to y?
+\item
+  \texttt{x\ ==\ y}: is x equal to y?
+\item
+  \texttt{x\ !=\ y}: is x not equal to y?
+\end{itemize}
+
+The easiest way to understand how these work is to simply use them. We need a couple of numeric variables first:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\DecValTok{11}\NormalTok{, }\DecValTok{12}\NormalTok{, }\DecValTok{13}\NormalTok{, }\DecValTok{14}\NormalTok{, }\DecValTok{15}\NormalTok{, }\DecValTok{16}\NormalTok{, }\DecValTok{17}\NormalTok{, }\DecValTok{18}\NormalTok{, }\DecValTok{19}\NormalTok{, }\DecValTok{20}\NormalTok{)}
+\NormalTok{y }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\DecValTok{3}\NormalTok{, }\DecValTok{6}\NormalTok{, }\DecValTok{9}\NormalTok{, }\DecValTok{12}\NormalTok{, }\DecValTok{15}\NormalTok{, }\DecValTok{18}\NormalTok{, }\DecValTok{21}\NormalTok{, }\DecValTok{24}\NormalTok{, }\DecValTok{27}\NormalTok{, }\DecValTok{30}\NormalTok{)}
+\NormalTok{x}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1] 11 12 13 14 15 16 17 18 19 20
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{y}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1]  3  6  9 12 15 18 21 24 27 30
+\end{verbatim}
+
+Now, if we need to evaluate and represent a question like, ``is x greater than than y'', we can use either \texttt{\textless{}} or \texttt{\textgreater{}}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x }\SpecialCharTok{\textgreater{}}\NormalTok{ y}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1]  TRUE  TRUE  TRUE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE
+\end{verbatim}
+
+The \texttt{x\ \textgreater{}\ y} expression produces a logical vector, with \texttt{TRUE} values associated with elements in \texttt{x} are less than \texttt{y}, and \texttt{FALSE} otherwise. In this example, x is less than y until we reach the value of 15 in each sequence. Notice too that relational operators are vectorised: they work on an element by element basis.
+
+What does the \texttt{==} operator do? It compares the elements of two vectors to determine if they are exactly equal:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x }\SpecialCharTok{==}\NormalTok{ y}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1] FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE
+\end{verbatim}
+
+The output of this comparison is true only for one element, the number 15, which is at the 5\textsuperscript{th} position in both \texttt{x} and \texttt{y}. The \texttt{!=} operator is essentially the opposite of \texttt{==}. It identifies cases where two elements are not exactly equal. We could step through each of the different the other relational operators, but hopefully they are self-explanatory at this point (if not, experiment with them).
+
+\begin{infobox}{warning}
+
+\hypertarget{and-are-not-the-same}{%
+\subsubsection*{\texorpdfstring{\texttt{=} and \texttt{==} are not the same}{= and == are not the same}}\label{and-are-not-the-same}}
+\addcontentsline{toc}{subsubsection}{\texttt{=} and \texttt{==} are not the same}
+
+If we want to test for equivalence between the elements of two vectors we must use double equals (\texttt{==}), not single equals (\texttt{=}). Forgetting to do this \texttt{==} instead of \texttt{=} is a very common source of mistakes. The \texttt{=} symbol already has a use in R---assigning name-value pairs---so it can't also be used to compare vectors because this would lead to ambiguity in our R scripts. Using \texttt{=} when you meant to use \texttt{==} is a very common mistake. If you make it, this will lead to all kinds of difficult-to-comprehend problems with your scripts. Try to remember the difference!
+
+\end{infobox}
+
+\hypertarget{data-frames}{%
+\chapter{Data frames}\label{data-frames}}
+
+\hypertarget{introduction-1}{%
+\section{Introduction}\label{introduction-1}}
+
+The \protect\hyperlink{quick-intro-to-r}{quick introduction to R} chapter introduced the word `variable' as a short hand for any kind of named object. For example, we can make a variable called \texttt{num\_vec} that refers to a simple numeric vector using:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{num\_vec }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\FloatTok{1.1}\NormalTok{, }\FloatTok{2.3}\NormalTok{, }\FloatTok{4.0}\NormalTok{, }\FloatTok{5.7}\NormalTok{)}
+\NormalTok{num\_vec}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1.1 2.3 4.0 5.7
+\end{verbatim}
+
+When an computer scientist talks about variables they're usually referring to these sorts of name-value associations.
+
+The word ``variable'' has a second, more abstract meaning in the world of statistics: it refers to anything we can control or measure. For example, data from an experiment will typically involve variables whose values describe the experimental conditions (e.g.~low temperature vs.~high temperature) and the quantities we chose to measure (e.g.~enzyme activity). These kinds of variables are ``statistical variables''.
+
+We'll discuss these statistical variables later on. The reason we're pointing out the dual meaning of the word `variable' is because we need to work with both interpretations. The dual meaning can be confusing, but both meanings are in widespread use so we just have to get used to them. We try to minimise confusion by using the phrase ``statistical variable'' when we are referring to data, rather than R objects.
+
+We're introducing these ideas now because we're going to consider a new type of data object in R---the \textbf{data frame}. Real world data analysis involves collections of related statistical variables. How should we keep a large collection of variables organised? We could work with them individually but this tends to be error prone. Instead, we need a way to keep related variables together. This is the problem that \textbf{data frames} are designed to manage.
+
+\hypertarget{data-frames-intro}{%
+\section{Data frames}\label{data-frames-intro}}
+
+Data frames are one of those features of R that mark it out as particularly good for data analysis. We can think of a data frame as table-like object with rows and columns. A data frame collects together different statistical variables, storing each of them as a seperate column. Related observations are all found in the same row. We'll think about the columns first\ldots{}
+
+Each column of a data frame is a vector of some kind. These are usually simple atomic vectors containing numbers or character strings, but it is possible to include more complicated vectors. The important constraint that a data frame applies is that each vector within it must have the same length. This is what gives a data frame it table-like structure.
+
+The simplest way to get a feel for data frames is to make one. We'll make one `by hand' using some artificial data describing an experiment. Imagine that we conducted a small experiment to examine biomass and community diversity in six field plots. Three plots were subjected to fertiliser enrichment. The other three plots act as experimental controls.
+
+We could store the data describing this experiment in three vectors:
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{trt} (short for ``treatment'') shows which experimental manipulation was used in a given plot.
+\item
+  \texttt{bms} (short for ``biomass'') shows the total biomass measured at the end of the experiment.
+\item
+  \texttt{div} (short for ``diversity'') shows the number of species present at the end of the experiment.
+\end{itemize}
+
+Here's some R code to generate these three vectors (it doesn't matter what the actual values are, they're made up):
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{trt }\OtherTok{\textless{}{-}} \FunctionTok{rep}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\StringTok{"Control"}\NormalTok{,}\StringTok{"Fertilser"}\NormalTok{), }\AttributeTok{each =} \DecValTok{3}\NormalTok{) }
+\NormalTok{bms }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\DecValTok{284}\NormalTok{, }\DecValTok{328}\NormalTok{, }\DecValTok{291}\NormalTok{, }\DecValTok{956}\NormalTok{, }\DecValTok{954}\NormalTok{, }\DecValTok{685}\NormalTok{)}
+\NormalTok{div }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\DecValTok{8}\NormalTok{, }\DecValTok{12}\NormalTok{, }\DecValTok{11}\NormalTok{, }\DecValTok{8}\NormalTok{, }\DecValTok{4}\NormalTok{, }\DecValTok{5}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{trt}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "Control"   "Control"   "Control"   "Fertilser" "Fertilser" "Fertilser"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{bms}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 284 328 291 956 954 685
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{div}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1]  8 12 11  8  4  5
+\end{verbatim}
+
+Notice that the information about different observations are linked by their positions in these vectors. For example, the third control plot had a biomass of `291' and a species diversity `11'.
+
+We use the \texttt{data.frame} function to construct a data frame from one or more vectors, i.e.~to build a data frame from the three vectors we just created:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{experim.data }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(trt, bms, div)}
+\NormalTok{experim.data}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##         trt bms div
+## 1   Control 284   8
+## 2   Control 328  12
+## 3   Control 291  11
+## 4 Fertilser 956   8
+## 5 Fertilser 954   4
+## 6 Fertilser 685   5
+\end{verbatim}
+
+Notice what happens when we print the data frame: it is displayed as though it has rows and columns. That's what we meant when we said a data frame is a table-like structure.
+
+The \texttt{data.frame} function takes a variable number of arguments. We used the \texttt{trt}, \texttt{bms} and \texttt{div} vectors, resulting in a data frame with three columns. Each of these vectors has 6 elements, so the resulting data frame has 6 rows. The names of the vectors were used to name its columns. The rows do not have names, but they are numbered to reflect their position.
+
+The words \texttt{trt}, \texttt{bms} and \texttt{div} are not very informative. If we prefer to work with more meaningful column names---which is always a good idea---then we can name the \texttt{data.frame} arguments:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{experim.data }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}\AttributeTok{Treatment =}\NormalTok{ trt, }\AttributeTok{Biomass =}\NormalTok{ bms, }\AttributeTok{Diversity =}\NormalTok{ div)}
+\NormalTok{experim.data}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   Treatment Biomass Diversity
+## 1   Control     284         8
+## 2   Control     328        12
+## 3   Control     291        11
+## 4 Fertilser     956         8
+## 5 Fertilser     954         4
+## 6 Fertilser     685         5
+\end{verbatim}
+
+The new data frame contains the same data as the previous one but now the column names correspond to the human-readable words we chose.
+
+\begin{infobox}{warning}
+
+\hypertarget{dont-bother-with-row-names}{%
+\subsubsection*{Don't bother with row names}\label{dont-bother-with-row-names}}
+\addcontentsline{toc}{subsubsection}{Don't bother with row names}
+
+We can also name the rows of a data frame using the \texttt{row.names} argument of the \texttt{data.frame} function. We won't bother to show an example of this though. Why? We can't easily work with the information in row names which means there's not much point adding it. If we need to include row-specific information in a data frame it's best to include an additional variable, i.e.~an extra column.
+
+\end{infobox}
+
+\hypertarget{exploring-data-frames}{%
+\section{Exploring data frames}\label{exploring-data-frames}}
+
+The first things to do when presented with a new data set is explore its structure to understand what we're dealing with. There are plenty of options for doing this when the data is stored in a data frame. For example, the \texttt{head} and \texttt{tail} functions extract the first and last few rows of a data set:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{head}\NormalTok{(experim.data, }\AttributeTok{n =} \DecValTok{3}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   Treatment Biomass Diversity
+## 1   Control     284         8
+## 2   Control     328        12
+## 3   Control     291        11
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{tail}\NormalTok{(experim.data, }\AttributeTok{n =} \DecValTok{3}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   Treatment Biomass Diversity
+## 4 Fertilser     956         8
+## 5 Fertilser     954         4
+## 6 Fertilser     685         5
+\end{verbatim}
+
+Notice that the \texttt{n} argument controls the number of rows printed. The \texttt{View} function can be used to open up the whole data set in a table- or spreadsheet-like like view:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{View}\NormalTok{(experim.data)}
+\end{Highlighting}
+\end{Shaded}
+
+Exactly what happens when we use \texttt{View} depends on how we're interacting with R. When we run it in RStudio a new tab opens up with the data shown inside it.
+
+\begin{infobox}{warning}
+
+\hypertarget{view-only-displays-the-data}{%
+\subsubsection*{\texorpdfstring{\texttt{View} only displays the data}{View only displays the data}}\label{view-only-displays-the-data}}
+\addcontentsline{toc}{subsubsection}{\texttt{View} only displays the data}
+
+The \texttt{View} function is designed to allow us to display the data in a data frame as a table of rows and columns. We can't change the data in any way with the \texttt{View} function. We can reorder the way the data are presented, but keep in mind that this won't alter the underlying data.
+
+\end{infobox}
+
+There are quite a few different R functions that will extract information about a data frame. The \texttt{nrow} and \texttt{ncol} functions return the number of rows and columns, respectively:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{nrow}\NormalTok{(experim.data)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 6
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ncol}\NormalTok{(experim.data)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 3
+\end{verbatim}
+
+The \texttt{names} function is used to extract the column names from a data frame:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{colnames}\NormalTok{(experim.data)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "Treatment" "Biomass"   "Diversity"
+\end{verbatim}
+
+The \texttt{experim.data} data frame has three columns, so \texttt{names} returns a character vector of length three, where each element corresponds to a column name.
+
+\hypertarget{extracting-and-adding-a-single-variable}{%
+\section{Extracting and adding a single variable}\label{extracting-and-adding-a-single-variable}}
+
+Remember, each column of a data frame can be thought of as a variable. Data frames would not be much use if we could not extract and modify the variables they contain. In this section we will briefly review how to extract a variable. We'll examine ways to manipulate the data within a data frame in later chapters.
+
+One way of extracting a variable from a data frame uses a double square brackets construct, \texttt{{[}{[}}. For example, we extract the \texttt{Biomass} variable from our example data frame with the double square brackets like this:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{experim.data[[}\StringTok{"Biomass"}\NormalTok{]]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 284 328 291 956 954 685
+\end{verbatim}
+
+This prints whatever is in the \texttt{Biomass} column to the Console. What kind of object is this? It's a numeric vector:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{is.numeric}\NormalTok{(experim.data[[}\StringTok{"Biomass"}\NormalTok{]])}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] TRUE
+\end{verbatim}
+
+See? A data frame really is a collection of vectors. Notice that all we did was print the resulting vector to the Console. If we want to actually do something with this numeric vector we need to assign the result:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{bmass }\OtherTok{\textless{}{-}}\NormalTok{ experim.data}\SpecialCharTok{$}\NormalTok{Biomass}
+\NormalTok{bmass}\SpecialCharTok{\^{}}\DecValTok{2}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1]  80656 107584  84681 913936 910116 469225
+\end{verbatim}
+
+Here, we extracted the \texttt{Biomass} variable, assigned it to \texttt{bmass}, and then squared this.
+
+Notice that we used \texttt{"Biomass"} instead of \texttt{Biomass} inside the double square brackets, i.e.~we quoted the name of the variable. This is because we want R to treat the word ``Biomass'' as a literal value. This little detail is important! If we don't quote the name then R will assume that \texttt{Biomass} is the name of an object and go in search of it in the global environment. Since we haven't created something called \texttt{Biomass}, leaving out the quotes would generate an error:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{experim.data[[Biomass]]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Error in (function(x, i, exact) if (is.matrix(i)) as.matrix(x)[[i]] else .subset2(x, : object 'Biomass' not found
+\end{verbatim}
+
+The error message is telling us that R can't find a variable called \texttt{Biomass}.
+
+The second method for extracting a variable uses the \texttt{\$} operator. For example, to extract the \texttt{Biomass} column from \texttt{experim.data}, we use:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{experim.data}\SpecialCharTok{$}\NormalTok{Biomass}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 284 328 291 956 954 685
+\end{verbatim}
+
+We use the \texttt{\$} operator by placing the name of the data frame we want to work with on the left hand side and and the name of the column (i.e.~the variable) we want to extract on the right hand side. Notice that this time we didn't have to put quotes around the variable name when using the \texttt{\$} operator. We can do this if we want to---i.e.~\texttt{experim.data\$"Biomass"} also works---but \texttt{\$} doesn't require it.
+
+\begin{infobox}{warning}
+
+\hypertarget{why-is-there-more-than-one-way-to-extract-variables}{%
+\subsubsection*{Why is there more than one way to extract variables?}\label{why-is-there-more-than-one-way-to-extract-variables}}
+\addcontentsline{toc}{subsubsection}{Why is there more than one way to extract variables?}
+
+There's no simple way to answer this question without getting into the details of how R represents data frames. The simple answer is that \texttt{\$} and \texttt{{[}{[}} are not actually equivalent, even though they appear to do much the same thing. The \texttt{\$} method is a bit easier to read and people tend to prefer it for interactive data analysis tasks, whereas the \texttt{{[}{[}} construct tends to be used when we need a bit more flexibility for programming.
+
+\end{infobox}
+
+\hypertarget{packages}{%
+\chapter{Packages}\label{packages}}
+
+\hypertarget{package-system}{%
+\section{The R package system}\label{package-system}}
+
+The R package system is probably the most important single factor driving increased adoption of R. Packages are used to extend the basic capabilities of R. In \href{http://r-pkgs.had.co.nz}{his book} about R packages Hadley Wickam says,
+
+\begin{quote}
+Packages are the fundamental units of reproducible R code. They include reusable R functions, the documentation that describes how to use them, and sample data.
+\end{quote}
+
+An R package is just a collection of folders and files in a standard, well-defined format that bundles together computer code, data, and documentation in a way that is easy to use and share with other users. The computer code might all be R code, but it can also include code written in other languages. Packages provide an R-friendly interface to use this ``foreign'' code without the need to understand how it works.
+
+The base R distribution it comes with quite a few pre-installed packages. These base R packages represent a very small subset of all available R packages. The majority of these are hosted on a network of web servers around the world collectively know as \href{http://cran.r-project.org}{CRAN}: the Comprehensive R Archive Network, pronounced either ``see-ran'' or ``kran''.
+
+CRAN is a fairly spartan web site, so it's easy to navigate. The \href{http://cran.r-project.org}{landing page} has about a dozen links on the right hand side. Under the \emph{Software} section there is a link called \href{http://cran.r-project.org/web/packages/}{Packages}. Near the top of that packages page there is a link called \href{http://cran.r-project.org/web/packages/available_packages_by_name.html}{Table of available packages, sorted by name} that points to a very long list of all the packages on CRAN. The column on the left shows each package name, followed by a brief description of what the package does on the right. There are 1000s of packages listed there.
+
+\hypertarget{task-views}{%
+\section{Task views}\label{task-views}}
+
+The huge list of packages on the \href{http://cran.r-project.org/web/packages/available_packages_by_name.html}{available packages} is pretty overwhelming. A more user-friendly view of many R packages can be found on the \href{http://cran.r-project.org/web/views/}{Task Views} page (the link is on the left hand side, under the section labelled \emph{CRAN}). A Task View is basically a curated guide to the packages and functions that are useful for certain disciplines. The Task Views page shows a list of these discipline-specific topics, along with a brief description. For example---
+
+\begin{itemize}
+\tightlist
+\item
+  The \href{http://cran.r-project.org/web/views/Environmetrics.html}{Environmentrics} Task View contains information about using R to analyse ecological and environmental data.
+\item
+  The \href{https://cran.r-project.org/web/views/ClinicalTrials.html}{Clinical Trials} Task View contains information about using R for the design, monitoring and analysis of data from clinical trials.
+\item
+  The \href{https://cran.r-project.org/web/views/MedicalImaging.html}{Medical Image Analysis} Task View contains information about packages for working with commercial medical image data.
+\item
+  The \href{https://cran.r-project.org/web/views/Pharmacokinetics.html}{Pharmacokinetic} Task View contains information about packages for working with pharmacokinetic (PK) data.
+\end{itemize}
+
+Task views are often a good place to start looking for a new package to support a particular analysis in future projects.
+
+\hypertarget{use-packages}{%
+\section{Using packages}\label{use-packages}}
+
+Two things need to happen to actually make use of a package. First, we need to ensure that a copy of the folders and files that make up the package are copied to an appropriate folder on our computer. This process of putting the package files into the correct location is called \textbf{installing} the package. Second, we need to \textbf{load and attach} the package for use in a particular R session. The word ``session'' refers to the time between when we start up R and close it down again.
+
+It's worth unpacking these two ideas a bit, because packages are a very frequent source of confusion for new users:
+
+\begin{itemize}
+\item
+  If we don't have a copy of a package's folders and files our computer we can't use it. The process of making this copy is called \textbf{installing} the package. It is possible to manually install packages by going to the CRAN website, downloading the package, and then using various tools to install it. We don't recommend using this approach though because it's inefficient and error prone. Instead, use built-in R functions to grab the package from CRAN and install it one step.
+\item
+  Once we have a copy of the package on our hard drive it will remain there for us to use. We don't need to re-install a packages we plan to use every time we start a new R session. It is worth saying that again, \textbf{there is no need to install a package every time we start up R / RStudio}. The only exception to this rule is that a major update to R will sometimes require a complete re-install of the packages. These major updates are fairly infrequent though.
+\item
+  Installing a package does nothing more than place a copy of the relevant files on our hard drive. If we actually want to use the functions or the data that comes with a package we need to make them available in our current R session. Unlike package installation this \textbf{load and attach} process as it's known has to be repeated every time we restart R. If we forget to load up the package we can't use it.
+\end{itemize}
+
+\hypertarget{viewing-installed-packages}{%
+\subsection{Viewing installed packages}\label{viewing-installed-packages}}
+
+We sometimes need to check whether a package is currently installed. RStudio provides a simple, intuitive way to see which packages are installed on our computer. The \textbf{Packages} tab in the bottom right pane shows the name of every installed package, a brief description (the same one seen on CRAN) and a version number.
+
+There are also a few R functions that can be used to check whether a package is currently installed. For example, the \texttt{find.package} function can do this:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{find.package}\NormalTok{(}\StringTok{"MASS"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "/Library/Frameworks/R.framework/Versions/4.0/Resources/library/MASS"
+\end{verbatim}
+
+This either prints a ``file path'' showing us where the package is located, or returns an error if the package can't be found. Alternatively, the function called \texttt{installed.packages} returns a data frame containing a lot more information about the installed packages.
+
+\hypertarget{installing-packages}{%
+\subsection{Installing packages}\label{installing-packages}}
+
+R packages can be installed from a number of different sources. For example, they can be installed from a local file on a computer, from the CRAN repository, or from a different kind of online repository called Github. Although various alternatives to CRAN are becoming more popular, we're only going to worry about installing packages that live on CRAN.
+
+To install a package from an online repository like CRAN we have to first download the package files, possibly uncompress them (like we would a ZIP file), and move them to the correct location. All of this can be done using a single function: \texttt{install.packages}. For example, if we want to install a package called \textbf{fortunes}, we use:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{install.packages}\NormalTok{(}\StringTok{"fortunes"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+The quotes are necessary by the way. If everything is working---we have an active internet connection, the package name is valid, and so on---R will briefly pause while it communicates with the CRAN servers, we should see some red text reporting back what's happening, and then we're returned to the prompt. The red text is just letting us know what R is up to. As long as this text does not include the word ``error'', there is usually no need to worry about it.
+
+There are a couple of things to keep in mind. First, package names are case sensitive. For example, \textbf{fortunes} is not the same as \textbf{Fortunes}. Quite often package installations fail because we used the wrong case somewhere in the package name. The other aspect of packages we need to know about is related to \textbf{dependencies}: some packages rely on other packages in order to work properly. By default \texttt{install.packages} will install these dependencies, so we don't usually have to worry too much about them. Just don't be surprised if the \texttt{install.packages} function installs more than one package when only one was requested.
+
+RStudio provides a way of interacting with \texttt{install.packages} via point-and-click. The \textbf{Packages} tab has an ``Install''" button at the top right. Clicking on this brings up a small window with three main fields: ``Install from'', ``Packages'', and ``Install to Library''. We only need to work with the ``Packages'' field -- the other two can be left at their defaults. When we start typing in the first few letters of a package name (e.g.~\textbf{dplyr}) RStudio provides a list of available packages that match this. After we select the one we want and click the ``Install'' button, RStudio invokes \texttt{install.packages} with the appropriate arguments at the Console for us.
+
+\hypertarget{loading-and-attaching-packages}{%
+\subsection{Loading and attaching packages}\label{loading-and-attaching-packages}}
+
+Once we've installed a package or two we'll probably want to actually use them. Two things have to happen to access a package's facilities: the package has to be loaded into memory, and then it has to attached to something called a search path so that R can find it. It is beyond the scope of this book to get in to ``how'' and ``why'' of these events. Fortunately, there's no need to worry about these details, as both loading and attaching can be done in a single step with a function called \texttt{library}. The \texttt{library} function works exactly as we might expect it to. If we want to start using the \texttt{fortunes} package---which was just installed above---all we need is:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(}\StringTok{"fortunes"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Nothing much happens if everything is working as it should. R just returns us to the prompt without printing anything to the Console. The difference is that now we can use the functions that \textbf{fortunes} provides. As it turns out, there is only one, called fortune:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{fortune}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Friends don't let friends use Excel for statistics!
+##    -- Jonathan D. Cryer (about problems with using Microsoft Excel for
+##       statistics)
+##       JSM 2001, Atlanta (August 2001)
+\end{verbatim}
+
+The \textbf{fortunes} package is either very useful or utterly pointless, depending on ones perspective. It dispenses quotes from various R experts delivered to the venerable R mailing list.
+
+\begin{infobox}{warning}
+
+\hypertarget{dont-use-rstudio-for-loading-packages}{%
+\subsection{Don't use RStudio for loading packages!}\label{dont-use-rstudio-for-loading-packages}}
+
+As usual, if we don't like working in the Console RStudio can help us out. There is a small button next to each package listed in the \textbf{Packages} tab. Packages that have been loaded and attached have a blue check box next to them, whereas this is absent from those that have not. Clicking on an empty check box will load up the package. We mention this because at some point most people realise they can use RStudio to load and attach packages. \textbf{We don't recommend using this route}. It's much better to put \texttt{library} statements into a script. Why? Because if we rely on RStudio to load packages, we have to do this every time we want to run a script, and if we forget one we need, the script won't work.
+
+\end{infobox}
+
+\hypertarget{an-analogy}{%
+\subsection{An analogy}\label{an-analogy}}
+
+The package system frequently confuses new users. The reason for this stems from the fact that they aren't clear about what the \texttt{install.packages} and \texttt{library} functions are doing. One way to think about these is by analogy with smartphone ``Apps''. Think of an R package as analogous to a smartphone App--- a package effectively extends what R can do, just as an App extends what a phone can do.
+
+When we want to try out a new App we have to first download it from an App store and install it on our phone. Once it has been downloaded, an App lives permanently on the phone and can be used whenever it's needed. Downloading and installing the App is something we only have to do once. Packages are no different. When we want to use an R package we first have to make sure it is installed on the computer (e.g.~using \texttt{install.packages}). Installing a package is a `do once' operation. Once installed, we don't need to install a package again each time we restart R.
+
+In order to actually use an App on our phone we open it up by tapping on its icon. This obviously has to happen every time we want to use the App. The package equivalent of opening a smartphone App is the ``load and attach'' operation. This is what \texttt{library} does. It makes a package available for use in a particular session. We have to use \texttt{library} to load the package every time we start a new R session if we plan to access the functions in that package: loading and attaching a package via \texttt{library} is a ``do every time'' operation.
+
+\hypertarget{the-tidyverse-ecosystem-of-packages}{%
+\section{The tidyverse ecosystem of packages}\label{the-tidyverse-ecosystem-of-packages}}
+
+{[}COMPLETE ME{]}
+
+\hypertarget{package-data}{%
+\section{Package data}\label{package-data}}
+
+Remember what Hadley Wickam said about packages? ``\ldots{} include reusable R functions, the documentation that describes how to use them, \textbf{and sample data}.'' Many packages include sample data sets for use in examples and package vignettes. Use the \texttt{data} function to list the data sets hiding away in packages:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{data}\NormalTok{(}\AttributeTok{package =} \FunctionTok{.packages}\NormalTok{(}\AttributeTok{all.available =} \ConstantTok{TRUE}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+The mysterious \texttt{.packages(all.available\ =\ TRUE)} part of this generates a character vector with the names of all the installed packages in it. If we only use \texttt{data()} then R only lists the data sets found in a package called \texttt{datasets} and any additional packages we have loaded in the current R session.
+
+The \texttt{datasets} package is part of the base R distribution. It exists for one reason---to store example data sets. The \texttt{datasets} package is automatically loaded when we start R, i.e.~there's no need to use \texttt{library} to access it, meaning any data stored in this package can be accessed every time we start R.
+
+From the perspective of learning to use R, working with package data is really useful because it allows us to work with `well-behaved' data sets without having to worry about getting them into R. Importing data is certainly an important skill but it's not necessarily something a new user wants to worry about. We'll use a package data sets to learn about \textbf{dplyr} and \textbf{ggplot2} later.
+
+\hypertarget{part-data-wrangling}{%
+\part{Data Wrangling}\label{part-data-wrangling}}
+
+\hypertarget{data-wrangling-with-dplyr}{%
+\chapter{\texorpdfstring{Data wrangling with \textbf{dplyr}}{Data wrangling with dplyr}}\label{data-wrangling-with-dplyr}}
+
+We describe how to use \textbf{readr} and \textbf{dplyr} to import and manipulate data in this section.
+
+\hypertarget{part-exporing-data}{%
+\part{Exporing Data}\label{part-exporing-data}}
+
+\hypertarget{exploratory-data-analysis-with-ggplot2}{%
+\chapter{\texorpdfstring{Exploratory data analysis with \textbf{ggplot2}}{Exploratory data analysis with ggplot2}}\label{exploratory-data-analysis-with-ggplot2}}
+
+We describe how to use \textbf{ggplot2} to visually explore data in this section.
+
+\hypertarget{appendix-supplementary-material}{%
+\appendix}
+
+
+\hypertarget{using-r-with-rstudio}{%
+\chapter{Using R with RStudio}\label{using-r-with-rstudio}}
+
+\hypertarget{working-with-scripts}{%
+\section{Working with scripts}\label{working-with-scripts}}
+
+We've seen that using variables is useful because it enables us to break down a problem into a series of simpler steps. However, so far we've only been working in the Console. If we want to reuse a calculation when we're working like this, we have to change a variable or two and then evaluate the expressions that do the job of solving an equation, make a graph, whatever. We also have to do all of this in the correct order, or things will not work as intended.
+
+We can see that working in the Console is not going to be practical most of the time. So what should we do? The answer is: put our sequence of R expressions into a text file, called a \textbf{script}. Calling it a script makes it sound a bit fancy and clever---``I spent all day debugging my script''. It is not. It is a boring text file that could be opened up in something like Notepad.exe. We just call it a script to signify the fact that the text contained in the file is a series of instructions telling our computer to do something.
+
+\begin{infobox}{warning}
+
+\hypertarget{dont-work-directly-in-the-console}{%
+\subsubsection{Don't work directly in the Console}\label{dont-work-directly-in-the-console}}
+
+Working directly at the Console is the simplest way to use R, but we don't recommend working this way unless you only need to do something very simple that involves a handful of steps. For more complicated activities you should always store your instructions in a script.
+
+\end{infobox}
+
+\hypertarget{writing-scripts-in-rstudio}{%
+\subsection{Writing scripts in RStudio}\label{writing-scripts-in-rstudio}}
+
+To open a new script in RStudio navigate to \texttt{File\ \textgreater{}\ New\ File\ \textgreater{}\ R\ Script}. This will open the new file in a fourth pane. This pane is the Source Code Editor we mentioned in the {[}Get up and running with R and RStudio{]} chapter. The name of the tab where this new file lives will be set to \textbf{Untitled1} if we haven't opened any other new R Scripts. Here is what RStudio looks like after we do this (we've highlighted the new pane with a red asterisk):
+
+\includegraphics{images/RStudio-4-pane.png}
+
+When we work with a script we type the required sequence of R expressions into the Editor pane, \textbf{not directly into the Console}. This is important---if we mix and match mistakes happen. The worst of these is that we write a script that seems to work, only to find it is broken when we open it up and use it again later. This usually happens because we typed something into the Console that is needed to make the whole script run when we were preparing it, but then forget to put it into the script. Just don't switch between using the Console and the Editor to avoid this.
+
+The easiest way to appreciate the benefits of using a script is to work with one. Here are a few lines of R code to copy-paste into the new Editor pane\ldots{}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{a }\OtherTok{\textless{}{-}} \DecValTok{1}
+\NormalTok{b }\OtherTok{\textless{}{-}} \DecValTok{6}
+\NormalTok{c }\OtherTok{\textless{}{-}} \DecValTok{5}
+
+\NormalTok{sqrt.b2ac }\OtherTok{\textless{}{-}}\NormalTok{ (b}\SpecialCharTok{\^{}}\DecValTok{2} \SpecialCharTok{{-}}\DecValTok{4} \SpecialCharTok{*}\NormalTok{ a }\SpecialCharTok{*}\NormalTok{ c)}\SpecialCharTok{\^{}}\NormalTok{(}\DecValTok{1}\SpecialCharTok{/}\DecValTok{2}\NormalTok{)}
+
+\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{b }\SpecialCharTok{+}\NormalTok{ sqrt.b2ac) }\SpecialCharTok{/}\NormalTok{ (}\DecValTok{2} \SpecialCharTok{*}\NormalTok{ a)}
+\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{b }\SpecialCharTok{{-}}\NormalTok{ sqrt.b2ac) }\SpecialCharTok{/}\NormalTok{ (}\DecValTok{2} \SpecialCharTok{*}\NormalTok{ a)}
+\end{Highlighting}
+\end{Shaded}
+
+\ldots and here's a partial screenshot of how the Editor pane might look (the details depend on how RStudio is set up):
+
+\includegraphics{images/editor-eg.png}
+
+Notice that parts of the R code is formatted by colour. This is called \textbf{syntax highlighting}. Syntax highlighting is a must have feature of any Editor. In a nutshell, syntax is a bit like the grammar of a computer language. It is the set of rules that determine how we form valid expressions, assign variables, and so on. The purpose of syntax highlighting is to draw attention to different components of syntax. We can see that when we use the Cobalt highlighting option, RStudio sets the background to black and displays variables in white, parentheses and arithmetic operators in orange, and numbers in red. It doesn't matter so much what the colours are. What matters is that we have a visual means to distinguish these different kinds of elements, making it much easier to read a script.
+
+\begin{infobox}{action}
+
+\hypertarget{choose-your-own-colour-scheme}{%
+\subsubsection*{Choose your own colour scheme}\label{choose-your-own-colour-scheme}}
+\addcontentsline{toc}{subsubsection}{Choose your own colour scheme}
+
+The first thing you will probably notice is that this Editor looks a little different from yours. We said earlier that RStudio was highly customisable. What we did above was change the way it does something called \textbf{syntax highlighting}. You can do this by navigating to \texttt{Tools\ \textgreater{}\ Global\ Options...}, selecting the \texttt{Appearance} button, and picking the \texttt{Cobalt} option under \texttt{Editor\ theme}.
+
+\end{infobox}
+
+The other kind of elements RStudio has highlighted are in blue. We added these. They are called comments. Comments in R always start with a \texttt{\#} symbol---this is called the ``hash''" symbol (also known as the `pound' symbol to North Americans of a certain age). \textbf{Lines that start with \texttt{\#} are completely ignored by R}. They exist only to allow us, the developers of a script, to add notes and explanations that remind us how it all works.
+
+\begin{infobox}{warning}
+
+\hypertarget{comments-are-important}{%
+\subsubsection*{Comments are important}\label{comments-are-important}}
+\addcontentsline{toc}{subsubsection}{Comments are important}
+
+At this point we just want to emphasise that \textbf{you should always use comments in your scripts} to remind yourself what your R code is supposed to be doing. Use them liberally to help you understand the logic of each script you write. This is another ``take our word''" for it situation -- if you do not use comments, then when you come back to your precious script in a few weeks/months/years time you will have no idea what it does.
+
+\end{infobox}
+
+\hypertarget{running-scripts-in-rstudio}{%
+\subsection{Running scripts in RStudio}\label{running-scripts-in-rstudio}}
+
+The whole point of writing a script is ultimately to run it. The phrase ``run our code'' is shorthand for ``send a number of R expressions to the R interpreter to be read and evaluated''. The latter is tedious to write (and read) over and over again, so we will just write ``run your/my/our code''. We could run the code in the above script by copying and pasting it into the Console, but this is inefficient. Instead of relying on cut and paste, RStudio gives us different ways to run our code:
+
+\begin{itemize}
+\item
+  There is a \texttt{Run} button at the top right of the Editor pane. As we might imagine, clicking on this will run some code. If we haven't highlighted anything in the Editor, this runs whichever line the cursor is at, i.e.~it runs just that one line. If we had highlighted a region inside the Editor, this button will run all of that in sequence.
+\item
+  No one likes clicking buttons. Luckily, pressing Control+Enter (or Command+Enter on a Mac) does exactly the same thing as the \texttt{Run} button. It also uses the same rules to decide which bits of code to run or not\footnote{We can also run lines of code via the \texttt{Code\ \textgreater{}\ Run\ Lines}. This is easily the most inefficient method after cut and paste. It's only there in case we forget our keyboard shortcut or cannot remember where the run button is.}.
+\end{itemize}
+
+Now that we know how to `run our code', we can run every line in the script we just started. Here's what should happen at the Console when we do this:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{a }\OtherTok{\textless{}{-}} \DecValTok{1}
+\NormalTok{b }\OtherTok{\textless{}{-}} \DecValTok{6}
+\NormalTok{c }\OtherTok{\textless{}{-}} \DecValTok{5}
+
+\NormalTok{sqrt.b2ac }\OtherTok{\textless{}{-}}\NormalTok{ (b}\SpecialCharTok{\^{}}\DecValTok{2} \SpecialCharTok{{-}}\DecValTok{4} \SpecialCharTok{*}\NormalTok{ a }\SpecialCharTok{*}\NormalTok{ c)}\SpecialCharTok{\^{}}\NormalTok{(}\DecValTok{1}\SpecialCharTok{/}\DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{b }\SpecialCharTok{+}\NormalTok{ sqrt.b2ac) }\SpecialCharTok{/}\NormalTok{ (}\DecValTok{2} \SpecialCharTok{*}\NormalTok{ a)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] -1
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{b }\SpecialCharTok{{-}}\NormalTok{ sqrt.b2ac) }\SpecialCharTok{/}\NormalTok{ (}\DecValTok{2} \SpecialCharTok{*}\NormalTok{ a)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] -5
+\end{verbatim}
+
+This works exactly as though we typed or pasted the sequence of R expressions into the Console, hitting Enter each time we get to the end of a line. What this means is that we can use this script to find the solutions to any quadratic equation with `real roots'. All we have to do is edit the values assigned to \texttt{a}, \texttt{b} and \texttt{c} and then rerun \textbf{the whole script}. We can't just rerun bits of it because everything is designed to work together, in sequence.
+
+Now that we have a script that does something a little bit useful we might wish to reuse it at some point. It's just a text file, so we can save the script as we would any other file. We can do this using the familiar menu-based approach (\texttt{File\ \textgreater{}\ Save\ As...}) or via the keyboard shortcut \texttt{Control+S} (or \texttt{Command+S} on a Mac). The only thing to keep in mind is that we must use the file extension \texttt{.R} or \texttt{.r} when we name the file, e.g.~\texttt{my\_great\_script.R}. This is because RStudio uses the file extension to detect the fact that a file is an R script and not an ordinary text file. If we don't do this, then next time we open up the file in RStudio we won't be able to access the fancy Editor features like syntax highlighting, nor will we be able to send lines to the Console without using copy-paste.
+
+From now on always work with scripts. No more typing into the Console!
+
+\begin{infobox}{warning}
+
+\hypertarget{do-not-use-install.packages-in-scripts}{%
+\subsubsection*{\texorpdfstring{Do not use \texttt{install.packages} in scripts}{Do not use install.packages in scripts}}\label{do-not-use-install.packages-in-scripts}}
+\addcontentsline{toc}{subsubsection}{Do not use \texttt{install.packages} in scripts}
+
+Because installing a package is a ``do once'' operation, it is almost never a good idea to place \texttt{install.packages} in a typical R script. A script may be run 100s of times as we develop an analysis. Installing a package is quite time consuming, so we don't really want to do it every time we run our analysis. As long as the package has been installed at some point in the past it is ready to be used and the script will work fine without re-installing it.
+
+\end{infobox}
+
+\hypertarget{using-projects-in-rstudio}{%
+\section{Using projects in RStudio}\label{using-projects-in-rstudio}}
+
+{[}COMPLETE ME{]}
+
+\hypertarget{spotting-problems}{%
+\section{Spotting problems}\label{spotting-problems}}
+
+We may as well get something out of the way early on. It's painfully easy to accidentally ask R to do something that contains an error of some kind. Mistakes happen all the time when writing R code---everyone does it. It's not a problem when this happens. When it does though, it's important to step back and work out what went wrong.
+
+\hypertarget{the-dreaded}{%
+\subsection{\texorpdfstring{The dreaded \texttt{+}}{The dreaded +}}\label{the-dreaded}}
+
+Be careful when highlighting code to run. RStudio will run exactly the text that is highlighted. If we start or finish the highlighted region in the middle of an expression then one of three things will usually happen. If we're lucky we'll generate an error because we ran an invalid partial expression. We say this is lucky because the error will at least be easy to spot. If we're unlucky, we might end up running part of an expression that \emph{is itself} a valid expression, but does not do what we had intended. This is harder to spot because it won't generate an error, and it will probably create problems further down the line.
+
+The third outcome is that the Console will look something like this:
+
+\includegraphics{images/dreaded-plus.png}
+
+What happened? Look carefully at the little snippet of R code we sent to the Console. It's not a complete R expression, because it is missing a closing parenthesis: \texttt{)}. When R receives only part of an expression like this, which has correct syntax but is not complete, it sits and waits for the rest of the expression. This is what the \texttt{+} at the Console signifies. When we see this we have two options. We can manually type in the missing part of the expression and hit Enter, or (better) we can hit the Escape key to return you to the prompt \texttt{\textgreater{}} and start again. The first option is rather error prone so we would generally prefer the latter.
+
+\hypertarget{errors}{%
+\subsection{Errors}\label{errors}}
+
+Here is an example of what happens at the Console when we generate an error:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{xyz }\SpecialCharTok{+} \DecValTok{2}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Error in eval(expr, envir, enclos): object 'xyz' not found
+\end{verbatim}
+
+In general terms, what happened is that R read in the instruction \texttt{xyz\ +\ 2}, tried to evaluate it, and found it could not. This is because the variable \texttt{xyz} does not exist, i.e.~we never made a variable called \texttt{xyz}. Upon running into the error, R printed something to the screen to tell us we've made a mistake (``Error: object `xyz' not found'').
+
+When this happens we say R has `thrown an error'. We know its an error because the message is in a warning colour (probably red or orange---it depends how RStudio is set up) and contains the word \texttt{Error}. The bit after the \texttt{:} is an attempt by R to tell us what went wrong. Always \textbf{read the error messages}. They will be incomprehensible at first, but they will eventually start to make more sense and become helpful (usually---sometimes they make no sense whatsoever, even to experienced users). This way of learning only works if we read the error messages in the first place though.
+
+\hypertarget{getting-help}{%
+\chapter{Getting help}\label{getting-help}}
+
+\hypertarget{console-help}{%
+\section{Introduction}\label{console-help}}
+
+R has a comprehensive built-in help system orientated around the base R functions, and every good external package also comes with its own set of \textbf{help files}. These provide information about individual package functions and summarise the included data sets. They also sometimes give descriptions of how different parts of the package should be used, and if we're lucky, one or more `vignettes' that offer a practical demonstration of how to use the package.
+
+We may as well get something out of the way early on. The word `help' in the phrase `help file' is a bit of a misnomer. It's more accurate to say R has an extensive \textbf{documentation} system. Help files are designed first and foremost to carefully document the different elements of a package, rather than explain how a particular function or the package as whole should be used to achieve a given end. They are aimed more at experienced users than novices. That said, help files often contain useful examples, and many package authors do try to make our life easier by providing functional demonstrations of their package.
+
+It is important to get to grips with the built in help system. It contains a great deal of useful information which we need to really start using R effectively. The road to enlightenment is bumpy though.
+
+\hypertarget{browsing-the-help-system}{%
+\section{Browsing the help system}\label{browsing-the-help-system}}
+
+Help files are a little like mini web pages, which means we can navigate among them using hyperlinks. One way to begin browsing the help system uses the \texttt{help.start} function:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{help.start}\NormalTok{() }
+\end{Highlighting}
+\end{Shaded}
+
+When we run this function the \textbf{Package Index} page should open up in the \textbf{Help} tab of the bottom right pane in RStudio. This lists all the packages currently installed on a computer. We can view the help files associated with a package by clicking on the appropriate link. For example, all the functions that come with the base installation of R have a help file associated with them---we can click on the link to the R base package (\texttt{base}) to see these.
+
+The packages that we install separately each have their own set of associated help files. We will see how to navigate these in a moment.
+
+The help browser has Forward, Back, and Home buttons, just like a normal web browser. If we get lost in the mire of help pages we can always navigate backward until we get back to a familiar page. Clicking on the home button takes us to a page with three sections:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  The \textbf{Manuals} section looks like it might be useful for novice users. Unfortunately, it's not. Even the ``Introduction to R'' manual is only helpful for someone who understands what terms like `data structure' and `data type' mean. The others are more or less impenetrable unless the reader already knows quite a bit about computing in general.
+\item
+  The \textbf{Reference} section is a little more helpful. The ``Packages'' link takes us to the same page opened by \texttt{help.start}. From here we can browse the help pages on a package-specific basis. The ``Search Engine \& Keywords'' link takes us to a page we can use to search for specific help pages, either by supplying a search term or by navigating through the different keywords.
+\item
+  The \textbf{Miscellaneous Material} section has a couple of potentially useful links. The ``User Manuals'' link lists any user manuals supplied by package authors. The ``Frequently Asked Questions'' link is definitely worth reviewing at some point, tough again, most of the FAQs are a little difficult for novice users to fully understand.
+\end{enumerate}
+
+\hypertarget{searching-for-help-files}{%
+\section{Searching for help files}\label{searching-for-help-files}}
+
+After browsing help files via \texttt{help.start} for a bit it quickly becomes apparent that this way of searching for help is very inefficient. We often know the name of the function we need to use and all we want to do is open that particular help file. We can do this using the \texttt{help} function:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{help}\NormalTok{(}\AttributeTok{topic =}\NormalTok{ Trig)}
+\end{Highlighting}
+\end{Shaded}
+
+After we run this line RStudio opens up the help file for the trigonometry topic in the \textbf{Help} tab. This file provides information about the various trigonometric functions such as \texttt{sin} or \texttt{cos} (we'll see how to make sense of such help pages in a bit).
+
+The \texttt{help} function needs a minimum of one argument: the name of the topic or function of interest. When we use it like this the help function searches across packages, looking for a help file whose name gives \textbf{an exact match} to the name we supplied. In this case, we opened the help file associated with the \texttt{Trig} topic.
+
+Most of the time we use the \texttt{help} function to find the help page for a specific function, rather than a general topic. This is fine if we can remember the name of the topic associated with different functions. Most of us cannot. Luckily, the help function will also match help pages by the name of the function(s) they cover:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{help}\NormalTok{(}\AttributeTok{topic =}\NormalTok{ sin)}
+\end{Highlighting}
+\end{Shaded}
+
+Here we searched for help on the \texttt{sin} function. This is part of the \texttt{Trig} topic so \texttt{help(topic\ =\ sin)} brings up the same page as the \texttt{help(topic\ =\ Trig)}.
+
+By default, the \texttt{help} function only searches for files associated with the base functions or with packages that we have loaded in the current session with the \texttt{library} function. If we want to search for help on the \texttt{mutate} function---part of the \textbf{dplyr} package---but we haven't run \texttt{library(dplyr)} in the current session this will fail:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{help}\NormalTok{(mutate)}
+\end{Highlighting}
+\end{Shaded}
+
+Instead, we need tell \texttt{help} where to look by setting the \texttt{package} argument:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{help}\NormalTok{(mutate, }\AttributeTok{package =} \StringTok{"dplyr"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Even very experienced R users regularly forget how to use the odd function and have to dive into the help. It's for this reason that R has a built in shortcut for \texttt{help} accessed via \texttt{?}. For example, instead of typing \texttt{help(topic\ =\ sin)} into the Console we can bring up the help page for the \texttt{sin} function by using \texttt{?} like this:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{?sin}
+\end{Highlighting}
+\end{Shaded}
+
+This is just a convenient shortcut that does the same thing as \texttt{help}. The only difference is that \texttt{?} does not allow us to set arguments such as \texttt{package}.
+
+\hypertarget{nav-help}{%
+\section{Navigating help files}\label{nav-help}}
+
+Navigating help files is a little daunting at first. These files can be quite long and contain a lot of technical jargon. The help files associated with functions---the most common type---do at least have a consistent structure with a number of distinct sections. Wrestling with a help file is much easier if we at least understand what each section is for. After the title, there are eight sections we need to know about:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  \textbf{Description} gives us a short overview of what the function is meant to be used for. If the help page covers a family of related functions it gives a collective overview of all the functions. Always read this before diving into the rest of the help file.
+\item
+  \textbf{Usage} shows how the function(s) are meant to be used. It lists each member of the family as well as their common arguments. The argument names are listed on their own if they have no default, or in name-value pairs, where the value gives the default should we choose not to set it ourselves.
+\item
+  \textbf{Arguments} lists the allowed arguments along with a short description of what they do. This also tells us what what kind of data we're allowed to use with each argument, along with the allowable values (if relevant). Always read this section.
+\item
+  \textbf{Details} describes precisely how the function(s) behave, often in painful detail. This is often the hardest-to-comprehend section. We can sometimes get away with ignoring this section but when we really want to understand a function we need to wade through it.
+\item
+  \textbf{Value} explains what kind of object a function returns when it finishes doing whatever it does. We can often possible to guess what this will be from the type of function, but nonetheless, it is a good idea to check whether our reasoning is correct.
+\item
+  \textbf{References} just lists the key reference(s) for when if we really need to know the `hows' and `whys' of a function. We can usually skip this information. The one exception is if the function implements a particular analysis tool. It's best to know how such tools work before trying to use them.
+\item
+  \textbf{See Also} gives links to the help pages of related functions. These are usually functions that do something similar to the function of interest or are meant to be used in conjunction with it. We can often learn quite a bit about packages or related functions by following the links in this section.
+\item
+  \textbf{Examples} provides one or more examples of how to use the function. These are stand-alone examples, so there's nothing to stop us running them. This is often the most useful section of all. Seeing a function in action is a very good way to cut through the jargon and understand how it works.
+\end{enumerate}
+
+\hypertarget{vignettes}{%
+\section{Vignettes and demos}\label{vignettes}}
+
+The purpose of a package vignette is to provide a relatively brief, practical account of one or more of its features. Not all packages come with vignettes, though the best packages often do. We use the \texttt{vignette} function to view all the available vignettes in Rstudio. This will open up a tab that lists each vignette under their associated package name along with a brief description. A package will often have more than one vignette.
+
+If we just want to see the vignettes associated with a particular package, we have to set the \texttt{package} argument. For example, to see the vignettes associated with \textbf{dplyr} we use:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{vignette}\NormalTok{(}\AttributeTok{package =} \StringTok{"dplyr"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Each vignette has a name (the ``topic'') and is available either as a PDF or HTML file (or both). We can view a particular vignette by passing the \texttt{vignette} function the \texttt{package} and \texttt{topic} arguments. For example, to view the ``grouping'' vignette in the \textbf{dplyr} package we would use:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{vignette}\NormalTok{(}\AttributeTok{topic =} \StringTok{"grouping"}\NormalTok{, }\AttributeTok{package =} \StringTok{"dplyr"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+The \texttt{vignette} function is fine, but it is more convenient to browse the list of vignettes inside a web browser. This allows us to open a particular vignette directly by clicking on its link, rather than working at the Console. We can use the \texttt{browseVignettes} function to do this:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{browseVignettes}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+This will open a page in our browser showing the vignettes we can view. As usual, we can narrow our options to a specific package by setting the \texttt{package} argument.
+
+  \bibliography{book.bib,packages.bib}
+
+\end{document}

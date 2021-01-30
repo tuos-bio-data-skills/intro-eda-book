@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>A Using R with RStudio | Exploratory Data Analysis with R</title>
+  <meta name="description" content="This is…" />
+  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="A Using R with RStudio | Exploratory Data Analysis with R" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="This is…" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="A Using R with RStudio | Exploratory Data Analysis with R" />
+  
+  <meta name="twitter:description" content="This is…" />
+  
+
+<meta name="author" content="Dylan Childs" />
+
+
+<meta name="date" content="2021-01-30" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="exploratory-data-analysis-with-ggplot2.html"/>
+<link rel="next" href="getting-help.html"/>
+<script src="libs/header-attrs-2.5/header-attrs.js"></script>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Exploratory Data Analysis with R</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>What you will learn</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#aims"><i class="fa fa-check"></i>Aims</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#topics"><i class="fa fa-check"></i>Topics</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#technologies"><i class="fa fa-check"></i>Technologies</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#what-is-r"><i class="fa fa-check"></i>What is R?</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#what-is-rstudio"><i class="fa fa-check"></i>What is RStudio?</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="get-up-and-running.html"><a href="get-up-and-running.html"><i class="fa fa-check"></i>Get up and running</a>
+<ul>
+<li class="chapter" data-level="0.1" data-path="get-up-and-running.html"><a href="get-up-and-running.html#conventions-in-the-course-book"><i class="fa fa-check"></i><b>0.1</b> Conventions in the course book</a></li>
+<li class="chapter" data-level="0.2" data-path="get-up-and-running.html"><a href="get-up-and-running.html#different-ways-to-run-rstudio"><i class="fa fa-check"></i><b>0.2</b> Different ways to run RStudio</a></li>
+<li class="chapter" data-level="0.3" data-path="get-up-and-running.html"><a href="get-up-and-running.html#installing-r-and-rstudio-locally"><i class="fa fa-check"></i><b>0.3</b> Installing R and RStudio locally</a>
+<ul>
+<li class="chapter" data-level="0.3.1" data-path="get-up-and-running.html"><a href="get-up-and-running.html#installing-r"><i class="fa fa-check"></i><b>0.3.1</b> Installing R</a></li>
+<li class="chapter" data-level="" data-path="get-up-and-running.html"><a href="get-up-and-running.html#installing-rstudio"><i class="fa fa-check"></i>Installing RStudio</a></li>
+</ul></li>
+<li class="chapter" data-level="0.4" data-path="get-up-and-running.html"><a href="get-up-and-running.html#the-anatomy-of-rstudio"><i class="fa fa-check"></i><b>0.4</b> The anatomy of RStudio</a></li>
+<li class="chapter" data-level="0.5" data-path="get-up-and-running.html"><a href="get-up-and-running.html#working-at-console"><i class="fa fa-check"></i><b>0.5</b> Working at the Console in RStudio</a></li>
+<li class="chapter" data-level="0.6" data-path="get-up-and-running.html"><a href="get-up-and-running.html#working-with-learnr-tutorials"><i class="fa fa-check"></i><b>0.6</b> Working with <strong>learnr</strong> tutorials</a></li>
+</ul></li>
+<li class="part"><span><b>I Introduction to R</b></span></li>
+<li class="chapter" data-level="1" data-path="quick-intro-to-r.html"><a href="quick-intro-to-r.html"><i class="fa fa-check"></i><b>1</b> A quick introduction to R</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="quick-intro-to-r.html"><a href="quick-intro-to-r.html#r-calculator"><i class="fa fa-check"></i><b>1.1</b> Using R as a big calculator</a>
+<ul>
+<li class="chapter" data-level="1.1.1" data-path="quick-intro-to-r.html"><a href="quick-intro-to-r.html#basic-arithmetic"><i class="fa fa-check"></i><b>1.1.1</b> Basic arithmetic</a></li>
+<li class="chapter" data-level="1.1.2" data-path="quick-intro-to-r.html"><a href="quick-intro-to-r.html#combining-arithmetic-operations"><i class="fa fa-check"></i><b>1.1.2</b> Combining arithmetic operations</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="quick-intro-to-r.html"><a href="quick-intro-to-r.html#problematic-calculations"><i class="fa fa-check"></i><b>1.2</b> Problematic calculations</a></li>
+<li class="chapter" data-level="1.3" data-path="quick-intro-to-r.html"><a href="quick-intro-to-r.html#assignment"><i class="fa fa-check"></i><b>1.3</b> Storing and reusing results</a></li>
+<li class="chapter" data-level="1.4" data-path="quick-intro-to-r.html"><a href="quick-intro-to-r.html#how-does-assignment-work"><i class="fa fa-check"></i><b>1.4</b> How does assignment work?</a></li>
+<li class="chapter" data-level="1.5" data-path="quick-intro-to-r.html"><a href="quick-intro-to-r.html#global-environment"><i class="fa fa-check"></i><b>1.5</b> Global environment</a></li>
+<li class="chapter" data-level="1.6" data-path="quick-intro-to-r.html"><a href="quick-intro-to-r.html#naming-rules-and-conventions"><i class="fa fa-check"></i><b>1.6</b> Naming rules and conventions</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="using-functions.html"><a href="using-functions.html"><i class="fa fa-check"></i><b>2</b> Using functions</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="using-functions.html"><a href="using-functions.html#intro-functions"><i class="fa fa-check"></i><b>2.1</b> Introduction</a></li>
+<li class="chapter" data-level="2.2" data-path="using-functions.html"><a href="using-functions.html#functions-and-arguments"><i class="fa fa-check"></i><b>2.2</b> Functions and arguments</a></li>
+<li class="chapter" data-level="2.3" data-path="using-functions.html"><a href="using-functions.html#evaluating-arguments-and-returning-results"><i class="fa fa-check"></i><b>2.3</b> Evaluating arguments and returning results</a></li>
+<li class="chapter" data-level="2.4" data-path="using-functions.html"><a href="using-functions.html#functions-do-not-have-side-effects"><i class="fa fa-check"></i><b>2.4</b> Functions do not have ‘side effects’</a></li>
+<li class="chapter" data-level="2.5" data-path="using-functions.html"><a href="using-functions.html#combining-functions"><i class="fa fa-check"></i><b>2.5</b> Combining functions</a></li>
+<li class="chapter" data-level="2.6" data-path="using-functions.html"><a href="using-functions.html#function-arguments"><i class="fa fa-check"></i><b>2.6</b> Specifying function arguments</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="vectors.html"><a href="vectors.html"><i class="fa fa-check"></i><b>3</b> Vectors</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="vectors.html"><a href="vectors.html#introduction"><i class="fa fa-check"></i><b>3.1</b> Introduction</a></li>
+<li class="chapter" data-level="3.2" data-path="vectors.html"><a href="vectors.html#atomic-vectors"><i class="fa fa-check"></i><b>3.2</b> Atomic vectors</a></li>
+<li class="chapter" data-level="3.3" data-path="vectors.html"><a href="vectors.html#intro-vectors"><i class="fa fa-check"></i><b>3.3</b> Numeric vectors</a></li>
+<li class="chapter" data-level="3.4" data-path="vectors.html"><a href="vectors.html#constructing-numeric-vectors"><i class="fa fa-check"></i><b>3.4</b> Constructing numeric vectors</a></li>
+<li class="chapter" data-level="3.5" data-path="vectors.html"><a href="vectors.html#named-vectors"><i class="fa fa-check"></i><b>3.5</b> Named vectors</a></li>
+<li class="chapter" data-level="3.6" data-path="vectors.html"><a href="vectors.html#vectorised-operations"><i class="fa fa-check"></i><b>3.6</b> Vectorised operations</a></li>
+<li class="chapter" data-level="3.7" data-path="vectors.html"><a href="vectors.html#other-vectors"><i class="fa fa-check"></i><b>3.7</b> Other kinds of atomic vectors</a>
+<ul>
+<li class="chapter" data-level="3.7.1" data-path="vectors.html"><a href="vectors.html#character-vectors"><i class="fa fa-check"></i><b>3.7.1</b> Character vectors</a></li>
+<li class="chapter" data-level="3.7.2" data-path="vectors.html"><a href="vectors.html#logical-vectors"><i class="fa fa-check"></i><b>3.7.2</b> Logical vectors</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="data-frames.html"><a href="data-frames.html"><i class="fa fa-check"></i><b>4</b> Data frames</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="data-frames.html"><a href="data-frames.html#introduction-1"><i class="fa fa-check"></i><b>4.1</b> Introduction</a></li>
+<li class="chapter" data-level="4.2" data-path="data-frames.html"><a href="data-frames.html#data-frames-intro"><i class="fa fa-check"></i><b>4.2</b> Data frames</a></li>
+<li class="chapter" data-level="4.3" data-path="data-frames.html"><a href="data-frames.html#exploring-data-frames"><i class="fa fa-check"></i><b>4.3</b> Exploring data frames</a></li>
+<li class="chapter" data-level="4.4" data-path="data-frames.html"><a href="data-frames.html#extracting-and-adding-a-single-variable"><i class="fa fa-check"></i><b>4.4</b> Extracting and adding a single variable</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="packages.html"><a href="packages.html"><i class="fa fa-check"></i><b>5</b> Packages</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="packages.html"><a href="packages.html#package-system"><i class="fa fa-check"></i><b>5.1</b> The R package system</a></li>
+<li class="chapter" data-level="5.2" data-path="packages.html"><a href="packages.html#task-views"><i class="fa fa-check"></i><b>5.2</b> Task views</a></li>
+<li class="chapter" data-level="5.3" data-path="packages.html"><a href="packages.html#use-packages"><i class="fa fa-check"></i><b>5.3</b> Using packages</a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="packages.html"><a href="packages.html#viewing-installed-packages"><i class="fa fa-check"></i><b>5.3.1</b> Viewing installed packages</a></li>
+<li class="chapter" data-level="5.3.2" data-path="packages.html"><a href="packages.html#installing-packages"><i class="fa fa-check"></i><b>5.3.2</b> Installing packages</a></li>
+<li class="chapter" data-level="5.3.3" data-path="packages.html"><a href="packages.html#loading-and-attaching-packages"><i class="fa fa-check"></i><b>5.3.3</b> Loading and attaching packages</a></li>
+<li class="chapter" data-level="5.3.4" data-path="packages.html"><a href="packages.html#dont-use-rstudio-for-loading-packages"><i class="fa fa-check"></i><b>5.3.4</b> Don’t use RStudio for loading packages!</a></li>
+<li class="chapter" data-level="5.3.5" data-path="packages.html"><a href="packages.html#an-analogy"><i class="fa fa-check"></i><b>5.3.5</b> An analogy</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="packages.html"><a href="packages.html#the-tidyverse-ecosystem-of-packages"><i class="fa fa-check"></i><b>5.4</b> The tidyverse ecosystem of packages</a></li>
+<li class="chapter" data-level="5.5" data-path="packages.html"><a href="packages.html#package-data"><i class="fa fa-check"></i><b>5.5</b> Package data</a></li>
+</ul></li>
+<li class="part"><span><b>II Data Wrangling</b></span></li>
+<li class="chapter" data-level="6" data-path="data-wrangling-with-dplyr.html"><a href="data-wrangling-with-dplyr.html"><i class="fa fa-check"></i><b>6</b> Data wrangling with <strong>dplyr</strong></a></li>
+<li class="part"><span><b>III Exporing Data</b></span></li>
+<li class="chapter" data-level="7" data-path="exploratory-data-analysis-with-ggplot2.html"><a href="exploratory-data-analysis-with-ggplot2.html"><i class="fa fa-check"></i><b>7</b> Exploratory data analysis with <strong>ggplot2</strong></a></li>
+<li class="appendix"><span><b>Supplementary Material</b></span></li>
+<li class="chapter" data-level="A" data-path="using-r-with-rstudio.html"><a href="using-r-with-rstudio.html"><i class="fa fa-check"></i><b>A</b> Using R with RStudio</a>
+<ul>
+<li class="chapter" data-level="A.1" data-path="using-r-with-rstudio.html"><a href="using-r-with-rstudio.html#working-with-scripts"><i class="fa fa-check"></i><b>A.1</b> Working with scripts</a>
+<ul>
+<li class="chapter" data-level="A.1.1" data-path="using-r-with-rstudio.html"><a href="using-r-with-rstudio.html#writing-scripts-in-rstudio"><i class="fa fa-check"></i><b>A.1.1</b> Writing scripts in RStudio</a></li>
+<li class="chapter" data-level="A.1.2" data-path="using-r-with-rstudio.html"><a href="using-r-with-rstudio.html#running-scripts-in-rstudio"><i class="fa fa-check"></i><b>A.1.2</b> Running scripts in RStudio</a></li>
+</ul></li>
+<li class="chapter" data-level="A.2" data-path="using-r-with-rstudio.html"><a href="using-r-with-rstudio.html#using-projects-in-rstudio"><i class="fa fa-check"></i><b>A.2</b> Using projects in RStudio</a></li>
+<li class="chapter" data-level="A.3" data-path="using-r-with-rstudio.html"><a href="using-r-with-rstudio.html#spotting-problems"><i class="fa fa-check"></i><b>A.3</b> Spotting problems</a>
+<ul>
+<li class="chapter" data-level="A.3.1" data-path="using-r-with-rstudio.html"><a href="using-r-with-rstudio.html#the-dreaded"><i class="fa fa-check"></i><b>A.3.1</b> The dreaded <code>+</code></a></li>
+<li class="chapter" data-level="A.3.2" data-path="using-r-with-rstudio.html"><a href="using-r-with-rstudio.html#errors"><i class="fa fa-check"></i><b>A.3.2</b> Errors</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="B" data-path="getting-help.html"><a href="getting-help.html"><i class="fa fa-check"></i><b>B</b> Getting help</a>
+<ul>
+<li class="chapter" data-level="B.1" data-path="getting-help.html"><a href="getting-help.html#console-help"><i class="fa fa-check"></i><b>B.1</b> Introduction</a></li>
+<li class="chapter" data-level="B.2" data-path="getting-help.html"><a href="getting-help.html#browsing-the-help-system"><i class="fa fa-check"></i><b>B.2</b> Browsing the help system</a></li>
+<li class="chapter" data-level="B.3" data-path="getting-help.html"><a href="getting-help.html#searching-for-help-files"><i class="fa fa-check"></i><b>B.3</b> Searching for help files</a></li>
+<li class="chapter" data-level="B.4" data-path="getting-help.html"><a href="getting-help.html#nav-help"><i class="fa fa-check"></i><b>B.4</b> Navigating help files</a></li>
+<li class="chapter" data-level="B.5" data-path="getting-help.html"><a href="getting-help.html#vignettes"><i class="fa fa-check"></i><b>B.5</b> Vignettes and demos</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Exploratory Data Analysis with R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="using-r-with-rstudio" class="section level1" number="8">
+<h1><span class="header-section-number">A</span> Using R with RStudio</h1>
+<div id="working-with-scripts" class="section level2" number="8.1">
+<h2><span class="header-section-number">A.1</span> Working with scripts</h2>
+<p>We’ve seen that using variables is useful because it enables us to break down a problem into a series of simpler steps. However, so far we’ve only been working in the Console. If we want to reuse a calculation when we’re working like this, we have to change a variable or two and then evaluate the expressions that do the job of solving an equation, make a graph, whatever. We also have to do all of this in the correct order, or things will not work as intended.</p>
+<p>We can see that working in the Console is not going to be practical most of the time. So what should we do? The answer is: put our sequence of R expressions into a text file, called a <strong>script</strong>. Calling it a script makes it sound a bit fancy and clever—“I spent all day debugging my script.” It is not. It is a boring text file that could be opened up in something like Notepad.exe. We just call it a script to signify the fact that the text contained in the file is a series of instructions telling our computer to do something.</p>
+<div id="dont-work-directly-in-the-console" class="section level4 infobox warning" number="8.1.0.1">
+<h4><span class="header-section-number">A.1.0.1</span> Don’t work directly in the Console</h4>
+<p>Working directly at the Console is the simplest way to use R, but we don’t recommend working this way unless you only need to do something very simple that involves a handful of steps. For more complicated activities you should always store your instructions in a script.</p>
+</div>
+<div id="writing-scripts-in-rstudio" class="section level3" number="8.1.1">
+<h3><span class="header-section-number">A.1.1</span> Writing scripts in RStudio</h3>
+<p>To open a new script in RStudio navigate to <code>File &gt; New File &gt; R Script</code>. This will open the new file in a fourth pane. This pane is the Source Code Editor we mentioned in the [Get up and running with R and RStudio] chapter. The name of the tab where this new file lives will be set to <strong>Untitled1</strong> if we haven’t opened any other new R Scripts. Here is what RStudio looks like after we do this (we’ve highlighted the new pane with a red asterisk):</p>
+<p><img src="images/RStudio-4-pane.png" /><!-- --></p>
+<p>When we work with a script we type the required sequence of R expressions into the Editor pane, <strong>not directly into the Console</strong>. This is important—if we mix and match mistakes happen. The worst of these is that we write a script that seems to work, only to find it is broken when we open it up and use it again later. This usually happens because we typed something into the Console that is needed to make the whole script run when we were preparing it, but then forget to put it into the script. Just don’t switch between using the Console and the Editor to avoid this.</p>
+<p>The easiest way to appreciate the benefits of using a script is to work with one. Here are a few lines of R code to copy-paste into the new Editor pane…</p>
+<div class="sourceCode" id="cb186"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb186-1"><a href="using-r-with-rstudio.html#cb186-1" aria-hidden="true" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb186-2"><a href="using-r-with-rstudio.html#cb186-2" aria-hidden="true" tabindex="-1"></a>b <span class="ot">&lt;-</span> <span class="dv">6</span></span>
+<span id="cb186-3"><a href="using-r-with-rstudio.html#cb186-3" aria-hidden="true" tabindex="-1"></a>c <span class="ot">&lt;-</span> <span class="dv">5</span></span>
+<span id="cb186-4"><a href="using-r-with-rstudio.html#cb186-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb186-5"><a href="using-r-with-rstudio.html#cb186-5" aria-hidden="true" tabindex="-1"></a>sqrt.b2ac <span class="ot">&lt;-</span> (b<span class="sc">^</span><span class="dv">2</span> <span class="sc">-</span><span class="dv">4</span> <span class="sc">*</span> a <span class="sc">*</span> c)<span class="sc">^</span>(<span class="dv">1</span><span class="sc">/</span><span class="dv">2</span>)</span>
+<span id="cb186-6"><a href="using-r-with-rstudio.html#cb186-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb186-7"><a href="using-r-with-rstudio.html#cb186-7" aria-hidden="true" tabindex="-1"></a>(<span class="sc">-</span>b <span class="sc">+</span> sqrt.b2ac) <span class="sc">/</span> (<span class="dv">2</span> <span class="sc">*</span> a)</span>
+<span id="cb186-8"><a href="using-r-with-rstudio.html#cb186-8" aria-hidden="true" tabindex="-1"></a>(<span class="sc">-</span>b <span class="sc">-</span> sqrt.b2ac) <span class="sc">/</span> (<span class="dv">2</span> <span class="sc">*</span> a)</span></code></pre></div>
+<p>…and here’s a partial screenshot of how the Editor pane might look (the details depend on how RStudio is set up):</p>
+<p><img src="images/editor-eg.png" /><!-- --></p>
+<p>Notice that parts of the R code is formatted by colour. This is called <strong>syntax highlighting</strong>. Syntax highlighting is a must have feature of any Editor. In a nutshell, syntax is a bit like the grammar of a computer language. It is the set of rules that determine how we form valid expressions, assign variables, and so on. The purpose of syntax highlighting is to draw attention to different components of syntax. We can see that when we use the Cobalt highlighting option, RStudio sets the background to black and displays variables in white, parentheses and arithmetic operators in orange, and numbers in red. It doesn’t matter so much what the colours are. What matters is that we have a visual means to distinguish these different kinds of elements, making it much easier to read a script.</p>
+<div id="choose-your-own-colour-scheme" class="section level4 unnumbered infobox action">
+<h4>Choose your own colour scheme</h4>
+<p>The first thing you will probably notice is that this Editor looks a little different from yours. We said earlier that RStudio was highly customisable. What we did above was change the way it does something called <strong>syntax highlighting</strong>. You can do this by navigating to <code>Tools &gt; Global Options...</code>, selecting the <code>Appearance</code> button, and picking the <code>Cobalt</code> option under <code>Editor theme</code>.</p>
+</div>
+<p>The other kind of elements RStudio has highlighted are in blue. We added these. They are called comments. Comments in R always start with a <code>#</code> symbol—this is called the “hash”" symbol (also known as the ‘pound’ symbol to North Americans of a certain age). <strong>Lines that start with <code>#</code> are completely ignored by R</strong>. They exist only to allow us, the developers of a script, to add notes and explanations that remind us how it all works.</p>
+<div id="comments-are-important" class="section level4 unnumbered infobox warning">
+<h4>Comments are important</h4>
+<p>At this point we just want to emphasise that <strong>you should always use comments in your scripts</strong> to remind yourself what your R code is supposed to be doing. Use them liberally to help you understand the logic of each script you write. This is another “take our word”" for it situation – if you do not use comments, then when you come back to your precious script in a few weeks/months/years time you will have no idea what it does.</p>
+</div>
+</div>
+<div id="running-scripts-in-rstudio" class="section level3" number="8.1.2">
+<h3><span class="header-section-number">A.1.2</span> Running scripts in RStudio</h3>
+<p>The whole point of writing a script is ultimately to run it. The phrase “run our code” is shorthand for “send a number of R expressions to the R interpreter to be read and evaluated.” The latter is tedious to write (and read) over and over again, so we will just write “run your/my/our code.” We could run the code in the above script by copying and pasting it into the Console, but this is inefficient. Instead of relying on cut and paste, RStudio gives us different ways to run our code:</p>
+<ul>
+<li><p>There is a <code>Run</code> button at the top right of the Editor pane. As we might imagine, clicking on this will run some code. If we haven’t highlighted anything in the Editor, this runs whichever line the cursor is at, i.e. it runs just that one line. If we had highlighted a region inside the Editor, this button will run all of that in sequence.</p></li>
+<li><p>No one likes clicking buttons. Luckily, pressing Control+Enter (or Command+Enter on a Mac) does exactly the same thing as the <code>Run</code> button. It also uses the same rules to decide which bits of code to run or not<a href="#fn7" class="footnote-ref" id="fnref7"><sup>7</sup></a>.</p></li>
+</ul>
+<p>Now that we know how to ‘run our code,’ we can run every line in the script we just started. Here’s what should happen at the Console when we do this:</p>
+<div class="sourceCode" id="cb187"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb187-1"><a href="using-r-with-rstudio.html#cb187-1" aria-hidden="true" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb187-2"><a href="using-r-with-rstudio.html#cb187-2" aria-hidden="true" tabindex="-1"></a>b <span class="ot">&lt;-</span> <span class="dv">6</span></span>
+<span id="cb187-3"><a href="using-r-with-rstudio.html#cb187-3" aria-hidden="true" tabindex="-1"></a>c <span class="ot">&lt;-</span> <span class="dv">5</span></span>
+<span id="cb187-4"><a href="using-r-with-rstudio.html#cb187-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb187-5"><a href="using-r-with-rstudio.html#cb187-5" aria-hidden="true" tabindex="-1"></a>sqrt.b2ac <span class="ot">&lt;-</span> (b<span class="sc">^</span><span class="dv">2</span> <span class="sc">-</span><span class="dv">4</span> <span class="sc">*</span> a <span class="sc">*</span> c)<span class="sc">^</span>(<span class="dv">1</span><span class="sc">/</span><span class="dv">2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb188"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb188-1"><a href="using-r-with-rstudio.html#cb188-1" aria-hidden="true" tabindex="-1"></a>(<span class="sc">-</span>b <span class="sc">+</span> sqrt.b2ac) <span class="sc">/</span> (<span class="dv">2</span> <span class="sc">*</span> a)</span></code></pre></div>
+<pre><code>## [1] -1</code></pre>
+<div class="sourceCode" id="cb190"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb190-1"><a href="using-r-with-rstudio.html#cb190-1" aria-hidden="true" tabindex="-1"></a>(<span class="sc">-</span>b <span class="sc">-</span> sqrt.b2ac) <span class="sc">/</span> (<span class="dv">2</span> <span class="sc">*</span> a)</span></code></pre></div>
+<pre><code>## [1] -5</code></pre>
+<p>This works exactly as though we typed or pasted the sequence of R expressions into the Console, hitting Enter each time we get to the end of a line. What this means is that we can use this script to find the solutions to any quadratic equation with ‘real roots.’ All we have to do is edit the values assigned to <code>a</code>, <code>b</code> and <code>c</code> and then rerun <strong>the whole script</strong>. We can’t just rerun bits of it because everything is designed to work together, in sequence.</p>
+<p>Now that we have a script that does something a little bit useful we might wish to reuse it at some point. It’s just a text file, so we can save the script as we would any other file. We can do this using the familiar menu-based approach (<code>File &gt; Save As...</code>) or via the keyboard shortcut <code>Control+S</code> (or <code>Command+S</code> on a Mac). The only thing to keep in mind is that we must use the file extension <code>.R</code> or <code>.r</code> when we name the file, e.g. <code>my_great_script.R</code>. This is because RStudio uses the file extension to detect the fact that a file is an R script and not an ordinary text file. If we don’t do this, then next time we open up the file in RStudio we won’t be able to access the fancy Editor features like syntax highlighting, nor will we be able to send lines to the Console without using copy-paste.</p>
+<p>From now on always work with scripts. No more typing into the Console!</p>
+<div id="do-not-use-install.packages-in-scripts" class="section level4 unnumbered infobox warning">
+<h4>Do not use <code>install.packages</code> in scripts</h4>
+<p>Because installing a package is a “do once” operation, it is almost never a good idea to place <code>install.packages</code> in a typical R script. A script may be run 100s of times as we develop an analysis. Installing a package is quite time consuming, so we don’t really want to do it every time we run our analysis. As long as the package has been installed at some point in the past it is ready to be used and the script will work fine without re-installing it.</p>
+</div>
+</div>
+</div>
+<div id="using-projects-in-rstudio" class="section level2" number="8.2">
+<h2><span class="header-section-number">A.2</span> Using projects in RStudio</h2>
+<p>[COMPLETE ME]</p>
+</div>
+<div id="spotting-problems" class="section level2" number="8.3">
+<h2><span class="header-section-number">A.3</span> Spotting problems</h2>
+<p>We may as well get something out of the way early on. It’s painfully easy to accidentally ask R to do something that contains an error of some kind. Mistakes happen all the time when writing R code—everyone does it. It’s not a problem when this happens. When it does though, it’s important to step back and work out what went wrong.</p>
+<div id="the-dreaded" class="section level3" number="8.3.1">
+<h3><span class="header-section-number">A.3.1</span> The dreaded <code>+</code></h3>
+<p>Be careful when highlighting code to run. RStudio will run exactly the text that is highlighted. If we start or finish the highlighted region in the middle of an expression then one of three things will usually happen. If we’re lucky we’ll generate an error because we ran an invalid partial expression. We say this is lucky because the error will at least be easy to spot. If we’re unlucky, we might end up running part of an expression that <em>is itself</em> a valid expression, but does not do what we had intended. This is harder to spot because it won’t generate an error, and it will probably create problems further down the line.</p>
+<p>The third outcome is that the Console will look something like this:</p>
+<p><img src="images/dreaded-plus.png" /><!-- --></p>
+<p>What happened? Look carefully at the little snippet of R code we sent to the Console. It’s not a complete R expression, because it is missing a closing parenthesis: <code>)</code>. When R receives only part of an expression like this, which has correct syntax but is not complete, it sits and waits for the rest of the expression. This is what the <code>+</code> at the Console signifies. When we see this we have two options. We can manually type in the missing part of the expression and hit Enter, or (better) we can hit the Escape key to return you to the prompt <code>&gt;</code> and start again. The first option is rather error prone so we would generally prefer the latter.</p>
+</div>
+<div id="errors" class="section level3" number="8.3.2">
+<h3><span class="header-section-number">A.3.2</span> Errors</h3>
+<p>Here is an example of what happens at the Console when we generate an error:</p>
+<div class="sourceCode" id="cb192"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb192-1"><a href="using-r-with-rstudio.html#cb192-1" aria-hidden="true" tabindex="-1"></a>xyz <span class="sc">+</span> <span class="dv">2</span></span></code></pre></div>
+<pre><code>## Error in eval(expr, envir, enclos): object &#39;xyz&#39; not found</code></pre>
+<p>In general terms, what happened is that R read in the instruction <code>xyz + 2</code>, tried to evaluate it, and found it could not. This is because the variable <code>xyz</code> does not exist, i.e. we never made a variable called <code>xyz</code>. Upon running into the error, R printed something to the screen to tell us we’ve made a mistake (“Error: object ‘xyz’ not found”).</p>
+<p>When this happens we say R has ‘thrown an error.’ We know its an error because the message is in a warning colour (probably red or orange—it depends how RStudio is set up) and contains the word <code>Error</code>. The bit after the <code>:</code> is an attempt by R to tell us what went wrong. Always <strong>read the error messages</strong>. They will be incomprehensible at first, but they will eventually start to make more sense and become helpful (usually—sometimes they make no sense whatsoever, even to experienced users). This way of learning only works if we read the error messages in the first place though.</p>
+
+</div>
+</div>
+</div>
+<div class="footnotes">
+<hr />
+<ol start="7">
+<li id="fn7"><p>We can also run lines of code via the <code>Code &gt; Run Lines</code>. This is easily the most inefficient method after cut and paste. It’s only there in case we forget our keyboard shortcut or cannot remember where the run button is.<a href="using-r-with-rstudio.html#fnref7" class="footnote-back">↩︎</a></p></li>
+</ol>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="exploratory-data-analysis-with-ggplot2.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="getting-help.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["intro-bio-data-book.pdf", "intro-bio-data-book.epub"],
+"toc": {
+"collapse": "section"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
