@@ -1,8 +1,3 @@
-conventions-in-the-course-book
-different-ways-to-run-rstudio
-installing-r-and-rstudio-locally
-a-quick-look-at-rstudio
-working-at-console
 quick-intro-to-r
 r-calculator
 basic-arithmetic
@@ -16,9 +11,9 @@ using-functions
 intro-functions
 functions-and-arguments
 evaluating-arguments-and-returning-results
-functions-do-not-have-side-effects
-combining-functions
 function-arguments
+combining-functions
+functions-do-not-have-side-effects
 vectors
 introduction
 atomic-vectors
@@ -47,15 +42,6 @@ the-tidyverse-ecosystem-of-packages
 package-data
 data-wrangling-with-dplyr
 exploratory-data-analysis-with-ggplot2
-using-r-with-rstudio
-working-with-scripts
-dont-work-directly-in-the-console
-writing-scripts-in-rstudio
-running-scripts-in-rstudio
-using-projects-in-rstudio
-spotting-problems
-the-dreaded
-errors
 getting-help
 console-help
 browsing-the-help-system
