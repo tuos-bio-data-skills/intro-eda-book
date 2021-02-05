@@ -146,7 +146,7 @@
 
 \title{Exploratory Data Analysis with R}
 \author{Dylan Childs}
-\date{2021-01-30}
+\date{2021-02-05}
 
 \begin{document}
 \maketitle
@@ -245,16 +245,13 @@ So what is RStudio? In one sense RStudio is just another Graphical User Interfac
 
 We'll only scratch the surface of what RStudio can do. The reason for introducing a powerful tool like RStudio is because one day you may need to access sophisticated features like debugging facilities, package build tools, and repository management. RStudio makes it easy to use these advanced tools.
 
-\hypertarget{get-up-and-running}{%
-\chapter*{Get up and running}\label{get-up-and-running}}
-\addcontentsline{toc}{chapter}{Get up and running}
-
-\hypertarget{conventions-in-the-course-book}{%
-\section{Conventions in the course book}\label{conventions-in-the-course-book}}
+\hypertarget{how-to-use-this-book}{%
+\chapter*{How to use this book}\label{how-to-use-this-book}}
+\addcontentsline{toc}{chapter}{How to use this book}
 
 \hypertarget{text-instructions-and-explanations}{%
-\subsubsection*{Text, instructions, and explanations}\label{text-instructions-and-explanations}}
-\addcontentsline{toc}{subsubsection}{Text, instructions, and explanations}
+\section*{Text, instructions, and explanations}\label{text-instructions-and-explanations}}
+\addcontentsline{toc}{section}{Text, instructions, and explanations}
 
 Normal text---instructions, explanations and so on---are written in the same type as this document. We will tend to use bold for emphasis and italics to highlight specific technical terms when they are first introduced.
 
@@ -290,9 +287,9 @@ This is a \textbf{warning} box. These usually highlight a common `gotcha' that m
 
 \end{infobox}
 
-\hypertarget{r-code-and-output-in-this-book}{%
-\subsubsection*{R code and output in this book}\label{r-code-and-output-in-this-book}}
-\addcontentsline{toc}{subsubsection}{R code and output in this book}
+\hypertarget{r-code-and-output}{%
+\section*{R code and output}\label{r-code-and-output}}
+\addcontentsline{toc}{section}{R code and output}
 
 We try to illustrate as many ideas as we can using snippets of real R code. It's a good idea to run these when working through a topic. The best way to learn something is to use it. Of course, in order to do that we need to know what we're looking at\ldots{} Stand alone snippets will be formatted like this:
 
@@ -315,8 +312,13 @@ A sequence of selections from an RStudio menu is indicated as follows: e.g.~\tex
 
 File names referred to in general text are given in upper case in the normal typeface: e.g.~MYFILE.CSV.
 
+\hypertarget{get-up-and-running}{%
+\chapter*{Get up and running}\label{get-up-and-running}}
+\addcontentsline{toc}{chapter}{Get up and running}
+
 \hypertarget{different-ways-to-run-rstudio}{%
-\section{Different ways to run RStudio}\label{different-ways-to-run-rstudio}}
+\section*{Different ways to run RStudio}\label{different-ways-to-run-rstudio}}
+\addcontentsline{toc}{section}{Different ways to run RStudio}
 
 We can run RStudio in a variety of different ways---
 
@@ -342,7 +344,8 @@ If you're lucky enough to have access to RStudio Server or an RStudio Cloud acco
 \end{infobox}
 
 \hypertarget{installing-r-and-rstudio-locally}{%
-\section{Installing R and RStudio locally}\label{installing-r-and-rstudio-locally}}
+\section*{Installing R and RStudio locally}\label{installing-r-and-rstudio-locally}}
+\addcontentsline{toc}{section}{Installing R and RStudio locally}
 
 It does not need to cost a penny to use R and RStudio. The source code for R is open source, meaning anyone with the time, energy and expertise is free to download it and alter it as they please. Open source does not necessarily mean free, as in it costs £0 to use, but luckily R \textbf{is} free in this sense. On the other hand, RStudio is developed and maintained by a for-profit company (called\ldots{} RStudio). Luckily, because they make their money selling professional software and services, the open source desktop version of RStudio is also free to use. This section will show you how to download and install R and RStudio.
 
@@ -361,7 +364,8 @@ After installing R it should be visible in the Programs menu on a Windows comput
 RStudio can be downloaded from the RStudio \href{http://www.rstudio.com/products/RStudio/\#Desk}{download page}. The one to go for is the Open Source Edition of RStudio Desktop, \textbf{not} the commercial version of RStudio Desktop called RStudio Desktop Pro. RStudio installs like any other piece of software---just run the installer and follow the instructions. There's no need to configure after after installation.
 
 \hypertarget{a-quick-look-at-rstudio}{%
-\section{A quick look at RStudio}\label{a-quick-look-at-rstudio}}
+\section*{A quick look at RStudio}\label{a-quick-look-at-rstudio}}
+\addcontentsline{toc}{section}{A quick look at RStudio}
 
 Once installed RStudio runs like any other stand-alone application via the Programs menu or the Applications folder on a Windows PC or Mac, respectively (though it will only work properly if R is also installed). Here is how RStudio appears the first time it runs on a Mac:
 
@@ -390,9 +394,10 @@ Don't be alarmed if RStudio looks different on your computer. RStudio saves its 
 \end{infobox}
 
 \hypertarget{working-at-console}{%
-\section{Working at the Console in RStudio}\label{working-at-console}}
+\section*{Working at the Console in RStudio}\label{working-at-console}}
+\addcontentsline{toc}{section}{Working at the Console in RStudio}
 
-R was designed to be used interactively---it is what is known as an \textbf{interpreted language}, which we can interact with via something called a Command Line Interface (CLI). This is just a fancy way of saying that we can type an instructions to ``do something'' directly into the Console and those instructions will then be interpreted when we hit the Enter key. If our R expression does not contain any errors, R will then do something like read in some data, perform a calculation, make a figure, and so on. What actually happens obviously depends on what we ask it to do.
+R was designed to be used interactively---it is what is known as an \textbf{interpreted language}, which we can interact with via something called a Command Line Interface (CLI). This is just a fancy way of saying that we can type instructions to ``do something'' into the Console and those instructions will then be interpreted when we hit the Enter key. If our R instructions do not contain any errors, R will then do something like read in some data, perform a calculation, make a figure, and so on. What actually happens obviously depends on what we ask it to do.
 
 Let's briefly see what all this means by doing something very simple with R. Type \texttt{1\ +\ 3} at the Console and hit the Enter key:
 
@@ -1057,8 +1062,8 @@ The important thing to realise is that the expression(s) on the right hand side 
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{myvar }\OtherTok{\textless{}{-}} \FloatTok{2.3} \SpecialCharTok{+} \FloatTok{1.4}
-\FunctionTok{round}\NormalTok{(}\AttributeTok{x =}\NormalTok{ myvar, }\AttributeTok{digits =} \DecValTok{0}\NormalTok{)}
+\NormalTok{y }\OtherTok{\textless{}{-}} \FloatTok{2.3} \SpecialCharTok{+} \FloatTok{1.4}
+\FunctionTok{round}\NormalTok{(}\AttributeTok{x =}\NormalTok{ y, }\AttributeTok{digits =} \DecValTok{0}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1066,7 +1071,7 @@ The important thing to realise is that the expression(s) on the right hand side 
 ## [1] 4
 \end{verbatim}
 
-This time we created a new variable called \texttt{myvar} and then supplied this as the value of the \texttt{x} argument. When we call the \texttt{round} function like this, the R interpreter spots the fact that something on the right hand side of an \texttt{=} is a variable and associates the value of this variable with \texttt{x} argument. As long as we have actually defined the numeric variable \texttt{myvar} at some point we can use it as the value of an argument.
+This time we created a new variable called \texttt{y} and then supplied this as the value of the \texttt{x} argument. When we call the \texttt{round} function like this, the R interpreter spots the fact that something on the right hand side of an \texttt{=} is a variable and associates the value of this variable with \texttt{x} argument. As long as we have actually defined the numeric variable \texttt{y} at some point we can use it as the value of an argument.
 
 We said at the beginning of this section that a function may optionally \textbf{return} a value to us when it completes its task. That word `return' is jargon that refers to the process by which a function outputs a value. If we use a function at the Console the returned value is printed out. However, we can use this value in other ways. For example, there is nothing to stop us combining function calls with the arithmetic operations:
 
@@ -1114,109 +1119,6 @@ What is going on here? The key to understanding this is to realise that the symb
 The message here is that what matters is where things appear relative to the \texttt{=}, not the symbols used to represent them.
 
 \end{infobox}
-
-\hypertarget{functions-do-not-have-side-effects}{%
-\section{Functions do not have `side effects'}\label{functions-do-not-have-side-effects}}
-
-There is one idea about functions that every R user needs to understand if they are to avoid confusion. It relates to how functions modify their arguments, or more accurately, how they \textbf{do not} modify their arguments. Take a look at this example:
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{myvar }\OtherTok{\textless{}{-}} \FloatTok{3.7}
-\FunctionTok{round}\NormalTok{(}\AttributeTok{x =}\NormalTok{ myvar, }\AttributeTok{digits =} \DecValTok{0}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## [1] 4
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{myvar}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## [1] 3.7
-\end{verbatim}
-
-We created a variable \texttt{myvar} with the value 3.7, rounded this to a whole number with \texttt{round}, printed out the result, and then printed the value of \texttt{myvar}. Notice that \textbf{the value of \texttt{myvar} has not changed} after using it as an argument to \texttt{round}.
-
-This is important. R functions do not typically alter the values of their arguments (we say `typically' because there are ways to alter this behaviour if we really want to). The standard behaviour---that functions do not alter their arguments---is captured by the phrase `functions do not have side effects'.
-
-If we had intended to round the value of \texttt{myvar} so that we can use this new value later on, we have to assign the result of function evaluation, like this:
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{myvar }\OtherTok{\textless{}{-}} \FloatTok{3.7}
-\NormalTok{myvar }\OtherTok{\textless{}{-}} \FunctionTok{round}\NormalTok{(}\AttributeTok{x =}\NormalTok{ myvar, }\AttributeTok{digits =} \DecValTok{0}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-The reason for pointing out this behaviour is because new R users sometimes assume a function will change its arguments. R functions do not typically do this. If we want to make use of changes, rather than simply print them to the Console, we need to assign the result a name, either by creating a new variable or overwriting the old one. So\ldots. remember---functions do not have side effects! Forgetting this creates all kinds of headaches.
-
-\hypertarget{combining-functions}{%
-\section{Combining functions}\label{combining-functions}}
-
-Using R to do `real work' usually involves linked steps, each facilitated by a different function. There is more than one way to achieve this. Here's a simple example that uses an approach we already know about:
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{myvar }\OtherTok{\textless{}{-}} \FunctionTok{sqrt}\NormalTok{(}\AttributeTok{x =} \DecValTok{10}\NormalTok{)}
-\FunctionTok{round}\NormalTok{(}\AttributeTok{x =}\NormalTok{ myvar, }\AttributeTok{digits =} \DecValTok{0}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## [1] 3
-\end{verbatim}
-
-These two lines calculate the square root of the number 10 and assigned the result to \texttt{myvar}, then round this to a whole number and print the result. This method of linking steps together assigns a name to the result at each step, and then uses this as the argument to a function in the next step.
-
-Here is another way to replicate the same calculation:
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{round}\NormalTok{(}\AttributeTok{x =} \FunctionTok{sqrt}\NormalTok{(}\AttributeTok{x =} \DecValTok{10}\NormalTok{), }\AttributeTok{digits =} \DecValTok{0}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## [1] 3
-\end{verbatim}
-
-The technical name for this is \textbf{function composition} or \textbf{function nesting}: the \texttt{sqrt} function is `nested inside' the \texttt{round} function. The way we have to read these constructs is \textbf{from the inside out}. The \texttt{sqrt(x\ =\ 10)} expression is on the right hand side of an \texttt{=} symbol, so this is evaluated first, the result is associated with the \texttt{x} argument of the \texttt{round} function, and only then does the \texttt{round} function do its job.
-
-Notive that there aren't really any new ideas here. We have already seen that the R interpreter evaluates whatever is on the right hand side of the \texttt{=} symbol first before associating the resulting value with the appropriate argument name.
-
-We can extend this nesting idea to do more complicated calculations, i.e.~there's nothing to stop us using multiple levels of nesting either. Take a look at this example:
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{round}\NormalTok{(}\AttributeTok{x =} \FunctionTok{sqrt}\NormalTok{(}\AttributeTok{x =} \FunctionTok{abs}\NormalTok{(}\AttributeTok{x =} \SpecialCharTok{{-}}\DecValTok{10}\NormalTok{)), }\AttributeTok{digits =} \DecValTok{0}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## [1] 3
-\end{verbatim}
-
-The \texttt{abs} function takes the absolute value of a number, i.e.~removes the \texttt{-} sign if it is there. Remember, read nested calls from the inside out:
-
-\begin{itemize}
-\tightlist
-\item
-  first we find the absolute value of -10,
-\item
-  we calculation the square root of the resulting number (10), and
-\item
-  then we rounded this to a whole number.
-\end{itemize}
-
-Nested function calls can be useful because they make R code less verbose (we write less) but this comes at a significant cost of reduced readability. No reasonable person would say that \texttt{round(x\ =\ sqrt(x\ =\ abs(x\ =\ -10)),\ digits\ =\ 0)} is easy to read! For this reason, we aim to keep function nesting to a minimum in this book. We will occasionally have to work with the nesting construct though, so it is important to understand how it works even if we don't like using it.
-
-The good news is that we'll see a much-easier-to-read method for applying a series of functions in the Data Wrangling block.
 
 \hypertarget{function-arguments}{%
 \section{Specifying function arguments}\label{function-arguments}}
@@ -1291,6 +1193,109 @@ Here is some advice. Do not rely on partial matching of function names. It just 
 What about position matching? This can also cause problems if we're not paying attention. For example, if you forget the order of the arguments to a function and then place your arguments in the wrong place, you will either generate an error or produce a nonsensical result. It is nice not to have to type out the \texttt{name\ =\ value} construct all the time though, so our advice is to rely positional matching only for the first argument. This is a common convention in R, and it makes sense because it is often obvious what kind of information or data the first argument should carry, so the its name is redundant.
 
 \end{infobox}
+
+\hypertarget{combining-functions}{%
+\section{Combining functions}\label{combining-functions}}
+
+Using R to do `real work' usually involves linked steps, each facilitated by a different function. There is more than one way to achieve this. Here's a simple example that uses an approach we already know about:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{y }\OtherTok{\textless{}{-}} \FunctionTok{sqrt}\NormalTok{(}\DecValTok{10}\NormalTok{)}
+\FunctionTok{round}\NormalTok{(y, }\AttributeTok{digits =} \DecValTok{1}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 3.2
+\end{verbatim}
+
+These two lines calculate the square root of the number 10 and assigned the result to \texttt{y}, then round this to one decimal place and print the result. This method of linking steps together assigns a name to the result at each step, and then uses this as the argument to a function in the next step.
+
+Here is another way to replicate the same calculation:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{round}\NormalTok{(}\FunctionTok{sqrt}\NormalTok{(}\DecValTok{10}\NormalTok{), }\AttributeTok{digits =} \DecValTok{1}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 3.2
+\end{verbatim}
+
+The technical name for this is \textbf{function composition} or \textbf{function nesting}: the \texttt{sqrt} function is `nested inside' the \texttt{round} function. The way we have to read these constructs is \textbf{from the inside out}. The \texttt{sqrt(10)} expression is on the right hand side of an \texttt{=} symbol, so this is evaluated first, the result is associated with the first argument of the \texttt{round} function, and only then does the \texttt{round} function do its job.
+
+There aren't really any new ideas here. We have already seen that R evaluates whatever is on the right hand side of the \texttt{=} symbol first before associating the resulting value with the appropriate argument name.
+
+We can extend this nesting idea to do more complicated calculations, i.e.~there's nothing to stop us using multiple levels of nesting either. Take a look at this example:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{round}\NormalTok{(}\FunctionTok{sqrt}\NormalTok{(}\FunctionTok{abs}\NormalTok{(}\SpecialCharTok{{-}}\DecValTok{10}\NormalTok{)), }\AttributeTok{digits =} \DecValTok{1}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 3.2
+\end{verbatim}
+
+The \texttt{abs} function takes the absolute value of a number, i.e.~removes the \texttt{-} sign if it is there. Remember, read nested calls from the inside out:
+
+\begin{itemize}
+\tightlist
+\item
+  first we find the absolute value of -10,
+\item
+  we calculation the square root of the resulting number (10), and
+\item
+  then we rounded this to a whole number.
+\end{itemize}
+
+Nested function calls can be useful because they make R code less verbose (we write less) but this comes at a significant cost of reduced readability. No reasonable person would say that \texttt{round(sqrt(abs(-10)),\ digits\ =\ 1)} is easy to read! For this reason, we aim to keep function nesting to a minimum. We will occasionally have to use the nesting construct, so it is important to understand how it works even if we don't like it.
+
+The good news is that we'll see a much-easier-to-read method for applying a series of functions in the Data Wrangling block.
+
+\hypertarget{functions-do-not-have-side-effects}{%
+\section{Functions do not have `side effects'}\label{functions-do-not-have-side-effects}}
+
+We'll finish this chapter with an idea that every R user needs to understand if they are to avoid confusion. It relates to how functions modify their arguments, or more accurately, how they \textbf{do not} modify their arguments. Take a look at this example:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{y }\OtherTok{\textless{}{-}} \FloatTok{3.7}
+\FunctionTok{round}\NormalTok{(y, }\AttributeTok{digits =} \DecValTok{0}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 4
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{y}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 3.7
+\end{verbatim}
+
+We created a variable \texttt{y} with the value 3.7, rounded this to a whole number with \texttt{round}, printed out the result, and then printed the value of \texttt{y}. Notice that \textbf{the value of \texttt{y} has not changed} after using it as an argument to \texttt{round}.
+
+This is important. R functions do not typically alter the values of their arguments (we say `typically' because there are ways to alter this behaviour if we really want to). The standard behaviour---that functions do not alter their arguments---is captured by the phrase `functions do not have side effects'.
+
+If we had intended to round the value of \texttt{y} so that we can use this new value later on, we have to assign the result of function evaluation, like this:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{y }\OtherTok{\textless{}{-}} \FloatTok{3.7}
+\NormalTok{y }\OtherTok{\textless{}{-}} \FunctionTok{round}\NormalTok{(y, }\AttributeTok{digits =} \DecValTok{0}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+The reason for pointing out this behaviour is because new R users sometimes assume a function will change its arguments. R functions do not typically do this. If we want to make use of changes, rather than simply print them to the Console, we need to assign the result a name, either by creating a new variable or overwriting the old one. So\ldots. remember---functions do not have side effects! Forgetting this creates all kinds of headaches.
 
 \hypertarget{vectors}{%
 \chapter{Vectors}\label{vectors}}
@@ -2237,177 +2242,6 @@ We describe how to use \textbf{ggplot2} to visually explore data in this section
 \hypertarget{appendix-supplementary-material}{%
 \appendix}
 
-
-\hypertarget{using-r-with-rstudio}{%
-\chapter{Using R with RStudio}\label{using-r-with-rstudio}}
-
-\hypertarget{working-with-scripts}{%
-\section{Working with scripts}\label{working-with-scripts}}
-
-We've seen that using variables is useful because it enables us to break down a problem into a series of simpler steps. However, so far we've only been working in the Console. If we want to reuse a calculation when we're working like this, we have to change a variable or two and then evaluate the expressions that do the job of solving an equation, make a graph, whatever. We also have to do all of this in the correct order, or things will not work as intended.
-
-We can see that working in the Console is not going to be practical most of the time. So what should we do? The answer is: put our sequence of R expressions into a text file, called a \textbf{script}. Calling it a script makes it sound a bit fancy and clever---``I spent all day debugging my script''. It is not. It is a boring text file that could be opened up in something like Notepad.exe. We just call it a script to signify the fact that the text contained in the file is a series of instructions telling our computer to do something.
-
-\begin{infobox}{warning}
-
-\hypertarget{dont-work-directly-in-the-console}{%
-\subsubsection{Don't work directly in the Console}\label{dont-work-directly-in-the-console}}
-
-Working directly at the Console is the simplest way to use R, but we don't recommend working this way unless you only need to do something very simple that involves a handful of steps. For more complicated activities you should always store your instructions in a script.
-
-\end{infobox}
-
-\hypertarget{writing-scripts-in-rstudio}{%
-\subsection{Writing scripts in RStudio}\label{writing-scripts-in-rstudio}}
-
-To open a new script in RStudio navigate to \texttt{File\ \textgreater{}\ New\ File\ \textgreater{}\ R\ Script}. This will open the new file in a fourth pane. This pane is the Source Code Editor we mentioned in the {[}Get up and running with R and RStudio{]} chapter. The name of the tab where this new file lives will be set to \textbf{Untitled1} if we haven't opened any other new R Scripts. Here is what RStudio looks like after we do this (we've highlighted the new pane with a red asterisk):
-
-\includegraphics{images/RStudio-4-pane.png}
-
-When we work with a script we type the required sequence of R expressions into the Editor pane, \textbf{not directly into the Console}. This is important---if we mix and match mistakes happen. The worst of these is that we write a script that seems to work, only to find it is broken when we open it up and use it again later. This usually happens because we typed something into the Console that is needed to make the whole script run when we were preparing it, but then forget to put it into the script. Just don't switch between using the Console and the Editor to avoid this.
-
-The easiest way to appreciate the benefits of using a script is to work with one. Here are a few lines of R code to copy-paste into the new Editor pane\ldots{}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{a }\OtherTok{\textless{}{-}} \DecValTok{1}
-\NormalTok{b }\OtherTok{\textless{}{-}} \DecValTok{6}
-\NormalTok{c }\OtherTok{\textless{}{-}} \DecValTok{5}
-
-\NormalTok{sqrt.b2ac }\OtherTok{\textless{}{-}}\NormalTok{ (b}\SpecialCharTok{\^{}}\DecValTok{2} \SpecialCharTok{{-}}\DecValTok{4} \SpecialCharTok{*}\NormalTok{ a }\SpecialCharTok{*}\NormalTok{ c)}\SpecialCharTok{\^{}}\NormalTok{(}\DecValTok{1}\SpecialCharTok{/}\DecValTok{2}\NormalTok{)}
-
-\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{b }\SpecialCharTok{+}\NormalTok{ sqrt.b2ac) }\SpecialCharTok{/}\NormalTok{ (}\DecValTok{2} \SpecialCharTok{*}\NormalTok{ a)}
-\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{b }\SpecialCharTok{{-}}\NormalTok{ sqrt.b2ac) }\SpecialCharTok{/}\NormalTok{ (}\DecValTok{2} \SpecialCharTok{*}\NormalTok{ a)}
-\end{Highlighting}
-\end{Shaded}
-
-\ldots and here's a partial screenshot of how the Editor pane might look (the details depend on how RStudio is set up):
-
-\includegraphics{images/editor-eg.png}
-
-Notice that parts of the R code is formatted by colour. This is called \textbf{syntax highlighting}. Syntax highlighting is a must have feature of any Editor. In a nutshell, syntax is a bit like the grammar of a computer language. It is the set of rules that determine how we form valid expressions, assign variables, and so on. The purpose of syntax highlighting is to draw attention to different components of syntax. We can see that when we use the Cobalt highlighting option, RStudio sets the background to black and displays variables in white, parentheses and arithmetic operators in orange, and numbers in red. It doesn't matter so much what the colours are. What matters is that we have a visual means to distinguish these different kinds of elements, making it much easier to read a script.
-
-\begin{infobox}{action}
-
-\hypertarget{choose-your-own-colour-scheme}{%
-\subsubsection*{Choose your own colour scheme}\label{choose-your-own-colour-scheme}}
-\addcontentsline{toc}{subsubsection}{Choose your own colour scheme}
-
-The first thing you will probably notice is that this Editor looks a little different from yours. We said earlier that RStudio was highly customisable. What we did above was change the way it does something called \textbf{syntax highlighting}. You can do this by navigating to \texttt{Tools\ \textgreater{}\ Global\ Options...}, selecting the \texttt{Appearance} button, and picking the \texttt{Cobalt} option under \texttt{Editor\ theme}.
-
-\end{infobox}
-
-The other kind of elements RStudio has highlighted are in blue. We added these. They are called comments. Comments in R always start with a \texttt{\#} symbol---this is called the ``hash''" symbol (also known as the `pound' symbol to North Americans of a certain age). \textbf{Lines that start with \texttt{\#} are completely ignored by R}. They exist only to allow us, the developers of a script, to add notes and explanations that remind us how it all works.
-
-\begin{infobox}{warning}
-
-\hypertarget{comments-are-important}{%
-\subsubsection*{Comments are important}\label{comments-are-important}}
-\addcontentsline{toc}{subsubsection}{Comments are important}
-
-At this point we just want to emphasise that \textbf{you should always use comments in your scripts} to remind yourself what your R code is supposed to be doing. Use them liberally to help you understand the logic of each script you write. This is another ``take our word''" for it situation -- if you do not use comments, then when you come back to your precious script in a few weeks/months/years time you will have no idea what it does.
-
-\end{infobox}
-
-\hypertarget{running-scripts-in-rstudio}{%
-\subsection{Running scripts in RStudio}\label{running-scripts-in-rstudio}}
-
-The whole point of writing a script is ultimately to run it. The phrase ``run our code'' is shorthand for ``send a number of R expressions to the R interpreter to be read and evaluated''. The latter is tedious to write (and read) over and over again, so we will just write ``run your/my/our code''. We could run the code in the above script by copying and pasting it into the Console, but this is inefficient. Instead of relying on cut and paste, RStudio gives us different ways to run our code:
-
-\begin{itemize}
-\item
-  There is a \texttt{Run} button at the top right of the Editor pane. As we might imagine, clicking on this will run some code. If we haven't highlighted anything in the Editor, this runs whichever line the cursor is at, i.e.~it runs just that one line. If we had highlighted a region inside the Editor, this button will run all of that in sequence.
-\item
-  No one likes clicking buttons. Luckily, pressing Control+Enter (or Command+Enter on a Mac) does exactly the same thing as the \texttt{Run} button. It also uses the same rules to decide which bits of code to run or not\footnote{We can also run lines of code via the \texttt{Code\ \textgreater{}\ Run\ Lines}. This is easily the most inefficient method after cut and paste. It's only there in case we forget our keyboard shortcut or cannot remember where the run button is.}.
-\end{itemize}
-
-Now that we know how to `run our code', we can run every line in the script we just started. Here's what should happen at the Console when we do this:
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{a }\OtherTok{\textless{}{-}} \DecValTok{1}
-\NormalTok{b }\OtherTok{\textless{}{-}} \DecValTok{6}
-\NormalTok{c }\OtherTok{\textless{}{-}} \DecValTok{5}
-
-\NormalTok{sqrt.b2ac }\OtherTok{\textless{}{-}}\NormalTok{ (b}\SpecialCharTok{\^{}}\DecValTok{2} \SpecialCharTok{{-}}\DecValTok{4} \SpecialCharTok{*}\NormalTok{ a }\SpecialCharTok{*}\NormalTok{ c)}\SpecialCharTok{\^{}}\NormalTok{(}\DecValTok{1}\SpecialCharTok{/}\DecValTok{2}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{b }\SpecialCharTok{+}\NormalTok{ sqrt.b2ac) }\SpecialCharTok{/}\NormalTok{ (}\DecValTok{2} \SpecialCharTok{*}\NormalTok{ a)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## [1] -1
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{b }\SpecialCharTok{{-}}\NormalTok{ sqrt.b2ac) }\SpecialCharTok{/}\NormalTok{ (}\DecValTok{2} \SpecialCharTok{*}\NormalTok{ a)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## [1] -5
-\end{verbatim}
-
-This works exactly as though we typed or pasted the sequence of R expressions into the Console, hitting Enter each time we get to the end of a line. What this means is that we can use this script to find the solutions to any quadratic equation with `real roots'. All we have to do is edit the values assigned to \texttt{a}, \texttt{b} and \texttt{c} and then rerun \textbf{the whole script}. We can't just rerun bits of it because everything is designed to work together, in sequence.
-
-Now that we have a script that does something a little bit useful we might wish to reuse it at some point. It's just a text file, so we can save the script as we would any other file. We can do this using the familiar menu-based approach (\texttt{File\ \textgreater{}\ Save\ As...}) or via the keyboard shortcut \texttt{Control+S} (or \texttt{Command+S} on a Mac). The only thing to keep in mind is that we must use the file extension \texttt{.R} or \texttt{.r} when we name the file, e.g.~\texttt{my\_great\_script.R}. This is because RStudio uses the file extension to detect the fact that a file is an R script and not an ordinary text file. If we don't do this, then next time we open up the file in RStudio we won't be able to access the fancy Editor features like syntax highlighting, nor will we be able to send lines to the Console without using copy-paste.
-
-From now on always work with scripts. No more typing into the Console!
-
-\begin{infobox}{warning}
-
-\hypertarget{do-not-use-install.packages-in-scripts}{%
-\subsubsection*{\texorpdfstring{Do not use \texttt{install.packages} in scripts}{Do not use install.packages in scripts}}\label{do-not-use-install.packages-in-scripts}}
-\addcontentsline{toc}{subsubsection}{Do not use \texttt{install.packages} in scripts}
-
-Because installing a package is a ``do once'' operation, it is almost never a good idea to place \texttt{install.packages} in a typical R script. A script may be run 100s of times as we develop an analysis. Installing a package is quite time consuming, so we don't really want to do it every time we run our analysis. As long as the package has been installed at some point in the past it is ready to be used and the script will work fine without re-installing it.
-
-\end{infobox}
-
-\hypertarget{using-projects-in-rstudio}{%
-\section{Using projects in RStudio}\label{using-projects-in-rstudio}}
-
-{[}COMPLETE ME{]}
-
-\hypertarget{spotting-problems}{%
-\section{Spotting problems}\label{spotting-problems}}
-
-We may as well get something out of the way early on. It's painfully easy to accidentally ask R to do something that contains an error of some kind. Mistakes happen all the time when writing R code---everyone does it. It's not a problem when this happens. When it does though, it's important to step back and work out what went wrong.
-
-\hypertarget{the-dreaded}{%
-\subsection{\texorpdfstring{The dreaded \texttt{+}}{The dreaded +}}\label{the-dreaded}}
-
-Be careful when highlighting code to run. RStudio will run exactly the text that is highlighted. If we start or finish the highlighted region in the middle of an expression then one of three things will usually happen. If we're lucky we'll generate an error because we ran an invalid partial expression. We say this is lucky because the error will at least be easy to spot. If we're unlucky, we might end up running part of an expression that \emph{is itself} a valid expression, but does not do what we had intended. This is harder to spot because it won't generate an error, and it will probably create problems further down the line.
-
-The third outcome is that the Console will look something like this:
-
-\includegraphics{images/dreaded-plus.png}
-
-What happened? Look carefully at the little snippet of R code we sent to the Console. It's not a complete R expression, because it is missing a closing parenthesis: \texttt{)}. When R receives only part of an expression like this, which has correct syntax but is not complete, it sits and waits for the rest of the expression. This is what the \texttt{+} at the Console signifies. When we see this we have two options. We can manually type in the missing part of the expression and hit Enter, or (better) we can hit the Escape key to return you to the prompt \texttt{\textgreater{}} and start again. The first option is rather error prone so we would generally prefer the latter.
-
-\hypertarget{errors}{%
-\subsection{Errors}\label{errors}}
-
-Here is an example of what happens at the Console when we generate an error:
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{xyz }\SpecialCharTok{+} \DecValTok{2}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## Error in eval(expr, envir, enclos): object 'xyz' not found
-\end{verbatim}
-
-In general terms, what happened is that R read in the instruction \texttt{xyz\ +\ 2}, tried to evaluate it, and found it could not. This is because the variable \texttt{xyz} does not exist, i.e.~we never made a variable called \texttt{xyz}. Upon running into the error, R printed something to the screen to tell us we've made a mistake (``Error: object `xyz' not found'').
-
-When this happens we say R has `thrown an error'. We know its an error because the message is in a warning colour (probably red or orange---it depends how RStudio is set up) and contains the word \texttt{Error}. The bit after the \texttt{:} is an attempt by R to tell us what went wrong. Always \textbf{read the error messages}. They will be incomprehensible at first, but they will eventually start to make more sense and become helpful (usually---sometimes they make no sense whatsoever, even to experienced users). This way of learning only works if we read the error messages in the first place though.
 
 \hypertarget{getting-help}{%
 \chapter{Getting help}\label{getting-help}}
