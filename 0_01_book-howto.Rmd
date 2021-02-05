@@ -1,4 +1,4 @@
-# Formatting conventions {.unnumbered}
+# How to use this book {.unnumbered}
 
 ## Text, instructions, and explanations {.unnumbered}
 

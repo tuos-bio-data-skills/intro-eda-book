@@ -63,11 +63,11 @@ What happened above is that R evaluated `2.3 + 1.4`, resulting in the number `3.
 The important thing to realise is that the expression(s) on the right hand side of the `=` can be anything we like. This third example essentially equivalent to the last one:
 
 ```{r}
-myvar <- 2.3 + 1.4
-round(x = myvar, digits = 0)
+y <- 2.3 + 1.4
+round(x = y, digits = 0)
 ```
 
-This time we created a new variable called `myvar` and then supplied this as the value of the `x` argument. When we call the `round` function like this, the R interpreter spots the fact that something on the right hand side of an `=` is a variable and associates the value of this variable with `x` argument. As long as we have actually defined the numeric variable `myvar` at some point we can use it as the value of an argument.
+This time we created a new variable called `y` and then supplied this as the value of the `x` argument. When we call the `round` function like this, the R interpreter spots the fact that something on the right hand side of an `=` is a variable and associates the value of this variable with `x` argument. As long as we have actually defined the numeric variable `y` at some point we can use it as the value of an argument.
 
 We said at the beginning of this section that a function may optionally **return** a value to us when it completes its task. That word 'return' is jargon that refers to the process by which a function outputs a value. If we use a function at the Console the returned value is printed out. However, we can use this value in other ways. For example, there is nothing to stop us combining function calls with the arithmetic operations:
 
@@ -97,66 +97,6 @@ What is going on here? The key to understanding this is to realise that the symb
 
 The message here is that what matters is where things appear relative to the `=`, not the symbols used to represent them.
 :::
-
-## Functions do not have 'side effects'
-
-There is one idea about functions that every R user needs to understand if they are to avoid confusion. It relates to how functions modify their arguments, or more accurately, how they **do not** modify their arguments. Take a look at this example:
-
-```{r}
-myvar <- 3.7
-round(x = myvar, digits = 0)
-myvar
-```
-
-We created a variable `myvar` with the value 3.7, rounded this to a whole number with `round`, printed out the result, and then printed the value of `myvar`. Notice that **the value of `myvar` has not changed** after using it as an argument to `round`.
-
-This is important. R functions do not typically alter the values of their arguments (we say 'typically' because there are ways to alter this behaviour if we really want to). The standard behaviour---that functions do not alter their arguments---is captured by the phrase 'functions do not have side effects'.
-
-If we had intended to round the value of `myvar` so that we can use this new value later on, we have to assign the result of function evaluation, like this:
-
-```{r}
-myvar <- 3.7
-myvar <- round(x = myvar, digits = 0)
-```
-
-The reason for pointing out this behaviour is because new R users sometimes assume a function will change its arguments. R functions do not typically do this. If we want to make use of changes, rather than simply print them to the Console, we need to assign the result a name, either by creating a new variable or overwriting the old one. So.... remember---functions do not have side effects! Forgetting this creates all kinds of headaches.
-
-## Combining functions {#combining-functions}
-
-Using R to do 'real work' usually involves linked steps, each facilitated by a different function. There is more than one way to achieve this. Here's a simple example that uses an approach we already know about:
-
-```{r}
-myvar <- sqrt(x = 10)
-round(x = myvar, digits = 0)
-```
-
-These two lines calculate the square root of the number 10 and assigned the result to `myvar`, then round this to a whole number and print the result. This method of linking steps together assigns a name to the result at each step, and then uses this as the argument to a function in the next step.
-
-Here is another way to replicate the same calculation:
-
-```{r}
-round(x = sqrt(x = 10), digits = 0)
-```
-
-The technical name for this is **function composition** or **function nesting**: the `sqrt` function is 'nested inside' the `round` function. The way we have to read these constructs is **from the inside out**. The `sqrt(x = 10)` expression is on the right hand side of an `=` symbol, so this is evaluated first, the result is associated with the `x` argument of the `round` function, and only then does the `round` function do its job.
-
-Notive that there aren't really any new ideas here. We have already seen that the R interpreter evaluates whatever is on the right hand side of the `=` symbol first before associating the resulting value with the appropriate argument name.
-
-We can extend this nesting idea to do more complicated calculations, i.e. there's nothing to stop us using multiple levels of nesting either. Take a look at this example:
-
-```{r}
-round(x = sqrt(x = abs(x = -10)), digits = 0)
-```
-
-The `abs` function takes the absolute value of a number, i.e. removes the `-` sign if it is there. Remember, read nested calls from the inside out:
-
--   first we find the absolute value of -10,
--   we calculation the square root of the resulting number (10), and
--   then we rounded this to a whole number.
-
-Nested function calls can be useful because they make R code less verbose (we write less) but this comes at a significant cost of reduced readability. No reasonable person would say that `round(x = sqrt(x = abs(x = -10)), digits = 0)` is easy to read! For this reason, we aim to keep function nesting to a minimum in this book. We will occasionally have to work with the nesting construct though, so it is important to understand how it works even if we don't like using it.
-
-The good news is that we'll see a much-easier-to-read method for applying a series of functions in the Data Wrangling block.
 
 ## Specifying function arguments {#function-arguments}
 
@@ -201,3 +141,66 @@ Here is some advice. Do not rely on partial matching of function names. It just 
 
 What about position matching? This can also cause problems if we're not paying attention. For example, if you forget the order of the arguments to a function and then place your arguments in the wrong place, you will either generate an error or produce a nonsensical result. It is nice not to have to type out the `name = value` construct all the time though, so our advice is to rely positional matching only for the first argument. This is a common convention in R, and it makes sense because it is often obvious what kind of information or data the first argument should carry, so the its name is redundant.
 :::
+
+## Combining functions {#combining-functions}
+
+Using R to do 'real work' usually involves linked steps, each facilitated by a different function. There is more than one way to achieve this. Here's a simple example that uses an approach we already know about:
+
+```{r}
+y <- sqrt(10)
+round(y, digits = 1)
+```
+
+These two lines calculate the square root of the number 10 and assigned the result to `y`, then round this to one decimal place and print the result. This method of linking steps together assigns a name to the result at each step, and then uses this as the argument to a function in the next step.
+
+Here is another way to replicate the same calculation:
+
+```{r}
+round(sqrt(10), digits = 1)
+```
+
+The technical name for this is **function composition** or **function nesting**: the `sqrt` function is 'nested inside' the `round` function. The way we have to read these constructs is **from the inside out**. The `sqrt(10)` expression is on the right hand side of an `=` symbol, so this is evaluated first, the result is associated with the first argument of the `round` function, and only then does the `round` function do its job.
+
+There aren't really any new ideas here. We have already seen that R evaluates whatever is on the right hand side of the `=` symbol first before associating the resulting value with the appropriate argument name.
+
+We can extend this nesting idea to do more complicated calculations, i.e. there's nothing to stop us using multiple levels of nesting either. Take a look at this example:
+
+```{r}
+round(sqrt(abs(-10)), digits = 1)
+```
+
+The `abs` function takes the absolute value of a number, i.e. removes the `-` sign if it is there. Remember, read nested calls from the inside out:
+
+-   first we find the absolute value of -10,
+-   we calculation the square root of the resulting number (10), and
+-   then we rounded this to a whole number.
+
+Nested function calls can be useful because they make R code less verbose (we write less) but this comes at a significant cost of reduced readability. No reasonable person would say that `round(sqrt(abs(-10)), digits = 1)` is easy to read! For this reason, we aim to keep function nesting to a minimum. We will occasionally have to use the nesting construct, so it is important to understand how it works even if we don't like it.
+
+The good news is that we'll see a much-easier-to-read method for applying a series of functions in the Data Wrangling block.
+
+## Functions do not have 'side effects'
+
+We'll finish this chapter with an idea that every R user needs to understand if they are to avoid confusion. It relates to how functions modify their arguments, or more accurately, how they **do not** modify their arguments. Take a look at this example:
+
+```{r}
+y <- 3.7
+round(y, digits = 0)
+y
+```
+
+We created a variable `y` with the value 3.7, rounded this to a whole number with `round`, printed out the result, and then printed the value of `y`. Notice that **the value of `y` has not changed** after using it as an argument to `round`.
+
+This is important. R functions do not typically alter the values of their arguments (we say 'typically' because there are ways to alter this behaviour if we really want to). The standard behaviour---that functions do not alter their arguments---is captured by the phrase 'functions do not have side effects'.
+
+If we had intended to round the value of `y` so that we can use this new value later on, we have to assign the result of function evaluation, like this:
+
+```{r}
+y <- 3.7
+y <- round(y, digits = 0)
+```
+
+The reason for pointing out this behaviour is because new R users sometimes assume a function will change its arguments. R functions do not typically do this. If we want to make use of changes, rather than simply print them to the Console, we need to assign the result a name, either by creating a new variable or overwriting the old one. So.... remember---functions do not have side effects! Forgetting this creates all kinds of headaches.
+
+
+
