@@ -146,7 +146,7 @@
 
 \title{Exploratory Data Analysis with R}
 \author{Dylan Childs}
-\date{2021-02-05}
+\date{2021-02-09}
 
 \begin{document}
 \maketitle
@@ -445,7 +445,7 @@ That probably doesn't make much sense! In simple terms, an R expression is a sma
 \hypertarget{basic-arithmetic}{%
 \subsection{Basic arithmetic}\label{basic-arithmetic}}
 
-The \protect\hyperlink{working-at-console}{Get up and running chapter} showed that R can handle familiar arithmetic operations: division, multiplication, addition and subtraction. If we want to add or subtract two numbers we place the \texttt{+} or \texttt{-} symbol in between two numbers and hit Enter. R will read the arithmetic expression, evaluate it, and print the result to the Console. This works exactly as you'd expect:
+The \protect\hyperlink{working-at-console}{Get up and running chapter} showed that R could handle familiar arithmetic operations: division, multiplication, addition and subtraction. If we want to add or subtract two numbers, we place the \texttt{+} or \texttt{-} symbol in between two numbers and hit Enter. R will read the arithmetic expression, evaluate it, and print the result to the Console. This works as you'd expect:
 
 \emph{Addition}--
 
@@ -471,7 +471,7 @@ The \protect\hyperlink{working-at-console}{Get up and running chapter} showed th
 ## [1] 4
 \end{verbatim}
 
-Multiplication and division are no different, However, we can't use \texttt{x} or \texttt{÷} symbols for these operations. Instead, use \texttt{*} and \texttt{/} to multiply and divide:
+Multiplication and division are no different. However, we can't use \texttt{x} or \texttt{÷} symbols for these operations. Instead, use \texttt{*} and \texttt{/} to multiply and divide:
 
 \emph{Multiplication}--
 
@@ -511,7 +511,7 @@ We can also exponentiate numbers, i.e.~raise one number to the power of another.
 ## [1] 16
 \end{verbatim}
 
-This raises 4 to the power of 2 (i.e.~we squared it). In general, we can raise a number \texttt{x} to the power of \texttt{y} using \texttt{x\^{}y}. Neither \texttt{x} or \texttt{y} need to be a whole numbers either.
+This raises 4 to the power of 2 (i.e.~we squared it). In general, we can raise a number \texttt{x} to the power of \texttt{y} using \texttt{x\^{}y}. Neither \texttt{x} nor \texttt{y} need to be whole numbers either.
 
 \begin{infobox}{information}
 
@@ -519,14 +519,14 @@ This raises 4 to the power of 2 (i.e.~we squared it). In general, we can raise a
 \subsubsection*{Operators?}\label{operators}}
 \addcontentsline{toc}{subsubsection}{Operators?}
 
-What does `operator' mean? An operator is simply a symbol, or a particular sequence of symbols that does something specific with one or more inputs (typically numbers). For example, operators like \texttt{/}, \texttt{*}, \texttt{+} and \texttt{-} carry out arithmetic calculations with pairs of numbers. Operators are one of the basic building blocks of a programming language like R.
+What does `operator' mean? An operator is simply a symbol (or sequence of symbols) that does something specific with one or more inputs. For example, operators like \texttt{/}, \texttt{*}, \texttt{+} and \texttt{-} carry out arithmetic calculations with pairs of numbers. Operators are one of the basic building blocks of a programming language like R.
 
 \end{infobox}
 
 \hypertarget{combining-arithmetic-operations}{%
 \subsection{Combining arithmetic operations}\label{combining-arithmetic-operations}}
 
-Arithmetic operations can be combined. Assume we want to subtract 6 from 2\textsuperscript{3}. The expression to perform this calculation is:
+We can also combine arithmetic operations. Assume we want to subtract 6 from 2\textsuperscript{3}. The expression to perform this calculation is:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -538,7 +538,7 @@ Arithmetic operations can be combined. Assume we want to subtract 6 from 2\texts
 ## [1] 2
 \end{verbatim}
 
-Simple enough, but what if we had wanted to carry out a slightly longer calculation that required the last answer to then be divided by 2? This is the \textbf{wrong} the way to do this:
+Simple enough, but what if we had wanted to carry out a slightly longer calculation that required the last answer to then be divided by 2? This is the \textbf{wrong} way to do this:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -552,12 +552,12 @@ Simple enough, but what if we had wanted to carry out a slightly longer calculat
 
 The answer we expect here is \(1\). So what happened? R evaluated \(6/2\) first and then subtracted this answer from \(2^3\).
 
-If that's obvious, great. If not, it's time to learn about \textbf{order of precendence}. R uses a standard set of rules to decide the order in which calculations feed into one another so that it can unambiguously evaluate any expression. It uses the same order as every other computer language, which thankfully is the same one we all learn in mathematics classes at school. The order of precedence is:
+If that's obvious, great. If not, it's time to learn about \textbf{order of precedence}. R uses a standard set of rules to decide the order in which calculations feed into one another to unambiguously evaluate any expression. It uses the same order as every other computer language, which thankfully is the same one we all learn in mathematics classes at school. The order of precedence is:
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
 \item
-  exponents and roots (also, ``powers'' or ``orders'')
+  exponents and roots (also, `powers' or `orders')
 \item
   division and then multiplication
 \item
@@ -574,7 +574,7 @@ If you find it difficult to remember the standard order of precedence there are 
 
 \end{infobox}
 
-To arrive at the answer we were looking for in the above example we need to control the order of evaluation. Do this by grouping together calculations inside parentheses, i.e.~`round brackets' \texttt{(} and \texttt{)}. Here's the expression we should have used:
+We need to control the order of evaluation to arrive at the answer we were looking for in the above example. Do this by grouping together calculations inside parentheses, i.e.~`round brackets' \texttt{(} and \texttt{)}. Here's the expression we should have used:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -586,7 +586,7 @@ To arrive at the answer we were looking for in the above example we need to cont
 ## [1] 1
 \end{verbatim}
 
-We can use more than one pair of parentheses to control the order of evaluation in more complex calculations. The order in which expressions inside different pairs of parentheses are evaluated then happens `inside-out'. For example, if we want to find the cube root of 2 (i.e.~2\textsuperscript{1/3}) rather than 2\textsuperscript{3} in that last calculation we would instead write:
+We can use more than one pair of parentheses to control the order of evaluation in more complex calculations. The order of evaluation then happens `inside-out'. For example, if we want to find the cube root of 2 (i.e.~2\textsuperscript{1/3}) rather than 2\textsuperscript{3} in that last calculation we would instead write:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -598,7 +598,7 @@ We can use more than one pair of parentheses to control the order of evaluation 
 ## [1] -2.370039
 \end{verbatim}
 
-The parentheses around the \texttt{1/3} in the exponent are needed to ensure this is evaluated prior to being used as the exponent.
+The parentheses around the \texttt{1/3} are needed to ensure this is evaluated prior to being used as the exponent.
 
 \begin{infobox}{action}
 
@@ -606,7 +606,7 @@ The parentheses around the \texttt{1/3} in the exponent are needed to ensure thi
 \subsubsection*{Working efficiently at the Console}\label{working-efficiently-at-the-console}}
 \addcontentsline{toc}{subsubsection}{Working efficiently at the Console}
 
-Working at the Console soon gets tedious if we have to retype similar things over and over again. There is no need to do this though. Place the cursor at the prompt and hit the up arrow. What happens? This brings back the last expression sent to R's interpreter. Hit the up arrow again to see the last-but-one expression, and so on. We go back down the list using the down arrow. Once we're at the line we need, we use the left and right arrows to move around the expression and the delete key to remove the parts we want to change. Once an expression has been edited like this we hit Enter to send it to R again. Try it!
+Working at the Console soon gets tedious if we have to retype similar things over and over again. There is no need to do this, though. Place the cursor at the prompt and hit the up arrow. What happens? This brings back the last expression sent to R's interpreter. Hit the up arrow again to see the last-but-one expression, and so on. We go back down the list using the down arrow. Once we're at the line we need, we use the left and right arrows to move around the expression and the delete key to remove the parts we want to change. Once an expression has been edited we can hit Enter to send it to R again. Try it.
 
 \end{infobox}
 
@@ -625,9 +625,9 @@ Now is a good time to highlight how R handles certain kinds of awkward numerical
 ## [1] Inf
 \end{verbatim}
 
-R has a special built in value that allows it to handle this kind of result. This is \texttt{Inf}, which of course, stands for ``infinity''.
+R has a special built-in value that allows it to handle this kind of result. This is \texttt{Inf}, which stands for `infinity'.
 
-The other special kind of value we sometimes run into can be generated by numerical calculations that don't have a well-defined result. For example, this arises when we try to divide 0 by 0:
+The other special kind of value we sometimes run into is generated by calculations that don't have a well-defined numerical result. For example, look what happens when we try to divide 0 by 0:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -639,9 +639,9 @@ The other special kind of value we sometimes run into can be generated by numeri
 ## [1] NaN
 \end{verbatim}
 
-The \texttt{NaN} in this result stands for Not a Number. R produces \texttt{NaN} because \(0 / 0\) is not defined mathematically: it produces something that is Not a Number.
+The \texttt{NaN} in this result stands for `Not a Number'. R produces \texttt{NaN} because \(0 / 0\) is not defined mathematically: it produces something that is Not a Number.
 
-The reason we are pointing out \texttt{Inf} and \texttt{NaN} is not because we expect to use them. It's important to know what they represent because they often arise as a result of a mistake somewhere in a program. It's hard to track down such mistakes if we don't know how \texttt{Inf} and \texttt{NaN} arise.
+The reason we are pointing out \texttt{Inf} and \texttt{NaN} is not that we expect to use them. It's important to know what they represent because they often arise due to a mistake somewhere in our code. It's hard to track down such mistakes if we don't know how \texttt{Inf} and \texttt{NaN} arise.
 
 \begin{infobox}{information}
 
@@ -656,13 +656,13 @@ What we've seen so far is that we can interact with R via the so-called REPL: th
 \hypertarget{assignment}{%
 \section{Storing and reusing results}\label{assignment}}
 
-We've not yet tried to do anything remotely complicated or interesting beyond using parentheses to construct longer calculations. This approach is fine when a calculation is very simple but it quickly becomes unwieldy for dealing with anything more complicated.
+We've not yet tried to do anything remotely complicated or interesting beyond using parentheses to construct longer calculations. This approach is acceptable when a calculation is straightforward, but it quickly becomes unwieldy for dealing with anything more complicated.
 
 The best way to see what we mean is by working through a simple example---solving a quadratic equation. You probably remember these from school. A quadratic equation looks like this:
 
 \[a + bx + cx^2 = 0\] If we know the values of \(a\), \(b\) and \(c\) then we can solve this equation to find the values of \(x\) that satisfy this equation. Here's the well-known formula for these solutions: \[
 x = \frac{-b\pm\sqrt{b^2-4ac}}{2a}
-\] We can use R to calculate these solutions for us. Say that we want to find the solutions to the quadratic equation when \(a=1\), \(b=6\) and \(c=5\). We just have to turn the above equation into a pair of R expressions:
+\] We can use R to calculate these solutions for us. Say that we want to find the solutions to the quadratic equation when \(a=1\), \(b=6\) and \(c=5\). We have to turn the above equation into a pair of R expressions:
 
 \emph{Solution 1}--
 
@@ -690,11 +690,11 @@ x = \frac{-b\pm\sqrt{b^2-4ac}}{2a}
 
 The output tells us that the two values of \(x\) that satisfy this particular quadratic equation are -1 and -5.
 
-But what should we do if we now need to solve a different quadratic equation? Working at the Console, we could bring up the expressions we typed (using the up arrow) and change the numbers to match the new values of \(a\), \(b\) and \(c\). However, editing expressions like this is tedious, and more importantly, it's error prone because we have to make sure we substitute the new numbers into exactly the right positions.
+But what should we do if we now need to solve a different quadratic equation? Working at the Console, we could bring up the expressions we typed (using the up arrow) and change the numbers to match the new values of \(a\), \(b\) and \(c\). However, editing expressions like this is tedious, and more importantly, it's error-prone because we have to make sure we substitute the new numbers into precisely the right positions.
 
 A partial solution to this problem is to store the values of \(a\), \(b\) and \(c\) in some way so that we only have to change them one. We'll see why this is useful in a moment.
 
-First, we need to learn how to store results in R. The key to this is to use the \textbf{assignment operator}, which is written as an arrow pointing to the left, \texttt{\textless{}-}. Sticking with the current example, we need to store the numbers 1, 6 and 5. We do this by typing out three expressions, one after the another, each time hitting enter to get R to evaluate it:
+First, we need to learn how to store results in R. The key to this is to use the \textbf{assignment operator}, written as an arrow pointing to the left, \texttt{\textless{}-}. Sticking with the current example, we need to store the numbers 1, 6 and 5. We do this by typing out three expressions, one after the another, each time hitting enter to get R to evaluate it:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -714,13 +714,13 @@ First, we need to learn how to store results in R. The key to this is to use the
 \end{Highlighting}
 \end{Shaded}
 
-The assignment operator is defined by the sequence \texttt{\textless{}-} without a space between the \texttt{\textless{}} and \texttt{-} symbols. R won't recognise it as assignment if we try to include a space.
+The exact sequence \texttt{\textless{}-} defines the assignment operator. R won't recognise it as assignment if we try to include a space between the \texttt{\textless{}} and \texttt{-} symbols.
 
-Notice that R didn't print anything to screen. So what actually happened? We asked R to first evaluate the expression on the right hand side of each \texttt{\textless{}-} (just a number in this case) and then \textbf{assigns the result} of that evaluation instead of printing it. Each result has a name associated with it, which appears on the left hand side of the \texttt{\textless{}-}.
+Notice that R didn't print anything to screen. So what actually happened? We asked R to first evaluate the expression on the right hand side of each \texttt{\textless{}-} (just a number in this case) and then \textbf{assigns the result} of that evaluation instead of printing it. Each result has a name associated with it, which appears on the left hand-side of the \texttt{\textless{}-}.
 
 The net result of all this is that we have stored the numbers 1, 6 and 5 somewhere in R and associated them with the letters \texttt{a}, \texttt{b} and \texttt{c}, respectively. We can check whether this assignment business has worked by looking at the \textbf{Environment} tab in the top right RStudio window. There should be three `names' listed in that tab now (\texttt{a}, \texttt{b} and \texttt{c}) along with the associated numbers 1, 6 and 5.
 
-What does this actually mean in practical terms? Look at what happens if we now type the letter \texttt{a} into the Console and hit Enter:
+What does this mean in practical terms? Look at what happens if we now type the letter \texttt{a} into the Console and hit Enter:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -732,7 +732,7 @@ What does this actually mean in practical terms? Look at what happens if we now 
 ## [1] 1
 \end{verbatim}
 
-It looks the same as if we had typed the number \texttt{1} directly into the Console. What we just did was to store the output that results from evaluating three separate R expressions, associating each a name so that we can access them again\footnote{Technically, this is called \textbf{binding} the name to a value. You don't need to remember this.}. Whenever we use the assignment operator \texttt{\textless{}-} we are telling R to keep whatever kind of value results from the calculation on the right hand side of \texttt{\textless{}-}, giving it the name on the left hand side so that we can access it later.
+It looks the same as if we had typed the number \texttt{1} directly into the Console. We stored the output from three separate R expressions, associating each a name so that we can access it again\footnote{Technically, this is called \textbf{binding} the name to a value. You don't need to remember this.}. Whenever we use the assignment operator \texttt{\textless{}-} we are telling R to keep whatever kind of value results from the calculation on the right-hand side of \texttt{\textless{}-}, giving it the name on the left-hand side so that we can access it later.
 
 Why is this useful? Let's imagine we want to do more than one thing with our three numbers. If we want to know their sum or their product we can now use:
 
@@ -760,7 +760,7 @@ Why is this useful? Let's imagine we want to do more than one thing with our thr
 ## [1] 30
 \end{verbatim}
 
-So\ldots{} once we've stored a result and associated it with a name we can reuse it whenever it's needed. Returning to our example, we can now calculate the solutions to the quadratic equation by typing these two expressions into the Console:
+So\ldots{} once we've stored a result and associated it with a name we can reuse it whenever needed. Returning to our example, we can now calculate the solutions to the quadratic equation by typing these two expressions into the Console:
 
 \emph{Solution 1}--
 
@@ -786,7 +786,7 @@ So\ldots{} once we've stored a result and associated it with a name we can reuse
 ## [1] -5
 \end{verbatim}
 
-Now imagine we'd like to find the solutions to a different quadratic equation where \(a=1\), \(b=5\) and \(c=5\). We only changed the value of \(b\) here. To find the new solutions we have to do two things. First we change the value of the number associated with \texttt{b}\ldots{}
+Imagine we'd now like to find the solutions to a different quadratic equation where \(a=1\), \(b=5\) and \(c=5\). We only changed the value of \(b\) here. To find the new solutions we have to do two things. First we change the value of the number associated with \texttt{b}\ldots{}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -826,16 +826,16 @@ More importantly, we are beginning to see the benefits of using something like R
 \subsubsection*{RStudio shortcut}\label{rstudio-shortcut}}
 \addcontentsline{toc}{subsubsection}{RStudio shortcut}
 
-We use the assignment operator \texttt{\textless{}-} all the time when working with R. Because it's inefficient to type the \texttt{\textless{}} and \texttt{-} characters over and over again, RStudio has a built in shortcut for typing the assignment operator.
+We use the assignment operator \texttt{\textless{}-} all the time when working with R. Because it's inefficient to type the \texttt{\textless{}} and \texttt{-} characters repeatedly, RStudio has a built-in shortcut for typing the assignment operator.
 
-The shortcut is `Alt + \texttt{-}' . Try it now. Move the curser to the Console, hold down the Alt key (`Option' on a Mac), and press the \texttt{-} sign key. RStudio will auto-magically add insert \texttt{\textless{}-}. \textbf{If you only learn one RStudio shortcut, learn this one!} It will save you a lot of time in he long run.
+The shortcut is `Alt + \texttt{-}' . Try it now. Move the cursor to the Console, hold down the Alt key (`Option' on a Mac), and press the \texttt{-} sign key. RStudio will auto-magically add insert \texttt{\textless{}-}. \textbf{If you only learn one RStudio shortcut, learn this one!} It will save you a lot of time in the long run.
 
 \end{infobox}
 
 \hypertarget{how-does-assignment-work}{%
 \section{How does assignment work?}\label{how-does-assignment-work}}
 
-When we use the assignment operator \texttt{\textless{}-} to associate names and values, we refer to this as creating or modifying \textbf{a variable}. This is much less tedious than using words like ``bind'', ``associate'', value``, and''name" all the time. Why is it called a variable? What happens when we run these lines:
+When we use the assignment operator \texttt{\textless{}-} to associate names and values, we refer to this as creating or modifying \textbf{a variable}. This is much less tedious than using words like `associate', `value', and `name' all the time. Why is it called a variable? What happens when we run these lines:
 
 \emph{Create} \texttt{myvar} \emph{and print out its value}--
 
@@ -863,11 +863,11 @@ When we use the assignment operator \texttt{\textless{}-} to associate names and
 ## [1] 7
 \end{verbatim}
 
-The first time we used \texttt{\textless{}-} with \texttt{myvar} on the left hand side we \textbf{created} a variable \texttt{myvar} associated with the value 1. We then printed out the value associated with \texttt{myvar}. The second line \texttt{myvar\ \textless{}-\ 7} \textbf{modified} the value of \texttt{myvar} to be 7 (and printed this out again). This is why we refer to \texttt{myvar} as a variable: we can change the its value as we please.
+The first time we used \texttt{\textless{}-} with \texttt{myvar} on the left-hand side, we \textbf{created} a variable \texttt{myvar} associated with the value 1. We then printed out the value associated with \texttt{myvar}. The second line \texttt{myvar\ \textless{}-\ 7} \textbf{modified} the value of \texttt{myvar} to be 7 (and printed this out again). This is why we refer to \texttt{myvar} as a variable: we can change its value as we please.
 
 What happened to the old value associated with \texttt{myvar}? In short, it is gone, kaput, lost\ldots{} forever. The moment we assign a new value to \texttt{myvar} the old one is destroyed and can no longer be accessed. Remember this.
 
-Keep in mind that the expression on the right hand side of \texttt{\textless{}-} can be any kind of calculation and the variable can have any (valid) name we like. For example, if we want to perform the calculation \texttt{(1\ +\ 2\^{}3)\ /\ (2\ +\ 7)} and associate the result with the word \texttt{answer}, we would do this:
+Keep in mind that the expression on the right-hand side of \texttt{\textless{}-} can be any kind of calculation and the variable can have any (valid) name we like. For example, if we want to perform the calculation \texttt{(1\ +\ 2\^{}3)\ /\ (2\ +\ 7)} and associate the result with the word \texttt{answer}, we would do this:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -880,7 +880,7 @@ Keep in mind that the expression on the right hand side of \texttt{\textless{}-}
 ## [1] 1
 \end{verbatim}
 
-As along as the expression on the right hand side of \texttt{\textless{}-} generates an output of some kind it can be used with the assignment operator. For example, we can create new variables from others:
+Any expression can be used on the right-hand side of the assignment operator as along as it generates an output of some kind. For example, we can create new variables from others:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -888,7 +888,7 @@ As along as the expression on the right hand side of \texttt{\textless{}-} gener
 \end{Highlighting}
 \end{Shaded}
 
-What happened here? Start at the right hand side of \texttt{\textless{}-}. The expression on this side contained the variable \texttt{answer} so R went to see if \texttt{answer} actually exists. It does, so it then substituted the value associated with \texttt{answer} into the calculation and assigned the resulting value of 2 to \texttt{newvar}.
+What happened here? Start at the right-hand side of \texttt{\textless{}-}. The expression on this side contained the variable \texttt{answer} so R went to see if \texttt{answer} actually exists. It does, so it then substituted the value associated with \texttt{answer} into the calculation and assigned the resulting value of 2 to \texttt{newvar}.
 
 Finally, look at what happens if we copy a variable using the assignment operator:
 
@@ -927,14 +927,12 @@ We now have a pair of variables, \texttt{myvar} and \texttt{mycopy}, associated 
 ## [1] 7
 \end{verbatim}
 
-R always behaves like this unless we work hard to alter this behaviour. So remember, every time we assign one variable to another, we actually make a completely new, independent copy of its associated value. For our purposes this is a good thing because it makes it much easier to understand what a long sequence of R expressions will do.
-
-That probably doesn't seem like an obvious or important point, but trust us, it is. It will be particularly important to understand this behaviour when we start learning how to manipulate data sets.
+R always behaves like this unless we work hard to alter this behaviour. Remember that---every time we assign one variable to another, we actually make a completely new, independent copy of its associated value. That probably doesn't seem like an obvious or important point, but trust us, it is. It will be critical to remember this behaviour when we start learning how to manipulate data sets.
 
 \hypertarget{global-environment}{%
 \section{Global environment}\label{global-environment}}
 
-Whenever we associate a name with a value we create a copy of both these things somewhere in the computer's memory. In R the ``somewhere'' is called an environment. We aren't going to get into a discussion of R's many different kinds of environments---that's an advanced topic well beyond the scope of this book. The one environment we do need to be aware of though is the \textbf{Global Environment}.
+Whenever we associate a name with a value we create a copy of both these things somewhere in the computer's memory. In R the ``somewhere'' is called an environment. We aren't going to get into a discussion of R's many different kinds of environments---that's an advanced topic well beyond the scope of this book. The one environment we do need to be aware of is the \textbf{Global Environment}.
 
 Whenever we perform an assignment in the Console the variable we create is placed into the Global Environment. The set of variables currently in existence are listed in the \textbf{Environment} tab in RStudio. Take a look. There are two columns in the \textbf{Environment} tab: the first shows the names of the variables, the second summarises their values.
 
@@ -944,20 +942,20 @@ Whenever we perform an assignment in the Console the variable we create is place
 \subsubsection*{The Global Environment is temporary}\label{the-global-environment-is-temporary}}
 \addcontentsline{toc}{subsubsection}{The Global Environment is temporary}
 
-By default, R will try to save everything in the Global Environment when we close it down and then restore everything when we start the next R session. It does this by writing a copy of the Global Environment to disk. In theory this means we can close down R, reopen it, and pick things up from where we left off. \textbf{Don't rely on this behaviour!} It just increases the risk of making a serious mistake.
+By default, R will try to save everything in the Global Environment when we close it down and restore everything when we start the next R session. It does this by writing a copy of the Global Environment to disk. In theory, this means we can close down R, reopen it, and pick things up from where we left off. \textbf{Don't rely on this behaviour!} It just increases the risk of making a mistake.
 
 \end{infobox}
 
 \hypertarget{naming-rules-and-conventions}{%
 \section{Naming rules and conventions}\label{naming-rules-and-conventions}}
 
-We don't have to use a single letter to name things in R. The words \texttt{tom}, \texttt{dick} and \texttt{harry} could be used in place of \texttt{a}, \texttt{b} and \texttt{c}. It might be confusing to use them, but \texttt{tom}, \texttt{dick} and \texttt{harry} are all legal names as far as to R is concerned:
+We don't have to use a single letter to name things in R. We could use the words \texttt{tom}, \texttt{dick} and \texttt{harry} in place of \texttt{a}, \texttt{b} and \texttt{c}. It might be confusing to use them, but \texttt{tom}, \texttt{dick} and \texttt{harry} are all legal names as far as to R is concerned:
 
 \begin{itemize}
 \item
   A legal name in R is any sequence of letters, numbers, \texttt{.}, or \texttt{\_}, but the sequence of characters we use must begin with a letter. Both upper and lower case letters are allowed. For example, \texttt{num\_1}, \texttt{num.1}, \texttt{num1}, \texttt{NUM1}, \texttt{myNum1} are all legal names, but \texttt{1num} and \texttt{\_num1} are not because they begin with \texttt{1} and \texttt{\_}.
 \item
-  R is case sensitive---it treats upper and lower case letters as different characters. This means that \texttt{num} and \texttt{Num} are treated as distinct names. Forgetting about case sensitivity is a good way to create errors when using R. Try to remember that.
+  R is case sensitive---it treats upper and lower case letters as different characters. This means R treats \texttt{num} and \texttt{Num} as distinct names. Forgetting about case sensitivity is a good way to create errors when using R. Try to remember that.
 \end{itemize}
 
 \begin{infobox}{warning}

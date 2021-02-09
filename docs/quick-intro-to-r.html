@@ -24,7 +24,7 @@
 <meta name="author" content="Dylan Childs" />
 
 
-<meta name="date" content="2021-02-05" />
+<meta name="date" content="2021-02-09" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -259,14 +259,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2><span class="header-section-number">1.1</span> Using R as a big calculator</h2>
 <div id="basic-arithmetic" class="section level3" number="1.1.1">
 <h3><span class="header-section-number">1.1.1</span> Basic arithmetic</h3>
-<p>The <a href="get-up-and-running.html#working-at-console">Get up and running chapter</a> showed that R can handle familiar arithmetic operations: division, multiplication, addition and subtraction. If we want to add or subtract two numbers we place the <code>+</code> or <code>-</code> symbol in between two numbers and hit Enter. R will read the arithmetic expression, evaluate it, and print the result to the Console. This works exactly as you’d expect:</p>
+<p>The <a href="get-up-and-running.html#working-at-console">Get up and running chapter</a> showed that R could handle familiar arithmetic operations: division, multiplication, addition and subtraction. If we want to add or subtract two numbers, we place the <code>+</code> or <code>-</code> symbol in between two numbers and hit Enter. R will read the arithmetic expression, evaluate it, and print the result to the Console. This works as you’d expect:</p>
 <p><em>Addition</em>–</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="quick-intro-to-r.html#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="dv">3</span> <span class="sc">+</span> <span class="dv">2</span></span></code></pre></div>
 <pre><code>## [1] 5</code></pre>
 <p><em>Subtraction</em>–</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="quick-intro-to-r.html#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="dv">5</span> <span class="sc">-</span> <span class="dv">1</span></span></code></pre></div>
 <pre><code>## [1] 4</code></pre>
-<p>Multiplication and division are no different, However, we can’t use <code>x</code> or <code>÷</code> symbols for these operations. Instead, use <code>*</code> and <code>/</code> to multiply and divide:</p>
+<p>Multiplication and division are no different. However, we can’t use <code>x</code> or <code>÷</code> symbols for these operations. Instead, use <code>*</code> and <code>/</code> to multiply and divide:</p>
 <p><em>Multiplication</em>–</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="quick-intro-to-r.html#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="dv">7</span> <span class="sc">*</span> <span class="dv">2</span></span></code></pre></div>
 <pre><code>## [1] 14</code></pre>
@@ -277,24 +277,24 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><em>Exponentiation</em>–</p>
 <div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="quick-intro-to-r.html#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="dv">4</span><span class="sc">^</span><span class="dv">2</span></span></code></pre></div>
 <pre><code>## [1] 16</code></pre>
-<p>This raises 4 to the power of 2 (i.e. we squared it). In general, we can raise a number <code>x</code> to the power of <code>y</code> using <code>x^y</code>. Neither <code>x</code> or <code>y</code> need to be a whole numbers either.</p>
+<p>This raises 4 to the power of 2 (i.e. we squared it). In general, we can raise a number <code>x</code> to the power of <code>y</code> using <code>x^y</code>. Neither <code>x</code> nor <code>y</code> need to be whole numbers either.</p>
 <div id="operators" class="section level4 unnumbered infobox information">
 <h4>Operators?</h4>
-<p>What does ‘operator’ mean? An operator is simply a symbol, or a particular sequence of symbols that does something specific with one or more inputs (typically numbers). For example, operators like <code>/</code>, <code>*</code>, <code>+</code> and <code>-</code> carry out arithmetic calculations with pairs of numbers. Operators are one of the basic building blocks of a programming language like R.</p>
+<p>What does ‘operator’ mean? An operator is simply a symbol (or sequence of symbols) that does something specific with one or more inputs. For example, operators like <code>/</code>, <code>*</code>, <code>+</code> and <code>-</code> carry out arithmetic calculations with pairs of numbers. Operators are one of the basic building blocks of a programming language like R.</p>
 </div>
 </div>
 <div id="combining-arithmetic-operations" class="section level3" number="1.1.2">
 <h3><span class="header-section-number">1.1.2</span> Combining arithmetic operations</h3>
-<p>Arithmetic operations can be combined. Assume we want to subtract 6 from 2<sup>3</sup>. The expression to perform this calculation is:</p>
+<p>We can also combine arithmetic operations. Assume we want to subtract 6 from 2<sup>3</sup>. The expression to perform this calculation is:</p>
 <div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="quick-intro-to-r.html#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span><span class="sc">^</span><span class="dv">3</span> <span class="sc">-</span> <span class="dv">6</span></span></code></pre></div>
 <pre><code>## [1] 2</code></pre>
-<p>Simple enough, but what if we had wanted to carry out a slightly longer calculation that required the last answer to then be divided by 2? This is the <strong>wrong</strong> the way to do this:</p>
+<p>Simple enough, but what if we had wanted to carry out a slightly longer calculation that required the last answer to then be divided by 2? This is the <strong>wrong</strong> way to do this:</p>
 <div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="quick-intro-to-r.html#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span><span class="sc">^</span><span class="dv">3</span> <span class="sc">-</span> <span class="dv">6</span> <span class="sc">/</span> <span class="dv">2</span></span></code></pre></div>
 <pre><code>## [1] 5</code></pre>
 <p>The answer we expect here is <span class="math inline">\(1\)</span>. So what happened? R evaluated <span class="math inline">\(6/2\)</span> first and then subtracted this answer from <span class="math inline">\(2^3\)</span>.</p>
-<p>If that’s obvious, great. If not, it’s time to learn about <strong>order of precendence</strong>. R uses a standard set of rules to decide the order in which calculations feed into one another so that it can unambiguously evaluate any expression. It uses the same order as every other computer language, which thankfully is the same one we all learn in mathematics classes at school. The order of precedence is:</p>
+<p>If that’s obvious, great. If not, it’s time to learn about <strong>order of precedence</strong>. R uses a standard set of rules to decide the order in which calculations feed into one another to unambiguously evaluate any expression. It uses the same order as every other computer language, which thankfully is the same one we all learn in mathematics classes at school. The order of precedence is:</p>
 <ol style="list-style-type: decimal">
-<li><p>exponents and roots (also, “powers” or “orders”)</p></li>
+<li><p>exponents and roots (also, ‘powers’ or ‘orders’)</p></li>
 <li><p>division and then multiplication</p></li>
 <li><p>additional and then subtraction</p></li>
 </ol>
@@ -302,16 +302,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h4>BODMAS and friends</h4>
 <p>If you find it difficult to remember the standard order of precedence there are a load of <a href="http://en.wikipedia.org/wiki/Order_of_operations#Mnemonics">mnemonics</a> that can to help.</p>
 </div>
-<p>To arrive at the answer we were looking for in the above example we need to control the order of evaluation. Do this by grouping together calculations inside parentheses, i.e. ‘round brackets’ <code>(</code> and <code>)</code>. Here’s the expression we should have used:</p>
+<p>We need to control the order of evaluation to arrive at the answer we were looking for in the above example. Do this by grouping together calculations inside parentheses, i.e. ‘round brackets’ <code>(</code> and <code>)</code>. Here’s the expression we should have used:</p>
 <div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="quick-intro-to-r.html#cb19-1" aria-hidden="true" tabindex="-1"></a>(<span class="dv">2</span><span class="sc">^</span><span class="dv">3</span> <span class="sc">-</span> <span class="dv">6</span>) <span class="sc">/</span> <span class="dv">2</span></span></code></pre></div>
 <pre><code>## [1] 1</code></pre>
-<p>We can use more than one pair of parentheses to control the order of evaluation in more complex calculations. The order in which expressions inside different pairs of parentheses are evaluated then happens ‘inside-out.’ For example, if we want to find the cube root of 2 (i.e. 2<sup>1/3</sup>) rather than 2<sup>3</sup> in that last calculation we would instead write:</p>
+<p>We can use more than one pair of parentheses to control the order of evaluation in more complex calculations. The order of evaluation then happens ‘inside-out.’ For example, if we want to find the cube root of 2 (i.e. 2<sup>1/3</sup>) rather than 2<sup>3</sup> in that last calculation we would instead write:</p>
 <div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="quick-intro-to-r.html#cb21-1" aria-hidden="true" tabindex="-1"></a>(<span class="dv">2</span><span class="sc">^</span>(<span class="dv">1</span><span class="sc">/</span><span class="dv">3</span>) <span class="sc">-</span> <span class="dv">6</span>) <span class="sc">/</span> <span class="dv">2</span></span></code></pre></div>
 <pre><code>## [1] -2.370039</code></pre>
-<p>The parentheses around the <code>1/3</code> in the exponent are needed to ensure this is evaluated prior to being used as the exponent.</p>
+<p>The parentheses around the <code>1/3</code> are needed to ensure this is evaluated prior to being used as the exponent.</p>
 <div id="working-efficiently-at-the-console" class="section level4 unnumbered infobox action">
 <h4>Working efficiently at the Console</h4>
-<p>Working at the Console soon gets tedious if we have to retype similar things over and over again. There is no need to do this though. Place the cursor at the prompt and hit the up arrow. What happens? This brings back the last expression sent to R’s interpreter. Hit the up arrow again to see the last-but-one expression, and so on. We go back down the list using the down arrow. Once we’re at the line we need, we use the left and right arrows to move around the expression and the delete key to remove the parts we want to change. Once an expression has been edited like this we hit Enter to send it to R again. Try it!</p>
+<p>Working at the Console soon gets tedious if we have to retype similar things over and over again. There is no need to do this, though. Place the cursor at the prompt and hit the up arrow. What happens? This brings back the last expression sent to R’s interpreter. Hit the up arrow again to see the last-but-one expression, and so on. We go back down the list using the down arrow. Once we’re at the line we need, we use the left and right arrows to move around the expression and the delete key to remove the parts we want to change. Once an expression has been edited we can hit Enter to send it to R again. Try it.</p>
 </div>
 </div>
 </div>
@@ -320,12 +320,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Now is a good time to highlight how R handles certain kinds of awkward numerical calculations. One of these involves division of a non-zero by 0. Mathematically, division of a finite number by <code>0</code> equals A Very Large Number: infinity. Some programming languages will respond to an attempt to do this with an error. R is a bit more forgiving:</p>
 <div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="quick-intro-to-r.html#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="sc">/</span> <span class="dv">0</span></span></code></pre></div>
 <pre><code>## [1] Inf</code></pre>
-<p>R has a special built in value that allows it to handle this kind of result. This is <code>Inf</code>, which of course, stands for “infinity.”</p>
-<p>The other special kind of value we sometimes run into can be generated by numerical calculations that don’t have a well-defined result. For example, this arises when we try to divide 0 by 0:</p>
+<p>R has a special built-in value that allows it to handle this kind of result. This is <code>Inf</code>, which stands for ‘infinity.’</p>
+<p>The other special kind of value we sometimes run into is generated by calculations that don’t have a well-defined numerical result. For example, look what happens when we try to divide 0 by 0:</p>
 <div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="quick-intro-to-r.html#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="dv">0</span> <span class="sc">/</span> <span class="dv">0</span></span></code></pre></div>
 <pre><code>## [1] NaN</code></pre>
-<p>The <code>NaN</code> in this result stands for Not a Number. R produces <code>NaN</code> because <span class="math inline">\(0 / 0\)</span> is not defined mathematically: it produces something that is Not a Number.</p>
-<p>The reason we are pointing out <code>Inf</code> and <code>NaN</code> is not because we expect to use them. It’s important to know what they represent because they often arise as a result of a mistake somewhere in a program. It’s hard to track down such mistakes if we don’t know how <code>Inf</code> and <code>NaN</code> arise.</p>
+<p>The <code>NaN</code> in this result stands for ‘Not a Number.’ R produces <code>NaN</code> because <span class="math inline">\(0 / 0\)</span> is not defined mathematically: it produces something that is Not a Number.</p>
+<p>The reason we are pointing out <code>Inf</code> and <code>NaN</code> is not that we expect to use them. It’s important to know what they represent because they often arise due to a mistake somewhere in our code. It’s hard to track down such mistakes if we don’t know how <code>Inf</code> and <code>NaN</code> arise.</p>
 <div id="r-as-a-fancy-calculator" class="section level4 unnumbered infobox information">
 <h4>R as a fancy calculator</h4>
 <p>What we’ve seen so far is that we can interact with R via the so-called REPL: the read-evaluate-print loop. R takes user input (e.g. <code>1 / 0</code>), evaluates it (<code>1 / 0 = Inf</code>), prints the results (<code>## [1] Inf</code>), and then waits for the next input (e.g. <code>0 / 0</code>). This facility is handy because it means we can use R interactively, working through a set of calculations line-by-line.</p>
@@ -333,11 +333,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="assignment" class="section level2" number="1.3">
 <h2><span class="header-section-number">1.3</span> Storing and reusing results</h2>
-<p>We’ve not yet tried to do anything remotely complicated or interesting beyond using parentheses to construct longer calculations. This approach is fine when a calculation is very simple but it quickly becomes unwieldy for dealing with anything more complicated.</p>
+<p>We’ve not yet tried to do anything remotely complicated or interesting beyond using parentheses to construct longer calculations. This approach is acceptable when a calculation is straightforward, but it quickly becomes unwieldy for dealing with anything more complicated.</p>
 <p>The best way to see what we mean is by working through a simple example—solving a quadratic equation. You probably remember these from school. A quadratic equation looks like this:</p>
 <p><span class="math display">\[a + bx + cx^2 = 0\]</span> If we know the values of <span class="math inline">\(a\)</span>, <span class="math inline">\(b\)</span> and <span class="math inline">\(c\)</span> then we can solve this equation to find the values of <span class="math inline">\(x\)</span> that satisfy this equation. Here’s the well-known formula for these solutions: <span class="math display">\[
 x = \frac{-b\pm\sqrt{b^2-4ac}}{2a}
-\]</span> We can use R to calculate these solutions for us. Say that we want to find the solutions to the quadratic equation when <span class="math inline">\(a=1\)</span>, <span class="math inline">\(b=6\)</span> and <span class="math inline">\(c=5\)</span>. We just have to turn the above equation into a pair of R expressions:</p>
+\]</span> We can use R to calculate these solutions for us. Say that we want to find the solutions to the quadratic equation when <span class="math inline">\(a=1\)</span>, <span class="math inline">\(b=6\)</span> and <span class="math inline">\(c=5\)</span>. We have to turn the above equation into a pair of R expressions:</p>
 <p><em>Solution 1</em>–</p>
 <div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="quick-intro-to-r.html#cb27-1" aria-hidden="true" tabindex="-1"></a>(<span class="sc">-</span><span class="dv">6</span> <span class="sc">+</span> (<span class="dv">6</span><span class="sc">^</span><span class="dv">2</span> <span class="sc">-</span><span class="dv">4</span> <span class="sc">*</span> <span class="dv">1</span> <span class="sc">*</span> <span class="dv">5</span>)<span class="sc">^</span>(<span class="dv">1</span><span class="sc">/</span><span class="dv">2</span>)) <span class="sc">/</span> (<span class="dv">2</span> <span class="sc">*</span> <span class="dv">1</span>)</span></code></pre></div>
 <pre><code>## [1] -1</code></pre>
@@ -345,19 +345,19 @@ x = \frac{-b\pm\sqrt{b^2-4ac}}{2a}
 <div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="quick-intro-to-r.html#cb29-1" aria-hidden="true" tabindex="-1"></a>(<span class="sc">-</span><span class="dv">6</span> <span class="sc">-</span> (<span class="dv">6</span><span class="sc">^</span><span class="dv">2</span> <span class="sc">-</span><span class="dv">4</span> <span class="sc">*</span> <span class="dv">1</span> <span class="sc">*</span> <span class="dv">5</span>)<span class="sc">^</span>(<span class="dv">1</span><span class="sc">/</span><span class="dv">2</span>)) <span class="sc">/</span> (<span class="dv">2</span> <span class="sc">*</span> <span class="dv">1</span>)</span></code></pre></div>
 <pre><code>## [1] -5</code></pre>
 <p>The output tells us that the two values of <span class="math inline">\(x\)</span> that satisfy this particular quadratic equation are -1 and -5.</p>
-<p>But what should we do if we now need to solve a different quadratic equation? Working at the Console, we could bring up the expressions we typed (using the up arrow) and change the numbers to match the new values of <span class="math inline">\(a\)</span>, <span class="math inline">\(b\)</span> and <span class="math inline">\(c\)</span>. However, editing expressions like this is tedious, and more importantly, it’s error prone because we have to make sure we substitute the new numbers into exactly the right positions.</p>
+<p>But what should we do if we now need to solve a different quadratic equation? Working at the Console, we could bring up the expressions we typed (using the up arrow) and change the numbers to match the new values of <span class="math inline">\(a\)</span>, <span class="math inline">\(b\)</span> and <span class="math inline">\(c\)</span>. However, editing expressions like this is tedious, and more importantly, it’s error-prone because we have to make sure we substitute the new numbers into precisely the right positions.</p>
 <p>A partial solution to this problem is to store the values of <span class="math inline">\(a\)</span>, <span class="math inline">\(b\)</span> and <span class="math inline">\(c\)</span> in some way so that we only have to change them one. We’ll see why this is useful in a moment.</p>
-<p>First, we need to learn how to store results in R. The key to this is to use the <strong>assignment operator</strong>, which is written as an arrow pointing to the left, <code>&lt;-</code>. Sticking with the current example, we need to store the numbers 1, 6 and 5. We do this by typing out three expressions, one after the another, each time hitting enter to get R to evaluate it:</p>
+<p>First, we need to learn how to store results in R. The key to this is to use the <strong>assignment operator</strong>, written as an arrow pointing to the left, <code>&lt;-</code>. Sticking with the current example, we need to store the numbers 1, 6 and 5. We do this by typing out three expressions, one after the another, each time hitting enter to get R to evaluate it:</p>
 <div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="quick-intro-to-r.html#cb31-1" aria-hidden="true" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="dv">1</span></span></code></pre></div>
 <div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="quick-intro-to-r.html#cb32-1" aria-hidden="true" tabindex="-1"></a>b <span class="ot">&lt;-</span> <span class="dv">6</span></span></code></pre></div>
 <div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="quick-intro-to-r.html#cb33-1" aria-hidden="true" tabindex="-1"></a>c <span class="ot">&lt;-</span> <span class="dv">5</span></span></code></pre></div>
-<p>The assignment operator is defined by the sequence <code>&lt;-</code> without a space between the <code>&lt;</code> and <code>-</code> symbols. R won’t recognise it as assignment if we try to include a space.</p>
-<p>Notice that R didn’t print anything to screen. So what actually happened? We asked R to first evaluate the expression on the right hand side of each <code>&lt;-</code> (just a number in this case) and then <strong>assigns the result</strong> of that evaluation instead of printing it. Each result has a name associated with it, which appears on the left hand side of the <code>&lt;-</code>.</p>
+<p>The exact sequence <code>&lt;-</code> defines the assignment operator. R won’t recognise it as assignment if we try to include a space between the <code>&lt;</code> and <code>-</code> symbols.</p>
+<p>Notice that R didn’t print anything to screen. So what actually happened? We asked R to first evaluate the expression on the right hand side of each <code>&lt;-</code> (just a number in this case) and then <strong>assigns the result</strong> of that evaluation instead of printing it. Each result has a name associated with it, which appears on the left hand-side of the <code>&lt;-</code>.</p>
 <p>The net result of all this is that we have stored the numbers 1, 6 and 5 somewhere in R and associated them with the letters <code>a</code>, <code>b</code> and <code>c</code>, respectively. We can check whether this assignment business has worked by looking at the <strong>Environment</strong> tab in the top right RStudio window. There should be three ‘names’ listed in that tab now (<code>a</code>, <code>b</code> and <code>c</code>) along with the associated numbers 1, 6 and 5.</p>
-<p>What does this actually mean in practical terms? Look at what happens if we now type the letter <code>a</code> into the Console and hit Enter:</p>
+<p>What does this mean in practical terms? Look at what happens if we now type the letter <code>a</code> into the Console and hit Enter:</p>
 <div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="quick-intro-to-r.html#cb34-1" aria-hidden="true" tabindex="-1"></a>a</span></code></pre></div>
 <pre><code>## [1] 1</code></pre>
-<p>It looks the same as if we had typed the number <code>1</code> directly into the Console. What we just did was to store the output that results from evaluating three separate R expressions, associating each a name so that we can access them again<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a>. Whenever we use the assignment operator <code>&lt;-</code> we are telling R to keep whatever kind of value results from the calculation on the right hand side of <code>&lt;-</code>, giving it the name on the left hand side so that we can access it later.</p>
+<p>It looks the same as if we had typed the number <code>1</code> directly into the Console. We stored the output from three separate R expressions, associating each a name so that we can access it again<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a>. Whenever we use the assignment operator <code>&lt;-</code> we are telling R to keep whatever kind of value results from the calculation on the right-hand side of <code>&lt;-</code>, giving it the name on the left-hand side so that we can access it later.</p>
 <p>Why is this useful? Let’s imagine we want to do more than one thing with our three numbers. If we want to know their sum or their product we can now use:</p>
 <p><em>Sum</em>–</p>
 <div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="quick-intro-to-r.html#cb36-1" aria-hidden="true" tabindex="-1"></a>a <span class="sc">+</span> b <span class="sc">+</span> c</span></code></pre></div>
@@ -365,14 +365,14 @@ x = \frac{-b\pm\sqrt{b^2-4ac}}{2a}
 <p><em>Product</em>–</p>
 <div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="quick-intro-to-r.html#cb38-1" aria-hidden="true" tabindex="-1"></a>a <span class="sc">*</span> b <span class="sc">*</span> c</span></code></pre></div>
 <pre><code>## [1] 30</code></pre>
-<p>So… once we’ve stored a result and associated it with a name we can reuse it whenever it’s needed. Returning to our example, we can now calculate the solutions to the quadratic equation by typing these two expressions into the Console:</p>
+<p>So… once we’ve stored a result and associated it with a name we can reuse it whenever needed. Returning to our example, we can now calculate the solutions to the quadratic equation by typing these two expressions into the Console:</p>
 <p><em>Solution 1</em>–</p>
 <div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="quick-intro-to-r.html#cb40-1" aria-hidden="true" tabindex="-1"></a>(<span class="sc">-</span>b <span class="sc">+</span> (b<span class="sc">^</span><span class="dv">2</span> <span class="sc">-</span><span class="dv">4</span> <span class="sc">*</span> a <span class="sc">*</span> c)<span class="sc">^</span>(<span class="dv">1</span><span class="sc">/</span><span class="dv">2</span>)) <span class="sc">/</span> (<span class="dv">2</span> <span class="sc">*</span> a)</span></code></pre></div>
 <pre><code>## [1] -1</code></pre>
 <p><em>Solution 2</em>–</p>
 <div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="quick-intro-to-r.html#cb42-1" aria-hidden="true" tabindex="-1"></a>(<span class="sc">-</span>b <span class="sc">-</span> (b<span class="sc">^</span><span class="dv">2</span> <span class="sc">-</span><span class="dv">4</span> <span class="sc">*</span> a <span class="sc">*</span> c)<span class="sc">^</span>(<span class="dv">1</span><span class="sc">/</span><span class="dv">2</span>)) <span class="sc">/</span> (<span class="dv">2</span> <span class="sc">*</span> a)</span></code></pre></div>
 <pre><code>## [1] -5</code></pre>
-<p>Now imagine we’d like to find the solutions to a different quadratic equation where <span class="math inline">\(a=1\)</span>, <span class="math inline">\(b=5\)</span> and <span class="math inline">\(c=5\)</span>. We only changed the value of <span class="math inline">\(b\)</span> here. To find the new solutions we have to do two things. First we change the value of the number associated with <code>b</code>…</p>
+<p>Imagine we’d now like to find the solutions to a different quadratic equation where <span class="math inline">\(a=1\)</span>, <span class="math inline">\(b=5\)</span> and <span class="math inline">\(c=5\)</span>. We only changed the value of <span class="math inline">\(b\)</span> here. To find the new solutions we have to do two things. First we change the value of the number associated with <code>b</code>…</p>
 <div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="quick-intro-to-r.html#cb44-1" aria-hidden="true" tabindex="-1"></a>b <span class="ot">&lt;-</span> <span class="dv">5</span></span></code></pre></div>
 <p>…then we bring up those lines that calculate the solutions to the quadratic equation and run them, one after the other:</p>
 <div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="quick-intro-to-r.html#cb45-1" aria-hidden="true" tabindex="-1"></a>(<span class="sc">-</span>b <span class="sc">+</span> (b<span class="sc">^</span><span class="dv">2</span> <span class="sc">-</span><span class="dv">4</span> <span class="sc">*</span> a <span class="sc">*</span> c)<span class="sc">^</span>(<span class="dv">1</span><span class="sc">/</span><span class="dv">2</span>)) <span class="sc">/</span> (<span class="dv">2</span> <span class="sc">*</span> a)</span></code></pre></div>
@@ -383,13 +383,13 @@ x = \frac{-b\pm\sqrt{b^2-4ac}}{2a}
 <p>More importantly, we are beginning to see the benefits of using something like R—we can break down complex calculations into a series of steps, storing and reusing intermediate results as required.</p>
 <div id="rstudio-shortcut" class="section level4 unnumbered infobox action">
 <h4>RStudio shortcut</h4>
-<p>We use the assignment operator <code>&lt;-</code> all the time when working with R. Because it’s inefficient to type the <code>&lt;</code> and <code>-</code> characters over and over again, RStudio has a built in shortcut for typing the assignment operator.</p>
-<p>The shortcut is ‘Alt + <code>-</code>’ . Try it now. Move the curser to the Console, hold down the Alt key (‘Option’ on a Mac), and press the <code>-</code> sign key. RStudio will auto-magically add insert <code>&lt;-</code>. <strong>If you only learn one RStudio shortcut, learn this one!</strong> It will save you a lot of time in he long run.</p>
+<p>We use the assignment operator <code>&lt;-</code> all the time when working with R. Because it’s inefficient to type the <code>&lt;</code> and <code>-</code> characters repeatedly, RStudio has a built-in shortcut for typing the assignment operator.</p>
+<p>The shortcut is ‘Alt + <code>-</code>’ . Try it now. Move the cursor to the Console, hold down the Alt key (‘Option’ on a Mac), and press the <code>-</code> sign key. RStudio will auto-magically add insert <code>&lt;-</code>. <strong>If you only learn one RStudio shortcut, learn this one!</strong> It will save you a lot of time in the long run.</p>
 </div>
 </div>
 <div id="how-does-assignment-work" class="section level2" number="1.4">
 <h2><span class="header-section-number">1.4</span> How does assignment work?</h2>
-<p>When we use the assignment operator <code>&lt;-</code> to associate names and values, we refer to this as creating or modifying <strong>a variable</strong>. This is much less tedious than using words like “bind,” “associate,” value“, and”name" all the time. Why is it called a variable? What happens when we run these lines:</p>
+<p>When we use the assignment operator <code>&lt;-</code> to associate names and values, we refer to this as creating or modifying <strong>a variable</strong>. This is much less tedious than using words like ‘associate,’ ‘value,’ and ‘name’ all the time. Why is it called a variable? What happens when we run these lines:</p>
 <p><em>Create</em> <code>myvar</code> <em>and print out its value</em>–</p>
 <div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="quick-intro-to-r.html#cb49-1" aria-hidden="true" tabindex="-1"></a>myvar <span class="ot">&lt;-</span> <span class="dv">1</span></span>
 <span id="cb49-2"><a href="quick-intro-to-r.html#cb49-2" aria-hidden="true" tabindex="-1"></a>myvar</span></code></pre></div>
@@ -398,15 +398,15 @@ x = \frac{-b\pm\sqrt{b^2-4ac}}{2a}
 <div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="quick-intro-to-r.html#cb51-1" aria-hidden="true" tabindex="-1"></a>myvar <span class="ot">&lt;-</span> <span class="dv">7</span></span>
 <span id="cb51-2"><a href="quick-intro-to-r.html#cb51-2" aria-hidden="true" tabindex="-1"></a>myvar</span></code></pre></div>
 <pre><code>## [1] 7</code></pre>
-<p>The first time we used <code>&lt;-</code> with <code>myvar</code> on the left hand side we <strong>created</strong> a variable <code>myvar</code> associated with the value 1. We then printed out the value associated with <code>myvar</code>. The second line <code>myvar &lt;- 7</code> <strong>modified</strong> the value of <code>myvar</code> to be 7 (and printed this out again). This is why we refer to <code>myvar</code> as a variable: we can change the its value as we please.</p>
+<p>The first time we used <code>&lt;-</code> with <code>myvar</code> on the left-hand side, we <strong>created</strong> a variable <code>myvar</code> associated with the value 1. We then printed out the value associated with <code>myvar</code>. The second line <code>myvar &lt;- 7</code> <strong>modified</strong> the value of <code>myvar</code> to be 7 (and printed this out again). This is why we refer to <code>myvar</code> as a variable: we can change its value as we please.</p>
 <p>What happened to the old value associated with <code>myvar</code>? In short, it is gone, kaput, lost… forever. The moment we assign a new value to <code>myvar</code> the old one is destroyed and can no longer be accessed. Remember this.</p>
-<p>Keep in mind that the expression on the right hand side of <code>&lt;-</code> can be any kind of calculation and the variable can have any (valid) name we like. For example, if we want to perform the calculation <code>(1 + 2^3) / (2 + 7)</code> and associate the result with the word <code>answer</code>, we would do this:</p>
+<p>Keep in mind that the expression on the right-hand side of <code>&lt;-</code> can be any kind of calculation and the variable can have any (valid) name we like. For example, if we want to perform the calculation <code>(1 + 2^3) / (2 + 7)</code> and associate the result with the word <code>answer</code>, we would do this:</p>
 <div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="quick-intro-to-r.html#cb53-1" aria-hidden="true" tabindex="-1"></a>answer <span class="ot">&lt;-</span> (<span class="dv">1</span> <span class="sc">+</span> <span class="dv">2</span><span class="sc">^</span><span class="dv">3</span>) <span class="sc">/</span> (<span class="dv">2</span> <span class="sc">+</span> <span class="dv">7</span>)</span>
 <span id="cb53-2"><a href="quick-intro-to-r.html#cb53-2" aria-hidden="true" tabindex="-1"></a>answer</span></code></pre></div>
 <pre><code>## [1] 1</code></pre>
-<p>As along as the expression on the right hand side of <code>&lt;-</code> generates an output of some kind it can be used with the assignment operator. For example, we can create new variables from others:</p>
+<p>Any expression can be used on the right-hand side of the assignment operator as along as it generates an output of some kind. For example, we can create new variables from others:</p>
 <div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="quick-intro-to-r.html#cb55-1" aria-hidden="true" tabindex="-1"></a>newvar <span class="ot">&lt;-</span> <span class="dv">2</span> <span class="sc">*</span> answer</span></code></pre></div>
-<p>What happened here? Start at the right hand side of <code>&lt;-</code>. The expression on this side contained the variable <code>answer</code> so R went to see if <code>answer</code> actually exists. It does, so it then substituted the value associated with <code>answer</code> into the calculation and assigned the resulting value of 2 to <code>newvar</code>.</p>
+<p>What happened here? Start at the right-hand side of <code>&lt;-</code>. The expression on this side contained the variable <code>answer</code> so R went to see if <code>answer</code> actually exists. It does, so it then substituted the value associated with <code>answer</code> into the calculation and assigned the resulting value of 2 to <code>newvar</code>.</p>
 <p>Finally, look at what happens if we copy a variable using the assignment operator:</p>
 <div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="quick-intro-to-r.html#cb56-1" aria-hidden="true" tabindex="-1"></a>myvar <span class="ot">&lt;-</span> <span class="dv">7</span></span>
 <span id="cb56-2"><a href="quick-intro-to-r.html#cb56-2" aria-hidden="true" tabindex="-1"></a>mycopy <span class="ot">&lt;-</span> myvar</span></code></pre></div>
@@ -416,24 +416,23 @@ x = \frac{-b\pm\sqrt{b^2-4ac}}{2a}
 <pre><code>## [1] 10</code></pre>
 <div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="quick-intro-to-r.html#cb60-1" aria-hidden="true" tabindex="-1"></a>mycopy</span></code></pre></div>
 <pre><code>## [1] 7</code></pre>
-<p>R always behaves like this unless we work hard to alter this behaviour. So remember, every time we assign one variable to another, we actually make a completely new, independent copy of its associated value. For our purposes this is a good thing because it makes it much easier to understand what a long sequence of R expressions will do.</p>
-<p>That probably doesn’t seem like an obvious or important point, but trust us, it is. It will be particularly important to understand this behaviour when we start learning how to manipulate data sets.</p>
+<p>R always behaves like this unless we work hard to alter this behaviour. Remember that—every time we assign one variable to another, we actually make a completely new, independent copy of its associated value. That probably doesn’t seem like an obvious or important point, but trust us, it is. It will be critical to remember this behaviour when we start learning how to manipulate data sets.</p>
 </div>
 <div id="global-environment" class="section level2" number="1.5">
 <h2><span class="header-section-number">1.5</span> Global environment</h2>
-<p>Whenever we associate a name with a value we create a copy of both these things somewhere in the computer’s memory. In R the “somewhere” is called an environment. We aren’t going to get into a discussion of R’s many different kinds of environments—that’s an advanced topic well beyond the scope of this book. The one environment we do need to be aware of though is the <strong>Global Environment</strong>.</p>
+<p>Whenever we associate a name with a value we create a copy of both these things somewhere in the computer’s memory. In R the “somewhere” is called an environment. We aren’t going to get into a discussion of R’s many different kinds of environments—that’s an advanced topic well beyond the scope of this book. The one environment we do need to be aware of is the <strong>Global Environment</strong>.</p>
 <p>Whenever we perform an assignment in the Console the variable we create is placed into the Global Environment. The set of variables currently in existence are listed in the <strong>Environment</strong> tab in RStudio. Take a look. There are two columns in the <strong>Environment</strong> tab: the first shows the names of the variables, the second summarises their values.</p>
 <div id="the-global-environment-is-temporary" class="section level4 unnumbered infobox warning">
 <h4>The Global Environment is temporary</h4>
-<p>By default, R will try to save everything in the Global Environment when we close it down and then restore everything when we start the next R session. It does this by writing a copy of the Global Environment to disk. In theory this means we can close down R, reopen it, and pick things up from where we left off. <strong>Don’t rely on this behaviour!</strong> It just increases the risk of making a serious mistake.</p>
+<p>By default, R will try to save everything in the Global Environment when we close it down and restore everything when we start the next R session. It does this by writing a copy of the Global Environment to disk. In theory, this means we can close down R, reopen it, and pick things up from where we left off. <strong>Don’t rely on this behaviour!</strong> It just increases the risk of making a mistake.</p>
 </div>
 </div>
 <div id="naming-rules-and-conventions" class="section level2" number="1.6">
 <h2><span class="header-section-number">1.6</span> Naming rules and conventions</h2>
-<p>We don’t have to use a single letter to name things in R. The words <code>tom</code>, <code>dick</code> and <code>harry</code> could be used in place of <code>a</code>, <code>b</code> and <code>c</code>. It might be confusing to use them, but <code>tom</code>, <code>dick</code> and <code>harry</code> are all legal names as far as to R is concerned:</p>
+<p>We don’t have to use a single letter to name things in R. We could use the words <code>tom</code>, <code>dick</code> and <code>harry</code> in place of <code>a</code>, <code>b</code> and <code>c</code>. It might be confusing to use them, but <code>tom</code>, <code>dick</code> and <code>harry</code> are all legal names as far as to R is concerned:</p>
 <ul>
 <li><p>A legal name in R is any sequence of letters, numbers, <code>.</code>, or <code>_</code>, but the sequence of characters we use must begin with a letter. Both upper and lower case letters are allowed. For example, <code>num_1</code>, <code>num.1</code>, <code>num1</code>, <code>NUM1</code>, <code>myNum1</code> are all legal names, but <code>1num</code> and <code>_num1</code> are not because they begin with <code>1</code> and <code>_</code>.</p></li>
-<li><p>R is case sensitive—it treats upper and lower case letters as different characters. This means that <code>num</code> and <code>Num</code> are treated as distinct names. Forgetting about case sensitivity is a good way to create errors when using R. Try to remember that.</p></li>
+<li><p>R is case sensitive—it treats upper and lower case letters as different characters. This means R treats <code>num</code> and <code>Num</code> as distinct names. Forgetting about case sensitivity is a good way to create errors when using R. Try to remember that.</p></li>
 </ul>
 <div id="dont-begin-a-name-with-." class="section level4 unnumbered infobox warning">
 <h4>Don’t begin a name with <code>.</code></h4>
