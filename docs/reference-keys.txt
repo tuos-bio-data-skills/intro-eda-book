@@ -38,8 +38,8 @@ installing-packages
 loading-and-attaching-packages
 dont-use-rstudio-for-loading-packages
 an-analogy
-the-tidyverse-ecosystem-of-packages
 package-data
+the-tidyverse-ecosystem-of-packages
 data-wrangling-with-dplyr
 exploratory-data-analysis-with-ggplot2
 getting-help

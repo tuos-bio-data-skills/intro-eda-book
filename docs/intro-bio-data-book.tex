@@ -2087,29 +2087,29 @@ There's no simple way to answer this question without getting into the details o
 \hypertarget{package-system}{%
 \section{The R package system}\label{package-system}}
 
-The R package system is probably the most important single factor driving increased adoption of R. Packages are used to extend the basic capabilities of R. In \href{http://r-pkgs.had.co.nz}{his book} about R packages Hadley Wickam says,
+The R package system is the most important single factor driving increased adoption of R. Packages are used to extend the basic capabilities of R. In \href{http://r-pkgs.had.co.nz}{his book} about R packages Hadley Wickam says,
 
 \begin{quote}
 Packages are the fundamental units of reproducible R code. They include reusable R functions, the documentation that describes how to use them, and sample data.
 \end{quote}
 
-An R package is just a collection of folders and files in a standard, well-defined format that bundles together computer code, data, and documentation in a way that is easy to use and share with other users. The computer code might all be R code, but it can also include code written in other languages. Packages provide an R-friendly interface to use this ``foreign'' code without the need to understand how it works.
+An R package is a collection of folders and files in a standard, well-defined format that bundles together computer code, data, and documentation in a way that is easy to use and share with other users. The computer code might all be R code, but it can also include code written in other languages. Packages provide an R-friendly interface to use this ``foreign'' code without needing to understand how it works.
 
-The base R distribution it comes with quite a few pre-installed packages. These base R packages represent a very small subset of all available R packages. The majority of these are hosted on a network of web servers around the world collectively know as \href{http://cran.r-project.org}{CRAN}: the Comprehensive R Archive Network, pronounced either ``see-ran'' or ``kran''.
+The base R distribution it comes with quite a few pre-installed packages. These base R packages represent a tiny subset of all available R packages. The majority of these are hosted on a worldwide network of web servers collectively know as \href{http://cran.r-project.org}{CRAN}: the Comprehensive R Archive Network, pronounced either ``see-ran'' or ``kran''.
 
-CRAN is a fairly spartan web site, so it's easy to navigate. The \href{http://cran.r-project.org}{landing page} has about a dozen links on the right hand side. Under the \emph{Software} section there is a link called \href{http://cran.r-project.org/web/packages/}{Packages}. Near the top of that packages page there is a link called \href{http://cran.r-project.org/web/packages/available_packages_by_name.html}{Table of available packages, sorted by name} that points to a very long list of all the packages on CRAN. The column on the left shows each package name, followed by a brief description of what the package does on the right. There are 1000s of packages listed there.
+CRAN is a fairly spartan web site, so it's easy to navigate. The \href{http://cran.r-project.org}{landing page} has about a dozen links on the right-hand side. Under the \emph{Software} section there is a link called \href{http://cran.r-project.org/web/packages/}{Packages}. Near the top of that packages page there is a link called \href{http://cran.r-project.org/web/packages/available_packages_by_name.html}{Table of available packages, sorted by name} that points to a very long list of all the packages on CRAN. The column on the left shows each package name, followed by a brief description of what the package does on the right. There are 1000s of packages listed there.
 
 \hypertarget{task-views}{%
 \section{Task views}\label{task-views}}
 
-The huge list of packages on the \href{http://cran.r-project.org/web/packages/available_packages_by_name.html}{available packages} is pretty overwhelming. A more user-friendly view of many R packages can be found on the \href{http://cran.r-project.org/web/views/}{Task Views} page (the link is on the left hand side, under the section labelled \emph{CRAN}). A Task View is basically a curated guide to the packages and functions that are useful for certain disciplines. The Task Views page shows a list of these discipline-specific topics, along with a brief description. For example---
+The huge list of packages on the \href{http://cran.r-project.org/web/packages/available_packages_by_name.html}{available packages} is pretty overwhelming. A more user-friendly view of many R packages is found on the \href{http://cran.r-project.org/web/views/}{Task Views} page (the link is on the left hand side, under the section labelled \emph{CRAN}). A Task View is basically a curated guide to the packages and functions that are useful for certain disciplines. The Task Views page shows a list of these discipline-specific topics, along with a brief description. For example---
 
 \begin{itemize}
 \tightlist
 \item
   The \href{http://cran.r-project.org/web/views/Environmetrics.html}{Environmentrics} Task View contains information about using R to analyse ecological and environmental data.
 \item
-  The \href{https://cran.r-project.org/web/views/ClinicalTrials.html}{Clinical Trials} Task View contains information about using R for the design, monitoring and analysis of data from clinical trials.
+  The \href{https://cran.r-project.org/web/views/ClinicalTrials.html}{Clinical Trials} Task View contains information about using R to design, monitor, and analyse data from clinical trials.
 \item
   The \href{https://cran.r-project.org/web/views/MedicalImaging.html}{Medical Image Analysis} Task View contains information about packages for working with commercial medical image data.
 \item
@@ -2121,23 +2121,23 @@ Task views are often a good place to start looking for a new package to support 
 \hypertarget{use-packages}{%
 \section{Using packages}\label{use-packages}}
 
-Two things need to happen to actually make use of a package. First, we need to ensure that a copy of the folders and files that make up the package are copied to an appropriate folder on our computer. This process of putting the package files into the correct location is called \textbf{installing} the package. Second, we need to \textbf{load and attach} the package for use in a particular R session. The word ``session'' refers to the time between when we start up R and close it down again.
+Two things need to happen to make use of a package. First, we need to copy the folders and files that make up the package to an appropriate location on our computer. This process is called \textbf{installing} the package. Second, we need to \textbf{load and attach} the package for use in an R session. The word ``session'' refers to the time between when we start up R and close it down again.
 
-It's worth unpacking these two ideas a bit, because packages are a very frequent source of confusion for new users:
+It's worth unpacking these two ideas because packages are a very frequent source of confusion for new users:
 
 \begin{itemize}
 \item
-  If we don't have a copy of a package's folders and files our computer we can't use it. The process of making this copy is called \textbf{installing} the package. It is possible to manually install packages by going to the CRAN website, downloading the package, and then using various tools to install it. We don't recommend using this approach though because it's inefficient and error prone. Instead, use built-in R functions to grab the package from CRAN and install it one step.
+  If we don't have a copy of a package's folders and files our computer, we can't use it. The process of making this copy is called \textbf{installing} the package. It's possible to manually install packages by going to the CRAN website, downloading the package, and then using various tools to install it. We don't recommend using this approach though, because it's inefficient and error-prone. Instead, use built-in R functions to grab the package from CRAN and install it one step.
 \item
-  Once we have a copy of the package on our hard drive it will remain there for us to use. We don't need to re-install a packages we plan to use every time we start a new R session. It is worth saying that again, \textbf{there is no need to install a package every time we start up R / RStudio}. The only exception to this rule is that a major update to R will sometimes require a complete re-install of the packages. These major updates are fairly infrequent though.
+  Once we have a copy of the package on our computer, it will remain there for us to use. We don't need to re-install a package we want to use every time we start a new R session. It is worth saying that again, \textbf{there is no need to install a package every time we start up R / RStudio}. The only exception to this rule is that a major update to R will sometimes require a complete re-install of the packages. Such major updates are infrequent.
 \item
-  Installing a package does nothing more than place a copy of the relevant files on our hard drive. If we actually want to use the functions or the data that comes with a package we need to make them available in our current R session. Unlike package installation this \textbf{load and attach} process as it's known has to be repeated every time we restart R. If we forget to load up the package we can't use it.
+  Installing a package does nothing more than place a copy of the relevant files on our hard drive. If we want to use the functions or the data that comes with a package we need to make them available in our current R session. Unlike package installation, this \textbf{load and attach} process as it's known has to be repeated every time we restart R. If we forget to load up the package we can't use it.
 \end{itemize}
 
 \hypertarget{viewing-installed-packages}{%
 \subsection{Viewing installed packages}\label{viewing-installed-packages}}
 
-We sometimes need to check whether a package is currently installed. RStudio provides a simple, intuitive way to see which packages are installed on our computer. The \textbf{Packages} tab in the bottom right pane shows the name of every installed package, a brief description (the same one seen on CRAN) and a version number.
+We sometimes need to check whether a package is currently installed. RStudio provides a simple, intuitive way to see which packages are installed on our computer. The \textbf{Packages} tab in the bottom right pane shows the name of every installed package, a brief description and a version number.
 
 There are also a few R functions that can be used to check whether a package is currently installed. For example, the \texttt{find.package} function can do this:
 
@@ -2151,14 +2151,14 @@ There are also a few R functions that can be used to check whether a package is 
 ## [1] "/Library/Frameworks/R.framework/Versions/4.0/Resources/library/MASS"
 \end{verbatim}
 
-This either prints a ``file path'' showing us where the package is located, or returns an error if the package can't be found. Alternatively, the function called \texttt{installed.packages} returns a data frame containing a lot more information about the installed packages.
+The \texttt{find.package} function either prints a ``file path'' showing us where the package is located, as above, or return an error if the package can't be found. Alternatively, a function called \texttt{installed.packages} will return a data frame containing a lot of information about the installed packages.
 
 \hypertarget{installing-packages}{%
 \subsection{Installing packages}\label{installing-packages}}
 
-R packages can be installed from a number of different sources. For example, they can be installed from a local file on a computer, from the CRAN repository, or from a different kind of online repository called Github. Although various alternatives to CRAN are becoming more popular, we're only going to worry about installing packages that live on CRAN.
+R packages can be installed from several different sources. For example, they can be installed from a local file on a computer, from the CRAN repository, or from an other kind of online repository called Github. Although various alternatives to CRAN are becoming more popular, we're only going to worry about installing packages that live on CRAN.
 
-To install a package from an online repository like CRAN we have to first download the package files, possibly uncompress them (like we would a ZIP file), and move them to the correct location. All of this can be done using a single function: \texttt{install.packages}. For example, if we want to install a package called \textbf{fortunes}, we use:
+To install a package from an online repository like CRAN we have to download the package files, uncompress them (like we would a ZIP file), and move them to the correct location. All of this can be done using a single function: \texttt{install.packages}. For example, to install a package called \textbf{fortunes} we use:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2170,12 +2170,14 @@ The quotes are necessary by the way. If everything is working---we have an activ
 
 There are a couple of things to keep in mind. First, package names are case sensitive. For example, \textbf{fortunes} is not the same as \textbf{Fortunes}. Quite often package installations fail because we used the wrong case somewhere in the package name. The other aspect of packages we need to know about is related to \textbf{dependencies}: some packages rely on other packages in order to work properly. By default \texttt{install.packages} will install these dependencies, so we don't usually have to worry too much about them. Just don't be surprised if the \texttt{install.packages} function installs more than one package when only one was requested.
 
-RStudio provides a way of interacting with \texttt{install.packages} via point-and-click. The \textbf{Packages} tab has an ``Install''" button at the top right. Clicking on this brings up a small window with three main fields: ``Install from'', ``Packages'', and ``Install to Library''. We only need to work with the ``Packages'' field -- the other two can be left at their defaults. When we start typing in the first few letters of a package name (e.g.~\textbf{dplyr}) RStudio provides a list of available packages that match this. After we select the one we want and click the ``Install'' button, RStudio invokes \texttt{install.packages} with the appropriate arguments at the Console for us.
+RStudio provides a way of interacting with \texttt{install.packages} via point-and-click. The \textbf{Packages} tab has an ``Install''" button at the top right. Clicking on this brings up a small window with three main fields: ``Install from'', ``Packages'', and ``Install to Library''. We only need to work with the ``Packages'' field -- the other two can be left at their defaults. When we start typing in the first few letters of a package name (e.g.~\textbf{dplyr}) RStudio provides a list of available packages that match this. After we select the one we want and click the ``Install'' button, RStudio invokes \texttt{install.packages} for us.
 
 \hypertarget{loading-and-attaching-packages}{%
 \subsection{Loading and attaching packages}\label{loading-and-attaching-packages}}
 
-Once we've installed a package or two we'll probably want to actually use them. Two things have to happen to access a package's facilities: the package has to be loaded into memory, and then it has to attached to something called a search path so that R can find it. It is beyond the scope of this book to get in to ``how'' and ``why'' of these events. Fortunately, there's no need to worry about these details, as both loading and attaching can be done in a single step with a function called \texttt{library}. The \texttt{library} function works exactly as we might expect it to. If we want to start using the \texttt{fortunes} package---which was just installed above---all we need is:
+Once we've installed a package or two, we'll probably want to use them. Two things have to happen to access a package's facilities: the package has to be loaded into memory, and then it has to attached to something called a search path so that R can find it.
+
+It is beyond the scope of this book to get in to ``how'' and ``why'' of these events. Fortunately, there's no need to worry about these details, as both loading and attaching can be done in a single step with a function called \texttt{library}. The \texttt{library} function works as we might expect it to. If we want to start using the \texttt{fortunes} package---which was just installed above---all we need is:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2183,7 +2185,7 @@ Once we've installed a package or two we'll probably want to actually use them. 
 \end{Highlighting}
 \end{Shaded}
 
-Nothing much happens if everything is working as it should. R just returns us to the prompt without printing anything to the Console. The difference is that now we can use the functions that \textbf{fortunes} provides. As it turns out, there is only one, called fortune:
+Nothing much happens if everything is working as it should. R just returns us to the prompt without printing anything to the Console. The difference is that now we can use the functions that \textbf{fortunes} provides. As it turns out, there is only one function, called fortune:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2199,30 +2201,25 @@ Nothing much happens if everything is working as it should. R just returns us to
 ##       JSM 2001, Atlanta (August 2001)
 \end{verbatim}
 
-The \textbf{fortunes} package is either very useful or utterly pointless, depending on ones perspective. It dispenses quotes from various R experts delivered to the venerable R mailing list.
+The \textbf{fortunes} package is either very useful or utterly pointless, depending on one's perspective. It dispenses quotes from various R experts delivered to the venerable R mailing list.
 
 \begin{infobox}{warning}
 
 \hypertarget{dont-use-rstudio-for-loading-packages}{%
 \subsection{Don't use RStudio for loading packages!}\label{dont-use-rstudio-for-loading-packages}}
 
-As usual, if we don't like working in the Console RStudio can help us out. There is a small button next to each package listed in the \textbf{Packages} tab. Packages that have been loaded and attached have a blue check box next to them, whereas this is absent from those that have not. Clicking on an empty check box will load up the package. We mention this because at some point most people realise they can use RStudio to load and attach packages. \textbf{We don't recommend using this route}. It's much better to put \texttt{library} statements into a script. Why? Because if we rely on RStudio to load packages, we have to do this every time we want to run a script, and if we forget one we need, the script won't work.
+As usual, if we don't like working in the Console RStudio can help us out. There is a small button next to each package listed in the \textbf{Packages} tab. Packages that have been loaded and attached have a blue check box next to them, whereas this is absent from those that have not. Clicking on an empty check box will load up the package. We mention this because at some point most people realise they can use RStudio to load and attach packages. \textbf{We don't recommend using this route}. It's much better to put \texttt{library} statements into your R script. Read the relevant appendix if you're not sure what a script is yet.
 
 \end{infobox}
 
 \hypertarget{an-analogy}{%
 \subsection{An analogy}\label{an-analogy}}
 
-The package system frequently confuses new users. The reason for this stems from the fact that they aren't clear about what the \texttt{install.packages} and \texttt{library} functions are doing. One way to think about these is by analogy with smartphone ``Apps''. Think of an R package as analogous to a smartphone App--- a package effectively extends what R can do, just as an App extends what a phone can do.
+The package system frequently confuses new users. This stems from the fact that they aren't clear about what the \texttt{install.packages} and \texttt{library} functions are doing. One way to think about these is by analogy with smartphone ``Apps''. Think of an R package as analogous to a smartphone App--- a package effectively extends what R can do, just as an App extends what a phone can do.
 
-When we want to try out a new App we have to first download it from an App store and install it on our phone. Once it has been downloaded, an App lives permanently on the phone and can be used whenever it's needed. Downloading and installing the App is something we only have to do once. Packages are no different. When we want to use an R package we first have to make sure it is installed on the computer (e.g.~using \texttt{install.packages}). Installing a package is a `do once' operation. Once installed, we don't need to install a package again each time we restart R.
+When we want to use a new App, we download it from the App store and install it on our phone. Once downloaded, the App lives permanently on the phone and can be used whenever it's needed. Downloading and installing the App is something we only have to do once. Packages are no different. When we want to use an R package we first have to make sure it is installed on the computer (e.g.~using \texttt{install.packages}). Installing a package is a `do once' operation. Once installed, we don't need to install a package again each time we restart R.
 
-In order to actually use an App on our phone we open it up by tapping on its icon. This obviously has to happen every time we want to use the App. The package equivalent of opening a smartphone App is the ``load and attach'' operation. This is what \texttt{library} does. It makes a package available for use in a particular session. We have to use \texttt{library} to load the package every time we start a new R session if we plan to access the functions in that package: loading and attaching a package via \texttt{library} is a ``do every time'' operation.
-
-\hypertarget{the-tidyverse-ecosystem-of-packages}{%
-\section{The tidyverse ecosystem of packages}\label{the-tidyverse-ecosystem-of-packages}}
-
-{[}COMPLETE ME{]}
+To actually use an App on our phone we open it up by tapping on its icon. This has to happen every time we want to use the App. The package equivalent of opening a smartphone App is the ``load and attach'' operation. This is what \texttt{library} does. It makes a package available for use in a particular session. We have to use \texttt{library} to load the package every time we start a new R session if we plan to access the functions in that package: loading and attaching a package via \texttt{library} is a ``do every time'' operation.
 
 \hypertarget{package-data}{%
 \section{Package data}\label{package-data}}
@@ -2239,7 +2236,18 @@ The mysterious \texttt{.packages(all.available\ =\ TRUE)} part of this generates
 
 The \texttt{datasets} package is part of the base R distribution. It exists for one reason---to store example data sets. The \texttt{datasets} package is automatically loaded when we start R, i.e.~there's no need to use \texttt{library} to access it, meaning any data stored in this package can be accessed every time we start R.
 
-From the perspective of learning to use R, working with package data is really useful because it allows us to work with `well-behaved' data sets without having to worry about getting them into R. Importing data is certainly an important skill but it's not necessarily something a new user wants to worry about. We'll use a package data sets to learn about \textbf{dplyr} and \textbf{ggplot2} later.
+From the perspective of learning to use R, working with package data is really useful because it allows us to work with `well-behaved' data sets without having to worry about getting them into R. Importing data is certainly an important skill but it's not necessarily something a new user wants to worry about. For this reason, we tend to use package data sets in this book.
+
+\hypertarget{the-tidyverse-ecosystem-of-packages}{%
+\section{The tidyverse ecosystem of packages}\label{the-tidyverse-ecosystem-of-packages}}
+
+We're going to be using several packages that belong to a widely used, well-known ecosystem of packages known as the \textbf{tidyverse}. Here is the description of the tidyverse on its \href{https://www.tidyverse.org/}{website}:
+
+\begin{quote}
+The tidyverse is an opinionated collection of R packages designed for data science. All packages share an underlying design philosophy, grammar, and data structures.
+\end{quote}
+
+Using the tidyverse makes data analysis simpler, faster and a more entertaining experience (honestly).
 
 \hypertarget{part-data-wrangling}{%
 \part{Data Wrangling}\label{part-data-wrangling}}
