@@ -249,11 +249,23 @@ We'll only scratch the surface of what RStudio can do. The reason for introducin
 \chapter*{How to use this book}\label{how-to-use-this-book}}
 \addcontentsline{toc}{chapter}{How to use this book}
 
+We have adopted a number of formatting conventions in this book to distinguish between normal text, R code, file names, and so on. You need to be aware to make best use of the book.
+
 \hypertarget{text-instructions-and-explanations}{%
 \section*{Text, instructions, and explanations}\label{text-instructions-and-explanations}}
 \addcontentsline{toc}{section}{Text, instructions, and explanations}
 
-Normal text---instructions, explanations and so on---are written in the same type as this document. We will tend to use bold for emphasis and italics to highlight specific technical terms when they are first introduced.
+Normal text---instructions, explanations and so on---are written in the same type as this document. We will tend to use bold for emphasis and italics to highlight specific technical terms when they are first introduced. In addition:
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{This\ typeface} is used to distinguish R code within a sentence of text: e.g.~``We use the \texttt{mutate} function to change or add new variables.''
+\item
+  A sequence of selections from an RStudio menu is indicated as follows: e.g.~\textbf{File ▶ New File ▶ R Script}
+\item
+  File names referred to in general text are given in upper case in the normal typeface: e.g.~MYFILE.CSV.
+\end{itemize}
 
 At various points in the text you will come across text in different coloured boxes. These are designed to highlight stand-alone exercises or little pieces of supplementary information that might otherwise break the flow. There are three different kinds of boxes:
 
@@ -291,7 +303,7 @@ This is a \textbf{warning} box. These usually highlight a common `gotcha' that m
 \section*{R code and output}\label{r-code-and-output}}
 \addcontentsline{toc}{section}{R code and output}
 
-We try to illustrate as many ideas as we can using snippets of real R code. It's a good idea to run these when working through a topic. The best way to learn something is to use it. Of course, in order to do that we need to know what we're looking at\ldots{} Stand alone snippets will be formatted like this:
+We try to illustrate ideas using snippets of real R code where possible. It's a good idea to run these when working through a topic. The best way to learn something is to use it. Of course, in order to do that we need to know what we're looking at\ldots{} Stand alone snippets will be formatted like this:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -305,12 +317,6 @@ We try to illustrate as many ideas as we can using snippets of real R code. It's
 \end{verbatim}
 
 At this point it does not matter what the above actually means. You just need to understand how the formatting of R code in this book works. The lines that start with \texttt{\#\#} show us what R prints to the screen after it evaluates an instruction and does whatever was asked of it, that is, they show the output. The lines that \textbf{do not} start with \texttt{\#\#} show us the instructions, that is, they show us the input. So remember, the absence of \texttt{\#\#} shows us what we are asking R to do, otherwise we are looking at something R prints in response to these instructions.
-
-\texttt{This\ typeface} is used to distinguish R code within a sentence of text: e.g.~``We use the \texttt{mutate} function to change or add new variables.''
-
-A sequence of selections from an RStudio menu is indicated as follows: e.g.~\textbf{File ▶ New File ▶ R Script}
-
-File names referred to in general text are given in upper case in the normal typeface: e.g.~MYFILE.CSV.
 
 \hypertarget{get-up-and-running}{%
 \chapter*{Get up and running}\label{get-up-and-running}}
