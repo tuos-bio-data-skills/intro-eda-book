@@ -1313,7 +1313,7 @@ The reason for pointing out this behaviour is because new R users sometimes assu
 \hypertarget{introduction}{%
 \section{Introduction}\label{introduction}}
 
-This chapter has three goals. First, we want to learn how to work with something called a \textbf{vector}, one of the basic structures used to represent data in R-land. Second, we'll learn how to work with vectors by using \textbf{numeric} vectors to perform simple calculations. Finally, we'll introduce a couple of different kinds of vectors---\textbf{character} vectors and \textbf{logical} vectors. This will provide a foundation for working with real data sets in the next block.
+This chapter has three goals. First, we want to learn how to work with a vector, one of the basic structures used to represent data in R-land. Second, we'll learn how to work with vectors by using \textbf{numeric} vectors to perform simple calculations. Finally, we'll introduce a couple of different kinds of vectors---\textbf{character} vectors and \textbf{logical} vectors. This material provides a foundation for working with real data sets in the next block.
 
 \begin{infobox}{information}
 
@@ -1328,11 +1328,11 @@ The term `data structure' is used to describe conventions or rules for organisin
 \hypertarget{atomic-vectors}{%
 \section{Atomic vectors}\label{atomic-vectors}}
 
-We'll start with a definition, even though it probably won't make much sense initially: a \textbf{vector} is a 1-dimensional data structure for storing a set of values, each accessible by its position in the vector. The simplest kind of vectors in R are called \textbf{atomic vectors}\footnote{The other common vector is called a ``list''. Lists are very useful but we won't cover them in this book.}.
+We'll start with a definition, even though it probably won't make much sense yet: a \textbf{vector} is a 1-dimensional data structure for storing a set of values, each accessible by its position in the vector. The simplest kind of vectors in R are called \textbf{atomic vectors}\footnote{The other common vector is called a ``list''. Lists are very useful but we won't cover them in this book.}.
 
-There are a few different kinds of atomic vector, but the defining feature of each one is that it can only contain data of one `type'. An atomic vector might contain all integers (e.g.~2, 4, 6, \ldots) or all characters (e.g.~``A'', ``B'', ``C''), but it can't mix and match integers and characters (e.g.~``A'', 2, ``C'', 5).
+There are different kinds of atomic vector, but their defining, common feature is that it can only contain data of one `type'. They might contain all integers (e.g.~2, 4, 6, \ldots) or all characters (e.g.~``A'', ``B'', ``C''), but they can't mix and match integers and characters (e.g.~``A'', 2, ``C'', 5).
 
-The word ``atomic'' in the name refers to the fact that an atomic vector can't be broken down into anything simpler---they are the simplest kind of data structure R knows about. Even if we're working with a single number we're actually dealing with an atomic vector of length one. Here's the very first expression we evaluated in the \protect\hyperlink{r-calculator}{Introduction to R chapter}:
+The word `atomic' in the name refers to the fact that an atomic vector can't be broken down into anything simpler---they are the simplest kind of data structure R knows. Even when working with a single number we're actually dealing with an atomic vector. Here's the very first expression we evaluated in the \protect\hyperlink{r-calculator}{Introduction to R chapter}:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1344,7 +1344,7 @@ The word ``atomic'' in the name refers to the fact that an atomic vector can't b
 ## [1] 2
 \end{verbatim}
 
-Look at the output. What is that \texttt{{[}1{]}} at the beginning? It's actually a clue that the output resulting from \texttt{1\ +\ 1} is an atomic vector. We can verify this with the \texttt{is.atomic} functions. First we make a variable called \texttt{x} with the result of the \texttt{1\ +\ 1} calculation:
+Look at the output. What is that \texttt{{[}1{]}} at the beginning? It's actually a clue that the output resulting from \texttt{1\ +\ 1} is an atomic vector. We can verify this with the \texttt{is.atomic} functions. First, make a variable called \texttt{x} with the result of the \texttt{1\ +\ 1} calculation:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1357,7 +1357,7 @@ Look at the output. What is that \texttt{{[}1{]}} at the beginning? It's actuall
 ## [1] 2
 \end{verbatim}
 
-Then verify to see if \texttt{x} is `atomic':
+Then use \texttt{is.atomic} to check whether \texttt{x} really is an atomic vector:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1369,7 +1369,7 @@ Then verify to see if \texttt{x} is `atomic':
 ## [1] TRUE
 \end{verbatim}
 
-Atomic vectors really are the simplest kind of data structure in R. Unlike many other languages there is simply no way to represent just a number. Instead, a single number must be stored as a vector of length one\footnote{The same is true for things like sets of characters (\texttt{"dog"}, \texttt{"cat"}, \texttt{"fish"}, \ldots) and logical values (\texttt{TRUE} or \texttt{FALSE}) discussed in the next two chapters.}.
+Atomic vectors really are the simplest kind of data structure in R. Unlike many other languages, there is simply no way to represent just a number. Instead, a single number is always stored as a vector of length one\footnote{The same is true for things like sets of characters (\texttt{"dog"}, \texttt{"cat"}, \texttt{"fish"}, \ldots) and logical values (\texttt{TRUE} or \texttt{FALSE}) discussed in the next two chapters.}.
 
 \hypertarget{intro-vectors}{%
 \section{Numeric vectors}\label{intro-vectors}}
@@ -1388,11 +1388,11 @@ A lot of work in R involves \textbf{numeric vectors}. After all, data analysis i
 ## [39] 0 0 0 0 0 0 0 0 0 0 0 0
 \end{verbatim}
 
-What happened? We made a numeric vector with 50 \textbf{elements}, each of which is the number 0. The word ``element'' is used to reference an object (a number in this case) that resides at a particular position in a vector.
+What happened? We made a numeric vector with 50 \textbf{elements}, each of which is the number 0. The word `element' is used to refer to the values that reside in a vector.
 
-When we create a vector but don't assign it to a name using \texttt{\textless{}-} R just prints it for us. Notice what happens when a vector is printed to the screen. Since a length-50 vector can't fit on one line, it was printed over two. At the beginning of each line there is a \texttt{{[}X{]}}: the \texttt{X} gives the position of the element shown at the beginning of a particular line.
+When we create a vector but don't assign it to a name using \texttt{\textless{}-} R just prints it for us. Notice what happens when a vector is printed to the screen. Since a length-50 vector can't fit on one line, it was printed over two. At the beginning of each line there is a \texttt{{[}X{]}}: the number \texttt{X} gives the position of the elements printed at the beginning of each line.
 
-If we need to check that we really have made a numeric vector we can use the \texttt{is.numeric}\footnote{This may not look like the most useful function in the world, but sometimes we need functions like \texttt{is.numeric} to understand what R is doing or root out mistakes in our scripts.} function to do this:
+If we need to check that we really have made a numeric vector, we can use the \texttt{is.numeric}\footnote{This may not look like the most useful function in the world, but sometimes we need functions like \texttt{is.numeric} to understand what R is doing or root out mistakes in our scripts.} function to do this:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1406,7 +1406,7 @@ If we need to check that we really have made a numeric vector we can use the \te
 
 This confirms \texttt{numvec} is numeric by returning \texttt{TRUE} (a value of \texttt{FALSE} would mean that \texttt{numvec} is some other kind of object).
 
-Keep in mind that R won't always print the exact values of the elements of a vector. For example, when we print a numeric vector it only prints the elements to 7 significant figures by default. We can see this by printing the built in constant \texttt{pi} to the Console:
+Keep in mind that R won't always print the exact values of the elements of a vector. For example, when R prints a numeric vector, it only prints the elements to 7 significant figures by default. We can see this by printing the built in constant \texttt{pi} to the Console:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1436,7 +1436,7 @@ The actual value stored in \texttt{pi} is much more precise than this. We can se
 \subsubsection*{Different kinds of numbers}\label{different-kinds-of-numbers}}
 \addcontentsline{toc}{subsubsection}{Different kinds of numbers}
 
-Roughly speaking, R stores numbers in two different ways depending of whether they are whole numbers (``integers'') or numbers containing decimal points (``doubles'' -- don't ask). We're not going to worry about this difference. Most of the time the distinction is invisible to users so it is easier to just think in terms of numeric vectors. We can mix and match integers and doubles in R without having to worry too much about how R is storing the numbers.
+Roughly speaking, R stores numbers in two different ways depending of whether they are whole numbers (``integers'') or numbers containing decimal points (``doubles'' -- don't ask). We're not going to worry about this difference. Most of the time, the distinction is invisible to users, so it is easier to think in terms of numeric vectors. We can mix and match integers and doubles in R without having to worry about how it is storing the numbers.
 
 \end{infobox}
 
@@ -1455,7 +1455,7 @@ We just saw to make a numeric vector of zeros using the \texttt{numeric} functio
 ## [1] 1.1 2.3 4.0 5.7
 \end{verbatim}
 
-The `c' in the function name stands for `combine'. The \texttt{c} function takes a variable number of arguments, each of which must be a vector of some kind, and combines these into a single vector. We supplied the \texttt{c} function with four arguments, each of which was a vector of length 1 (remember: a single number is treated as a length-one vector). The \texttt{c} function combines these to generate a vector of length 4. Simple.
+The `c' in the function name stands for `combine'. The \texttt{c} function takes a variable number of arguments, each of which must be a vector of some kind, and combines these into a single vector. We supplied the \texttt{c} function with four arguments, each of which was a single number (i.e.~a length-one vector). The \texttt{c} function combines these to generate a vector of length 4. Simple.
 
 Now look at this example:
 
@@ -1479,7 +1479,7 @@ This shows that we can use the \texttt{c} function to combine two or more vector
 \subsubsection*{\texorpdfstring{The \texttt{c} function is odd}{The c function is odd}}\label{the-c-function-is-odd}}
 \addcontentsline{toc}{subsubsection}{The \texttt{c} function is odd}
 
-Notice that we did not have to name the arguments in those two examples---there were no \texttt{=} involved. The \texttt{c} function is an example of one of those flexible functions that breaks the simple rules of thumb for using arguments that we set out earlier: it can take a variable number of arguments and these arguments do not have predefined names. This behaviour is necessary for \texttt{c} to be of any use: in order to be useful it needs to be flexible enough to take any combination of arguments.
+Notice that we did not have to name the arguments in those two examples---there were no \texttt{=} involved. The \texttt{c} function is an example of one of those flexible functions that breaks the simple rules of thumb for using arguments that we set out earlier: it can take a variable number of arguments that do not have predefined names. This behaviour is necessary for \texttt{c} to be of any use: to be useful it needs to be flexible enough to take any combination of arguments.
 
 \end{infobox}
 
@@ -1500,7 +1500,7 @@ What happens if use named arguments with \texttt{c}? Take a look at this:
 ## 1 2 3
 \end{verbatim}
 
-What happened? The argument names were used to define the names of each element in the vector we made. The resulting vector is still a 1-dimensional data structure. When it is printed to the Console the value of each element is printed along with its associated name above it. We can extract the names from a named vector using the \texttt{names} function:
+What happened? R used the argument names to set the names of each element in the vector. The resulting vector is still a 1-dimensional data structure. When printed to the Console, each element's value is printed along with its associated name above it. We can extract the names from a named vector using the \texttt{names} function:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1512,7 +1512,7 @@ What happened? The argument names were used to define the names of each element 
 ## [1] "a" "b" "c"
 \end{verbatim}
 
-Being able to name the elements of a vector is very useful because it allows us to more easily identify relevant information and extract the bits we need---we'll see how this works in the next chapter.
+Being able to name the elements of a vector is useful because it makes it easier to identify and extract the bits we need.
 
 \hypertarget{vectorised-operations}{%
 \section{Vectorised operations}\label{vectorised-operations}}
@@ -1553,9 +1553,9 @@ This constructed two length-10 numeric vectors, called \texttt{x} and \texttt{y}
 ##  [1]  1.1  2.2  3.3  4.4  5.5  6.6  7.7  8.8  9.9 11.0
 \end{verbatim}
 
-When R evaluates the expression \texttt{x\ +\ y} it does this by adding the first element of \texttt{x} to the first element of \texttt{y}, the second element of \texttt{x} to the second element of \texttt{y}, and so on, working through all 10 elements of \texttt{x} and \texttt{y}. That's what is meant by a \textbf{vectorised} operation.
+When R evaluates the expression \texttt{x\ +\ y} it does this by adding the first element of \texttt{x} to the first element of \texttt{y}, the second element of \texttt{x} to the second element of \texttt{y}, and so on, working through all ten elements of \texttt{x} and \texttt{y}. That's what is meant by a \textbf{vectorised} operation.
 
-Vectorisation is implemented in all the standard mathematical functions. For example, our friend the \texttt{round} function will round each element of a numeric vector to the nearest integer by default:
+Vectorisation is implemented in all the standard mathematical functions. For example, the \texttt{round} function rounds each element of a numeric vector to the nearest integer by default:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1581,7 +1581,7 @@ It is important to realise that not all functions are vectorised. For example, t
 ## [1] 5.5
 \end{verbatim}
 
-Although \texttt{sum} obviously works on a numeric vector it is not ``vectorised'' in the sense that it works element-by-element to return an output vector of the same length as its main argument. It just returns a single number--the sum total of the elements of its input.
+Although \texttt{sum} obviously works on a numeric vector it is not `vectorised' in the sense that it works element-by-element to return an output vector of the same length as its main argument. It just returns a single number---the sum total of the elements of its input.
 
 \begin{infobox}{information}
 
@@ -1589,21 +1589,21 @@ Although \texttt{sum} obviously works on a numeric vector it is not ``vectorised
 \subsubsection*{Vectorisation is not the norm}\label{vectorisation-is-not-the-norm}}
 \addcontentsline{toc}{subsubsection}{Vectorisation is not the norm}
 
-R's vectorised behaviour may seem like the ``obvious'' thing to do, but most computer languages do not work like this. In other languages we typically have to write a much more complicated expression to do something so simple. This is one of the reasons R is such a data analysis language: vectorisation allows us to express repetitious calculations in a simple, intuitive way. This behaviour can save us a lot of time. However, not every function treats its arguments in a vectorised way, so we always need to check (most easily, by experimenting) whether this behaviour is available before relying on it.
+R's vectorised behaviour may seem like the obvious thing to do, but most computer languages do not work like this. In other languages, we typically have to write a much more complicated expression to do something so simple. This is one reason R is such a good data analysis language: vectorisation allows us to express repetitious calculations in a simple, intuitive way. This behaviour can save a lot of time.
 
 \end{infobox}
 
 \hypertarget{other-vectors}{%
 \section{Other kinds of atomic vectors}\label{other-vectors}}
 
-The data we collect and analyse are often in the form of numbers, so it comes as no surprise that we work with numeric vectors a lot in R. Nonetheless, we also sometimes need to represent other kinds of vectors, either to represent different types of data, or to help us manipulate our data. This chapter introduces two new types of atomic vector to help us do this: character vectors and logical vectors.
+The data we collect and analyse are often in the form of numbers. It comes as no surprise, therefore, that we work with numeric vectors a lot in R. Nonetheless, we also need to use other kinds of vectors, either to represent different types of data, or to help us manipulate our data. This section introduces two new types of atomic vector to help us do this: character vectors and logical vectors.
 
 \hypertarget{character-vectors}{%
 \subsection{Character vectors}\label{character-vectors}}
 
-The elements of \textbf{character vectors} are what are known as a ``character string'' (or ``string'' if we are feeling lazy). The term ``character string'' refers a sequence of characters, such as ``Treatment 1'', ``University of Sheffield'', ``Population Density''. A character vector is an atomic vector that stores an ordered collection of one or more character strings.
+Each element of a \textbf{character vectors} is what is known as a ``character string'' (or ``string'' if we are feeling lazy). That term ``character string'' refers to a sequence of characters, such as ``Treatment 1'', ``University of Sheffield'', ``Population Density''. A character vector is an atomic vector that stores an ordered collection of one or more character strings.
 
-If we want to construct a character vector in R we have to place double (\texttt{"}) or single (\texttt{\textquotesingle{}}) quotation marks around the characters. For example, we can print the name ``Dylan'' to the Console like this:
+If we want to construct a character vector in R, we have to place double (\texttt{"}) or single (\texttt{\textquotesingle{}}) quotation marks around the characters. For example, we can print the name ``Dylan'' to the Console like this:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1617,7 +1617,7 @@ If we want to construct a character vector in R we have to place double (\texttt
 
 Notice the \texttt{{[}1{]}}. This shows that what we just printed is an atomic vector of some kind. We know it's a character vector because the output is printed with double quotes around the value. We often need to make simple character vectors containing only one value---for example, to set the values of arguments to a function.
 
-The quotation marks are not optional---they tell R we want to treat whatever is inside them as a literal value. The quoting is important. If we try to do the same thing as above without the quotes we end up with an error:
+The quotation marks are not optional---they tell R we want to treat whatever is inside them as a literal value. The quoting is important. If we try to do the same thing as above without the quotes, we end up with an error:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1631,7 +1631,7 @@ The quotation marks are not optional---they tell R we want to treat whatever is 
 
 What happened? When the interpreter sees the word \texttt{Dylan} without quotes it assumes that this must be the name of a variable, so it goes in search of it in the global environment. We haven't made a variable called Dylan, so there is no way to evaluate the expression and R spits out an error to let us know there's a problem.
 
-Longer character vectors are typically constructed to represent data of some kind. The \texttt{c} function is often a good starting point for this kind of thing:
+Character vectors are typically constructed to represent data of some kind. The \texttt{c} function is one starting point for this kind of thing:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1660,12 +1660,12 @@ Take note, this is \textbf{not} equivalent to the above :
 ## [1] "Dylan Zachary Childs"
 \end{verbatim}
 
-The only element of this character vector is a single character string containing the first, middle and last name separated by spaces. We didn't even need to use the the \texttt{c} function here because we were only ever working with a length-1 character vector. i.e.~we could have typed \texttt{"Dylan\ Zachary\ Childs"} and we would have ended up with exactly the same text printed at the Console.
+This length-1 character vector's only element is a single character string containing the first, middle and last name separated by spaces. We didn't even need to use the the \texttt{c} function here because we were only ever working with a length-1 character vector. i.e.~we could have typed \texttt{"Dylan\ Zachary\ Childs"} and we would have ended up with exactly the same text printed at the Console.
 
 \hypertarget{logical-vectors}{%
 \subsection{Logical vectors}\label{logical-vectors}}
 
-The elements of \textbf{logical vectors} only take two values: \texttt{TRUE} or \texttt{FALSE}. Don't let the simplicity of logical vectors fool you. They're very useful. As with other kinds of atomic vectors the \texttt{c} function can be used to construct a logical vector:
+The elements of \textbf{logical vectors} only take two values: \texttt{TRUE} or \texttt{FALSE}. Don't let the simplicity of logical vectors fool you. They're very useful. As with other kinds of atomic vectors, the \texttt{c} function can be used to construct a logical vector:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1680,7 +1680,7 @@ The elements of \textbf{logical vectors} only take two values: \texttt{TRUE} or 
 
 So why are logical vectors useful? Their allow us to represent the results of questions such as, ``is x greater than y'' or ``is x equal to y''. The results of such comparisons may then be used to carry out various kinds of subsetting operations.
 
-Let's first look at how we use logical vectors to evaluate comparisons. Before we can do that though we need to introduce \textbf{relational operators}. These sound fancy, but they are very simple: we use relational operators to evaluate the relative value of vector elements. Six are available in R:
+Before we can look at how to use logical vectors to evaluate comparisons, we need to introduce \textbf{relational operators}. These sound fancy, but they are very simple: we use relational operators to evaluate the relative value of vector elements. Six are available in R:
 
 \begin{itemize}
 \tightlist
@@ -1698,7 +1698,7 @@ Let's first look at how we use logical vectors to evaluate comparisons. Before w
   \texttt{x\ !=\ y}: is x not equal to y?
 \end{itemize}
 
-The easiest way to understand how these work is to simply use them. We need a couple of numeric variables first:
+The easiest way to understand how these work is by example. We need a couple of numeric variables first:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1748,7 +1748,7 @@ What does the \texttt{==} operator do? It compares the elements of two vectors t
 ##  [1] FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE
 \end{verbatim}
 
-The output of this comparison is true only for one element, the number 15, which is at the 5\textsuperscript{th} position in both \texttt{x} and \texttt{y}. The \texttt{!=} operator is essentially the opposite of \texttt{==}. It identifies cases where two elements are not exactly equal. We could step through each of the different the other relational operators, but hopefully they are self-explanatory at this point (if not, experiment with them).
+The output of this comparison is true only for one element, the number 15, which is at the 5\textsuperscript{th} position in both \texttt{x} and \texttt{y}. The \texttt{!=} operator is essentially the opposite of \texttt{==}. It identifies cases where two elements are not exactly equal. We could step through each of the different relational operators, but hopefully, they are self-explanatory at this point (if not, experiment with them).
 
 \begin{infobox}{warning}
 
@@ -1756,7 +1756,7 @@ The output of this comparison is true only for one element, the number 15, which
 \subsubsection*{\texorpdfstring{\texttt{=} and \texttt{==} are not the same}{= and == are not the same}}\label{and-are-not-the-same}}
 \addcontentsline{toc}{subsubsection}{\texttt{=} and \texttt{==} are not the same}
 
-If we want to test for equivalence between the elements of two vectors we must use double equals (\texttt{==}), not single equals (\texttt{=}). Forgetting to do this \texttt{==} instead of \texttt{=} is a very common source of mistakes. The \texttt{=} symbol already has a use in R---assigning name-value pairs---so it can't also be used to compare vectors because this would lead to ambiguity in our R scripts. Using \texttt{=} when you meant to use \texttt{==} is a very common mistake. If you make it, this will lead to all kinds of difficult-to-comprehend problems with your scripts. Try to remember the difference!
+If we want to test for equivalence between the elements of two vectors we must use double equals (\texttt{==}), not single equals (\texttt{=}). Forgetting to use \texttt{==} instead of \texttt{=} is a very common source of mistakes. The \texttt{=} symbol already has a use in R---assigning name-value pairs---so it can't also be used to compare vectors because this would lead to ambiguity in our R scripts. Using \texttt{=} when you meant to use \texttt{==} is a very common mistake. If you make it, this will lead to all kinds of difficult-to-comprehend problems with your scripts. Try to remember the difference!
 
 \end{infobox}
 
