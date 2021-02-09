@@ -1,8 +1,14 @@
 # How to use this book {.unnumbered}
 
+We have adopted a number of formatting conventions in this book to distinguish between normal text, R code, file names, and so on. You need to be aware to make best use of the book.
+
 ## Text, instructions, and explanations {.unnumbered}
 
-Normal text---instructions, explanations and so on---are written in the same type as this document. We will tend to use bold for emphasis and italics to highlight specific technical terms when they are first introduced.
+Normal text---instructions, explanations and so on---are written in the same type as this document. We will tend to use bold for emphasis and italics to highlight specific technical terms when they are first introduced. In addition:
+
+-   `This typeface` is used to distinguish R code within a sentence of text: e.g. "We use the `mutate` function to change or add new variables."
+-   A sequence of selections from an RStudio menu is indicated as follows: e.g. **File ▶ New File ▶ R Script**
+-   File names referred to in general text are given in upper case in the normal typeface: e.g. MYFILE.CSV.
 
 At various points in the text you will come across text in different coloured boxes. These are designed to highlight stand-alone exercises or little pieces of supplementary information that might otherwise break the flow. There are three different kinds of boxes:
 
@@ -26,7 +32,7 @@ This is a **warning** box. These usually highlight a common 'gotcha' that might 
 
 ## R code and output {.unnumbered}
 
-We try to illustrate as many ideas as we can using snippets of real R code. It's a good idea to run these when working through a topic. The best way to learn something is to use it. Of course, in order to do that we need to know what we're looking at... Stand alone snippets will be formatted like this:
+We try to illustrate ideas using snippets of real R code where possible. It's a good idea to run these when working through a topic. The best way to learn something is to use it. Of course, in order to do that we need to know what we're looking at... Stand alone snippets will be formatted like this:
 
 ```{r}
 tmp <- 1
@@ -34,9 +40,3 @@ print(tmp)
 ```
 
 At this point it does not matter what the above actually means. You just need to understand how the formatting of R code in this book works. The lines that start with `##` show us what R prints to the screen after it evaluates an instruction and does whatever was asked of it, that is, they show the output. The lines that **do not** start with `##` show us the instructions, that is, they show us the input. So remember, the absence of `##` shows us what we are asking R to do, otherwise we are looking at something R prints in response to these instructions.
-
-`This typeface` is used to distinguish R code within a sentence of text: e.g. "We use the `mutate` function to change or add new variables."
-
-A sequence of selections from an RStudio menu is indicated as follows: e.g. **File ▶ New File ▶ R Script**
-
-File names referred to in general text are given in upper case in the normal typeface: e.g. MYFILE.CSV.
