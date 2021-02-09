@@ -255,9 +255,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="how-to-use-this-book" class="section level1 unnumbered">
 <h1>How to use this book</h1>
+<p>We have adopted a number of formatting conventions in this book to distinguish between normal text, R code, file names, and so on. You need to be aware to make best use of the book.</p>
 <div id="text-instructions-and-explanations" class="section level2 unnumbered">
 <h2>Text, instructions, and explanations</h2>
-<p>Normal text—instructions, explanations and so on—are written in the same type as this document. We will tend to use bold for emphasis and italics to highlight specific technical terms when they are first introduced.</p>
+<p>Normal text—instructions, explanations and so on—are written in the same type as this document. We will tend to use bold for emphasis and italics to highlight specific technical terms when they are first introduced. In addition:</p>
+<ul>
+<li><code>This typeface</code> is used to distinguish R code within a sentence of text: e.g. “We use the <code>mutate</code> function to change or add new variables.”</li>
+<li>A sequence of selections from an RStudio menu is indicated as follows: e.g. <strong>File ▶ New File ▶ R Script</strong></li>
+<li>File names referred to in general text are given in upper case in the normal typeface: e.g. MYFILE.CSV.</li>
+</ul>
 <p>At various points in the text you will come across text in different coloured boxes. These are designed to highlight stand-alone exercises or little pieces of supplementary information that might otherwise break the flow. There are three different kinds of boxes:</p>
 <div id="action" class="section level4 unnumbered infobox action">
 <h4>Action!</h4>
@@ -274,14 +280,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="r-code-and-output" class="section level2 unnumbered">
 <h2>R code and output</h2>
-<p>We try to illustrate as many ideas as we can using snippets of real R code. It’s a good idea to run these when working through a topic. The best way to learn something is to use it. Of course, in order to do that we need to know what we’re looking at… Stand alone snippets will be formatted like this:</p>
+<p>We try to illustrate ideas using snippets of real R code where possible. It’s a good idea to run these when working through a topic. The best way to learn something is to use it. Of course, in order to do that we need to know what we’re looking at… Stand alone snippets will be formatted like this:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="how-to-use-this-book.html#cb1-1" aria-hidden="true" tabindex="-1"></a>tmp <span class="ot">&lt;-</span> <span class="dv">1</span></span>
 <span id="cb1-2"><a href="how-to-use-this-book.html#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(tmp)</span></code></pre></div>
 <pre><code>## [1] 1</code></pre>
 <p>At this point it does not matter what the above actually means. You just need to understand how the formatting of R code in this book works. The lines that start with <code>##</code> show us what R prints to the screen after it evaluates an instruction and does whatever was asked of it, that is, they show the output. The lines that <strong>do not</strong> start with <code>##</code> show us the instructions, that is, they show us the input. So remember, the absence of <code>##</code> shows us what we are asking R to do, otherwise we are looking at something R prints in response to these instructions.</p>
-<p><code>This typeface</code> is used to distinguish R code within a sentence of text: e.g. “We use the <code>mutate</code> function to change or add new variables.”</p>
-<p>A sequence of selections from an RStudio menu is indicated as follows: e.g. <strong>File ▶ New File ▶ R Script</strong></p>
-<p>File names referred to in general text are given in upper case in the normal typeface: e.g. MYFILE.CSV.</p>
 
 </div>
 </div>
