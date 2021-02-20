@@ -1,0 +1,123 @@
+# Working with observations
+
+## Introduction
+
+This chapter will explore the `filter` and `arrange` verbs. We discuss these functions together because they manipulate observations (i.e. rows) of a data frame or tibble:
+
+-   The `filter` function extracts a subset of observations based on supplied criteria.
+-   The `arrange` function reorders the rows according to the values in one or more variables.
+
+### Getting ready
+
+We'll be using the **dplyr** package, so we need to remember to load and attach the package in the current session:
+
+```{r, eval=FALSE}
+library("dplyr")
+```
+
+We'll use the Palmer penguins data again to illustrate the ideas in this chapter. The examples below assume those data been read into R as a tibble with the name `penguins`.
+
+## Relational and logical operators
+
+Most `filter` operations rely on some combination of **relational and logical operators**. Remember these from last year?
+
+1.  Use **relational operators** to make comparisons between a pair of variables on the basis of conditions like 'less than' or 'equal to':
+
+    -   `x < y`: is x less than y?
+    -   `x > y`: is x greater than y?
+    -   `x <= y`: is x less than or equal to y?
+    -   `x >= y`: is x greater than or equal to y?
+    -   `x == y`: is x equal to y?
+    -   `x != y`: is x not equal to y?
+
+2.  Use **logical operators** to connect two or more comparisons to arrive at a single overall criterion:
+
+    -   `x & y`: are both x AND y true?
+    -   `x | y`: is x OR y true?
+
+::: {.infobox .warning data-latex="{warning}"}
+#### Double `==` or single `=`? {.unnumbered}
+
+Remember to use 'double equals' `==` when testing for equivalence between `x` and `y`. We all forget this from time to time and use 'single equals' `=` instead. This will lead to an error. **dplyr** is pretty good at spotting this mistake these days and will warn you in its error message that you used `=` when you meant to use `==`. Of course, if you don't read the error messages, you won't benefit from this helpful behaviour.
+:::
+
+## Subset observations with `filter`
+
+We use `filter` to **subset observations** in a data frame or tibble containing our data. This is useful when we want to limit an analysis to a particular group of observations. Basic usage of `filter` looks something like this:
+
+```{r, eval=FALSE}
+filter(<data>, <expression-1>, <expression-2>, ...)
+```
+
+Yes, this is pseudocode again. Let's review the arguments:
+
+-   The first argument, `<data>`, must be the name of the object (usually a data frame or tibble) containing our data. As with all **dplyr** verbs, this is not optional.
+-   We then include one or more additional arguments. Each of these is a valid R expression involving one or more variables in `<data>` that returns a logical vector. We've expressed these as `<expression-1>, <expression-2>, ...`, where `<expression-1>` and `<expression-2>` represent the first two expressions, and the `...` is acting as placeholder for the remaining expressions.
+
+To see `filter` in action, we'll use it to subset observations in the `penguins` dataset, based on two relational criteria:
+
+```{r}
+filter(penguins, bill_length_mm > 45, bill_depth_mm > 18)
+```
+
+In this example, we've created a subset of `penguins` that only includes observations where the `bill_length_mm` variable is greater than 45 **and** the `bill_depth_mm` variable is greater than 45, i.e. both conditions must be met for an observation to be retained. This is probably starting to feel repetitious, but there are a few features of `filter` that we should be aware of:
+
+-   We do not surround each expression with quotes. The expression is meant to be evaluated---it is not 'a value.
+-   The result produced by `filter` was printed to the Console in the example. The `filter` function did not change the original `penguins` in any way (no side effects!).
+-   The `filter` function will return the same kind of data object it is working on: it returns a data frame if our data was originally in a data frame, and a tibble if it was a tibble.
+
+Notice that including are two conditions separated by a comma means both conditions have to be met. There is another way to achieve the exact same result:
+
+```{r}
+filter(penguins, bill_length_mm > 45 & bill_depth_mm > 18)
+```
+
+This version links the two parts with the logical `&` operator. That is, rather than supplying `bill_length_mm > 45` and `bill_depth_mm > 18` as two arguments, we used a single R expression, combining them with the `&`.
+
+We're pointing this out because we sometimes need to create filtering criteria that cannot be expressed as 'condition 1' **and** 'condition 2' **and** 'condition 3'... etc. Under those conditions we have to use logical operators to connect conditions. A simple instance of this situation is where we need to subset on an **either/or** basis. For example:
+
+```{r}
+filter(penguins, bill_length_mm < 36 | bill_length_mm > 54)
+```
+
+This creates a subset of `penguins` that only includes observation where `bill_length_mm` is less than 36 **or** (`|`) greater than 54. This creates a subset of the data associated with the more 'extreme' values of bill length (unusually small or large).
+
+We're not limited to using relational and logical operators when working with `filter`. The conditions specified in the `filter` function can be any expression that returns a logical vector. The only constraint is that the output vector's length has to equal its input's length, or be a single logical values (`TRUE` or `FALSE`).
+
+Here's an example. The **dplyr** `between` function is used to determine whether the values of a numeric vector fall in a specified range. It has three arguments: the numeric vector to filter on and the lower and upper and boundary values. For example:
+
+```{r}
+filter(penguins, between(bill_length_mm, 36, 54))
+```
+
+## Reordering observations with `arrange`
+
+We use `arrange` to **reorder the rows** of a data frame or tibble. Basic usage of `arrange` looks like this:
+
+```{r, eval=FALSE}
+arrange(<data>, <variable-1>, <variable-2>, ...)
+```
+
+Yes, this is pseudocode. As always, the first argument, `<data>`, is the name of the object containing our data. We then include a series of one or more additional arguments, where each of these is the name of a variable in `<data>`: `<variable-1>` and `<variable-2>` are names of the first two ordering variables, and the `...` is acting as a placeholder for the remaining variables.
+
+To see `arrange` in action, let's construct a new version of `penguins` where the rows have been reordered first by `flipper_length_mm`, and then by `body_mass_g`:
+
+```{r}
+arrange(penguins, flipper_length_mm, body_mass_g)
+```
+
+This creates a new version of `penguins` where the rows are sorted according to the values of by `flipper_length_mm` and `body_mass_g` in ascending order -- i.e. from smallest to largest. Look at the cases where flipper length is 178 mm. What do these show? Since `flipper_length_mm` was placed before `body_mass_g` in the arguments, the values of `body_mass_g` are only used to break ties within any particular value of `flipper_length_mm`.
+
+For the sake of avoiding doubt about how `arrange` works, we will quickly review its behaviour. It works the same as every other **dplyr** verb we have looked at:
+
+-   The variable names used as arguments of `arrange` are not surrounded by quotes.
+-   The `arrange` function did not change the original `penguins` in any way.
+-   The `arrange` function will return the same kind of data object it is working on.
+
+`arrange` sorts variables in ascending order by default. If we need it to sort a variable in descending order, we wrap the variable name in the **dplyr** `desc` function:
+
+```{r}
+arrange(penguins, flipper_length_mm, desc(body_mass_g))
+```
+
+This creates a new version of `penguins` where the rows are sorted according to the values of `flipper_length_mm` and `body_mass_g`, in ascending and descending order, respectively. Look carefully at the values in the `flipper_length_mm` and `body_mass_g` columns to see the difference between this example and the previous one.

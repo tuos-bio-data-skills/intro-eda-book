@@ -1,0 +1,88 @@
+# Building pipelines
+
+We don't often use the various **dplyr** verbs in isolation. Instead, they are combined in a sequence to prepare the data for further analysis. For example, we might create a new variable or two with `mutate` and then use `group_by` and `summarise` to calculate some numerical summaries. This chapter will introduce something called the pipe operator: `%>%`. The pipe operator's job is to allow us to represent a sequence of such steps in a transparent, readable manner.
+
+## Why do we need 'pipes'?
+
+We've seen that carrying out calculations on a per-group basis can be achieved by grouping a tibble, assigning this a name, and then applying the `summarise` function to the new tibble. For example, in the previous chapter we saw that to calculate the mean bill length for each species in the Palmer penguins data set, `penguins`, we first create a grouped version of it:
+
+```{r}
+penguins_by_species <- group_by(penguins, species)
+```
+
+Then we use `summarise` with the grouped version to calculate the mean bill length in each group:
+
+```{r}
+summarise(penguins_by_species, 
+          mean_bill_length = mean(bill_length_mm, na.rm = TRUE))
+```
+
+There's nothing wrong with this way of doing things. However, building up an analysis this was is quite lengthy because we have to keep storing intermediate steps. This is especially true if an analysis involves more than a couple of steps. It also tends to clutter the global environment with many intermediate objects we don't need to keep.
+
+One way to make things more concise is to use [function nesting](#combining-functions), like this:
+
+```{r}
+summarise(group_by(penguins, species), 
+          mean_bill_length = mean(bill_length_mm, na.rm = TRUE))
+```
+
+In this version, we placed the `group_by` function call inside the list of arguments to `summarise`. Remember---we have to read nested function calls from the inside out to understand what they are doing. This is exactly equivalent to the previous example, but now we get the result without having to store intermediate data. 
+
+However, there are a couple of very good reasons why this approach is not advised:
+
+-   Experienced R users might not mind this approach because they're used to it. Nonetheless, no reasonable person would argue that nesting functions inside one another is intuitive. Reading outward from the inside of a large number of nested functions is hard work.
+
+-   Using function nesting is an error-prone approach. For example, it's very easy to accidentally put an argument on the wrong side of a closing `)`. If we're lucky, this will produce an error and we'll catch the problem. If we're not, we may end up with complete nonsense in the output.
+
+## Using pipes (`%>%`)
+
+There is a better way to combing **dplyr** functions, which has the dual benefit of keeping our code concise and readable while avoiding the need to clutter the global environment with intermediate objects. This third approach involves the 'pipe operator': `%>%`. Notice there are no spaces between the three characters that make up the pipe---spaces are not allowed (e.g. `% > %` will not be recognised as the pipe).
+
+The pipe operator isn't part of base R. Instead, **dplyr** imports it from another package and makes it available for us to use.
+
+The pipe has become very popular in recent years. The main reason for this is because it allows us to specify a chain of function calls in a (reasonably) human readable format. Here's how we write the previous example using the pipe operator `%>%`:
+
+```{r}
+penguins %>% group_by(., species) %>% summarise(., mean_bill_length = mean(bill_length_mm, na.rm = TRUE))
+```
+
+How do we make sense of this? Every time we see the `%>%` operator it means the following: take whatever is produced by the left-hand expression and use it as an argument in the function on the right-hand side. The `.` serves as a placeholder for the location of the corresponding argument. A sequence of calculations can then be read from left to right, just as we would read the words in a book. This example says, take the `penguins` data, group it by `species`, then take that grouped tibble and apply the `summarise` function to it to calculate the mean of `mean_bill_length`.
+
+This is exactly the same calculation we did above.
+
+When using the pipe operator we can often leave out the `.` placeholder. Remember, this signifies the argument of the function on the right of `%>%` that is associated with the result from the left of `%>%`. If we choose to leave out the `.`, the pipe operator assumes we meant to slot it into the first argument. This means we can simplify our example even more:
+
+```{r}
+penguins %>% group_by(species) %>% summarise(mean_bill_length = mean(bill_length_mm, na.rm = TRUE))
+```
+
+**This is why the first argument of a dplyr verb is always the data**. Adopting this convention ensures we can use `%>%` without explicitly specifying the argument to pipe into. Data goes into the pipe; data comes out of the pipe.
+
+Remember, R does not care about white space, which means we can break a piped set of functions over several lines to make our code more readable:
+
+```{r}
+penguins %>% 
+  group_by(species) %>% 
+  summarise(mean_bill_length = mean(bill_length_mm, na.rm = TRUE))
+```
+
+Now each step in the pipeline is on its own line. Most **dplyr** users use this formatting convention to improve the readability of their R code.
+
+Finally, we do have to remember to assign the result of a chain of piped functions a name if we want to capture the result and use it later. We have to break the left to right rule a bit to do this, placing the assignment at the beginning[^dplyr-pipes-1]:
+
+[^dplyr-pipes-1]: Actually, there is a rightward assignment operator, `->`, but let's pretend that does not exist.
+
+```{r}
+bill_length_means <- 
+  penguins %>% 
+  group_by(species) %>% 
+  summarise(mean_bill_length = mean(bill_length_mm, na.rm = TRUE))
+```
+
+::: {.infobox .information data-latex="{information}"}
+#### Why is `%>%` called the 'pipe' operator? {.unnumbered}
+
+The `%>%` operator takes the output from one function and "pipes it" to another as the input. It's called 'the pipe' for the simple reason that it allows us to create an analysis 'pipeline' from a series of function calls. Incidentally, if you Google the phrase "magrittr pipe" you'll see why **magrittr** is a clever name for an R package.
+:::
+
+One final piece of advice---make an effort to learn how to use the `%>%` method of piping together functions. Why? Because it's the simplest and cleanest method for doing this, many of the examples in the **dplyr** help files and on the web use it, and the majority of people carrying out real-world data wrangling with **dplyr** rely on piping.
