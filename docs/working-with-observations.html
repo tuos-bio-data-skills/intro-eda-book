@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 5 Packages | Exploratory Data Analysis with R</title>
+  <title>Chapter 8 Working with observations | Exploratory Data Analysis with R</title>
   <meta name="description" content="This is the Exploratory Data Analysis in R book provided by the School of Biosciences at the University of Sheffield." />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 5 Packages | Exploratory Data Analysis with R" />
+  <meta property="og:title" content="Chapter 8 Working with observations | Exploratory Data Analysis with R" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 5 Packages | Exploratory Data Analysis with R" />
+  <meta name="twitter:title" content="Chapter 8 Working with observations | Exploratory Data Analysis with R" />
   
   <meta name="twitter:description" content="This is the Exploratory Data Analysis in R book provided by the School of Biosciences at the University of Sheffield." />
   
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="data-frames.html"/>
-<link rel="next" href="getting-ready-to-use-dplyr.html"/>
+<link rel="prev" href="working-with-variables.html"/>
+<link rel="next" href="grouping-and-summarising-data.html"/>
 <script src="libs/header-attrs-2.5/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -322,109 +322,184 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="packages" class="section level1" number="5">
-<h1><span class="header-section-number">Chapter 5</span> Packages</h1>
-<div id="package-system" class="section level2" number="5.1">
-<h2><span class="header-section-number">5.1</span> The R package system</h2>
-<p>The R package system is the most important single factor driving increased adoption of R. Packages are used to extend the basic capabilities of R. In <a href="http://r-pkgs.had.co.nz">his book</a> about R packages Hadley Wickam says,</p>
-<blockquote>
-<p>Packages are the fundamental units of reproducible R code. They include reusable R functions, the documentation that describes how to use them, and sample data.</p>
-</blockquote>
-<p>An R package is a collection of folders and files in a standard, well-defined format that bundles together computer code, data, and documentation in a way that is easy to use and share with other users. The computer code might all be R code, but it can also include code written in other languages. Packages provide an R-friendly interface to use this “foreign” code without needing to understand how it works.</p>
-<p>The base R distribution it comes with quite a few pre-installed packages. These base R packages represent a tiny subset of all available R packages. The majority of these are hosted on a worldwide network of web servers collectively know as <a href="http://cran.r-project.org">CRAN</a>: the Comprehensive R Archive Network, pronounced either “see-ran” or “kran.”</p>
-<p>CRAN is a fairly spartan web site, so it’s easy to navigate. The <a href="http://cran.r-project.org">landing page</a> has about a dozen links on the right-hand side. Under the <em>Software</em> section there is a link called <a href="http://cran.r-project.org/web/packages/">Packages</a>. Near the top of that packages page there is a link called <a href="http://cran.r-project.org/web/packages/available_packages_by_name.html">Table of available packages, sorted by name</a> that points to a very long list of all the packages on CRAN. The column on the left shows each package name, followed by a brief description of what the package does on the right. There are 1000s of packages listed there.</p>
-</div>
-<div id="task-views" class="section level2" number="5.2">
-<h2><span class="header-section-number">5.2</span> Task views</h2>
-<p>The huge list of packages on the <a href="http://cran.r-project.org/web/packages/available_packages_by_name.html">available packages</a> is pretty overwhelming. A more user-friendly view of many R packages is found on the <a href="http://cran.r-project.org/web/views/">Task Views</a> page (the link is on the left hand side, under the section labelled <em>CRAN</em>). A Task View is basically a curated guide to the packages and functions that are useful for certain disciplines. The Task Views page shows a list of these discipline-specific topics, along with a brief description. For example—</p>
+<div id="working-with-observations" class="section level1" number="8">
+<h1><span class="header-section-number">Chapter 8</span> Working with observations</h1>
+<div id="introduction-4" class="section level2" number="8.1">
+<h2><span class="header-section-number">8.1</span> Introduction</h2>
+<p>This chapter will explore the <code>filter</code> and <code>arrange</code> verbs. We discuss these functions together because they manipulate observations (i.e. rows) of a data frame or tibble:</p>
 <ul>
-<li>The <a href="http://cran.r-project.org/web/views/Environmetrics.html">Environmentrics</a> Task View contains information about using R to analyse ecological and environmental data.</li>
-<li>The <a href="https://cran.r-project.org/web/views/ClinicalTrials.html">Clinical Trials</a> Task View contains information about using R to design, monitor, and analyse data from clinical trials.</li>
-<li>The <a href="https://cran.r-project.org/web/views/MedicalImaging.html">Medical Image Analysis</a> Task View contains information about packages for working with commercial medical image data.</li>
-<li>The <a href="https://cran.r-project.org/web/views/Pharmacokinetics.html">Pharmacokinetic</a> Task View contains information about packages for working with pharmacokinetic (PK) data.</li>
+<li>The <code>filter</code> function extracts a subset of observations based on supplied criteria.</li>
+<li>The <code>arrange</code> function reorders the rows according to the values in one or more variables.</li>
 </ul>
-<p>Task views are often a good place to start looking for a new package to support a particular analysis in future projects.</p>
+<div id="getting-ready-1" class="section level3" number="8.1.1">
+<h3><span class="header-section-number">8.1.1</span> Getting ready</h3>
+<p>We’ll be using the <strong>dplyr</strong> package, so we need to remember to load and attach the package in the current session:</p>
+<div class="sourceCode" id="cb226"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb226-1"><a href="working-with-observations.html#cb226-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;dplyr&quot;</span>)</span></code></pre></div>
+<p>We’ll use the Palmer penguins data again to illustrate the ideas in this chapter. The examples below assume those data been read into R as a tibble with the name <code>penguins</code>.</p>
 </div>
-<div id="use-packages" class="section level2" number="5.3">
-<h2><span class="header-section-number">5.3</span> Using packages</h2>
-<p>Two things need to happen to make use of a package. First, we need to copy the folders and files that make up the package to an appropriate location on our computer. This process is called <strong>installing</strong> the package. Second, we need to <strong>load and attach</strong> the package for use in an R session. The word “session” refers to the time between when we start up R and close it down again.</p>
-<p>It’s worth unpacking these two ideas because packages are a very frequent source of confusion for new users:</p>
+</div>
+<div id="relational-and-logical-operators" class="section level2" number="8.2">
+<h2><span class="header-section-number">8.2</span> Relational and logical operators</h2>
+<p>Most <code>filter</code> operations rely on some combination of <strong>relational and logical operators</strong>. Remember these from last year?</p>
+<ol style="list-style-type: decimal">
+<li><p>Use <strong>relational operators</strong> to make comparisons between a pair of variables on the basis of conditions like ‘less than’ or ‘equal to’:</p>
 <ul>
-<li><p>If we don’t have a copy of a package’s folders and files our computer, we can’t use it. The process of making this copy is called <strong>installing</strong> the package. It’s possible to manually install packages by going to the CRAN website, downloading the package, and then using various tools to install it. We don’t recommend using this approach though, because it’s inefficient and error-prone. Instead, use built-in R functions to grab the package from CRAN and install it one step.</p></li>
-<li><p>Once we have a copy of the package on our computer, it will remain there for us to use. We don’t need to re-install a package we want to use every time we start a new R session. It is worth saying that again, <strong>there is no need to install a package every time we start up R / RStudio</strong>. The only exception to this rule is that a major update to R will sometimes require a complete re-install of the packages. Such major updates are infrequent.</p></li>
-<li><p>Installing a package does nothing more than place a copy of the relevant files on our hard drive. If we want to use the functions or the data that comes with a package we need to make them available in our current R session. Unlike package installation, this <strong>load and attach</strong> process as it’s known has to be repeated every time we restart R. If we forget to load up the package we can’t use it.</p></li>
+<li><code>x &lt; y</code>: is x less than y?</li>
+<li><code>x &gt; y</code>: is x greater than y?</li>
+<li><code>x &lt;= y</code>: is x less than or equal to y?</li>
+<li><code>x &gt;= y</code>: is x greater than or equal to y?</li>
+<li><code>x == y</code>: is x equal to y?</li>
+<li><code>x != y</code>: is x not equal to y?</li>
+</ul></li>
+<li><p>Use <strong>logical operators</strong> to connect two or more comparisons to arrive at a single overall criterion:</p>
+<ul>
+<li><code>x &amp; y</code>: are both x AND y true?</li>
+<li><code>x | y</code>: is x OR y true?</li>
+</ul></li>
+</ol>
+<div id="double-or-single" class="section level4 unnumbered infobox warning">
+<h4>Double <code>==</code> or single <code>=</code>?</h4>
+<p>Remember to use ‘double equals’ <code>==</code> when testing for equivalence between <code>x</code> and <code>y</code>. We all forget this from time to time and use ‘single equals’ <code>=</code> instead. This will lead to an error. <strong>dplyr</strong> is pretty good at spotting this mistake these days and will warn you in its error message that you used <code>=</code> when you meant to use <code>==</code>. Of course, if you don’t read the error messages, you won’t benefit from this helpful behaviour.</p>
+</div>
+</div>
+<div id="subset-observations-with-filter" class="section level2" number="8.3">
+<h2><span class="header-section-number">8.3</span> Subset observations with <code>filter</code></h2>
+<p>We use <code>filter</code> to <strong>subset observations</strong> in a data frame or tibble containing our data. This is useful when we want to limit an analysis to a particular group of observations. Basic usage of <code>filter</code> looks something like this:</p>
+<div class="sourceCode" id="cb227"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb227-1"><a href="working-with-observations.html#cb227-1" aria-hidden="true" tabindex="-1"></a><span class="fu">filter</span>(<span class="sc">&lt;</span>data<span class="sc">&gt;</span>, <span class="sc">&lt;</span>expression<span class="dv">-1</span><span class="sc">&gt;</span>, <span class="sc">&lt;</span>expression<span class="dv">-2</span><span class="sc">&gt;</span>, ...)</span></code></pre></div>
+<p>Yes, this is pseudocode again. Let’s review the arguments:</p>
+<ul>
+<li>The first argument, <code>&lt;data&gt;</code>, must be the name of the object (usually a data frame or tibble) containing our data. As with all <strong>dplyr</strong> verbs, this is not optional.</li>
+<li>We then include one or more additional arguments. Each of these is a valid R expression involving one or more variables in <code>&lt;data&gt;</code> that returns a logical vector. We’ve expressed these as <code>&lt;expression-1&gt;, &lt;expression-2&gt;, ...</code>, where <code>&lt;expression-1&gt;</code> and <code>&lt;expression-2&gt;</code> represent the first two expressions, and the <code>...</code> is acting as placeholder for the remaining expressions.</li>
 </ul>
-<div id="viewing-installed-packages" class="section level3" number="5.3.1">
-<h3><span class="header-section-number">5.3.1</span> Viewing installed packages</h3>
-<p>We sometimes need to check whether a package is currently installed. RStudio provides a simple, intuitive way to see which packages are installed on our computer. The <strong>Packages</strong> tab in the bottom right pane shows the name of every installed package, a brief description and a version number.</p>
-<p>There are also a few R functions that can be used to check whether a package is currently installed. For example, the <code>find.package</code> function can do this:</p>
-<div class="sourceCode" id="cb179"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb179-1"><a href="packages.html#cb179-1" aria-hidden="true" tabindex="-1"></a><span class="fu">find.package</span>(<span class="st">&quot;MASS&quot;</span>)</span></code></pre></div>
-<pre><code>## [1] &quot;/Library/Frameworks/R.framework/Versions/4.0/Resources/library/MASS&quot;</code></pre>
-<p>The <code>find.package</code> function either prints a “file path” showing us where the package is located, as above, or return an error if the package can’t be found. Alternatively, a function called <code>installed.packages</code> will return a data frame containing a lot of information about the installed packages.</p>
+<p>To see <code>filter</code> in action, we’ll use it to subset observations in the <code>penguins</code> dataset, based on two relational criteria:</p>
+<div class="sourceCode" id="cb228"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb228-1"><a href="working-with-observations.html#cb228-1" aria-hidden="true" tabindex="-1"></a><span class="fu">filter</span>(penguins, bill_length_mm <span class="sc">&gt;</span> <span class="dv">45</span>, bill_depth_mm <span class="sc">&gt;</span> <span class="dv">18</span>)</span></code></pre></div>
+<pre><code>## # A tibble: 44 x 8
+##    species island bill_length_mm bill_depth_mm flipper_length_… body_mass_g
+##    &lt;chr&gt;   &lt;chr&gt;           &lt;dbl&gt;         &lt;dbl&gt;            &lt;int&gt;       &lt;int&gt;
+##  1 Adelie  Torge…           46            21.5              194        4200
+##  2 Adelie  Torge…           45.8          18.9              197        4150
+##  3 Adelie  Biscoe           45.6          20.3              191        4600
+##  4 Chinst… Dream            50            19.5              196        3900
+##  5 Chinst… Dream            51.3          19.2              193        3650
+##  6 Chinst… Dream            45.4          18.7              188        3525
+##  7 Chinst… Dream            52.7          19.8              197        3725
+##  8 Chinst… Dream            46.1          18.2              178        3250
+##  9 Chinst… Dream            51.3          18.2              197        3750
+## 10 Chinst… Dream            46            18.9              195        4150
+## # … with 34 more rows, and 2 more variables: sex &lt;chr&gt;, year &lt;int&gt;</code></pre>
+<p>In this example, we’ve created a subset of <code>penguins</code> that only includes observations where the <code>bill_length_mm</code> variable is greater than 45 <strong>and</strong> the <code>bill_depth_mm</code> variable is greater than 45, i.e. both conditions must be met for an observation to be retained. This is probably starting to feel repetitious, but there are a few features of <code>filter</code> that we should be aware of:</p>
+<ul>
+<li>We do not surround each expression with quotes. The expression is meant to be evaluated—it is not ’a value.</li>
+<li>The result produced by <code>filter</code> was printed to the Console in the example. The <code>filter</code> function did not change the original <code>penguins</code> in any way (no side effects!).</li>
+<li>The <code>filter</code> function will return the same kind of data object it is working on: it returns a data frame if our data was originally in a data frame, and a tibble if it was a tibble.</li>
+</ul>
+<p>Notice that including are two conditions separated by a comma means both conditions have to be met. There is another way to achieve the exact same result:</p>
+<div class="sourceCode" id="cb230"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb230-1"><a href="working-with-observations.html#cb230-1" aria-hidden="true" tabindex="-1"></a><span class="fu">filter</span>(penguins, bill_length_mm <span class="sc">&gt;</span> <span class="dv">45</span> <span class="sc">&amp;</span> bill_depth_mm <span class="sc">&gt;</span> <span class="dv">18</span>)</span></code></pre></div>
+<pre><code>## # A tibble: 44 x 8
+##    species island bill_length_mm bill_depth_mm flipper_length_… body_mass_g
+##    &lt;chr&gt;   &lt;chr&gt;           &lt;dbl&gt;         &lt;dbl&gt;            &lt;int&gt;       &lt;int&gt;
+##  1 Adelie  Torge…           46            21.5              194        4200
+##  2 Adelie  Torge…           45.8          18.9              197        4150
+##  3 Adelie  Biscoe           45.6          20.3              191        4600
+##  4 Chinst… Dream            50            19.5              196        3900
+##  5 Chinst… Dream            51.3          19.2              193        3650
+##  6 Chinst… Dream            45.4          18.7              188        3525
+##  7 Chinst… Dream            52.7          19.8              197        3725
+##  8 Chinst… Dream            46.1          18.2              178        3250
+##  9 Chinst… Dream            51.3          18.2              197        3750
+## 10 Chinst… Dream            46            18.9              195        4150
+## # … with 34 more rows, and 2 more variables: sex &lt;chr&gt;, year &lt;int&gt;</code></pre>
+<p>This version links the two parts with the logical <code>&amp;</code> operator. That is, rather than supplying <code>bill_length_mm &gt; 45</code> and <code>bill_depth_mm &gt; 18</code> as two arguments, we used a single R expression, combining them with the <code>&amp;</code>.</p>
+<p>We’re pointing this out because we sometimes need to create filtering criteria that cannot be expressed as ‘condition 1’ <strong>and</strong> ‘condition 2’ <strong>and</strong> ‘condition 3’… etc. Under those conditions we have to use logical operators to connect conditions. A simple instance of this situation is where we need to subset on an <strong>either/or</strong> basis. For example:</p>
+<div class="sourceCode" id="cb232"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb232-1"><a href="working-with-observations.html#cb232-1" aria-hidden="true" tabindex="-1"></a><span class="fu">filter</span>(penguins, bill_length_mm <span class="sc">&lt;</span> <span class="dv">36</span> <span class="sc">|</span> bill_length_mm <span class="sc">&gt;</span> <span class="dv">54</span>)</span></code></pre></div>
+<pre><code>## # A tibble: 29 x 8
+##    species island bill_length_mm bill_depth_mm flipper_length_… body_mass_g
+##    &lt;chr&gt;   &lt;chr&gt;           &lt;dbl&gt;         &lt;dbl&gt;            &lt;int&gt;       &lt;int&gt;
+##  1 Adelie  Torge…           34.1          18.1              193        3475
+##  2 Adelie  Torge…           34.6          21.1              198        4400
+##  3 Adelie  Torge…           34.4          18.4              184        3325
+##  4 Adelie  Biscoe           35.9          19.2              189        3800
+##  5 Adelie  Biscoe           35.3          18.9              187        3800
+##  6 Adelie  Biscoe           35            17.9              190        3450
+##  7 Adelie  Biscoe           34.5          18.1              187        2900
+##  8 Adelie  Biscoe           35.7          16.9              185        3150
+##  9 Adelie  Biscoe           35.5          16.2              195        3350
+## 10 Adelie  Torge…           35.9          16.6              190        3050
+## # … with 19 more rows, and 2 more variables: sex &lt;chr&gt;, year &lt;int&gt;</code></pre>
+<p>This creates a subset of <code>penguins</code> that only includes observation where <code>bill_length_mm</code> is less than 36 <strong>or</strong> (<code>|</code>) greater than 54. This creates a subset of the data associated with the more ‘extreme’ values of bill length (unusually small or large).</p>
+<p>We’re not limited to using relational and logical operators when working with <code>filter</code>. The conditions specified in the <code>filter</code> function can be any expression that returns a logical vector. The only constraint is that the output vector’s length has to equal its input’s length, or be a single logical values (<code>TRUE</code> or <code>FALSE</code>).</p>
+<p>Here’s an example. The <strong>dplyr</strong> <code>between</code> function is used to determine whether the values of a numeric vector fall in a specified range. It has three arguments: the numeric vector to filter on and the lower and upper and boundary values. For example:</p>
+<div class="sourceCode" id="cb234"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb234-1"><a href="working-with-observations.html#cb234-1" aria-hidden="true" tabindex="-1"></a><span class="fu">filter</span>(penguins, <span class="fu">between</span>(bill_length_mm, <span class="dv">36</span>, <span class="dv">54</span>))</span></code></pre></div>
+<pre><code>## # A tibble: 313 x 8
+##    species island bill_length_mm bill_depth_mm flipper_length_… body_mass_g
+##    &lt;chr&gt;   &lt;chr&gt;           &lt;dbl&gt;         &lt;dbl&gt;            &lt;int&gt;       &lt;int&gt;
+##  1 Adelie  Torge…           39.1          18.7              181        3750
+##  2 Adelie  Torge…           39.5          17.4              186        3800
+##  3 Adelie  Torge…           40.3          18                195        3250
+##  4 Adelie  Torge…           36.7          19.3              193        3450
+##  5 Adelie  Torge…           39.3          20.6              190        3650
+##  6 Adelie  Torge…           38.9          17.8              181        3625
+##  7 Adelie  Torge…           39.2          19.6              195        4675
+##  8 Adelie  Torge…           42            20.2              190        4250
+##  9 Adelie  Torge…           37.8          17.1              186        3300
+## 10 Adelie  Torge…           37.8          17.3              180        3700
+## # … with 303 more rows, and 2 more variables: sex &lt;chr&gt;, year &lt;int&gt;</code></pre>
 </div>
-<div id="installing-packages" class="section level3" number="5.3.2">
-<h3><span class="header-section-number">5.3.2</span> Installing packages</h3>
-<p>R packages can be installed from several different sources. For example, they can be installed from a local file on a computer, from the CRAN repository, or from an other kind of online repository called Github. Although various alternatives to CRAN are becoming more popular, we’re only going to worry about installing packages that live on CRAN.</p>
-<p>To install a package from an online repository like CRAN we have to download the package files, uncompress them (like we would a ZIP file), and move them to the correct location. All of this can be done using a single function: <code>install.packages</code>. For example, to install a package called <strong>fortunes</strong> we use:</p>
-<div class="sourceCode" id="cb181"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb181-1"><a href="packages.html#cb181-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;fortunes&quot;</span>)</span></code></pre></div>
-<p>The quotes are necessary by the way. If everything is working—we have an active internet connection, the package name is valid, and so on—R will briefly pause while it communicates with the CRAN servers, we should see some red text reporting back what’s happening, and then we’re returned to the prompt. The red text is just letting us know what R is up to. As long as this text does not include the word “error,” there is usually no need to worry about it.</p>
-<p>There are a couple of things to keep in mind. First, package names are case sensitive. For example, <strong>fortunes</strong> is not the same as <strong>Fortunes</strong>. Quite often package installations fail because we used the wrong case somewhere in the package name. The other aspect of packages we need to know about is related to <strong>dependencies</strong>: some packages rely on other packages in order to work properly. By default <code>install.packages</code> will install these dependencies, so we don’t usually have to worry too much about them. Just don’t be surprised if the <code>install.packages</code> function installs more than one package when only one was requested.</p>
-<p>RStudio provides a way of interacting with <code>install.packages</code> via point-and-click. The <strong>Packages</strong> tab has an “Install”" button at the top right. Clicking on this brings up a small window with three main fields: “Install from,” “Packages,” and “Install to Library.” We only need to work with the “Packages” field – the other two can be left at their defaults. When we start typing in the first few letters of a package name (e.g. <strong>dplyr</strong>) RStudio provides a list of available packages that match this. After we select the one we want and click the “Install” button, RStudio invokes <code>install.packages</code> for us.</p>
-</div>
-<div id="loading-and-attaching-packages" class="section level3" number="5.3.3">
-<h3><span class="header-section-number">5.3.3</span> Loading and attaching packages</h3>
-<p>Once we’ve installed a package or two, we’ll probably want to use them. Two things have to happen to access a package’s facilities: the package has to be loaded into memory, and then it has to attached to something called a search path so that R can find it.</p>
-<p>It is beyond the scope of this book to get in to “how” and “why” of these events. Fortunately, there’s no need to worry about these details, as both loading and attaching can be done in a single step with a function called <code>library</code>. The <code>library</code> function works as we might expect it to. If we want to start using the <code>fortunes</code> package—which was just installed above—all we need is:</p>
-<div class="sourceCode" id="cb182"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb182-1"><a href="packages.html#cb182-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;fortunes&quot;</span>)</span></code></pre></div>
-<p>Nothing much happens if everything is working as it should. R just returns us to the prompt without printing anything to the Console. The difference is that now we can use the functions that <strong>fortunes</strong> provides. As it turns out, there is only one function, called fortune:</p>
-<div class="sourceCode" id="cb183"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb183-1"><a href="packages.html#cb183-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fortune</span>()</span></code></pre></div>
-<pre><code>## 
-## Friends don&#39;t let friends use Excel for statistics!
-##    -- Jonathan D. Cryer (about problems with using Microsoft Excel for
-##       statistics)
-##       JSM 2001, Atlanta (August 2001)</code></pre>
-<p>The <strong>fortunes</strong> package is either very useful or utterly pointless, depending on one’s perspective. It dispenses quotes from various R experts delivered to the venerable R mailing list.</p>
-</div>
-<div id="dont-use-rstudio-for-loading-packages" class="section level3 infobox warning" number="5.3.4">
-<h3><span class="header-section-number">5.3.4</span> Don’t use RStudio for loading packages!</h3>
-<p>As usual, if we don’t like working in the Console RStudio can help us out. There is a small button next to each package listed in the <strong>Packages</strong> tab. Packages that have been loaded and attached have a blue check box next to them, whereas this is absent from those that have not. Clicking on an empty check box will load up the package. We mention this because at some point most people realise they can use RStudio to load and attach packages. <strong>We don’t recommend using this route</strong>. It’s much better to put <code>library</code> statements into your R script. Read the relevant appendix if you’re not sure what a script is yet.</p>
-</div>
-<div id="an-analogy" class="section level3" number="5.3.5">
-<h3><span class="header-section-number">5.3.5</span> An analogy</h3>
-<p>The package system frequently confuses new users. This stems from the fact that they aren’t clear about what the <code>install.packages</code> and <code>library</code> functions are doing. One way to think about these is by analogy with smartphone “Apps.” Think of an R package as analogous to a smartphone App— a package effectively extends what R can do, just as an App extends what a phone can do.</p>
-<p>When we want to use a new App, we download it from the App store and install it on our phone. Once downloaded, the App lives permanently on the phone and can be used whenever it’s needed. Downloading and installing the App is something we only have to do once. Packages are no different. When we want to use an R package we first have to make sure it is installed on the computer (e.g. using <code>install.packages</code>). Installing a package is a ‘do once’ operation. Once installed, we don’t need to install a package again each time we restart R.</p>
-<p>To actually use an App on our phone we open it up by tapping on its icon. This has to happen every time we want to use the App. The package equivalent of opening a smartphone App is the “load and attach” operation. This is what <code>library</code> does. It makes a package available for use in a particular session. We have to use <code>library</code> to load the package every time we start a new R session if we plan to access the functions in that package: loading and attaching a package via <code>library</code> is a “do every time” operation.</p>
-</div>
-</div>
-<div id="package-data" class="section level2" number="5.4">
-<h2><span class="header-section-number">5.4</span> Package data</h2>
-<p>Remember what Hadley Wickam said about packages? “… <Packages> include reusable R functions, the documentation that describes how to use them, <strong>and sample data</strong>.” Many packages include sample data sets for use in examples and package vignettes. Use the <code>data</code> function to list the data sets hiding away in packages:</p>
-<div class="sourceCode" id="cb185"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb185-1"><a href="packages.html#cb185-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="at">package =</span> <span class="fu">.packages</span>(<span class="at">all.available =</span> <span class="cn">TRUE</span>))</span></code></pre></div>
-<p>The mysterious <code>.packages(all.available = TRUE)</code> part of this generates a character vector with the names of all the installed packages in it. If we only use <code>data()</code> then R only lists the data sets found in a package called <code>datasets</code> and any additional packages we have loaded in the current R session.</p>
-<p>The <code>datasets</code> package is part of the base R distribution. It exists for one reason—to store example data sets. The <code>datasets</code> package is automatically loaded when we start R, i.e. there’s no need to use <code>library</code> to access it, meaning any data stored in this package can be accessed every time we start R.</p>
-<p>From the perspective of learning to use R, working with package data is really useful because it allows us to work with ‘well-behaved’ data sets without having to worry about getting them into R. Importing data is certainly an important skill but it’s not necessarily something a new user wants to worry about. For this reason, we tend to use package data sets in this book.</p>
-</div>
-<div id="the-tidyverse-ecosystem-of-packages" class="section level2" number="5.5">
-<h2><span class="header-section-number">5.5</span> The tidyverse ecosystem of packages</h2>
-<p>We’re going to be using several packages that belong to a widely used, well-known ecosystem of packages known as the <strong>tidyverse</strong>. Here is the description of the tidyverse on its <a href="https://www.tidyverse.org/">website</a>:</p>
-<blockquote>
-<p>The tidyverse is an opinionated collection of R packages designed for data science. All packages share an underlying design philosophy, grammar, and data structures.</p>
-</blockquote>
-<p>Using the tidyverse makes data analysis simpler, faster and a more entertaining experience (honestly).</p>
+<div id="reordering-observations-with-arrange" class="section level2" number="8.4">
+<h2><span class="header-section-number">8.4</span> Reordering observations with <code>arrange</code></h2>
+<p>We use <code>arrange</code> to <strong>reorder the rows</strong> of a data frame or tibble. Basic usage of <code>arrange</code> looks like this:</p>
+<div class="sourceCode" id="cb236"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb236-1"><a href="working-with-observations.html#cb236-1" aria-hidden="true" tabindex="-1"></a><span class="fu">arrange</span>(<span class="sc">&lt;</span>data<span class="sc">&gt;</span>, <span class="sc">&lt;</span>variable<span class="dv">-1</span><span class="sc">&gt;</span>, <span class="sc">&lt;</span>variable<span class="dv">-2</span><span class="sc">&gt;</span>, ...)</span></code></pre></div>
+<p>Yes, this is pseudocode. As always, the first argument, <code>&lt;data&gt;</code>, is the name of the object containing our data. We then include a series of one or more additional arguments, where each of these is the name of a variable in <code>&lt;data&gt;</code>: <code>&lt;variable-1&gt;</code> and <code>&lt;variable-2&gt;</code> are names of the first two ordering variables, and the <code>...</code> is acting as a placeholder for the remaining variables.</p>
+<p>To see <code>arrange</code> in action, let’s construct a new version of <code>penguins</code> where the rows have been reordered first by <code>flipper_length_mm</code>, and then by <code>body_mass_g</code>:</p>
+<div class="sourceCode" id="cb237"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb237-1"><a href="working-with-observations.html#cb237-1" aria-hidden="true" tabindex="-1"></a><span class="fu">arrange</span>(penguins, flipper_length_mm, body_mass_g)</span></code></pre></div>
+<pre><code>## # A tibble: 344 x 8
+##    species island bill_length_mm bill_depth_mm flipper_length_… body_mass_g
+##    &lt;chr&gt;   &lt;chr&gt;           &lt;dbl&gt;         &lt;dbl&gt;            &lt;int&gt;       &lt;int&gt;
+##  1 Adelie  Biscoe           37.9          18.6              172        3150
+##  2 Adelie  Biscoe           37.8          18.3              174        3400
+##  3 Adelie  Torge…           40.2          17                176        3450
+##  4 Adelie  Dream            33.1          16.1              178        2900
+##  5 Adelie  Dream            39.5          16.7              178        3250
+##  6 Chinst… Dream            46.1          18.2              178        3250
+##  7 Adelie  Dream            37.2          18.1              178        3900
+##  8 Adelie  Dream            37.5          18.9              179        2975
+##  9 Adelie  Dream            42.2          18.5              180        3550
+## 10 Adelie  Biscoe           37.7          18.7              180        3600
+## # … with 334 more rows, and 2 more variables: sex &lt;chr&gt;, year &lt;int&gt;</code></pre>
+<p>This creates a new version of <code>penguins</code> where the rows are sorted according to the values of by <code>flipper_length_mm</code> and <code>body_mass_g</code> in ascending order – i.e. from smallest to largest. Look at the cases where flipper length is 178 mm. What do these show? Since <code>flipper_length_mm</code> was placed before <code>body_mass_g</code> in the arguments, the values of <code>body_mass_g</code> are only used to break ties within any particular value of <code>flipper_length_mm</code>.</p>
+<p>For the sake of avoiding doubt about how <code>arrange</code> works, we will quickly review its behaviour. It works the same as every other <strong>dplyr</strong> verb we have looked at:</p>
+<ul>
+<li>The variable names used as arguments of <code>arrange</code> are not surrounded by quotes.</li>
+<li>The <code>arrange</code> function did not change the original <code>penguins</code> in any way.</li>
+<li>The <code>arrange</code> function will return the same kind of data object it is working on.</li>
+</ul>
+<p><code>arrange</code> sorts variables in ascending order by default. If we need it to sort a variable in descending order, we wrap the variable name in the <strong>dplyr</strong> <code>desc</code> function:</p>
+<div class="sourceCode" id="cb239"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb239-1"><a href="working-with-observations.html#cb239-1" aria-hidden="true" tabindex="-1"></a><span class="fu">arrange</span>(penguins, flipper_length_mm, <span class="fu">desc</span>(body_mass_g))</span></code></pre></div>
+<pre><code>## # A tibble: 344 x 8
+##    species island bill_length_mm bill_depth_mm flipper_length_… body_mass_g
+##    &lt;chr&gt;   &lt;chr&gt;           &lt;dbl&gt;         &lt;dbl&gt;            &lt;int&gt;       &lt;int&gt;
+##  1 Adelie  Biscoe           37.9          18.6              172        3150
+##  2 Adelie  Biscoe           37.8          18.3              174        3400
+##  3 Adelie  Torge…           40.2          17                176        3450
+##  4 Adelie  Dream            37.2          18.1              178        3900
+##  5 Adelie  Dream            39.5          16.7              178        3250
+##  6 Chinst… Dream            46.1          18.2              178        3250
+##  7 Adelie  Dream            33.1          16.1              178        2900
+##  8 Adelie  Dream            37.5          18.9              179        2975
+##  9 Adelie  Biscoe           40.5          18.9              180        3950
+## 10 Adelie  Biscoe           38.8          17.2              180        3800
+## # … with 334 more rows, and 2 more variables: sex &lt;chr&gt;, year &lt;int&gt;</code></pre>
+<p>This creates a new version of <code>penguins</code> where the rows are sorted according to the values of <code>flipper_length_mm</code> and <code>body_mass_g</code>, in ascending and descending order, respectively. Look carefully at the values in the <code>flipper_length_mm</code> and <code>body_mass_g</code> columns to see the difference between this example and the previous one.</p>
 
 </div>
-</div>
-
-
-
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="data-frames.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="getting-ready-to-use-dplyr.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="working-with-variables.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="grouping-and-summarising-data.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

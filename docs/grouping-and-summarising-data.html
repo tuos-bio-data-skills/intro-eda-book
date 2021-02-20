@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 9 Grouping and summarising data | Exploratory Data Analysis with R</title>
+  <meta name="description" content="This is the Exploratory Data Analysis in R book provided by the School of Biosciences at the University of Sheffield." />
+  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 9 Grouping and summarising data | Exploratory Data Analysis with R" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="This is the Exploratory Data Analysis in R book provided by the School of Biosciences at the University of Sheffield." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 9 Grouping and summarising data | Exploratory Data Analysis with R" />
+  
+  <meta name="twitter:description" content="This is the Exploratory Data Analysis in R book provided by the School of Biosciences at the University of Sheffield." />
+  
+
+<meta name="author" content="Dylan Childs" />
+
+
+<meta name="date" content="2021-02-20" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="working-with-observations.html"/>
+<link rel="next" href="building-pipelines.html"/>
+<script src="libs/header-attrs-2.5/header-attrs.js"></script>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0/anchor-sections.js"></script>
+<link href="libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet" />
+<script src="libs/pagedtable-1.1/js/pagedtable.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Exploratory Data Analysis with R</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>What you will learn</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#aims"><i class="fa fa-check"></i>Aims</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#topics"><i class="fa fa-check"></i>Topics</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#technologies"><i class="fa fa-check"></i>Technologies</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#what-is-r"><i class="fa fa-check"></i>What is R?</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#what-is-rstudio"><i class="fa fa-check"></i>What is RStudio?</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="how-to-use-this-book.html"><a href="how-to-use-this-book.html"><i class="fa fa-check"></i>How to use this book</a>
+<ul>
+<li class="chapter" data-level="" data-path="how-to-use-this-book.html"><a href="how-to-use-this-book.html#text-instructions-and-explanations"><i class="fa fa-check"></i>Text, instructions, and explanations</a></li>
+<li class="chapter" data-level="" data-path="how-to-use-this-book.html"><a href="how-to-use-this-book.html#r-code-and-output"><i class="fa fa-check"></i>R code and output</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="get-up-and-running.html"><a href="get-up-and-running.html"><i class="fa fa-check"></i>Get up and running</a>
+<ul>
+<li class="chapter" data-level="" data-path="get-up-and-running.html"><a href="get-up-and-running.html#different-ways-to-run-rstudio"><i class="fa fa-check"></i>Different ways to run RStudio</a></li>
+<li class="chapter" data-level="" data-path="get-up-and-running.html"><a href="get-up-and-running.html#installing-r-and-rstudio-locally"><i class="fa fa-check"></i>Installing R and RStudio locally</a>
+<ul>
+<li class="chapter" data-level="" data-path="get-up-and-running.html"><a href="get-up-and-running.html#installing-rstudio"><i class="fa fa-check"></i>Installing RStudio</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="get-up-and-running.html"><a href="get-up-and-running.html#a-quick-look-at-rstudio"><i class="fa fa-check"></i>A quick look at RStudio</a></li>
+<li class="chapter" data-level="" data-path="get-up-and-running.html"><a href="get-up-and-running.html#working-at-console"><i class="fa fa-check"></i>Working at the Console in RStudio</a></li>
+</ul></li>
+<li class="part"><span><b>I Introduction to R</b></span></li>
+<li class="chapter" data-level="1" data-path="quick-intro-to-r.html"><a href="quick-intro-to-r.html"><i class="fa fa-check"></i><b>1</b> A quick introduction to R</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="quick-intro-to-r.html"><a href="quick-intro-to-r.html#r-calculator"><i class="fa fa-check"></i><b>1.1</b> Using R as a big calculator</a>
+<ul>
+<li class="chapter" data-level="1.1.1" data-path="quick-intro-to-r.html"><a href="quick-intro-to-r.html#basic-arithmetic"><i class="fa fa-check"></i><b>1.1.1</b> Basic arithmetic</a></li>
+<li class="chapter" data-level="1.1.2" data-path="quick-intro-to-r.html"><a href="quick-intro-to-r.html#combining-arithmetic-operations"><i class="fa fa-check"></i><b>1.1.2</b> Combining arithmetic operations</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="quick-intro-to-r.html"><a href="quick-intro-to-r.html#problematic-calculations"><i class="fa fa-check"></i><b>1.2</b> Problematic calculations</a></li>
+<li class="chapter" data-level="1.3" data-path="quick-intro-to-r.html"><a href="quick-intro-to-r.html#assignment"><i class="fa fa-check"></i><b>1.3</b> Storing and reusing results</a></li>
+<li class="chapter" data-level="1.4" data-path="quick-intro-to-r.html"><a href="quick-intro-to-r.html#how-does-assignment-work"><i class="fa fa-check"></i><b>1.4</b> How does assignment work?</a></li>
+<li class="chapter" data-level="1.5" data-path="quick-intro-to-r.html"><a href="quick-intro-to-r.html#global-environment"><i class="fa fa-check"></i><b>1.5</b> Global environment</a></li>
+<li class="chapter" data-level="1.6" data-path="quick-intro-to-r.html"><a href="quick-intro-to-r.html#naming-rules-and-conventions"><i class="fa fa-check"></i><b>1.6</b> Naming rules and conventions</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="using-functions.html"><a href="using-functions.html"><i class="fa fa-check"></i><b>2</b> Using functions</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="using-functions.html"><a href="using-functions.html#intro-functions"><i class="fa fa-check"></i><b>2.1</b> Introduction</a></li>
+<li class="chapter" data-level="2.2" data-path="using-functions.html"><a href="using-functions.html#functions-and-arguments"><i class="fa fa-check"></i><b>2.2</b> Functions and arguments</a></li>
+<li class="chapter" data-level="2.3" data-path="using-functions.html"><a href="using-functions.html#evaluating-arguments-and-returning-results"><i class="fa fa-check"></i><b>2.3</b> Evaluating arguments and returning results</a></li>
+<li class="chapter" data-level="2.4" data-path="using-functions.html"><a href="using-functions.html#function-arguments"><i class="fa fa-check"></i><b>2.4</b> Specifying function arguments</a></li>
+<li class="chapter" data-level="2.5" data-path="using-functions.html"><a href="using-functions.html#combining-functions"><i class="fa fa-check"></i><b>2.5</b> Combining functions</a></li>
+<li class="chapter" data-level="2.6" data-path="using-functions.html"><a href="using-functions.html#functions-do-not-have-side-effects"><i class="fa fa-check"></i><b>2.6</b> Functions do not have ‘side effects’</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="vectors.html"><a href="vectors.html"><i class="fa fa-check"></i><b>3</b> Vectors</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="vectors.html"><a href="vectors.html#introduction"><i class="fa fa-check"></i><b>3.1</b> Introduction</a></li>
+<li class="chapter" data-level="3.2" data-path="vectors.html"><a href="vectors.html#atomic-vectors"><i class="fa fa-check"></i><b>3.2</b> Atomic vectors</a></li>
+<li class="chapter" data-level="3.3" data-path="vectors.html"><a href="vectors.html#intro-vectors"><i class="fa fa-check"></i><b>3.3</b> Numeric vectors</a></li>
+<li class="chapter" data-level="3.4" data-path="vectors.html"><a href="vectors.html#constructing-numeric-vectors"><i class="fa fa-check"></i><b>3.4</b> Constructing numeric vectors</a></li>
+<li class="chapter" data-level="3.5" data-path="vectors.html"><a href="vectors.html#named-vectors"><i class="fa fa-check"></i><b>3.5</b> Named vectors</a></li>
+<li class="chapter" data-level="3.6" data-path="vectors.html"><a href="vectors.html#vectorised-operations"><i class="fa fa-check"></i><b>3.6</b> Vectorised operations</a></li>
+<li class="chapter" data-level="3.7" data-path="vectors.html"><a href="vectors.html#other-vectors"><i class="fa fa-check"></i><b>3.7</b> Other kinds of atomic vectors</a>
+<ul>
+<li class="chapter" data-level="3.7.1" data-path="vectors.html"><a href="vectors.html#character-vectors"><i class="fa fa-check"></i><b>3.7.1</b> Character vectors</a></li>
+<li class="chapter" data-level="3.7.2" data-path="vectors.html"><a href="vectors.html#logical-vectors"><i class="fa fa-check"></i><b>3.7.2</b> Logical vectors</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="data-frames.html"><a href="data-frames.html"><i class="fa fa-check"></i><b>4</b> Data frames</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="data-frames.html"><a href="data-frames.html#introduction-1"><i class="fa fa-check"></i><b>4.1</b> Introduction</a></li>
+<li class="chapter" data-level="4.2" data-path="data-frames.html"><a href="data-frames.html#data-frames-intro"><i class="fa fa-check"></i><b>4.2</b> Data frames</a></li>
+<li class="chapter" data-level="4.3" data-path="data-frames.html"><a href="data-frames.html#exploring-data-frames"><i class="fa fa-check"></i><b>4.3</b> Exploring data frames</a></li>
+<li class="chapter" data-level="4.4" data-path="data-frames.html"><a href="data-frames.html#extracting-and-adding-a-single-variable"><i class="fa fa-check"></i><b>4.4</b> Extracting and adding a single variable</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="packages.html"><a href="packages.html"><i class="fa fa-check"></i><b>5</b> Packages</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="packages.html"><a href="packages.html#package-system"><i class="fa fa-check"></i><b>5.1</b> The R package system</a></li>
+<li class="chapter" data-level="5.2" data-path="packages.html"><a href="packages.html#task-views"><i class="fa fa-check"></i><b>5.2</b> Task views</a></li>
+<li class="chapter" data-level="5.3" data-path="packages.html"><a href="packages.html#use-packages"><i class="fa fa-check"></i><b>5.3</b> Using packages</a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="packages.html"><a href="packages.html#viewing-installed-packages"><i class="fa fa-check"></i><b>5.3.1</b> Viewing installed packages</a></li>
+<li class="chapter" data-level="5.3.2" data-path="packages.html"><a href="packages.html#installing-packages"><i class="fa fa-check"></i><b>5.3.2</b> Installing packages</a></li>
+<li class="chapter" data-level="5.3.3" data-path="packages.html"><a href="packages.html#loading-and-attaching-packages"><i class="fa fa-check"></i><b>5.3.3</b> Loading and attaching packages</a></li>
+<li class="chapter" data-level="5.3.4" data-path="packages.html"><a href="packages.html#dont-use-rstudio-for-loading-packages"><i class="fa fa-check"></i><b>5.3.4</b> Don’t use RStudio for loading packages!</a></li>
+<li class="chapter" data-level="5.3.5" data-path="packages.html"><a href="packages.html#an-analogy"><i class="fa fa-check"></i><b>5.3.5</b> An analogy</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="packages.html"><a href="packages.html#package-data"><i class="fa fa-check"></i><b>5.4</b> Package data</a></li>
+<li class="chapter" data-level="5.5" data-path="packages.html"><a href="packages.html#the-tidyverse-ecosystem-of-packages"><i class="fa fa-check"></i><b>5.5</b> The tidyverse ecosystem of packages</a></li>
+</ul></li>
+<li class="part"><span><b>II Data Wrangling</b></span></li>
+<li class="chapter" data-level="6" data-path="getting-ready-to-use-dplyr.html"><a href="getting-ready-to-use-dplyr.html"><i class="fa fa-check"></i><b>6</b> <strong>Getting ready to use dplyr</strong></a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="getting-ready-to-use-dplyr.html"><a href="getting-ready-to-use-dplyr.html#introduction-2"><i class="fa fa-check"></i><b>6.1</b> Introduction</a></li>
+<li class="chapter" data-level="6.2" data-path="getting-ready-to-use-dplyr.html"><a href="getting-ready-to-use-dplyr.html#tidy-data"><i class="fa fa-check"></i><b>6.2</b> Tidy data</a></li>
+<li class="chapter" data-level="6.3" data-path="getting-ready-to-use-dplyr.html"><a href="getting-ready-to-use-dplyr.html#penguins-data-overview"><i class="fa fa-check"></i><b>6.3</b> Penguins! 🐧+📊= 😃</a></li>
+<li class="chapter" data-level="6.4" data-path="getting-ready-to-use-dplyr.html"><a href="getting-ready-to-use-dplyr.html#um-tibbles"><i class="fa fa-check"></i><b>6.4</b> Um… tibbles?</a></li>
+<li class="chapter" data-level="6.5" data-path="getting-ready-to-use-dplyr.html"><a href="getting-ready-to-use-dplyr.html#missing-values"><i class="fa fa-check"></i><b>6.5</b> Missing values</a></li>
+<li class="chapter" data-level="6.6" data-path="getting-ready-to-use-dplyr.html"><a href="getting-ready-to-use-dplyr.html#why-dplyr"><i class="fa fa-check"></i><b>6.6</b> Introducing <strong>dplyr</strong></a>
+<ul>
+<li class="chapter" data-level="6.6.1" data-path="getting-ready-to-use-dplyr.html"><a href="getting-ready-to-use-dplyr.html#more-dplyr"><i class="fa fa-check"></i><b>6.6.1</b> A first look at <strong>dplyr</strong></a></li>
+<li class="chapter" data-level="6.6.2" data-path="getting-ready-to-use-dplyr.html"><a href="getting-ready-to-use-dplyr.html#dplyr-pseudocode"><i class="fa fa-check"></i><b>6.6.2</b> <strong>dplyr</strong> pseudocode</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="working-with-variables.html"><a href="working-with-variables.html"><i class="fa fa-check"></i><b>7</b> Working with variables</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="working-with-variables.html"><a href="working-with-variables.html#introduction-3"><i class="fa fa-check"></i><b>7.1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="7.1.1" data-path="working-with-variables.html"><a href="working-with-variables.html#getting-ready"><i class="fa fa-check"></i><b>7.1.1</b> Getting ready</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="working-with-variables.html"><a href="working-with-variables.html#subset-variables-with-select"><i class="fa fa-check"></i><b>7.2</b> Subset variables with <code>select</code></a>
+<ul>
+<li class="chapter" data-level="7.2.1" data-path="working-with-variables.html"><a href="working-with-variables.html#alternative-ways-to-identify-variables-with-select"><i class="fa fa-check"></i><b>7.2.1</b> Alternative ways to identify variables with <code>select</code></a></li>
+<li class="chapter" data-level="7.2.2" data-path="working-with-variables.html"><a href="working-with-variables.html#renaming-variables-with-select-and-rename"><i class="fa fa-check"></i><b>7.2.2</b> Renaming variables with <code>select</code> and <code>rename</code></a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="working-with-variables.html"><a href="working-with-variables.html#creating-variables-with-mutate"><i class="fa fa-check"></i><b>7.3</b> Creating variables with <code>mutate</code></a>
+<ul>
+<li class="chapter" data-level="7.3.1" data-path="working-with-variables.html"><a href="working-with-variables.html#transforming-and-dropping-variables"><i class="fa fa-check"></i><b>7.3.1</b> Transforming and dropping variables</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="working-with-observations.html"><a href="working-with-observations.html"><i class="fa fa-check"></i><b>8</b> Working with observations</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="working-with-observations.html"><a href="working-with-observations.html#introduction-4"><i class="fa fa-check"></i><b>8.1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="8.1.1" data-path="working-with-observations.html"><a href="working-with-observations.html#getting-ready-1"><i class="fa fa-check"></i><b>8.1.1</b> Getting ready</a></li>
+</ul></li>
+<li class="chapter" data-level="8.2" data-path="working-with-observations.html"><a href="working-with-observations.html#relational-and-logical-operators"><i class="fa fa-check"></i><b>8.2</b> Relational and logical operators</a></li>
+<li class="chapter" data-level="8.3" data-path="working-with-observations.html"><a href="working-with-observations.html#subset-observations-with-filter"><i class="fa fa-check"></i><b>8.3</b> Subset observations with <code>filter</code></a></li>
+<li class="chapter" data-level="8.4" data-path="working-with-observations.html"><a href="working-with-observations.html#reordering-observations-with-arrange"><i class="fa fa-check"></i><b>8.4</b> Reordering observations with <code>arrange</code></a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="grouping-and-summarising-data.html"><a href="grouping-and-summarising-data.html"><i class="fa fa-check"></i><b>9</b> Grouping and summarising data</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="grouping-and-summarising-data.html"><a href="grouping-and-summarising-data.html#summarising-variables-with-summarise"><i class="fa fa-check"></i><b>9.1</b> Summarising variables with <code>summarise</code></a>
+<ul>
+<li class="chapter" data-level="9.1.1" data-path="grouping-and-summarising-data.html"><a href="grouping-and-summarising-data.html#more-complicated-calculations-with-summarise"><i class="fa fa-check"></i><b>9.1.1</b> More complicated calculations with <code>summarise</code></a></li>
+</ul></li>
+<li class="chapter" data-level="9.2" data-path="grouping-and-summarising-data.html"><a href="grouping-and-summarising-data.html#grouped-operations-using-group_by"><i class="fa fa-check"></i><b>9.2</b> Grouped operations using <code>group_by</code></a>
+<ul>
+<li class="chapter" data-level="9.2.1" data-path="grouping-and-summarising-data.html"><a href="grouping-and-summarising-data.html#more-than-one-grouping-variable"><i class="fa fa-check"></i><b>9.2.1</b> More than one grouping variable</a></li>
+<li class="chapter" data-level="9.2.2" data-path="grouping-and-summarising-data.html"><a href="grouping-and-summarising-data.html#using-group_by-with-other-verbs"><i class="fa fa-check"></i><b>9.2.2</b> Using <code>group_by</code> with other verbs</a></li>
+</ul></li>
+<li class="chapter" data-level="9.3" data-path="grouping-and-summarising-data.html"><a href="grouping-and-summarising-data.html#removing-grouping-information"><i class="fa fa-check"></i><b>9.3</b> Removing grouping information</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="building-pipelines.html"><a href="building-pipelines.html"><i class="fa fa-check"></i><b>10</b> Building pipelines</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="building-pipelines.html"><a href="building-pipelines.html#why-do-we-need-pipes"><i class="fa fa-check"></i><b>10.1</b> Why do we need ‘pipes?’</a></li>
+<li class="chapter" data-level="10.2" data-path="building-pipelines.html"><a href="building-pipelines.html#using-pipes"><i class="fa fa-check"></i><b>10.2</b> Using pipes (<code>%&gt;%</code>)</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="helper-functions.html"><a href="helper-functions.html"><i class="fa fa-check"></i><b>11</b> Helper functions</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="helper-functions.html"><a href="helper-functions.html#introduction-5"><i class="fa fa-check"></i><b>11.1</b> Introduction</a></li>
+<li class="chapter" data-level="11.2" data-path="helper-functions.html"><a href="helper-functions.html#working-with-select"><i class="fa fa-check"></i><b>11.2</b> Working with <code>select</code></a></li>
+<li class="chapter" data-level="11.3" data-path="helper-functions.html"><a href="helper-functions.html#working-with-mutate-and-transmute"><i class="fa fa-check"></i><b>11.3</b> Working with <code>mutate</code> and <code>transmute</code></a></li>
+<li class="chapter" data-level="11.4" data-path="helper-functions.html"><a href="helper-functions.html#working-with-filter"><i class="fa fa-check"></i><b>11.4</b> Working with <code>filter</code></a></li>
+<li class="chapter" data-level="11.5" data-path="helper-functions.html"><a href="helper-functions.html#working-with-summarise"><i class="fa fa-check"></i><b>11.5</b> Working with <code>summarise</code></a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="data-wrangling-with-dplyr.html"><a href="data-wrangling-with-dplyr.html"><i class="fa fa-check"></i><b>12</b> Data wrangling with <strong>dplyr</strong></a></li>
+<li class="part"><span><b>III Exporing Data</b></span></li>
+<li class="chapter" data-level="13" data-path="exploratory-data-analysis-with-ggplot2.html"><a href="exploratory-data-analysis-with-ggplot2.html"><i class="fa fa-check"></i><b>13</b> Exploratory data analysis with <strong>ggplot2</strong></a></li>
+<li class="appendix"><span><b>Supplementary Material</b></span></li>
+<li class="chapter" data-level="A" data-path="getting-help.html"><a href="getting-help.html"><i class="fa fa-check"></i><b>A</b> Getting help</a>
+<ul>
+<li class="chapter" data-level="A.1" data-path="getting-help.html"><a href="getting-help.html#console-help"><i class="fa fa-check"></i><b>A.1</b> Introduction</a></li>
+<li class="chapter" data-level="A.2" data-path="getting-help.html"><a href="getting-help.html#browsing-the-help-system"><i class="fa fa-check"></i><b>A.2</b> Browsing the help system</a></li>
+<li class="chapter" data-level="A.3" data-path="getting-help.html"><a href="getting-help.html#searching-for-help-files"><i class="fa fa-check"></i><b>A.3</b> Searching for help files</a></li>
+<li class="chapter" data-level="A.4" data-path="getting-help.html"><a href="getting-help.html#nav-help"><i class="fa fa-check"></i><b>A.4</b> Navigating help files</a></li>
+<li class="chapter" data-level="A.5" data-path="getting-help.html"><a href="getting-help.html#vignettes"><i class="fa fa-check"></i><b>A.5</b> Vignettes and demos</a></li>
+</ul></li>
+<li class="chapter" data-level="B" data-path="project-scripts-data.html"><a href="project-scripts-data.html"><i class="fa fa-check"></i><b>B</b> Managing projects, scripts and data files</a></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Exploratory Data Analysis with R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="grouping-and-summarising-data" class="section level1" number="9">
+<h1><span class="header-section-number">Chapter 9</span> Grouping and summarising data</h1>
+<p>This chapter will explore the <code>summarise</code> and <code>group_by</code> verbs. We consider together because they are often used in combination. Their usage is also a bit different from the other <strong>dplyr</strong> verbs we’ve encountered. Here’s a quick summary of what they do:</p>
+<ul>
+<li><p>The <code>group_by</code> function adds information to its input (a data frame or tibble), which makes subsequent calculations happen on a group-specific basis.</p></li>
+<li><p>The <code>summarise</code> function is a data reduction function that calculates single-number summaries of one or more variables, respecting the group structure if present.</p></li>
+</ul>
+<p>We illustrate these ideas using the Paler penguins data set, which we assume has been read into a tibble called <code>peguins</code>.</p>
+<div id="summarising-variables-with-summarise" class="section level2" number="9.1">
+<h2><span class="header-section-number">9.1</span> Summarising variables with <code>summarise</code></h2>
+<p>We use <code>summarise</code> to <strong>calculate summaries of variables</strong> in an object containing our data. We do this kind of calculation all the time when analysing data. In terms of pseudo-code, usage of <code>summarise</code> looks like this:</p>
+<div class="sourceCode" id="cb241"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb241-1"><a href="grouping-and-summarising-data.html#cb241-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summarise</span>(<span class="sc">&lt;</span>data<span class="sc">&gt;</span>, <span class="sc">&lt;</span>expression1<span class="sc">&gt;</span>, <span class="sc">&lt;</span>expression2<span class="sc">&gt;</span>, ...)</span></code></pre></div>
+<p>The first argument, <code>&lt;data&gt;</code>, must be the name of the data frame or tibble containing our data. We then include a series of one or more additional arguments; each of these is a valid R expression involving at least one variable in <code>&lt;data&gt;</code>. These are given by the pseudo-code placeholder <code>&lt;expression1&gt;, &lt;expression2&gt;, ...</code>, where <code>&lt;expression1&gt;</code> and <code>&lt;expression2&gt;</code> represent the first two expressions, and the <code>...</code> is acting as placeholder for the remaining expressions. These expressions can be any calculation involving R functions that returns a vector of some kind.</p>
+<p>The <code>summarise</code> function seems to work a lot like <code>mutate</code>. The main difference is that the expressions <code>mutate</code> uses have to all return a vector of the same length as their inputs. In contrast, <code>summarise</code> expressions used all have to produce the same length output, but those outputs can be any length. They often return a single value because they are <strong>summarising</strong> the data in some way, but they don’t have to.</p>
+<p>The <code>summarise</code> verb is best understood by example. The <strong>dplyr</strong> function <code>n_distinct</code> takes a calculates the number of distinct (i.e. unique) cases in a vector. We can use <code>n_distinct</code> with <code>summarise</code> to calculate the number of unique vales of the <code>bill_length_mm</code> and <code>bill_depth_mm</code> variables like this:</p>
+<div class="sourceCode" id="cb242"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb242-1"><a href="grouping-and-summarising-data.html#cb242-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summarise</span>(penguins, <span class="fu">n_distinct</span>(bill_length_mm), <span class="fu">n_distinct</span>(bill_depth_mm))</span></code></pre></div>
+<pre><code>## # A tibble: 1 x 2
+##   `n_distinct(bill_length_mm)` `n_distinct(bill_depth_mm)`
+##                          &lt;int&gt;                       &lt;int&gt;
+## 1                          165                          81</code></pre>
+<p>Notice what kind of object <code>summarise</code> returns—it’s a tibble with one row and two columns: two columns because we calculated two counts, and one row containing because we only one set of counts. There are a few other things to note about how <code>summarise</code> works:</p>
+<ul>
+<li>The expression that performs each calculation is not surrounded by quotes because it’s an expression that it ‘does a calculation.’</li>
+<li>The order of the columns in the output is the same as the order in which they were created in the <code>&lt;expression1&gt;, &lt;expression2&gt;, ...</code> list.</li>
+<li><code>summarise</code> returns the same kind of data object as its input—it returns a data frame if our data was originally in a data frame, or a tibble if it was in a tibble.</li>
+<li>If we don’t specify a name <code>summarise</code> uses the actual R expression to name the columns of its output (e.g. <code>n_distinct(bill_length_mm)</code><strong>)</strong></li>
+</ul>
+<p>Variable names based on the calculation (e.g. <code>n_distinct(bill_length_mm)</code>) are not ideal because they are long and contain special reserved characters like <code>(</code>. This makes it difficult refer to columns in the output because we have to remember to place back ticks (<code>`</code>) around their name whenever we want to refer to them.</p>
+<p>Fortunately, the <code>summarise</code> function can name the new variables at the same time as they are created (just like <code>mutate</code>). We do this by naming the arguments using <code>=</code>, placing the name we require on the left hand side. For example:</p>
+<div class="sourceCode" id="cb244"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb244-1"><a href="grouping-and-summarising-data.html#cb244-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summarise</span>(penguins, </span>
+<span id="cb244-2"><a href="grouping-and-summarising-data.html#cb244-2" aria-hidden="true" tabindex="-1"></a>          <span class="at">n_bill_length =</span> <span class="fu">n_distinct</span>(bill_length_mm), </span>
+<span id="cb244-3"><a href="grouping-and-summarising-data.html#cb244-3" aria-hidden="true" tabindex="-1"></a>          <span class="at">n_bill_depth  =</span> <span class="fu">n_distinct</span>(bill_depth_mm))</span></code></pre></div>
+<pre><code>## # A tibble: 1 x 2
+##   n_bill_length n_bill_depth
+##           &lt;int&gt;        &lt;int&gt;
+## 1           165           81</code></pre>
+<p>This time we end up with summary data set that has reasonable column names. Notice how we organised that example—we placed each calculation on a new line. We don’t have to do this, but since R doesn’t care about white space, we can use newlines and spaces to keep everything more human-readable. It pays to organise <code>summarise</code> calculations like this when they become longer.</p>
+<div id="more-complicated-calculations-with-summarise" class="section level3" number="9.1.1">
+<h3><span class="header-section-number">9.1.1</span> More complicated calculations with <code>summarise</code></h3>
+<p>Many useful base R functions can be used with <code>summarise</code>. Of particular value are those that calculate various summaries of numeric variables are, such as:</p>
+<ul>
+<li><code>min</code> and <code>max</code> calculate the minimum and maximum values,</li>
+<li><code>mean</code> and <code>median</code> calculate the mean and median, and</li>
+<li><code>sd</code> and <code>var</code> calculate the standard deviation and variance.</li>
+</ul>
+<p>We do need to pay attention when using base R functions with <strong>dplyr</strong>. Take a look at this attempt to use summarise to calculate the mean of <code>bill_length_mm</code> and <code>bill_length_mm</code>:</p>
+<div class="sourceCode" id="cb246"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb246-1"><a href="grouping-and-summarising-data.html#cb246-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summarise</span>(penguins, </span>
+<span id="cb246-2"><a href="grouping-and-summarising-data.html#cb246-2" aria-hidden="true" tabindex="-1"></a>          <span class="at">n_bill_length =</span> <span class="fu">mean</span>(bill_length_mm), </span>
+<span id="cb246-3"><a href="grouping-and-summarising-data.html#cb246-3" aria-hidden="true" tabindex="-1"></a>          <span class="at">n_bill_depth  =</span> <span class="fu">mean</span>(bill_depth_mm))</span></code></pre></div>
+<pre><code>## # A tibble: 1 x 2
+##   n_bill_length n_bill_depth
+##           &lt;dbl&gt;        &lt;dbl&gt;
+## 1            NA           NA</code></pre>
+<p>No numbers—just a pair of <code>NA</code>s. We forgot about the presence of missing values in the <code>penguins</code> data. Both <code>bill_length_mm</code> and <code>bill_depth_mm</code> contain missing values. When the <code>mean</code> function encounters even one missing value in its input its default behaviour is to spit out <code>NA</code>. It is possible to change that behaviour by setting the <code>na.rm</code> argument of <code>mean</code>:</p>
+<div class="sourceCode" id="cb248"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb248-1"><a href="grouping-and-summarising-data.html#cb248-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summarise</span>(penguins, </span>
+<span id="cb248-2"><a href="grouping-and-summarising-data.html#cb248-2" aria-hidden="true" tabindex="-1"></a>          <span class="at">n_bill_length =</span> <span class="fu">mean</span>(bill_length_mm, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), </span>
+<span id="cb248-3"><a href="grouping-and-summarising-data.html#cb248-3" aria-hidden="true" tabindex="-1"></a>          <span class="at">n_bill_depth  =</span> <span class="fu">mean</span>(bill_depth_mm,  <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span></code></pre></div>
+<pre><code>## # A tibble: 1 x 2
+##   n_bill_length n_bill_depth
+##           &lt;dbl&gt;        &lt;dbl&gt;
+## 1          43.9         17.2</code></pre>
+<p>This example demonstrates something important—the functions we use within <code>summarise</code> often have their own arguments, and we sometimes need to set those arguments to perform the calculation we want.</p>
+<p>Almost any R code can be used as <code>summarise</code> expressions. This means we can combine more than one function to build up arbitrarily complicated calculations. For example, if we need to know the ratio of the mean bill length and mean bill width in <code>penguins</code>, we would use:</p>
+<div class="sourceCode" id="cb250"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb250-1"><a href="grouping-and-summarising-data.html#cb250-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summarise</span>(penguins,</span>
+<span id="cb250-2"><a href="grouping-and-summarising-data.html#cb250-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">ratio =</span> <span class="fu">mean</span>(bill_length_mm, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">/</span> <span class="fu">mean</span>(bill_depth_mm,  <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span></code></pre></div>
+<pre><code>## # A tibble: 1 x 1
+##   ratio
+##   &lt;dbl&gt;
+## 1  2.56</code></pre>
+<p>The ability to work with arbitrary expressions makes <code>summarise</code> (and <code>mutate</code>) very powerful.</p>
+</div>
+</div>
+<div id="grouped-operations-using-group_by" class="section level2" number="9.2">
+<h2><span class="header-section-number">9.2</span> Grouped operations using <code>group_by</code></h2>
+<p>Performing a calculation with one or more variables using the whole data set can be useful. However, we often need to carry out calculations on different subsets of our data. For example, it’s more useful to know how the mean bill length and depth vary among the different species in the <code>penguins</code> data set, rather than knowing the overall mean of these traits. We could calculate separate means by using <code>filter</code> to create different subsets of <code>penguins</code>, and then use <code>summary</code> on each of these to calculate the means. This would get the job done, but it’s inefficient and quickly becomes tiresome if we have to work with many groups.</p>
+<p>The <code>group_by</code> function provides an elegant solution to this kind of problem. All the <code>group_by</code> function does is add a bit of information to a tibble or data frame. In effect, it defines subsets of data based on one or more <strong>grouping variables</strong>. That’s all it does.</p>
+<p>The magic happens when the grouped object is used with a <strong>dplyr</strong> verb like <code>summarise</code> or <code>mutate</code>. Once a the data has been tagged with grouping information, operations that involve <strong>dplyr</strong> verbs are carried out on separate subsets of the data—defined by the values of the grouping variable(s)—and then combined.</p>
+<p>Basic usage of <code>group_by</code> looks like this:</p>
+<div class="sourceCode" id="cb252"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb252-1"><a href="grouping-and-summarising-data.html#cb252-1" aria-hidden="true" tabindex="-1"></a><span class="fu">group_by</span>(<span class="sc">&lt;</span>data<span class="sc">&gt;</span>, <span class="sc">&lt;</span>variable<span class="dv">-1</span><span class="sc">&gt;</span>, <span class="sc">&lt;</span>variable<span class="dv">-2</span><span class="sc">&gt;</span>, ...)</span></code></pre></div>
+<p>The first argument, <code>&lt;data&gt;</code>, must be the name of the object containing our data. We then have to include one or more additional arguments, where each one is the name of a variable in <code>&lt;data&gt;</code>. We have expressed this as <code>&lt;variable-1&gt;, &lt;variable-2&gt;, ...</code>, where <code>&lt;variable-1&gt;</code> and <code>&lt;variable-2&gt;</code> are names of the first two variables, and the <code>...</code> is acting as a placeholder for the remaining variables.</p>
+<p>We’ll illustrate <code>group_by</code> by using it alongside <code>summarise</code>. We’re aiming to calculate the mean bill length for each species in <code>penguins</code>. This is a two-step process. The first step uses <code>group_by</code> to add grouping information to <code>penguins</code>. Take a look at what we end up with when we do that:</p>
+<div class="sourceCode" id="cb253"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb253-1"><a href="grouping-and-summarising-data.html#cb253-1" aria-hidden="true" tabindex="-1"></a><span class="fu">group_by</span>(penguins, species)</span></code></pre></div>
+<pre><code>## # A tibble: 344 x 8
+## # Groups:   species [3]
+##    species island bill_length_mm bill_depth_mm flipper_length_… body_mass_g
+##    &lt;chr&gt;   &lt;chr&gt;           &lt;dbl&gt;         &lt;dbl&gt;            &lt;int&gt;       &lt;int&gt;
+##  1 Adelie  Torge…           39.1          18.7              181        3750
+##  2 Adelie  Torge…           39.5          17.4              186        3800
+##  3 Adelie  Torge…           40.3          18                195        3250
+##  4 Adelie  Torge…           NA            NA                 NA          NA
+##  5 Adelie  Torge…           36.7          19.3              193        3450
+##  6 Adelie  Torge…           39.3          20.6              190        3650
+##  7 Adelie  Torge…           38.9          17.8              181        3625
+##  8 Adelie  Torge…           39.2          19.6              195        4675
+##  9 Adelie  Torge…           34.1          18.1              193        3475
+## 10 Adelie  Torge…           42            20.2              190        4250
+## # … with 334 more rows, and 2 more variables: sex &lt;chr&gt;, year &lt;int&gt;</code></pre>
+<p>Compare this to the output produced when we print the original <code>penguins</code> data set:</p>
+<div class="sourceCode" id="cb255"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb255-1"><a href="grouping-and-summarising-data.html#cb255-1" aria-hidden="true" tabindex="-1"></a>penguins</span></code></pre></div>
+<pre><code>## # A tibble: 344 x 8
+##    species island bill_length_mm bill_depth_mm flipper_length_… body_mass_g
+##    &lt;chr&gt;   &lt;chr&gt;           &lt;dbl&gt;         &lt;dbl&gt;            &lt;int&gt;       &lt;int&gt;
+##  1 Adelie  Torge…           39.1          18.7              181        3750
+##  2 Adelie  Torge…           39.5          17.4              186        3800
+##  3 Adelie  Torge…           40.3          18                195        3250
+##  4 Adelie  Torge…           NA            NA                 NA          NA
+##  5 Adelie  Torge…           36.7          19.3              193        3450
+##  6 Adelie  Torge…           39.3          20.6              190        3650
+##  7 Adelie  Torge…           38.9          17.8              181        3625
+##  8 Adelie  Torge…           39.2          19.6              195        4675
+##  9 Adelie  Torge…           34.1          18.1              193        3475
+## 10 Adelie  Torge…           42            20.2              190        4250
+## # … with 334 more rows, and 2 more variables: sex &lt;chr&gt;, year &lt;int&gt;</code></pre>
+<p>There is very little difference—<code>group_by</code> really doesn’t do much on its own. The main change is that printing the tibble resulting from the <code>group_by</code> operation shows a bit of additional information at the top: <code>Groups: species [3]</code>. This tells us that the tibble is now grouped by the <code>species</code> variable. The <code>[3]</code> part tells us that there are three different groups (i.e. species of penguin). The <strong>only</strong> thing <code>group_by</code> did was add this grouping information to a copy of <code>penguins</code>.</p>
+<p>The original <code>penguins</code> object was not altered in any way. If we want to do anything useful with the grouped tibble we need to assign it a name so that we can work with it:</p>
+<div class="sourceCode" id="cb257"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb257-1"><a href="grouping-and-summarising-data.html#cb257-1" aria-hidden="true" tabindex="-1"></a>penguins_by_species <span class="ot">&lt;-</span> <span class="fu">group_by</span>(penguins, species)</span></code></pre></div>
+<p>Now we have a grouped tibble called <code>penguins_by_species</code> in which the value of <code>species</code> define the different groups—any row where <code>species</code> is equal to ‘Adelie’ is assigned to the first group, any row where <code>species</code> is equal to ‘Chinstrap’ is assigned to a second group, and any row where <code>species</code> is equal to ‘Gentoo’ is assigned to a third group.</p>
+<p><strong>dplyr</strong> operations on this tibble will now be performed on a ‘by group’ basis. To see this in action, we use <code>summarise</code> to calculate the mean bill length:</p>
+<div class="sourceCode" id="cb258"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb258-1"><a href="grouping-and-summarising-data.html#cb258-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summarise</span>(penguins_by_species, </span>
+<span id="cb258-2"><a href="grouping-and-summarising-data.html#cb258-2" aria-hidden="true" tabindex="-1"></a>          <span class="at">mean_bill_length =</span> <span class="fu">mean</span>(bill_length_mm, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span></code></pre></div>
+<pre><code>## `summarise()` ungrouping output (override with `.groups` argument)</code></pre>
+<pre><code>## # A tibble: 3 x 2
+##   species   mean_bill_length
+##   &lt;chr&gt;                &lt;dbl&gt;
+## 1 Adelie                38.8
+## 2 Chinstrap             48.8
+## 3 Gentoo                47.5</code></pre>
+<p>This is part two of the two-step process mentioned above. When we used <code>summarise</code> on an ungrouped object, the result was a tibble with one row—the overall global mean. Now the resulting tibble has three rows, one for each species in the data set. The <code>mean_bill_length</code> column shows the mean bill lengths for each species. The <code>species</code> column tells us what species each mean belongs to. Notice that <code>summarise</code> also printed an (un)helpful message:</p>
+<pre><code>`summarise()` ungrouping output (override with `.groups` argument)</code></pre>
+<p>There’s no need to worry about this. It is simply saying that <code>summarise</code> has removed the grouping information from the resulting tibble.</p>
+<p>We can also carry out multiple calculations with grouped data if we need to. For example, if we need to calculate the mean bill length and mean bill depth for each species, we would use the grouped version of <code>penguins</code> like this:</p>
+<div class="sourceCode" id="cb262"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb262-1"><a href="grouping-and-summarising-data.html#cb262-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summarise</span>(penguins_by_species, </span>
+<span id="cb262-2"><a href="grouping-and-summarising-data.html#cb262-2" aria-hidden="true" tabindex="-1"></a>          <span class="at">mean_bill_length =</span> <span class="fu">mean</span>(bill_length_mm, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb262-3"><a href="grouping-and-summarising-data.html#cb262-3" aria-hidden="true" tabindex="-1"></a>          <span class="at">mean_bill_depth  =</span> <span class="fu">mean</span>(bill_depth_mm,  <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span></code></pre></div>
+<pre><code>## `summarise()` ungrouping output (override with `.groups` argument)</code></pre>
+<pre><code>## # A tibble: 3 x 3
+##   species   mean_bill_length mean_bill_depth
+##   &lt;chr&gt;                &lt;dbl&gt;           &lt;dbl&gt;
+## 1 Adelie                38.8            18.3
+## 2 Chinstrap             48.8            18.4
+## 3 Gentoo                47.5            15.0</code></pre>
+<div id="more-than-one-grouping-variable" class="section level3" number="9.2.1">
+<h3><span class="header-section-number">9.2.1</span> More than one grouping variable</h3>
+<p>What if we need to calculate summaries using more than one grouping variable? The workflow is unchanged. Assume we need to know the mean body mass of males and females of each penguin species. First, we make a grouped copy of <code>penguins</code> using the appropriate grouping variables:</p>
+<div class="sourceCode" id="cb265"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb265-1"><a href="grouping-and-summarising-data.html#cb265-1" aria-hidden="true" tabindex="-1"></a>penguins_by_species_sex <span class="ot">&lt;-</span> <span class="fu">group_by</span>(penguins, species, sex)</span></code></pre></div>
+<p>We called the grouped tibble <code>penguins_by_species_sex</code>. Look at what happens when we print this:</p>
+<div class="sourceCode" id="cb266"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb266-1"><a href="grouping-and-summarising-data.html#cb266-1" aria-hidden="true" tabindex="-1"></a>penguins_by_species_sex</span></code></pre></div>
+<pre><code>## # A tibble: 344 x 8
+## # Groups:   species, sex [8]
+##    species island bill_length_mm bill_depth_mm flipper_length_… body_mass_g
+##    &lt;chr&gt;   &lt;chr&gt;           &lt;dbl&gt;         &lt;dbl&gt;            &lt;int&gt;       &lt;int&gt;
+##  1 Adelie  Torge…           39.1          18.7              181        3750
+##  2 Adelie  Torge…           39.5          17.4              186        3800
+##  3 Adelie  Torge…           40.3          18                195        3250
+##  4 Adelie  Torge…           NA            NA                 NA          NA
+##  5 Adelie  Torge…           36.7          19.3              193        3450
+##  6 Adelie  Torge…           39.3          20.6              190        3650
+##  7 Adelie  Torge…           38.9          17.8              181        3625
+##  8 Adelie  Torge…           39.2          19.6              195        4675
+##  9 Adelie  Torge…           34.1          18.1              193        3475
+## 10 Adelie  Torge…           42            20.2              190        4250
+## # … with 334 more rows, and 2 more variables: sex &lt;chr&gt;, year &lt;int&gt;</code></pre>
+<p>We see <code>Groups: species, sex [8]</code> near the top, which tells us that the tibble is grouped by two variables (<code>species</code> and <code>sex</code>) with eight unique combinations of values. That seems odd at first—there are three species and two sexes represented in this dataset, which gives six possible combinations at most.</p>
+<p>The reason for the discrepancy becomes clear when we move on to calculate the mean body mass for each sex-species combination:</p>
+<div class="sourceCode" id="cb268"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb268-1"><a href="grouping-and-summarising-data.html#cb268-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summarise</span>(penguins_by_species_sex, </span>
+<span id="cb268-2"><a href="grouping-and-summarising-data.html#cb268-2" aria-hidden="true" tabindex="-1"></a>          <span class="at">body_mass_g =</span> <span class="fu">mean</span>(body_mass_g, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span></code></pre></div>
+<pre><code>## `summarise()` regrouping output by &#39;species&#39; (override with `.groups` argument)</code></pre>
+<pre><code>## # A tibble: 8 x 3
+## # Groups:   species [3]
+##   species   sex    body_mass_g
+##   &lt;chr&gt;     &lt;chr&gt;        &lt;dbl&gt;
+## 1 Adelie    female       3369.
+## 2 Adelie    male         4043.
+## 3 Adelie    &lt;NA&gt;         3540 
+## 4 Chinstrap female       3527.
+## 5 Chinstrap male         3939.
+## 6 Gentoo    female       4680.
+## 7 Gentoo    male         5485.
+## 8 Gentoo    &lt;NA&gt;         4588.</code></pre>
+<p>This shows mean body mass for each unique combination of <code>species</code> and <code>sex</code>. The first line shows that the mean body mass associated with female Adelie penguins is 3369; the second line shows us the mean body mass associated with male Adelie penguins is 4043. The third line shows us the mean body mass of Adelie penguins where <strong>sex is missing</strong> (<code>NA</code>). That explains why we ended up with more groups than unique combinations of <code>species</code> and <code>sex</code> — missing values create extra groups.</p>
+</div>
+<div id="using-group_by-with-other-verbs" class="section level3" number="9.2.2">
+<h3><span class="header-section-number">9.2.2</span> Using <code>group_by</code> with other verbs</h3>
+<p>The <code>summarise</code> function is the <strong>dplyr</strong> verb that is most often used with grouped data. However, all the main <strong>dplyr</strong> verbs will alter their behaviour to respect group information when it is present. For example, when <code>mutate</code> or <code>transmute</code> are used with a grouped object the calculation of new variables occur “by group.” Here’s an example:</p>
+<div class="sourceCode" id="cb271"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb271-1"><a href="grouping-and-summarising-data.html#cb271-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create a data set &#39;mean centred&#39; bill length variable</span></span>
+<span id="cb271-2"><a href="grouping-and-summarising-data.html#cb271-2" aria-hidden="true" tabindex="-1"></a><span class="fu">transmute</span>(penguins_by_species_sex,</span>
+<span id="cb271-3"><a href="grouping-and-summarising-data.html#cb271-3" aria-hidden="true" tabindex="-1"></a>          <span class="at">body_mass_cen =</span> body_mass_g <span class="sc">-</span> <span class="fu">mean</span>(body_mass_g, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span></code></pre></div>
+<pre><code>## # A tibble: 344 x 3
+## # Groups:   species, sex [8]
+##    species sex    body_mass_cen
+##    &lt;chr&gt;   &lt;chr&gt;          &lt;dbl&gt;
+##  1 Adelie  male          -293. 
+##  2 Adelie  female         431. 
+##  3 Adelie  female        -119. 
+##  4 Adelie  &lt;NA&gt;            NA  
+##  5 Adelie  female          81.2
+##  6 Adelie  male          -393. 
+##  7 Adelie  female         256. 
+##  8 Adelie  male           632. 
+##  9 Adelie  &lt;NA&gt;           -65  
+## 10 Adelie  &lt;NA&gt;           710  
+## # … with 334 more rows</code></pre>
+<p>This calculated a standardised measure of body mass. The new <code>body_mass_cen</code> variable contains the difference between the original body mass and its mean in the appropriate species-sex group (rather than the overall mean).</p>
+</div>
+</div>
+<div id="removing-grouping-information" class="section level2" number="9.3">
+<h2><span class="header-section-number">9.3</span> Removing grouping information</h2>
+<p>On occasion, it’s necessary to remove grouping information and revert to operating on the whole data set. The <code>ungroup</code> function removes grouping information:</p>
+<div class="sourceCode" id="cb273"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb273-1"><a href="grouping-and-summarising-data.html#cb273-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ungroup</span>(penguins_by_species)</span></code></pre></div>
+<pre><code>## # A tibble: 344 x 8
+##    species island bill_length_mm bill_depth_mm flipper_length_… body_mass_g
+##    &lt;chr&gt;   &lt;chr&gt;           &lt;dbl&gt;         &lt;dbl&gt;            &lt;int&gt;       &lt;int&gt;
+##  1 Adelie  Torge…           39.1          18.7              181        3750
+##  2 Adelie  Torge…           39.5          17.4              186        3800
+##  3 Adelie  Torge…           40.3          18                195        3250
+##  4 Adelie  Torge…           NA            NA                 NA          NA
+##  5 Adelie  Torge…           36.7          19.3              193        3450
+##  6 Adelie  Torge…           39.3          20.6              190        3650
+##  7 Adelie  Torge…           38.9          17.8              181        3625
+##  8 Adelie  Torge…           39.2          19.6              195        4675
+##  9 Adelie  Torge…           34.1          18.1              193        3475
+## 10 Adelie  Torge…           42            20.2              190        4250
+## # … with 334 more rows, and 2 more variables: sex &lt;chr&gt;, year &lt;int&gt;</code></pre>
+<p>Looking at the top right of the printed summary, we can see that the <code>Group:</code> part is now gone—the <code>ungroup</code> function effectively recreated the original <code>penguins</code> tibble.</p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="working-with-observations.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="building-pipelines.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["intro-bio-data-book.pdf", "intro-bio-data-book.epub"],
+"toc": {
+"collapse": "section"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

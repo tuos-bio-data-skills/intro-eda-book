@@ -4,14 +4,13 @@
 %
 \documentclass[
 ]{book}
+\usepackage{amsmath,amssymb}
 \usepackage{lmodern}
-\usepackage{amsmath}
 \usepackage{ifxetex,ifluatex}
 \ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
   \usepackage[T1]{fontenc}
   \usepackage[utf8]{inputenc}
   \usepackage{textcomp} % provide euro and other symbols
-  \usepackage{amssymb}
 \else % if luatex or xetex
   \usepackage{unicode-math}
   \defaultfontfeatures{Scale=MatchLowercase}
@@ -82,7 +81,7 @@
 \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
 \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
 \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
-\usepackage{longtable,booktabs}
+\usepackage{longtable,booktabs,array}
 \usepackage{calc} % for calculating minipage widths
 % Correct order of tables after \paragraph or \subparagraph
 \usepackage{etoolbox}
@@ -146,7 +145,7 @@
 
 \title{Exploratory Data Analysis with R}
 \author{Dylan Childs}
-\date{2021-02-15}
+\date{2021-02-20}
 
 \begin{document}
 \maketitle
@@ -2252,6 +2251,1833 @@ Using the tidyverse makes data analysis simpler, faster and a more entertaining 
 \hypertarget{part-data-wrangling}{%
 \part{Data Wrangling}\label{part-data-wrangling}}
 
+\hypertarget{getting-ready-to-use-dplyr}{%
+\chapter{\texorpdfstring{\textbf{Getting ready to use dplyr}}{Getting ready to use dplyr}}\label{getting-ready-to-use-dplyr}}
+
+\hypertarget{introduction-2}{%
+\section{Introduction}\label{introduction-2}}
+
+Data wrangling is the process of cleaning and manipulating data to get it ready for analysis, for example, by creating derived variables and subsets of the data. Although not the most exciting part of a study---we want to answer questions, not format data---data wrangling is critical. This step in a data analysis workflow can become very time-consuming if not tackled with the right tools.
+
+The next few chapters will introduce the \textbf{dplyr} package. \textbf{dplyr} is an important member of the tidyverse ecosystem. Its job is to provide a set of tools to address common data manipulation tasks, such as selecting subsets of data, making new variables, and summarising data in various ways.
+
+However, before we can start to use these tools, we need a bit of a foundation. That is the aim of this chapter. We will provide some background to the so-called tidy data principles, introduce the data set we'll be using in our examples, discuss the tidyverse version of data frames known as the tibble, and finally, introduce the \textbf{dplyr} package.
+
+\hypertarget{tidy-data}{%
+\section{Tidy data}\label{tidy-data}}
+
+\textbf{dplyr} will work with any data frame. However, it is most powerful when data are organised according to \href{http://vita.had.co.nz/papers/tidy-data.pdf}{tidy data} conventions for rectangular data sets. Tidy data has a specific structure that makes it easy to manipulate, model and visualise. A tidy data set is one where each variable is only found in one column and each row contains one unique observation (an imaged cell, a treated organism, an experimental plot, and so on).
+
+The basic principles of tidy data are not too difficult to understand. We'll use an example to illustrate what the ``one variable = one column'' and ``one observation = one row'' idea means. Let's return to the made-up experiment investigating the response of communities to fertilizer addition. This time, imagine we had only measured biomass, but that we had measured it at two time points throughout the experiment.
+
+We'll look at two ways to organise some artificial data from this experimental setup. The first uses a separate column for each biomass measurement:
+
+\begin{verbatim}
+##   Treatment BiomassT1 BiomassT2
+## 1   Control       284       324
+## 2   Control       328       400
+## 3   Control       291       355
+## 4 Fertilser       956      1197
+## 5 Fertilser       954      1012
+## 6 Fertilser       685       859
+\end{verbatim}
+
+This feels like a reasonable way to store such data, especially for an Excel user. However, this format is \textbf{not} \textbf{tidy}. Why? The biomass variable has been split across two columns (\texttt{BiomassT1} and \texttt{BiomassT2}), which means each row corresponds to two distinct observations. We won't go into the `whys' here but take our word for it---adopting this format makes it difficult to use \textbf{dplyr} efficiently.
+
+A tidy version of that example data set would still have three columns but now these would be: \texttt{Treatment}, denoting the experimental treatment applied; \texttt{Time}, denoting the sampling occasion; and \texttt{Biomass}, denoting the biomass measured:
+
+\begin{verbatim}
+##    Treatment Time Biomass
+## 1    Control   T1     284
+## 2    Control   T1     328
+## 3    Control   T1     291
+## 4  Fertilser   T1     956
+## 5  Fertilser   T1     954
+## 6  Fertilser   T1     685
+## 7    Control   T2     324
+## 8    Control   T2     400
+## 9    Control   T2     355
+## 10 Fertilser   T2    1197
+## 11 Fertilser   T2    1012
+## 12 Fertilser   T2     859
+\end{verbatim}
+
+The change we made was to create an indicator variable called \texttt{Time} for the sampling occasion. In version one of the data, the time information was implicit---the time associated with a biomass measurement was encoded by column membership (\texttt{BiomassT1} vs \texttt{BiomassT2}). In the second version of the data set an indicator variable, \texttt{Time}, was created to label the sampling occasion explicitly. That simple change means each row corresponds to one distinct observation and each variable lives in one column. These data are now tidy and ideally set up for use with \textbf{dplyr}.
+
+\begin{infobox}{warning}
+
+\hypertarget{always-try-to-start-with-tidy-data}{%
+\subsubsection*{Always try to start with tidy data}\label{always-try-to-start-with-tidy-data}}
+\addcontentsline{toc}{subsubsection}{Always try to start with tidy data}
+
+The best way to make sure your data set is tidy is to store in that format \textbf{when it's first collected and recorded}. Some packages can help convert non-tidy data into the tidy data format (e.g.~the \textbf{tidyr} package), but life is much simpler if we ensure our data are tidy from the very beginning.
+
+\end{infobox}
+
+\hypertarget{penguins-data-overview}{%
+\section{Penguins! 🐧+📊= 😃}\label{penguins-data-overview}}
+
+To make progress with \textbf{dplyr}, we are going to need some data to play around with. The data we'll use contains measurements taken from penguins on the Palmer Archipelago, off the north-western coast of the Antarctic Peninsula. Each row contains information about an individual penguin, including:
+
+\begin{itemize}
+\tightlist
+\item
+  the species it belongs to,
+\item
+  the island it was found on,
+\item
+  morphometric data (flipper length, body mass, bill dimensions)
+\item
+  its body mass and sex,
+\item
+  and finally, the year of capture.
+\end{itemize}
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.75\linewidth]{./images/lter_penguins} 
+
+}
+
+\caption{Meet the Palmer penguins (artwork by Allison Horst)}\label{fig:unnamed-chunk-102}
+\end{figure}
+
+Why use this data set? Apart from the fact that everyone likes penguins, obviously, these data are sufficiently complex to demonstrate everything we want to do, while remaining easily understandable. Here is the full data set shown as a table:
+
+\emph{N.B. --- the data will only show up in the HTML version of the book.}
+
+This shows the first ten rows along with the first few columns. The \emph{Previous / Next} links at the bottom right can be used to navigate the rows; the arrows in the top header row are used to view the different columns. Below each column name you can also see three-letter abbreviations like \texttt{\textless{}dbl\textgreater{}}, \texttt{\textless{}int\textgreater{}} and \texttt{\textless{}chr\textgreater{}}. These are telling us that each column is a vector of some kind:
+
+\begin{itemize}
+\item
+  \texttt{\textless{}dbl\textgreater{}} = a numeric `double' vector (real numbers, i.e.~with decimals)
+\item
+  \texttt{\textless{}int\textgreater{}} = a numeric integer vector (integer numbers)
+\item
+  \texttt{\textless{}chr\textgreater{}} = character vector.
+\end{itemize}
+
+So\ldots{} data frames are table-like objects with rows and columns. They can also be seen in even simpler terms---data frames are simply collections of vectors, where each one represents a different aspect of a multi-faceted data set.
+
+We're going to be seeing a lot of this data set in the remaining chapters so we won't say anything more about it now.
+
+\begin{infobox}{information}
+
+\hypertarget{where-can-we-get-the-penguins-data}{%
+\subsubsection*{Where can we get the penguins data?}\label{where-can-we-get-the-penguins-data}}
+\addcontentsline{toc}{subsubsection}{Where can we get the penguins data?}
+
+The Palmer penguins data were collected and made available by \href{https://www.uaf.edu/cfos/people/faculty/detail/kristen-gorman.php}{Dr.~Kristen Gorman} and the \href{https://pal.lternet.edu/}{Palmer Station}. The data set exists mostly to support people learning and teaching R. It isn't part of base R, though. We have to import it into R somehow. There are two options:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  The data are available in an R package called\ldots{} \href{https://allisonhorst.github.io/palmerpenguins/index.html}{palmerpenguins}. Like other packages, \textbf{palmerpenguins} can be installed from \href{https://cran.r-project.org/web/packages/palmerpenguins/index.html}{CRAN} using either \texttt{install.packages} or the usual RStudio point-and-click mechanism. Once installed, we can make it available by running \texttt{library(palmerpenguins)} in any R session. After that, just type the name of the data set and R will find it and use it. The version in \textbf{palmerpenguins} is called \texttt{penguins}, by the way.
+\item
+  We could get a copy of the data set and store it as a file on our hard drive, ideally using a standard data format. The most common and portable format for storing rectangular data is as a `Comma Separated Value' (CSV) text file. Once you have a copy of the data as a CSV file, it's just a matter of using a function like read\_csv from the readr package to import the data into R. This is explained in the \protect\hyperlink{project-scripts-data}{Managing projects, scripts and data files} appendix.
+\end{enumerate}
+
+\end{infobox}
+
+\hypertarget{um-tibbles}{%
+\section{Um\ldots{} tibbles?}\label{um-tibbles}}
+
+To increase the scope of what the tidyverse can do, its makers created a special kind of data object known as a `tibble'. This is meant to sound like the word `table' pronounced by a New Zealander. We're not lying---the person who started the tidyverse is from New Zealand. Its name is a clue that a tibble is a table-like object, i.e.~a rectangular data structure similar to a data frame.
+
+In fact, the easiest way to conceptualise a tibble is as a special data frame with a few extra whistles and bells. More often than not, it's not necessary to pay attention to whether we're working with an ordinary data frame or a tidyverse tibble---we can often treat them as though they are interchangeable.
+
+That said, there are exceptions to this rule of thumb, and we do occasionally need to work out which one we're using. A simple way to do this is by printing the data object. Imagine that we've imported the Palmer penguins into R and stored it in a tibble called \texttt{penguins}. This is what that would look like if we printed it at the Console:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{penguins}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 344 x 8
+##    species island bill_length_mm bill_depth_mm flipper_length_~ body_mass_g
+##    <chr>   <chr>           <dbl>         <dbl>            <int>       <int>
+##  1 Adelie  Torge~           39.1          18.7              181        3750
+##  2 Adelie  Torge~           39.5          17.4              186        3800
+##  3 Adelie  Torge~           40.3          18                195        3250
+##  4 Adelie  Torge~           NA            NA                 NA          NA
+##  5 Adelie  Torge~           36.7          19.3              193        3450
+##  6 Adelie  Torge~           39.3          20.6              190        3650
+##  7 Adelie  Torge~           38.9          17.8              181        3625
+##  8 Adelie  Torge~           39.2          19.6              195        4675
+##  9 Adelie  Torge~           34.1          18.1              193        3475
+## 10 Adelie  Torge~           42            20.2              190        4250
+## # ... with 334 more rows, and 2 more variables: sex <chr>, year <int>
+\end{verbatim}
+
+The formatting applied to the output is telling us \texttt{penguins} is a tibble rather than an ordinary data frame (we only called it a data frame earlier because we had not introduced the concept of a tibble yet). There are a couple of clues about this in that printout. The very obvious one is the first line: \texttt{\#\ A\ tibble:\ 344\ x\ 8}. The printed output states \texttt{penguins} is a tibble! The output is also truncated---only the first ten lines were printed, and any columns that won't fit on one row are summarised at the bottom (i.e.~\texttt{sex} and \texttt{year}).
+
+\hypertarget{missing-values}{%
+\section{Missing values}\label{missing-values}}
+
+Take a close look at the values of the body mass data (\texttt{body\_mass\_g}) in \texttt{penguins} (we're using \texttt{\$} to extract the whole column):
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{penguins}\SpecialCharTok{$}\NormalTok{body\_mass\_g}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   [1] 3750 3800 3250   NA 3450 3650 3625 4675 3475 4250 3300 3700 3200 3800 4400
+##  [16] 3700 3450 4500 3325 4200 3400 3600 3800 3950 3800 3800 3550 3200 3150 3950
+##  [31] 3250 3900 3300 3900 3325 4150 3950 3550 3300 4650 3150 3900 3100 4400 3000
+##  [46] 4600 3425 2975 3450 4150 3500 4300 3450 4050 2900 3700 3550 3800 2850 3750
+##  [61] 3150 4400 3600 4050 2850 3950 3350 4100 3050 4450 3600 3900 3550 4150 3700
+##  [76] 4250 3700 3900 3550 4000 3200 4700 3800 4200 3350 3550 3800 3500 3950 3600
+##  [91] 3550 4300 3400 4450 3300 4300 3700 4350 2900 4100 3725 4725 3075 4250 2925
+## [106] 3550 3750 3900 3175 4775 3825 4600 3200 4275 3900 4075 2900 3775 3350 3325
+## [121] 3150 3500 3450 3875 3050 4000 3275 4300 3050 4000 3325 3500 3500 4475 3425
+## [136] 3900 3175 3975 3400 4250 3400 3475 3050 3725 3000 3650 4250 3475 3450 3750
+## [151] 3700 4000 4500 5700 4450 5700 5400 4550 4800 5200 4400 5150 4650 5550 4650
+## [166] 5850 4200 5850 4150 6300 4800 5350 5700 5000 4400 5050 5000 5100 4100 5650
+## [181] 4600 5550 5250 4700 5050 6050 5150 5400 4950 5250 4350 5350 3950 5700 4300
+## [196] 4750 5550 4900 4200 5400 5100 5300 4850 5300 4400 5000 4900 5050 4300 5000
+## [211] 4450 5550 4200 5300 4400 5650 4700 5700 4650 5800 4700 5550 4750 5000 5100
+## [226] 5200 4700 5800 4600 6000 4750 5950 4625 5450 4725 5350 4750 5600 4600 5300
+## [241] 4875 5550 4950 5400 4750 5650 4850 5200 4925 4875 4625 5250 4850 5600 4975
+## [256] 5500 4725 5500 4700 5500 4575 5500 5000 5950 4650 5500 4375 5850 4875 6000
+## [271] 4925   NA 4850 5750 5200 5400 3500 3900 3650 3525 3725 3950 3250 3750 4150
+## [286] 3700 3800 3775 3700 4050 3575 4050 3300 3700 3450 4400 3600 3400 2900 3800
+## [301] 3300 4150 3400 3800 3700 4550 3200 4300 3350 4100 3600 3900 3850 4800 2700
+## [316] 4500 3950 3650 3550 3500 3675 4450 3400 4300 3250 3675 3325 3950 3600 4050
+## [331] 3350 3450 3250 4050 3800 3525 3950 3650 3650 4000 3400 3775 4100 3775
+\end{verbatim}
+
+The body mass information lives in a numeric (integer) vector, but not every element in that vector is a number. Two values are \texttt{NA}. That stands for `Not Available'---the \texttt{NA}'s job is to label cases where a value is missing or unknown. If you scroll around the table view of \texttt{penguins} above you'll find \texttt{NA}'s in several of the columns.
+
+Missing data crop up all the time. They are just one of those facts of life---maybe the recording machine broke one afternoon, perhaps one of our organisms was infected by a pathogen, or maybe a cow ate one of our experimental plots. One of the nice things about R is that it knows how to represent missing data. It does this using the \texttt{NA} symbol.
+
+You need to be aware of missing values when they are present. Why? Because the behaviour of many functions is affected by the presence of \texttt{NA}s. Things get confusing if we don't understand that behaviour. We will see some examples of this in the next few chapters.
+
+\hypertarget{why-dplyr}{%
+\section{\texorpdfstring{Introducing \textbf{dplyr}}{Introducing dplyr}}\label{why-dplyr}}
+
+The \textbf{dplyr} package has been carefully designed to make it easy to manipulate `rectangular data', such as data frames. \textbf{dplyr} is very consistent in the way its functions work. For example, the first argument of the main \textbf{dplyr} functions is always an object containing our data. This consistency makes it very easy to get to grips with each of the main \textbf{dplyr} functions---it's often possible to understand how one works by seeing one or two examples of its use.
+
+Another reason for using \textbf{dplyr} is that it is orientated around a few core functions, each designed to do one thing well. These \textbf{dplyr} functions are sometimes referred to as its `verbs' to reflect the fact that they `do something' to data. For example:
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{select} is obtains a subset of variables,
+\item
+  \texttt{mutate} is constructs new variables,
+\item
+  \texttt{filter} is obtains a subset of rows,
+\item
+  \texttt{arrange} is reorders rows, and
+\item
+  \texttt{summarise} is calculates information about groups.
+\end{itemize}
+
+Notice that the names are chosen to reflect what each verb/function does to the input data. We'll cover each of these verbs in detail in later chapters, as well as a few additional ones, such as \texttt{rename} and \texttt{group\_by}.
+
+Apart from being easy to use, \textbf{dplyr} is also fast. This doesn't matter for small data sets but can be important when working with data sets with hundreds of thousands of rows. The \textbf{dplyr} package also allows us to work with data stored in different ways, for example, by interacting directly with several database systems. We're going to focus on using it with data frames and tibbles. But remember---once you know how to use \textbf{dplyr} with data frames its easy to use it for work with other kinds of data sources.
+
+\begin{infobox}{information}
+
+\hypertarget{a-dplyr-cheat-sheet}{%
+\subsubsection*{\texorpdfstring{A \textbf{dplyr} cheat sheet}{A dplyr cheat sheet}}\label{a-dplyr-cheat-sheet}}
+\addcontentsline{toc}{subsubsection}{A \textbf{dplyr} cheat sheet}
+
+The developers of RStudio have produced a very usable \href{http://www.rstudio.com/resources/cheatsheets/}{cheat sheat} that summarises the main data wrangling tools provided by \textbf{dplyr}.
+
+\includegraphics{images/data-transformation.jpg}
+
+Our advice is to download this, print out a copy, and refer to it often as you start working with \textbf{dplyr}.
+
+\end{infobox}
+
+\hypertarget{more-dplyr}{%
+\subsection{\texorpdfstring{A first look at \textbf{dplyr}}{A first look at dplyr}}\label{more-dplyr}}
+
+We'll draw this chapter to a close by taking a preliminary look at the \textbf{dplyr} package. The package is not part of the base R installation, so we have to have installed it first. Remember, once installed, there is no need to install the package every time we need to use it. We do have to use \texttt{library} to load and attach the package every time we want to use it:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(}\StringTok{"dplyr"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Let's look at one handy \textbf{dplyr} function now. Sometimes we just need a quick, compact summary of a data frame or tibble. This is the job of the \texttt{glimpse} function from \textbf{dplyr}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{glimpse}\NormalTok{(penguins)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Rows: 344
+## Columns: 8
+## $ species           <chr> "Adelie", "Adelie", "Adelie", "Adelie", "Adelie",...
+## $ island            <chr> "Torgersen", "Torgersen", "Torgersen", "Torgersen...
+## $ bill_length_mm    <dbl> 39.1, 39.5, 40.3, NA, 36.7, 39.3, 38.9, 39.2, 34....
+## $ bill_depth_mm     <dbl> 18.7, 17.4, 18.0, NA, 19.3, 20.6, 17.8, 19.6, 18....
+## $ flipper_length_mm <int> 181, 186, 195, NA, 193, 190, 181, 195, 193, 190, ...
+## $ body_mass_g       <int> 3750, 3800, 3250, NA, 3450, 3650, 3625, 4675, 347...
+## $ sex               <chr> "male", "female", "female", NA, "female", "male",...
+## $ year              <int> 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2...
+\end{verbatim}
+
+The function takes one argument: the name of a data frame or tibble. It then tells us how many rows it has, how many columns there are, what these columns are called, and what type of data is associated with them. This function is useful when we need a quick overview of what's inside our data set. Some advice---use this function on any new data set before trying to do anything with it.
+
+\hypertarget{dplyr-pseudocode}{%
+\subsection{\texorpdfstring{\textbf{dplyr} pseudocode}{dplyr pseudocode}}\label{dplyr-pseudocode}}
+
+We'll wrap-up this chapter with a quick mention of `pseudocode'. Pseudocode uses structural conventions of normal R code but is intended for us (humans) to read rather than the computer. We use it summarise how \textbf{dplyr} functions work. Here's an example you will encounter in the next chapter:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{select}\NormalTok{(}\SpecialCharTok{\textless{}}\NormalTok{data}\SpecialCharTok{\textgreater{}}\NormalTok{, }\SpecialCharTok{\textless{}}\NormalTok{variable}\DecValTok{{-}1}\SpecialCharTok{\textgreater{}}\NormalTok{, }\SpecialCharTok{\textless{}}\NormalTok{variable}\DecValTok{{-}2}\SpecialCharTok{\textgreater{}}\NormalTok{, ...)}
+\end{Highlighting}
+\end{Shaded}
+
+\textbf{This is not an example we can run.} It is pseudocode that serves as a template for using the \textbf{dplyr} \texttt{select} function. The words surrounded by `angle brackets' (\texttt{\textless{}\ \textgreater{}}) are placeholders. If we want to turn this pseudocode into real R code we have to \textbf{replace those placeholders}. For example, \texttt{\textless{}data\textgreater{}} is a placeholder for the name of a data set. We would replace that with the word \texttt{penguins} if we want to use select on our example data set (we'd also have to do something with the other placeholders (e.g.~\texttt{\textless{}variable-1\textgreater{}})---we'll get to that later).
+
+That's enough about pseudocode and \textbf{dplyr} templates. We'll see plenty of these in the next few chapters.
+
+\hypertarget{working-with-variables}{%
+\chapter{Working with variables}\label{working-with-variables}}
+
+\hypertarget{introduction-3}{%
+\section{Introduction}\label{introduction-3}}
+
+This chapter will explore the \textbf{dplyr} \texttt{select} and \texttt{mutate} verbs, and the closely related \texttt{rename} and \texttt{transmute} verbs. We consider these functions together because they operate on the variables (i.e.~the columns) of a data frame or tibble:
+
+\begin{itemize}
+\tightlist
+\item
+  The \texttt{select} function selects a subset of variables to retain and (optionally) renames them in the process.
+\item
+  The \texttt{mutate} function creates new variables from pre-existing ones and retains the original variables.
+\item
+  The \texttt{rename} function renames one or more variables while keeping the remaining variable names unchanged.
+\item
+  The \texttt{transmute} function creates new variables from pre-existing ones and drops the original variables.
+\end{itemize}
+
+\hypertarget{getting-ready}{%
+\subsection{Getting ready}\label{getting-ready}}
+
+Obviously, we need to have first installed \textbf{dplyr} package to use it. Assuming that's been done, we need to load and attach the package in the current session:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(}\StringTok{"dplyr"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+We will use the Palmer penguins data to illustrate the ideas in this chapter. Remember---the \protect\hyperlink{penguins-data-overview}{previous chapter} described this data set and explained where to find it. The examples below assume it was read into R as a tibble with the name \texttt{penguins}.
+
+\hypertarget{subset-variables-with-select}{%
+\section{\texorpdfstring{Subset variables with \texttt{select}}{Subset variables with select}}\label{subset-variables-with-select}}
+
+We use \texttt{select} to \textbf{select variables} from a data frame or tibble. This is used when we have a data set with many variables but only need to work with a subset of these. Basic usage of \texttt{select} looks like this:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{select}\NormalTok{(}\SpecialCharTok{\textless{}}\NormalTok{data}\SpecialCharTok{\textgreater{}}\NormalTok{, }\SpecialCharTok{\textless{}}\NormalTok{variable}\DecValTok{{-}1}\SpecialCharTok{\textgreater{}}\NormalTok{, }\SpecialCharTok{\textless{}}\NormalTok{variable}\DecValTok{{-}2}\SpecialCharTok{\textgreater{}}\NormalTok{, ...)}
+\end{Highlighting}
+\end{Shaded}
+
+Remember---this is not an example we can run. This is a pseudocode designed to provide a generic description of how we use \texttt{select}. Let's look at the arguments of select:
+
+\begin{itemize}
+\tightlist
+\item
+  The first argument, \texttt{\textless{}data\textgreater{}}, must be the name of the object containing our data (usually a data frame or tibble). This is not optional---\textbf{dplyr} functions only exist to manipulate data.
+\item
+  We then include a series of one or more additional arguments, where each one is the name of a variable in \texttt{\textless{}data\textgreater{}}. We've expressed this as \texttt{\textless{}variable-1\textgreater{},\ \textless{}variable-2\textgreater{},\ ...}, where \texttt{\textless{}variable-1\textgreater{}} and \texttt{\textless{}variable-2\textgreater{}} are names of the first two variables. The \texttt{...} is acting as a placeholder for the remaining variables. There could be any number of these.
+\end{itemize}
+
+It's easiest to understand how a function like \texttt{select} works by seeing it in action. We select the \texttt{species}, \texttt{bill\_length\_mm} and \texttt{bill\_depth\_mm} variables from \texttt{penguins} like this:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{select}\NormalTok{(penguins, species, bill\_length\_mm, bill\_depth\_mm)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 344 x 3
+##    species bill_length_mm bill_depth_mm
+##    <chr>            <dbl>         <dbl>
+##  1 Adelie            39.1          18.7
+##  2 Adelie            39.5          17.4
+##  3 Adelie            40.3          18  
+##  4 Adelie            NA            NA  
+##  5 Adelie            36.7          19.3
+##  6 Adelie            39.3          20.6
+##  7 Adelie            38.9          17.8
+##  8 Adelie            39.2          19.6
+##  9 Adelie            34.1          18.1
+## 10 Adelie            42            20.2
+## # ... with 334 more rows
+\end{verbatim}
+
+Hopefully, nothing about this example is too surprising. However, there are a few subtleties buried in that example:
+
+\begin{itemize}
+\tightlist
+\item
+  The \texttt{select} function is designed to work in a non-standard way which means variable names should \textbf{not} be surrounded by quotes. The one exception is when a name has a space in it. Under those circumstances, it has to be quoted with backticks, e.g.~\texttt{\textasciigrave{}variable\ 1\textasciigrave{}}.
+\item
+  The \texttt{select} function does not have `side effects'. This means is that it does not change the original \texttt{penguins} object. We printed the result produced by \texttt{select} to the Console, so we can't access the modified data set. If we need to use the result, we have to assign it a name using \texttt{\textless{}-}.
+\item
+  The order of variables (i.e.~the column order) in the resulting object is the same as the order in which they were supplied to the argument list. This means we can reorder variables at the same time as selecting them if we need to.
+\item
+  The \texttt{select} function will return the same kind of data object we give it to work on. It returns a data frame if our data was in a data frame and a tibble if it was a tibble. In this example, R prints a tibble because \texttt{penguins} was a tibble.
+\end{itemize}
+
+That second point is important---we have to remember to assign the result a name using \texttt{\textless{}-} if we want to keep it and use it later. For example, we might call the result of that last example \texttt{penguins\_bill}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{penguins\_bill }\OtherTok{\textless{}{-}} \FunctionTok{select}\NormalTok{(penguins, species, bill\_length\_mm, bill\_depth\_mm)}
+\end{Highlighting}
+\end{Shaded}
+
+Now that we've named the new data set created by \texttt{select} we can refer to it by that name whenever we need it:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{penguins\_bill}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 344 x 3
+##    species bill_length_mm bill_depth_mm
+##    <chr>            <dbl>         <dbl>
+##  1 Adelie            39.1          18.7
+##  2 Adelie            39.5          17.4
+##  3 Adelie            40.3          18  
+##  4 Adelie            NA            NA  
+##  5 Adelie            36.7          19.3
+##  6 Adelie            39.3          20.6
+##  7 Adelie            38.9          17.8
+##  8 Adelie            39.2          19.6
+##  9 Adelie            34.1          18.1
+## 10 Adelie            42            20.2
+## # ... with 334 more rows
+\end{verbatim}
+
+Remember---the original \texttt{penguins} data is completely unchanged:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{penguins}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 344 x 8
+##    species island bill_length_mm bill_depth_mm flipper_length_~ body_mass_g
+##    <chr>   <chr>           <dbl>         <dbl>            <int>       <int>
+##  1 Adelie  Torge~           39.1          18.7              181        3750
+##  2 Adelie  Torge~           39.5          17.4              186        3800
+##  3 Adelie  Torge~           40.3          18                195        3250
+##  4 Adelie  Torge~           NA            NA                 NA          NA
+##  5 Adelie  Torge~           36.7          19.3              193        3450
+##  6 Adelie  Torge~           39.3          20.6              190        3650
+##  7 Adelie  Torge~           38.9          17.8              181        3625
+##  8 Adelie  Torge~           39.2          19.6              195        4675
+##  9 Adelie  Torge~           34.1          18.1              193        3475
+## 10 Adelie  Torge~           42            20.2              190        4250
+## # ... with 334 more rows, and 2 more variables: sex <chr>, year <int>
+\end{verbatim}
+
+\hypertarget{alternative-ways-to-identify-variables-with-select}{%
+\subsection{\texorpdfstring{Alternative ways to identify variables with \texttt{select}}{Alternative ways to identify variables with select}}\label{alternative-ways-to-identify-variables-with-select}}
+
+It's sometimes more convenient to use \texttt{select} to subset variables by specifying those we do \textbf{not} need, rather than specifying of the ones to keep. We can use the \texttt{!} operator to indicate that certain variables should be dropped. For example, to get rid of the \texttt{bill\_depth\_mm} and \texttt{bill\_length\_mm} columns, we could use:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{select}\NormalTok{(penguins, }\SpecialCharTok{!}\NormalTok{bill\_depth\_mm, }\SpecialCharTok{!}\NormalTok{bill\_length\_mm)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 344 x 8
+##    species island bill_length_mm flipper_length_~ body_mass_g sex    year
+##    <chr>   <chr>           <dbl>            <int>       <int> <chr> <int>
+##  1 Adelie  Torge~           39.1              181        3750 male   2007
+##  2 Adelie  Torge~           39.5              186        3800 fema~  2007
+##  3 Adelie  Torge~           40.3              195        3250 fema~  2007
+##  4 Adelie  Torge~           NA                 NA          NA <NA>   2007
+##  5 Adelie  Torge~           36.7              193        3450 fema~  2007
+##  6 Adelie  Torge~           39.3              190        3650 male   2007
+##  7 Adelie  Torge~           38.9              181        3625 fema~  2007
+##  8 Adelie  Torge~           39.2              195        4675 male   2007
+##  9 Adelie  Torge~           34.1              193        3475 <NA>   2007
+## 10 Adelie  Torge~           42                190        4250 <NA>   2007
+## # ... with 334 more rows, and 1 more variable: bill_depth_mm <dbl>
+\end{verbatim}
+
+This returns a tibble with all the other variables: \texttt{species}, \texttt{island}, \texttt{flipper\_length\_mm}, \texttt{body\_mass\_g}, \texttt{sex} and \texttt{year}.
+
+The \texttt{select} function can also be used to grab (or drop) a set of variables that occur in a sequence next to one another. We specify a series of adjacent variables using the \texttt{:} operator. We use this with two variable names, one on the left-hand side and one on the right. When we use \texttt{:} like this, \texttt{select} will subset both those two variables along with any others that fall in between them.
+
+For example, if we want only the morphometric variables (\texttt{bill\_length\_mm}, \texttt{bill\_depth\_mm}, \texttt{flipper\_length\_mm} and \texttt{body\_mass\_g}) we could use:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{select}\NormalTok{(penguins, bill\_length\_mm}\SpecialCharTok{:}\NormalTok{body\_mass\_g)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 344 x 4
+##    bill_length_mm bill_depth_mm flipper_length_mm body_mass_g
+##             <dbl>         <dbl>             <int>       <int>
+##  1           39.1          18.7               181        3750
+##  2           39.5          17.4               186        3800
+##  3           40.3          18                 195        3250
+##  4           NA            NA                  NA          NA
+##  5           36.7          19.3               193        3450
+##  6           39.3          20.6               190        3650
+##  7           38.9          17.8               181        3625
+##  8           39.2          19.6               195        4675
+##  9           34.1          18.1               193        3475
+## 10           42            20.2               190        4250
+## # ... with 334 more rows
+\end{verbatim}
+
+The \texttt{:} operator can also be combined with \texttt{!} if we need to drop a series of variables according to their position in a data frame or tibble. For example, we can use this trick to get the complement of the previous example, i.e.~throw away the morphometric variables:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{select}\NormalTok{(penguins, }\SpecialCharTok{!}\NormalTok{bill\_length\_mm}\SpecialCharTok{:}\NormalTok{body\_mass\_g)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 344 x 4
+##    species island    sex     year
+##    <chr>   <chr>     <chr>  <int>
+##  1 Adelie  Torgersen male    2007
+##  2 Adelie  Torgersen female  2007
+##  3 Adelie  Torgersen female  2007
+##  4 Adelie  Torgersen <NA>    2007
+##  5 Adelie  Torgersen female  2007
+##  6 Adelie  Torgersen male    2007
+##  7 Adelie  Torgersen female  2007
+##  8 Adelie  Torgersen male    2007
+##  9 Adelie  Torgersen <NA>    2007
+## 10 Adelie  Torgersen <NA>    2007
+## # ... with 334 more rows
+\end{verbatim}
+
+\hypertarget{renaming-variables-with-select-and-rename}{%
+\subsection{\texorpdfstring{Renaming variables with \texttt{select} and \texttt{rename}}{Renaming variables with select and rename}}\label{renaming-variables-with-select-and-rename}}
+
+The \texttt{select} function can also rename variables at the same time as selecting them. To do this, we name the arguments using the \texttt{name\ =\ value} construct, where the name of the selected variable is placed on the right-hand side (\texttt{value}), and the new name goes on the left-hand side (\texttt{name}).
+
+For example, to select the\texttt{species}, \texttt{bill\_length\_mm} and \texttt{bill\_depth\_mm} variables from \texttt{penguins}, and in the process, rename \texttt{bill\_length\_mm} and \texttt{bill\_depth\_mm} to \texttt{BillLength} and \texttt{BillDepth}, use:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{select}\NormalTok{(penguins, species, }\AttributeTok{BillLength =}\NormalTok{ bill\_length\_mm, }\AttributeTok{BillDepth =}\NormalTok{ bill\_depth\_mm)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 344 x 3
+##    species BillLength BillDepth
+##    <chr>        <dbl>     <dbl>
+##  1 Adelie        39.1      18.7
+##  2 Adelie        39.5      17.4
+##  3 Adelie        40.3      18  
+##  4 Adelie        NA        NA  
+##  5 Adelie        36.7      19.3
+##  6 Adelie        39.3      20.6
+##  7 Adelie        38.9      17.8
+##  8 Adelie        39.2      19.6
+##  9 Adelie        34.1      18.1
+## 10 Adelie        42        20.2
+## # ... with 334 more rows
+\end{verbatim}
+
+Renaming the variables is a common task. What should we do if the only thing we want to achieve is to rename variables, rather than rename \emph{and} select them? \textbf{dplyr} provides an additional function called \texttt{rename} for exactly this purpose. This function renames some variables while retaining all others. It works like \texttt{select}. For example, to rename \texttt{bill\_length\_mm} and \texttt{bill\_depth\_mm} to \texttt{BillLength} and \texttt{BillDepth} but keep all the variables, use:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{rename}\NormalTok{(penguins, }\AttributeTok{BillLength =}\NormalTok{ bill\_length\_mm, }\AttributeTok{BillDepth =}\NormalTok{ bill\_depth\_mm)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 344 x 8
+##    species island  BillLength BillDepth flipper_length_~ body_mass_g sex    year
+##    <chr>   <chr>        <dbl>     <dbl>            <int>       <int> <chr> <int>
+##  1 Adelie  Torger~       39.1      18.7              181        3750 male   2007
+##  2 Adelie  Torger~       39.5      17.4              186        3800 fema~  2007
+##  3 Adelie  Torger~       40.3      18                195        3250 fema~  2007
+##  4 Adelie  Torger~       NA        NA                 NA          NA <NA>   2007
+##  5 Adelie  Torger~       36.7      19.3              193        3450 fema~  2007
+##  6 Adelie  Torger~       39.3      20.6              190        3650 male   2007
+##  7 Adelie  Torger~       38.9      17.8              181        3625 fema~  2007
+##  8 Adelie  Torger~       39.2      19.6              195        4675 male   2007
+##  9 Adelie  Torger~       34.1      18.1              193        3475 <NA>   2007
+## 10 Adelie  Torger~       42        20.2              190        4250 <NA>   2007
+## # ... with 334 more rows
+\end{verbatim}
+
+Notice \texttt{rename} also preserves the order of the variables found in the original data.
+
+\hypertarget{creating-variables-with-mutate}{%
+\section{\texorpdfstring{Creating variables with \texttt{mutate}}{Creating variables with mutate}}\label{creating-variables-with-mutate}}
+
+We use \texttt{mutate} to \textbf{add new variables} to a data frame or tibble. This is useful if we need to construct one or more derived variables to support an analysis. Basic usage of \texttt{mutate} looks like this:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{mutate}\NormalTok{(}\SpecialCharTok{\textless{}}\NormalTok{data}\SpecialCharTok{\textgreater{}}\NormalTok{, }\SpecialCharTok{\textless{}}\NormalTok{expression}\DecValTok{{-}1}\SpecialCharTok{\textgreater{}}\NormalTok{, }\SpecialCharTok{\textless{}}\NormalTok{expression}\DecValTok{{-}2}\SpecialCharTok{\textgreater{}}\NormalTok{, ...)}
+\end{Highlighting}
+\end{Shaded}
+
+Again, this is not an example we can run---it's pseudocode highlighting how to use \texttt{mutate} in abstract terms.
+
+The first argument, \texttt{\textless{}data\textgreater{}}, must be the name of the object containing our data. We then include a series of one or more additional arguments, where each of these is a valid R expression involving one or more variables in \texttt{\textless{}data\textgreater{}}. We've have expressed these as \texttt{\textless{}expression-1\textgreater{},\ \textless{}expression-2\textgreater{}}, where \texttt{\textless{}expression-1\textgreater{}} and \texttt{\textless{}expression-2\textgreater{}} represent the first two expressions, and the \texttt{...} is acting as a placeholder for the remaining expressions. These can be any valid R code that refers to variables in \texttt{\textless{}data\textgreater{}}. This is often a simple calculation (e.g.~involving arithmetic), but it can be arbitrarily complex.
+
+To see \texttt{mutate} in action, let's construct a new version of \texttt{penguins} that contains one extra variable---body mass measured in kilograms:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{mutate}\NormalTok{(penguins, body\_mass\_g }\SpecialCharTok{/} \DecValTok{1000}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 344 x 9
+##    species island bill_length_mm bill_depth_mm flipper_length_~ body_mass_g
+##    <chr>   <chr>           <dbl>         <dbl>            <int>       <int>
+##  1 Adelie  Torge~           39.1          18.7              181        3750
+##  2 Adelie  Torge~           39.5          17.4              186        3800
+##  3 Adelie  Torge~           40.3          18                195        3250
+##  4 Adelie  Torge~           NA            NA                 NA          NA
+##  5 Adelie  Torge~           36.7          19.3              193        3450
+##  6 Adelie  Torge~           39.3          20.6              190        3650
+##  7 Adelie  Torge~           38.9          17.8              181        3625
+##  8 Adelie  Torge~           39.2          19.6              195        4675
+##  9 Adelie  Torge~           34.1          18.1              193        3475
+## 10 Adelie  Torge~           42            20.2              190        4250
+## # ... with 334 more rows, and 3 more variables: sex <chr>, year <int>,
+## #   `body_mass_g/1000` <dbl>
+\end{verbatim}
+
+This creates a copy of \texttt{penguins} with a new column called \texttt{body\_mass\_g/1000} (look at the bottom of the printed output). That is not a very good name but do not worry---we will improve on it in a moment. Most of the rules that apply to \texttt{select} also apply to \texttt{mutate}:
+
+\begin{itemize}
+\tightlist
+\item
+  Quotes must not be placed around an expression that performs a calculation.~ This makes sense because the expression is meant to be evaluated so that it ``does something''. It is not a value.
+\item
+  The \texttt{mutate} function does not have side effects, meaning it does not change the original \texttt{penguins} in any way. In the example, we printed the result produced by \texttt{mutate} rather than assigning it a name using \texttt{\textless{}-}, which means we have no way to access the result.
+\item
+  The \texttt{mutate} function returns the same kind of object as the one it is working on: a data frame if our data was originally in a data frame, a tibble if it was a tibble.
+\end{itemize}
+
+Creating a variable called something like \texttt{body\_mass\_g/1000} is not ideal because that is a difficult name to work with. Fortunately, the \texttt{mutate} function can name new variables at the same time as it creates them. We just name the arguments using \texttt{=}, placing the name on the left-hand side. Look at how to use this construct to name the new area variable \texttt{body\_mass\_kg}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{mutate}\NormalTok{(penguins, }\AttributeTok{body\_mass\_kg =}\NormalTok{ body\_mass\_g }\SpecialCharTok{/} \DecValTok{1000}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 344 x 9
+##    species island bill_length_mm bill_depth_mm flipper_length_~ body_mass_g
+##    <chr>   <chr>           <dbl>         <dbl>            <int>       <int>
+##  1 Adelie  Torge~           39.1          18.7              181        3750
+##  2 Adelie  Torge~           39.5          17.4              186        3800
+##  3 Adelie  Torge~           40.3          18                195        3250
+##  4 Adelie  Torge~           NA            NA                 NA          NA
+##  5 Adelie  Torge~           36.7          19.3              193        3450
+##  6 Adelie  Torge~           39.3          20.6              190        3650
+##  7 Adelie  Torge~           38.9          17.8              181        3625
+##  8 Adelie  Torge~           39.2          19.6              195        4675
+##  9 Adelie  Torge~           34.1          18.1              193        3475
+## 10 Adelie  Torge~           42            20.2              190        4250
+## # ... with 334 more rows, and 3 more variables: sex <chr>, year <int>,
+## #   body_mass_kg <dbl>
+\end{verbatim}
+
+We can create more than one variable by supplying \texttt{mutate} multiple (named) arguments:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{mutate}\NormalTok{(penguins, }
+       \AttributeTok{bill\_size =}\NormalTok{ bill\_depth\_mm }\SpecialCharTok{*}\NormalTok{ bill\_length\_mm,}
+       \AttributeTok{scaled\_bill\_size =}\NormalTok{ bill\_size }\SpecialCharTok{/}\NormalTok{ body\_mass\_g)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 344 x 10
+##    species island bill_length_mm bill_depth_mm flipper_length_~ body_mass_g
+##    <chr>   <chr>           <dbl>         <dbl>            <int>       <int>
+##  1 Adelie  Torge~           39.1          18.7              181        3750
+##  2 Adelie  Torge~           39.5          17.4              186        3800
+##  3 Adelie  Torge~           40.3          18                195        3250
+##  4 Adelie  Torge~           NA            NA                 NA          NA
+##  5 Adelie  Torge~           36.7          19.3              193        3450
+##  6 Adelie  Torge~           39.3          20.6              190        3650
+##  7 Adelie  Torge~           38.9          17.8              181        3625
+##  8 Adelie  Torge~           39.2          19.6              195        4675
+##  9 Adelie  Torge~           34.1          18.1              193        3475
+## 10 Adelie  Torge~           42            20.2              190        4250
+## # ... with 334 more rows, and 4 more variables: sex <chr>, year <int>,
+## #   bill_size <dbl>, scaled_bill_size <dbl>
+\end{verbatim}
+
+Notice that we placed each calculation on a new line, remembering to use a comma to separate arguments. We can do this because R ignores white space. Splitting long a function call across multiple lines in this way is helpful because it makes it easier to read and understand the sequence of calculations.
+
+This last example reveals a nice feature of \texttt{mutate}---we can use newly created variables in further calculations. Here we constructed a synthetic bill size variable, and used that to calculate a second variable representing the ratio of bill size to body mass.
+
+\hypertarget{transforming-and-dropping-variables}{%
+\subsection{Transforming and dropping variables}\label{transforming-and-dropping-variables}}
+
+Occasionally we need to construct one or more new variables and then drop all the other ones in the original dataset. The \texttt{transmute} function is designed to do this. It works exactly like \texttt{mutate}, but it has a slightly different behaviour:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{transmute}\NormalTok{(penguins, }
+          \AttributeTok{bill\_size =}\NormalTok{ bill\_depth\_mm }\SpecialCharTok{*}\NormalTok{ bill\_length\_mm,}
+          \AttributeTok{scaled\_bill\_size =}\NormalTok{ bill\_size }\SpecialCharTok{/}\NormalTok{ body\_mass\_g)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 344 x 2
+##    bill_size scaled_bill_size
+##        <dbl>            <dbl>
+##  1      731.            0.195
+##  2      687.            0.181
+##  3      725.            0.223
+##  4       NA            NA    
+##  5      708.            0.205
+##  6      810.            0.222
+##  7      692.            0.191
+##  8      768.            0.164
+##  9      617.            0.178
+## 10      848.            0.200
+## # ... with 334 more rows
+\end{verbatim}
+
+Here we repeated the previous example, but now only the new variables were retained in the resulting tibble. If we also want to retain additional variables without altering them, we can pass them as unnamed arguments. For example, to retain \texttt{species} identity in the output, use:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{transmute}\NormalTok{(penguins,}
+\NormalTok{          species,}
+          \AttributeTok{bill\_size =}\NormalTok{ bill\_depth\_mm }\SpecialCharTok{*}\NormalTok{ bill\_length\_mm,}
+          \AttributeTok{scaled\_bill\_size =}\NormalTok{ bill\_size }\SpecialCharTok{/}\NormalTok{ body\_mass\_g)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 344 x 3
+##    species bill_size scaled_bill_size
+##    <chr>       <dbl>            <dbl>
+##  1 Adelie       731.            0.195
+##  2 Adelie       687.            0.181
+##  3 Adelie       725.            0.223
+##  4 Adelie        NA            NA    
+##  5 Adelie       708.            0.205
+##  6 Adelie       810.            0.222
+##  7 Adelie       692.            0.191
+##  8 Adelie       768.            0.164
+##  9 Adelie       617.            0.178
+## 10 Adelie       848.            0.200
+## # ... with 334 more rows
+\end{verbatim}
+
+\hypertarget{working-with-observations}{%
+\chapter{Working with observations}\label{working-with-observations}}
+
+\hypertarget{introduction-4}{%
+\section{Introduction}\label{introduction-4}}
+
+This chapter will explore the \texttt{filter} and \texttt{arrange} verbs. We discuss these functions together because they manipulate observations (i.e.~rows) of a data frame or tibble:
+
+\begin{itemize}
+\tightlist
+\item
+  The \texttt{filter} function extracts a subset of observations based on supplied criteria.
+\item
+  The \texttt{arrange} function reorders the rows according to the values in one or more variables.
+\end{itemize}
+
+\hypertarget{getting-ready-1}{%
+\subsection{Getting ready}\label{getting-ready-1}}
+
+We'll be using the \textbf{dplyr} package, so we need to remember to load and attach the package in the current session:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(}\StringTok{"dplyr"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+We'll use the Palmer penguins data again to illustrate the ideas in this chapter. The examples below assume those data been read into R as a tibble with the name \texttt{penguins}.
+
+\hypertarget{relational-and-logical-operators}{%
+\section{Relational and logical operators}\label{relational-and-logical-operators}}
+
+Most \texttt{filter} operations rely on some combination of \textbf{relational and logical operators}. Remember these from last year?
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  Use \textbf{relational operators} to make comparisons between a pair of variables on the basis of conditions like `less than' or `equal to':
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \texttt{x\ \textless{}\ y}: is x less than y?
+  \item
+    \texttt{x\ \textgreater{}\ y}: is x greater than y?
+  \item
+    \texttt{x\ \textless{}=\ y}: is x less than or equal to y?
+  \item
+    \texttt{x\ \textgreater{}=\ y}: is x greater than or equal to y?
+  \item
+    \texttt{x\ ==\ y}: is x equal to y?
+  \item
+    \texttt{x\ !=\ y}: is x not equal to y?
+  \end{itemize}
+\item
+  Use \textbf{logical operators} to connect two or more comparisons to arrive at a single overall criterion:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \texttt{x\ \&\ y}: are both x AND y true?
+  \item
+    \texttt{x\ \textbar{}\ y}: is x OR y true?
+  \end{itemize}
+\end{enumerate}
+
+\begin{infobox}{warning}
+
+\hypertarget{double-or-single}{%
+\subsubsection*{\texorpdfstring{Double \texttt{==} or single \texttt{=}?}{Double == or single =?}}\label{double-or-single}}
+\addcontentsline{toc}{subsubsection}{Double \texttt{==} or single \texttt{=}?}
+
+Remember to use `double equals' \texttt{==} when testing for equivalence between \texttt{x} and \texttt{y}. We all forget this from time to time and use `single equals' \texttt{=} instead. This will lead to an error. \textbf{dplyr} is pretty good at spotting this mistake these days and will warn you in its error message that you used \texttt{=} when you meant to use \texttt{==}. Of course, if you don't read the error messages, you won't benefit from this helpful behaviour.
+
+\end{infobox}
+
+\hypertarget{subset-observations-with-filter}{%
+\section{\texorpdfstring{Subset observations with \texttt{filter}}{Subset observations with filter}}\label{subset-observations-with-filter}}
+
+We use \texttt{filter} to \textbf{subset observations} in a data frame or tibble containing our data. This is useful when we want to limit an analysis to a particular group of observations. Basic usage of \texttt{filter} looks something like this:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{filter}\NormalTok{(}\SpecialCharTok{\textless{}}\NormalTok{data}\SpecialCharTok{\textgreater{}}\NormalTok{, }\SpecialCharTok{\textless{}}\NormalTok{expression}\DecValTok{{-}1}\SpecialCharTok{\textgreater{}}\NormalTok{, }\SpecialCharTok{\textless{}}\NormalTok{expression}\DecValTok{{-}2}\SpecialCharTok{\textgreater{}}\NormalTok{, ...)}
+\end{Highlighting}
+\end{Shaded}
+
+Yes, this is pseudocode again. Let's review the arguments:
+
+\begin{itemize}
+\tightlist
+\item
+  The first argument, \texttt{\textless{}data\textgreater{}}, must be the name of the object (usually a data frame or tibble) containing our data. As with all \textbf{dplyr} verbs, this is not optional.
+\item
+  We then include one or more additional arguments. Each of these is a valid R expression involving one or more variables in \texttt{\textless{}data\textgreater{}} that returns a logical vector. We've expressed these as \texttt{\textless{}expression-1\textgreater{},\ \textless{}expression-2\textgreater{},\ ...}, where \texttt{\textless{}expression-1\textgreater{}} and \texttt{\textless{}expression-2\textgreater{}} represent the first two expressions, and the \texttt{...} is acting as placeholder for the remaining expressions.
+\end{itemize}
+
+To see \texttt{filter} in action, we'll use it to subset observations in the \texttt{penguins} dataset, based on two relational criteria:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{filter}\NormalTok{(penguins, bill\_length\_mm }\SpecialCharTok{\textgreater{}} \DecValTok{45}\NormalTok{, bill\_depth\_mm }\SpecialCharTok{\textgreater{}} \DecValTok{18}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 44 x 8
+##    species island bill_length_mm bill_depth_mm flipper_length_~ body_mass_g
+##    <chr>   <chr>           <dbl>         <dbl>            <int>       <int>
+##  1 Adelie  Torge~           46            21.5              194        4200
+##  2 Adelie  Torge~           45.8          18.9              197        4150
+##  3 Adelie  Biscoe           45.6          20.3              191        4600
+##  4 Chinst~ Dream            50            19.5              196        3900
+##  5 Chinst~ Dream            51.3          19.2              193        3650
+##  6 Chinst~ Dream            45.4          18.7              188        3525
+##  7 Chinst~ Dream            52.7          19.8              197        3725
+##  8 Chinst~ Dream            46.1          18.2              178        3250
+##  9 Chinst~ Dream            51.3          18.2              197        3750
+## 10 Chinst~ Dream            46            18.9              195        4150
+## # ... with 34 more rows, and 2 more variables: sex <chr>, year <int>
+\end{verbatim}
+
+In this example, we've created a subset of \texttt{penguins} that only includes observations where the \texttt{bill\_length\_mm} variable is greater than 45 \textbf{and} the \texttt{bill\_depth\_mm} variable is greater than 45, i.e.~both conditions must be met for an observation to be retained. This is probably starting to feel repetitious, but there are a few features of \texttt{filter} that we should be aware of:
+
+\begin{itemize}
+\tightlist
+\item
+  We do not surround each expression with quotes. The expression is meant to be evaluated---it is not 'a value.
+\item
+  The result produced by \texttt{filter} was printed to the Console in the example. The \texttt{filter} function did not change the original \texttt{penguins} in any way (no side effects!).
+\item
+  The \texttt{filter} function will return the same kind of data object it is working on: it returns a data frame if our data was originally in a data frame, and a tibble if it was a tibble.
+\end{itemize}
+
+Notice that including are two conditions separated by a comma means both conditions have to be met. There is another way to achieve the exact same result:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{filter}\NormalTok{(penguins, bill\_length\_mm }\SpecialCharTok{\textgreater{}} \DecValTok{45} \SpecialCharTok{\&}\NormalTok{ bill\_depth\_mm }\SpecialCharTok{\textgreater{}} \DecValTok{18}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 44 x 8
+##    species island bill_length_mm bill_depth_mm flipper_length_~ body_mass_g
+##    <chr>   <chr>           <dbl>         <dbl>            <int>       <int>
+##  1 Adelie  Torge~           46            21.5              194        4200
+##  2 Adelie  Torge~           45.8          18.9              197        4150
+##  3 Adelie  Biscoe           45.6          20.3              191        4600
+##  4 Chinst~ Dream            50            19.5              196        3900
+##  5 Chinst~ Dream            51.3          19.2              193        3650
+##  6 Chinst~ Dream            45.4          18.7              188        3525
+##  7 Chinst~ Dream            52.7          19.8              197        3725
+##  8 Chinst~ Dream            46.1          18.2              178        3250
+##  9 Chinst~ Dream            51.3          18.2              197        3750
+## 10 Chinst~ Dream            46            18.9              195        4150
+## # ... with 34 more rows, and 2 more variables: sex <chr>, year <int>
+\end{verbatim}
+
+This version links the two parts with the logical \texttt{\&} operator. That is, rather than supplying \texttt{bill\_length\_mm\ \textgreater{}\ 45} and \texttt{bill\_depth\_mm\ \textgreater{}\ 18} as two arguments, we used a single R expression, combining them with the \texttt{\&}.
+
+We're pointing this out because we sometimes need to create filtering criteria that cannot be expressed as `condition 1' \textbf{and} `condition 2' \textbf{and} `condition 3'\ldots{} etc. Under those conditions we have to use logical operators to connect conditions. A simple instance of this situation is where we need to subset on an \textbf{either/or} basis. For example:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{filter}\NormalTok{(penguins, bill\_length\_mm }\SpecialCharTok{\textless{}} \DecValTok{36} \SpecialCharTok{|}\NormalTok{ bill\_length\_mm }\SpecialCharTok{\textgreater{}} \DecValTok{54}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 29 x 8
+##    species island bill_length_mm bill_depth_mm flipper_length_~ body_mass_g
+##    <chr>   <chr>           <dbl>         <dbl>            <int>       <int>
+##  1 Adelie  Torge~           34.1          18.1              193        3475
+##  2 Adelie  Torge~           34.6          21.1              198        4400
+##  3 Adelie  Torge~           34.4          18.4              184        3325
+##  4 Adelie  Biscoe           35.9          19.2              189        3800
+##  5 Adelie  Biscoe           35.3          18.9              187        3800
+##  6 Adelie  Biscoe           35            17.9              190        3450
+##  7 Adelie  Biscoe           34.5          18.1              187        2900
+##  8 Adelie  Biscoe           35.7          16.9              185        3150
+##  9 Adelie  Biscoe           35.5          16.2              195        3350
+## 10 Adelie  Torge~           35.9          16.6              190        3050
+## # ... with 19 more rows, and 2 more variables: sex <chr>, year <int>
+\end{verbatim}
+
+This creates a subset of \texttt{penguins} that only includes observation where \texttt{bill\_length\_mm} is less than 36 \textbf{or} (\texttt{\textbar{}}) greater than 54. This creates a subset of the data associated with the more `extreme' values of bill length (unusually small or large).
+
+We're not limited to using relational and logical operators when working with \texttt{filter}. The conditions specified in the \texttt{filter} function can be any expression that returns a logical vector. The only constraint is that the output vector's length has to equal its input's length, or be a single logical values (\texttt{TRUE} or \texttt{FALSE}).
+
+Here's an example. The \textbf{dplyr} \texttt{between} function is used to determine whether the values of a numeric vector fall in a specified range. It has three arguments: the numeric vector to filter on and the lower and upper and boundary values. For example:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{filter}\NormalTok{(penguins, }\FunctionTok{between}\NormalTok{(bill\_length\_mm, }\DecValTok{36}\NormalTok{, }\DecValTok{54}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 313 x 8
+##    species island bill_length_mm bill_depth_mm flipper_length_~ body_mass_g
+##    <chr>   <chr>           <dbl>         <dbl>            <int>       <int>
+##  1 Adelie  Torge~           39.1          18.7              181        3750
+##  2 Adelie  Torge~           39.5          17.4              186        3800
+##  3 Adelie  Torge~           40.3          18                195        3250
+##  4 Adelie  Torge~           36.7          19.3              193        3450
+##  5 Adelie  Torge~           39.3          20.6              190        3650
+##  6 Adelie  Torge~           38.9          17.8              181        3625
+##  7 Adelie  Torge~           39.2          19.6              195        4675
+##  8 Adelie  Torge~           42            20.2              190        4250
+##  9 Adelie  Torge~           37.8          17.1              186        3300
+## 10 Adelie  Torge~           37.8          17.3              180        3700
+## # ... with 303 more rows, and 2 more variables: sex <chr>, year <int>
+\end{verbatim}
+
+\hypertarget{reordering-observations-with-arrange}{%
+\section{\texorpdfstring{Reordering observations with \texttt{arrange}}{Reordering observations with arrange}}\label{reordering-observations-with-arrange}}
+
+We use \texttt{arrange} to \textbf{reorder the rows} of a data frame or tibble. Basic usage of \texttt{arrange} looks like this:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{arrange}\NormalTok{(}\SpecialCharTok{\textless{}}\NormalTok{data}\SpecialCharTok{\textgreater{}}\NormalTok{, }\SpecialCharTok{\textless{}}\NormalTok{variable}\DecValTok{{-}1}\SpecialCharTok{\textgreater{}}\NormalTok{, }\SpecialCharTok{\textless{}}\NormalTok{variable}\DecValTok{{-}2}\SpecialCharTok{\textgreater{}}\NormalTok{, ...)}
+\end{Highlighting}
+\end{Shaded}
+
+Yes, this is pseudocode. As always, the first argument, \texttt{\textless{}data\textgreater{}}, is the name of the object containing our data. We then include a series of one or more additional arguments, where each of these is the name of a variable in \texttt{\textless{}data\textgreater{}}: \texttt{\textless{}variable-1\textgreater{}} and \texttt{\textless{}variable-2\textgreater{}} are names of the first two ordering variables, and the \texttt{...} is acting as a placeholder for the remaining variables.
+
+To see \texttt{arrange} in action, let's construct a new version of \texttt{penguins} where the rows have been reordered first by \texttt{flipper\_length\_mm}, and then by \texttt{body\_mass\_g}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{arrange}\NormalTok{(penguins, flipper\_length\_mm, body\_mass\_g)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 344 x 8
+##    species island bill_length_mm bill_depth_mm flipper_length_~ body_mass_g
+##    <chr>   <chr>           <dbl>         <dbl>            <int>       <int>
+##  1 Adelie  Biscoe           37.9          18.6              172        3150
+##  2 Adelie  Biscoe           37.8          18.3              174        3400
+##  3 Adelie  Torge~           40.2          17                176        3450
+##  4 Adelie  Dream            33.1          16.1              178        2900
+##  5 Adelie  Dream            39.5          16.7              178        3250
+##  6 Chinst~ Dream            46.1          18.2              178        3250
+##  7 Adelie  Dream            37.2          18.1              178        3900
+##  8 Adelie  Dream            37.5          18.9              179        2975
+##  9 Adelie  Dream            42.2          18.5              180        3550
+## 10 Adelie  Biscoe           37.7          18.7              180        3600
+## # ... with 334 more rows, and 2 more variables: sex <chr>, year <int>
+\end{verbatim}
+
+This creates a new version of \texttt{penguins} where the rows are sorted according to the values of by \texttt{flipper\_length\_mm} and \texttt{body\_mass\_g} in ascending order -- i.e.~from smallest to largest. Look at the cases where flipper length is 178 mm. What do these show? Since \texttt{flipper\_length\_mm} was placed before \texttt{body\_mass\_g} in the arguments, the values of \texttt{body\_mass\_g} are only used to break ties within any particular value of \texttt{flipper\_length\_mm}.
+
+For the sake of avoiding doubt about how \texttt{arrange} works, we will quickly review its behaviour. It works the same as every other \textbf{dplyr} verb we have looked at:
+
+\begin{itemize}
+\tightlist
+\item
+  The variable names used as arguments of \texttt{arrange} are not surrounded by quotes.
+\item
+  The \texttt{arrange} function did not change the original \texttt{penguins} in any way.
+\item
+  The \texttt{arrange} function will return the same kind of data object it is working on.
+\end{itemize}
+
+\texttt{arrange} sorts variables in ascending order by default. If we need it to sort a variable in descending order, we wrap the variable name in the \textbf{dplyr} \texttt{desc} function:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{arrange}\NormalTok{(penguins, flipper\_length\_mm, }\FunctionTok{desc}\NormalTok{(body\_mass\_g))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 344 x 8
+##    species island bill_length_mm bill_depth_mm flipper_length_~ body_mass_g
+##    <chr>   <chr>           <dbl>         <dbl>            <int>       <int>
+##  1 Adelie  Biscoe           37.9          18.6              172        3150
+##  2 Adelie  Biscoe           37.8          18.3              174        3400
+##  3 Adelie  Torge~           40.2          17                176        3450
+##  4 Adelie  Dream            37.2          18.1              178        3900
+##  5 Adelie  Dream            39.5          16.7              178        3250
+##  6 Chinst~ Dream            46.1          18.2              178        3250
+##  7 Adelie  Dream            33.1          16.1              178        2900
+##  8 Adelie  Dream            37.5          18.9              179        2975
+##  9 Adelie  Biscoe           40.5          18.9              180        3950
+## 10 Adelie  Biscoe           38.8          17.2              180        3800
+## # ... with 334 more rows, and 2 more variables: sex <chr>, year <int>
+\end{verbatim}
+
+This creates a new version of \texttt{penguins} where the rows are sorted according to the values of \texttt{flipper\_length\_mm} and \texttt{body\_mass\_g}, in ascending and descending order, respectively. Look carefully at the values in the \texttt{flipper\_length\_mm} and \texttt{body\_mass\_g} columns to see the difference between this example and the previous one.
+
+\hypertarget{grouping-and-summarising-data}{%
+\chapter{Grouping and summarising data}\label{grouping-and-summarising-data}}
+
+This chapter will explore the \texttt{summarise} and \texttt{group\_by} verbs. We consider together because they are often used in combination. Their usage is also a bit different from the other \textbf{dplyr} verbs we've encountered. Here's a quick summary of what they do:
+
+\begin{itemize}
+\item
+  The \texttt{group\_by} function adds information to its input (a data frame or tibble), which makes subsequent calculations happen on a group-specific basis.
+\item
+  The \texttt{summarise} function is a data reduction function that calculates single-number summaries of one or more variables, respecting the group structure if present.
+\end{itemize}
+
+We illustrate these ideas using the Paler penguins data set, which we assume has been read into a tibble called \texttt{peguins}.
+
+\hypertarget{summarising-variables-with-summarise}{%
+\section{\texorpdfstring{Summarising variables with \texttt{summarise}}{Summarising variables with summarise}}\label{summarising-variables-with-summarise}}
+
+We use \texttt{summarise} to \textbf{calculate summaries of variables} in an object containing our data. We do this kind of calculation all the time when analysing data. In terms of pseudo-code, usage of \texttt{summarise} looks like this:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{summarise}\NormalTok{(}\SpecialCharTok{\textless{}}\NormalTok{data}\SpecialCharTok{\textgreater{}}\NormalTok{, }\SpecialCharTok{\textless{}}\NormalTok{expression1}\SpecialCharTok{\textgreater{}}\NormalTok{, }\SpecialCharTok{\textless{}}\NormalTok{expression2}\SpecialCharTok{\textgreater{}}\NormalTok{, ...)}
+\end{Highlighting}
+\end{Shaded}
+
+The first argument, \texttt{\textless{}data\textgreater{}}, must be the name of the data frame or tibble containing our data. We then include a series of one or more additional arguments; each of these is a valid R expression involving at least one variable in \texttt{\textless{}data\textgreater{}}. These are given by the pseudo-code placeholder \texttt{\textless{}expression1\textgreater{},\ \textless{}expression2\textgreater{},\ ...}, where \texttt{\textless{}expression1\textgreater{}} and \texttt{\textless{}expression2\textgreater{}} represent the first two expressions, and the \texttt{...} is acting as placeholder for the remaining expressions. These expressions can be any calculation involving R functions that returns a vector of some kind.
+
+The \texttt{summarise} function seems to work a lot like \texttt{mutate}. The main difference is that the expressions \texttt{mutate} uses have to all return a vector of the same length as their inputs. In contrast, \texttt{summarise} expressions used all have to produce the same length output, but those outputs can be any length. They often return a single value because they are \textbf{summarising} the data in some way, but they don't have to.
+
+The \texttt{summarise} verb is best understood by example. The \textbf{dplyr} function \texttt{n\_distinct} takes a calculates the number of distinct (i.e.~unique) cases in a vector. We can use \texttt{n\_distinct} with \texttt{summarise} to calculate the number of unique vales of the \texttt{bill\_length\_mm} and \texttt{bill\_depth\_mm} variables like this:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{summarise}\NormalTok{(penguins, }\FunctionTok{n\_distinct}\NormalTok{(bill\_length\_mm), }\FunctionTok{n\_distinct}\NormalTok{(bill\_depth\_mm))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 1 x 2
+##   `n_distinct(bill_length_mm)` `n_distinct(bill_depth_mm)`
+##                          <int>                       <int>
+## 1                          165                          81
+\end{verbatim}
+
+Notice what kind of object \texttt{summarise} returns---it's a tibble with one row and two columns: two columns because we calculated two counts, and one row containing because we only one set of counts. There are a few other things to note about how \texttt{summarise} works:
+
+\begin{itemize}
+\tightlist
+\item
+  The expression that performs each calculation is not surrounded by quotes because it's an expression that it `does a calculation'.
+\item
+  The order of the columns in the output is the same as the order in which they were created in the \texttt{\textless{}expression1\textgreater{},\ \textless{}expression2\textgreater{},\ ...} list.
+\item
+  \texttt{summarise} returns the same kind of data object as its input---it returns a data frame if our data was originally in a data frame, or a tibble if it was in a tibble.
+\item
+  If we don't specify a name \texttt{summarise} uses the actual R expression to name the columns of its output (e.g.~\texttt{n\_distinct(bill\_length\_mm)}\textbf{)}
+\end{itemize}
+
+Variable names based on the calculation (e.g.~\texttt{n\_distinct(bill\_length\_mm)}) are not ideal because they are long and contain special reserved characters like \texttt{(}. This makes it difficult refer to columns in the output because we have to remember to place back ticks (\texttt{\textasciigrave{}}) around their name whenever we want to refer to them.
+
+Fortunately, the \texttt{summarise} function can name the new variables at the same time as they are created (just like \texttt{mutate}). We do this by naming the arguments using \texttt{=}, placing the name we require on the left hand side. For example:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{summarise}\NormalTok{(penguins, }
+          \AttributeTok{n\_bill\_length =} \FunctionTok{n\_distinct}\NormalTok{(bill\_length\_mm), }
+          \AttributeTok{n\_bill\_depth  =} \FunctionTok{n\_distinct}\NormalTok{(bill\_depth\_mm))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 1 x 2
+##   n_bill_length n_bill_depth
+##           <int>        <int>
+## 1           165           81
+\end{verbatim}
+
+This time we end up with summary data set that has reasonable column names. Notice how we organised that example---we placed each calculation on a new line. We don't have to do this, but since R doesn't care about white space, we can use newlines and spaces to keep everything more human-readable. It pays to organise \texttt{summarise} calculations like this when they become longer.
+
+\hypertarget{more-complicated-calculations-with-summarise}{%
+\subsection{\texorpdfstring{More complicated calculations with \texttt{summarise}}{More complicated calculations with summarise}}\label{more-complicated-calculations-with-summarise}}
+
+Many useful base R functions can be used with \texttt{summarise}. Of particular value are those that calculate various summaries of numeric variables are, such as:
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{min} and \texttt{max} calculate the minimum and maximum values,
+\item
+  \texttt{mean} and \texttt{median} calculate the mean and median, and
+\item
+  \texttt{sd} and \texttt{var} calculate the standard deviation and variance.
+\end{itemize}
+
+We do need to pay attention when using base R functions with \textbf{dplyr}. Take a look at this attempt to use summarise to calculate the mean of \texttt{bill\_length\_mm} and \texttt{bill\_length\_mm}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{summarise}\NormalTok{(penguins, }
+          \AttributeTok{n\_bill\_length =} \FunctionTok{mean}\NormalTok{(bill\_length\_mm), }
+          \AttributeTok{n\_bill\_depth  =} \FunctionTok{mean}\NormalTok{(bill\_depth\_mm))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 1 x 2
+##   n_bill_length n_bill_depth
+##           <dbl>        <dbl>
+## 1            NA           NA
+\end{verbatim}
+
+No numbers---just a pair of \texttt{NA}s. We forgot about the presence of missing values in the \texttt{penguins} data. Both \texttt{bill\_length\_mm} and \texttt{bill\_depth\_mm} contain missing values. When the \texttt{mean} function encounters even one missing value in its input its default behaviour is to spit out \texttt{NA}. It is possible to change that behaviour by setting the \texttt{na.rm} argument of \texttt{mean}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{summarise}\NormalTok{(penguins, }
+          \AttributeTok{n\_bill\_length =} \FunctionTok{mean}\NormalTok{(bill\_length\_mm, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{), }
+          \AttributeTok{n\_bill\_depth  =} \FunctionTok{mean}\NormalTok{(bill\_depth\_mm,  }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 1 x 2
+##   n_bill_length n_bill_depth
+##           <dbl>        <dbl>
+## 1          43.9         17.2
+\end{verbatim}
+
+This example demonstrates something important---the functions we use within \texttt{summarise} often have their own arguments, and we sometimes need to set those arguments to perform the calculation we want.
+
+Almost any R code can be used as \texttt{summarise} expressions. This means we can combine more than one function to build up arbitrarily complicated calculations. For example, if we need to know the ratio of the mean bill length and mean bill width in \texttt{penguins}, we would use:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{summarise}\NormalTok{(penguins,}
+  \AttributeTok{ratio =} \FunctionTok{mean}\NormalTok{(bill\_length\_mm, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{) }\SpecialCharTok{/} \FunctionTok{mean}\NormalTok{(bill\_depth\_mm,  }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 1 x 1
+##   ratio
+##   <dbl>
+## 1  2.56
+\end{verbatim}
+
+The ability to work with arbitrary expressions makes \texttt{summarise} (and \texttt{mutate}) very powerful.
+
+\hypertarget{grouped-operations-using-group_by}{%
+\section{\texorpdfstring{Grouped operations using \texttt{group\_by}}{Grouped operations using group\_by}}\label{grouped-operations-using-group_by}}
+
+Performing a calculation with one or more variables using the whole data set can be useful. However, we often need to carry out calculations on different subsets of our data. For example, it's more useful to know how the mean bill length and depth vary among the different species in the \texttt{penguins} data set, rather than knowing the overall mean of these traits. We could calculate separate means by using \texttt{filter} to create different subsets of \texttt{penguins}, and then use \texttt{summary} on each of these to calculate the means. This would get the job done, but it's inefficient and quickly becomes tiresome if we have to work with many groups.
+
+The \texttt{group\_by} function provides an elegant solution to this kind of problem. All the \texttt{group\_by} function does is add a bit of information to a tibble or data frame. In effect, it defines subsets of data based on one or more \textbf{grouping variables}. That's all it does.
+
+The magic happens when the grouped object is used with a \textbf{dplyr} verb like \texttt{summarise} or \texttt{mutate}. Once a the data has been tagged with grouping information, operations that involve \textbf{dplyr} verbs are carried out on separate subsets of the data---defined by the values of the grouping variable(s)---and then combined.
+
+Basic usage of \texttt{group\_by} looks like this:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{group\_by}\NormalTok{(}\SpecialCharTok{\textless{}}\NormalTok{data}\SpecialCharTok{\textgreater{}}\NormalTok{, }\SpecialCharTok{\textless{}}\NormalTok{variable}\DecValTok{{-}1}\SpecialCharTok{\textgreater{}}\NormalTok{, }\SpecialCharTok{\textless{}}\NormalTok{variable}\DecValTok{{-}2}\SpecialCharTok{\textgreater{}}\NormalTok{, ...)}
+\end{Highlighting}
+\end{Shaded}
+
+The first argument, \texttt{\textless{}data\textgreater{}}, must be the name of the object containing our data. We then have to include one or more additional arguments, where each one is the name of a variable in \texttt{\textless{}data\textgreater{}}. We have expressed this as \texttt{\textless{}variable-1\textgreater{},\ \textless{}variable-2\textgreater{},\ ...}, where \texttt{\textless{}variable-1\textgreater{}} and \texttt{\textless{}variable-2\textgreater{}} are names of the first two variables, and the \texttt{...} is acting as a placeholder for the remaining variables.
+
+We'll illustrate \texttt{group\_by} by using it alongside \texttt{summarise}. We're aiming to calculate the mean bill length for each species in \texttt{penguins}. This is a two-step process. The first step uses \texttt{group\_by} to add grouping information to \texttt{penguins}. Take a look at what we end up with when we do that:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{group\_by}\NormalTok{(penguins, species)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 344 x 8
+## # Groups:   species [3]
+##    species island bill_length_mm bill_depth_mm flipper_length_~ body_mass_g
+##    <chr>   <chr>           <dbl>         <dbl>            <int>       <int>
+##  1 Adelie  Torge~           39.1          18.7              181        3750
+##  2 Adelie  Torge~           39.5          17.4              186        3800
+##  3 Adelie  Torge~           40.3          18                195        3250
+##  4 Adelie  Torge~           NA            NA                 NA          NA
+##  5 Adelie  Torge~           36.7          19.3              193        3450
+##  6 Adelie  Torge~           39.3          20.6              190        3650
+##  7 Adelie  Torge~           38.9          17.8              181        3625
+##  8 Adelie  Torge~           39.2          19.6              195        4675
+##  9 Adelie  Torge~           34.1          18.1              193        3475
+## 10 Adelie  Torge~           42            20.2              190        4250
+## # ... with 334 more rows, and 2 more variables: sex <chr>, year <int>
+\end{verbatim}
+
+Compare this to the output produced when we print the original \texttt{penguins} data set:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{penguins}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 344 x 8
+##    species island bill_length_mm bill_depth_mm flipper_length_~ body_mass_g
+##    <chr>   <chr>           <dbl>         <dbl>            <int>       <int>
+##  1 Adelie  Torge~           39.1          18.7              181        3750
+##  2 Adelie  Torge~           39.5          17.4              186        3800
+##  3 Adelie  Torge~           40.3          18                195        3250
+##  4 Adelie  Torge~           NA            NA                 NA          NA
+##  5 Adelie  Torge~           36.7          19.3              193        3450
+##  6 Adelie  Torge~           39.3          20.6              190        3650
+##  7 Adelie  Torge~           38.9          17.8              181        3625
+##  8 Adelie  Torge~           39.2          19.6              195        4675
+##  9 Adelie  Torge~           34.1          18.1              193        3475
+## 10 Adelie  Torge~           42            20.2              190        4250
+## # ... with 334 more rows, and 2 more variables: sex <chr>, year <int>
+\end{verbatim}
+
+There is very little difference---\texttt{group\_by} really doesn't do much on its own. The main change is that printing the tibble resulting from the \texttt{group\_by} operation shows a bit of additional information at the top: \texttt{Groups:\ species\ {[}3{]}}. This tells us that the tibble is now grouped by the \texttt{species} variable. The \texttt{{[}3{]}} part tells us that there are three different groups (i.e.~species of penguin). The \textbf{only} thing \texttt{group\_by} did was add this grouping information to a copy of \texttt{penguins}.
+
+The original \texttt{penguins} object was not altered in any way. If we want to do anything useful with the grouped tibble we need to assign it a name so that we can work with it:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{penguins\_by\_species }\OtherTok{\textless{}{-}} \FunctionTok{group\_by}\NormalTok{(penguins, species)}
+\end{Highlighting}
+\end{Shaded}
+
+Now we have a grouped tibble called \texttt{penguins\_by\_species} in which the value of \texttt{species} define the different groups---any row where \texttt{species} is equal to `Adelie' is assigned to the first group, any row where \texttt{species} is equal to `Chinstrap' is assigned to a second group, and any row where \texttt{species} is equal to `Gentoo' is assigned to a third group.
+
+\textbf{dplyr} operations on this tibble will now be performed on a `by group' basis. To see this in action, we use \texttt{summarise} to calculate the mean bill length:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{summarise}\NormalTok{(penguins\_by\_species, }
+          \AttributeTok{mean\_bill\_length =} \FunctionTok{mean}\NormalTok{(bill\_length\_mm, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## `summarise()` ungrouping output (override with `.groups` argument)
+\end{verbatim}
+
+\begin{verbatim}
+## # A tibble: 3 x 2
+##   species   mean_bill_length
+##   <chr>                <dbl>
+## 1 Adelie                38.8
+## 2 Chinstrap             48.8
+## 3 Gentoo                47.5
+\end{verbatim}
+
+This is part two of the two-step process mentioned above. When we used \texttt{summarise} on an ungrouped object, the result was a tibble with one row---the overall global mean. Now the resulting tibble has three rows, one for each species in the data set. The \texttt{mean\_bill\_length} column shows the mean bill lengths for each species. The \texttt{species} column tells us what species each mean belongs to. Notice that \texttt{summarise} also printed an (un)helpful message:
+
+\begin{verbatim}
+`summarise()` ungrouping output (override with `.groups` argument)
+\end{verbatim}
+
+There's no need to worry about this. It is simply saying that \texttt{summarise} has removed the grouping information from the resulting tibble.
+
+We can also carry out multiple calculations with grouped data if we need to. For example, if we need to calculate the mean bill length and mean bill depth for each species, we would use the grouped version of \texttt{penguins} like this:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{summarise}\NormalTok{(penguins\_by\_species, }
+          \AttributeTok{mean\_bill\_length =} \FunctionTok{mean}\NormalTok{(bill\_length\_mm, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{),}
+          \AttributeTok{mean\_bill\_depth  =} \FunctionTok{mean}\NormalTok{(bill\_depth\_mm,  }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## `summarise()` ungrouping output (override with `.groups` argument)
+\end{verbatim}
+
+\begin{verbatim}
+## # A tibble: 3 x 3
+##   species   mean_bill_length mean_bill_depth
+##   <chr>                <dbl>           <dbl>
+## 1 Adelie                38.8            18.3
+## 2 Chinstrap             48.8            18.4
+## 3 Gentoo                47.5            15.0
+\end{verbatim}
+
+\hypertarget{more-than-one-grouping-variable}{%
+\subsection{More than one grouping variable}\label{more-than-one-grouping-variable}}
+
+What if we need to calculate summaries using more than one grouping variable? The workflow is unchanged. Assume we need to know the mean body mass of males and females of each penguin species. First, we make a grouped copy of \texttt{penguins} using the appropriate grouping variables:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{penguins\_by\_species\_sex }\OtherTok{\textless{}{-}} \FunctionTok{group\_by}\NormalTok{(penguins, species, sex)}
+\end{Highlighting}
+\end{Shaded}
+
+We called the grouped tibble \texttt{penguins\_by\_species\_sex}. Look at what happens when we print this:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{penguins\_by\_species\_sex}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 344 x 8
+## # Groups:   species, sex [8]
+##    species island bill_length_mm bill_depth_mm flipper_length_~ body_mass_g
+##    <chr>   <chr>           <dbl>         <dbl>            <int>       <int>
+##  1 Adelie  Torge~           39.1          18.7              181        3750
+##  2 Adelie  Torge~           39.5          17.4              186        3800
+##  3 Adelie  Torge~           40.3          18                195        3250
+##  4 Adelie  Torge~           NA            NA                 NA          NA
+##  5 Adelie  Torge~           36.7          19.3              193        3450
+##  6 Adelie  Torge~           39.3          20.6              190        3650
+##  7 Adelie  Torge~           38.9          17.8              181        3625
+##  8 Adelie  Torge~           39.2          19.6              195        4675
+##  9 Adelie  Torge~           34.1          18.1              193        3475
+## 10 Adelie  Torge~           42            20.2              190        4250
+## # ... with 334 more rows, and 2 more variables: sex <chr>, year <int>
+\end{verbatim}
+
+We see \texttt{Groups:\ species,\ sex\ {[}8{]}} near the top, which tells us that the tibble is grouped by two variables (\texttt{species} and \texttt{sex}) with eight unique combinations of values. That seems odd at first---there are three species and two sexes represented in this dataset, which gives six possible combinations at most.
+
+The reason for the discrepancy becomes clear when we move on to calculate the mean body mass for each sex-species combination:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{summarise}\NormalTok{(penguins\_by\_species\_sex, }
+          \AttributeTok{body\_mass\_g =} \FunctionTok{mean}\NormalTok{(body\_mass\_g, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## `summarise()` regrouping output by 'species' (override with `.groups` argument)
+\end{verbatim}
+
+\begin{verbatim}
+## # A tibble: 8 x 3
+## # Groups:   species [3]
+##   species   sex    body_mass_g
+##   <chr>     <chr>        <dbl>
+## 1 Adelie    female       3369.
+## 2 Adelie    male         4043.
+## 3 Adelie    <NA>         3540 
+## 4 Chinstrap female       3527.
+## 5 Chinstrap male         3939.
+## 6 Gentoo    female       4680.
+## 7 Gentoo    male         5485.
+## 8 Gentoo    <NA>         4588.
+\end{verbatim}
+
+This shows mean body mass for each unique combination of \texttt{species} and \texttt{sex}. The first line shows that the mean body mass associated with female Adelie penguins is 3369; the second line shows us the mean body mass associated with male Adelie penguins is 4043. The third line shows us the mean body mass of Adelie penguins where \textbf{sex is missing} (\texttt{NA}). That explains why we ended up with more groups than unique combinations of \texttt{species} and \texttt{sex} --- missing values create extra groups.
+
+\hypertarget{using-group_by-with-other-verbs}{%
+\subsection{\texorpdfstring{Using \texttt{group\_by} with other verbs}{Using group\_by with other verbs}}\label{using-group_by-with-other-verbs}}
+
+The \texttt{summarise} function is the \textbf{dplyr} verb that is most often used with grouped data. However, all the main \textbf{dplyr} verbs will alter their behaviour to respect group information when it is present. For example, when \texttt{mutate} or \texttt{transmute} are used with a grouped object the calculation of new variables occur ``by group''. Here's an example:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# create a data set \textquotesingle{}mean centred\textquotesingle{} bill length variable}
+\FunctionTok{transmute}\NormalTok{(penguins\_by\_species\_sex,}
+          \AttributeTok{body\_mass\_cen =}\NormalTok{ body\_mass\_g }\SpecialCharTok{{-}} \FunctionTok{mean}\NormalTok{(body\_mass\_g, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 344 x 3
+## # Groups:   species, sex [8]
+##    species sex    body_mass_cen
+##    <chr>   <chr>          <dbl>
+##  1 Adelie  male          -293. 
+##  2 Adelie  female         431. 
+##  3 Adelie  female        -119. 
+##  4 Adelie  <NA>            NA  
+##  5 Adelie  female          81.2
+##  6 Adelie  male          -393. 
+##  7 Adelie  female         256. 
+##  8 Adelie  male           632. 
+##  9 Adelie  <NA>           -65  
+## 10 Adelie  <NA>           710  
+## # ... with 334 more rows
+\end{verbatim}
+
+This calculated a standardised measure of body mass. The new \texttt{body\_mass\_cen} variable contains the difference between the original body mass and its mean in the appropriate species-sex group (rather than the overall mean).
+
+\hypertarget{removing-grouping-information}{%
+\section{Removing grouping information}\label{removing-grouping-information}}
+
+On occasion, it's necessary to remove grouping information and revert to operating on the whole data set. The \texttt{ungroup} function removes grouping information:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ungroup}\NormalTok{(penguins\_by\_species)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 344 x 8
+##    species island bill_length_mm bill_depth_mm flipper_length_~ body_mass_g
+##    <chr>   <chr>           <dbl>         <dbl>            <int>       <int>
+##  1 Adelie  Torge~           39.1          18.7              181        3750
+##  2 Adelie  Torge~           39.5          17.4              186        3800
+##  3 Adelie  Torge~           40.3          18                195        3250
+##  4 Adelie  Torge~           NA            NA                 NA          NA
+##  5 Adelie  Torge~           36.7          19.3              193        3450
+##  6 Adelie  Torge~           39.3          20.6              190        3650
+##  7 Adelie  Torge~           38.9          17.8              181        3625
+##  8 Adelie  Torge~           39.2          19.6              195        4675
+##  9 Adelie  Torge~           34.1          18.1              193        3475
+## 10 Adelie  Torge~           42            20.2              190        4250
+## # ... with 334 more rows, and 2 more variables: sex <chr>, year <int>
+\end{verbatim}
+
+Looking at the top right of the printed summary, we can see that the \texttt{Group:} part is now gone---the \texttt{ungroup} function effectively recreated the original \texttt{penguins} tibble.
+
+\hypertarget{building-pipelines}{%
+\chapter{Building pipelines}\label{building-pipelines}}
+
+We don't often use the various \textbf{dplyr} verbs in isolation. Instead, they are combined in a sequence to prepare the data for further analysis. For example, we might create a new variable or two with \texttt{mutate} and then use \texttt{group\_by} and \texttt{summarise} to calculate some numerical summaries. This chapter will introduce something called the pipe operator: \texttt{\%\textgreater{}\%}. The pipe operator's job is to allow us to represent a sequence of such steps in a transparent, readable manner.
+
+\hypertarget{why-do-we-need-pipes}{%
+\section{Why do we need `pipes'?}\label{why-do-we-need-pipes}}
+
+We've seen that carrying out calculations on a per-group basis can be achieved by grouping a tibble, assigning this a name, and then applying the \texttt{summarise} function to the new tibble. For example, in the previous chapter we saw that to calculate the mean bill length for each species in the Palmer penguins data set, \texttt{penguins}, we first create a grouped version of it:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{penguins\_by\_species }\OtherTok{\textless{}{-}} \FunctionTok{group\_by}\NormalTok{(penguins, species)}
+\end{Highlighting}
+\end{Shaded}
+
+Then we use \texttt{summarise} with the grouped version to calculate the mean bill length in each group:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{summarise}\NormalTok{(penguins\_by\_species, }
+          \AttributeTok{mean\_bill\_length =} \FunctionTok{mean}\NormalTok{(bill\_length\_mm, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## `summarise()` ungrouping output (override with `.groups` argument)
+\end{verbatim}
+
+\begin{verbatim}
+## # A tibble: 3 x 2
+##   species   mean_bill_length
+##   <chr>                <dbl>
+## 1 Adelie                38.8
+## 2 Chinstrap             48.8
+## 3 Gentoo                47.5
+\end{verbatim}
+
+There's nothing wrong with this way of doing things. However, building up an analysis this was is quite lengthy because we have to keep storing intermediate steps. This is especially true if an analysis involves more than a couple of steps. It also tends to clutter the global environment with many intermediate objects we don't need to keep.
+
+One way to make things more concise is to use \protect\hyperlink{combining-functions}{function nesting}, like this:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{summarise}\NormalTok{(}\FunctionTok{group\_by}\NormalTok{(penguins, species), }
+          \AttributeTok{mean\_bill\_length =} \FunctionTok{mean}\NormalTok{(bill\_length\_mm, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## `summarise()` ungrouping output (override with `.groups` argument)
+\end{verbatim}
+
+\begin{verbatim}
+## # A tibble: 3 x 2
+##   species   mean_bill_length
+##   <chr>                <dbl>
+## 1 Adelie                38.8
+## 2 Chinstrap             48.8
+## 3 Gentoo                47.5
+\end{verbatim}
+
+In this version, we placed the \texttt{group\_by} function call inside the list of arguments to \texttt{summarise}. Remember---we have to read nested function calls from the inside out to understand what they are doing. This is exactly equivalent to the previous example, but now we get the result without having to store intermediate data.
+
+However, there are a couple of very good reasons why this approach is not advised:
+
+\begin{itemize}
+\item
+  Experienced R users might not mind this approach because they're used to it. Nonetheless, no reasonable person would argue that nesting functions inside one another is intuitive. Reading outward from the inside of a large number of nested functions is hard work.
+\item
+  Using function nesting is an error-prone approach. For example, it's very easy to accidentally put an argument on the wrong side of a closing \texttt{)}. If we're lucky, this will produce an error and we'll catch the problem. If we're not, we may end up with complete nonsense in the output.
+\end{itemize}
+
+\hypertarget{using-pipes}{%
+\section{\texorpdfstring{Using pipes (\texttt{\%\textgreater{}\%})}{Using pipes (\%\textgreater\%)}}\label{using-pipes}}
+
+There is a better way to combing \textbf{dplyr} functions, which has the dual benefit of keeping our code concise and readable while avoiding the need to clutter the global environment with intermediate objects. This third approach involves the `pipe operator': \texttt{\%\textgreater{}\%}. Notice there are no spaces between the three characters that make up the pipe---spaces are not allowed (e.g.~\texttt{\%\ \textgreater{}\ \%} will not be recognised as the pipe).
+
+The pipe operator isn't part of base R. Instead, \textbf{dplyr} imports it from another package and makes it available for us to use.
+
+The pipe has become very popular in recent years. The main reason for this is because it allows us to specify a chain of function calls in a (reasonably) human readable format. Here's how we write the previous example using the pipe operator \texttt{\%\textgreater{}\%}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{penguins }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{group\_by}\NormalTok{(., species) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{summarise}\NormalTok{(., }\AttributeTok{mean\_bill\_length =} \FunctionTok{mean}\NormalTok{(bill\_length\_mm, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## `summarise()` ungrouping output (override with `.groups` argument)
+\end{verbatim}
+
+\begin{verbatim}
+## # A tibble: 3 x 2
+##   species   mean_bill_length
+##   <chr>                <dbl>
+## 1 Adelie                38.8
+## 2 Chinstrap             48.8
+## 3 Gentoo                47.5
+\end{verbatim}
+
+How do we make sense of this? Every time we see the \texttt{\%\textgreater{}\%} operator it means the following: take whatever is produced by the left-hand expression and use it as an argument in the function on the right-hand side. The \texttt{.} serves as a placeholder for the location of the corresponding argument. A sequence of calculations can then be read from left to right, just as we would read the words in a book. This example says, take the \texttt{penguins} data, group it by \texttt{species}, then take that grouped tibble and apply the \texttt{summarise} function to it to calculate the mean of \texttt{mean\_bill\_length}.
+
+This is exactly the same calculation we did above.
+
+When using the pipe operator we can often leave out the \texttt{.} placeholder. Remember, this signifies the argument of the function on the right of \texttt{\%\textgreater{}\%} that is associated with the result from the left of \texttt{\%\textgreater{}\%}. If we choose to leave out the \texttt{.}, the pipe operator assumes we meant to slot it into the first argument. This means we can simplify our example even more:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{penguins }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{group\_by}\NormalTok{(species) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{summarise}\NormalTok{(}\AttributeTok{mean\_bill\_length =} \FunctionTok{mean}\NormalTok{(bill\_length\_mm, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## `summarise()` ungrouping output (override with `.groups` argument)
+\end{verbatim}
+
+\begin{verbatim}
+## # A tibble: 3 x 2
+##   species   mean_bill_length
+##   <chr>                <dbl>
+## 1 Adelie                38.8
+## 2 Chinstrap             48.8
+## 3 Gentoo                47.5
+\end{verbatim}
+
+\textbf{This is why the first argument of a dplyr verb is always the data}. Adopting this convention ensures we can use \texttt{\%\textgreater{}\%} without explicitly specifying the argument to pipe into. Data goes into the pipe; data comes out of the pipe.
+
+Remember, R does not care about white space, which means we can break a piped set of functions over several lines to make our code more readable:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{penguins }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{group\_by}\NormalTok{(species) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{summarise}\NormalTok{(}\AttributeTok{mean\_bill\_length =} \FunctionTok{mean}\NormalTok{(bill\_length\_mm, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## `summarise()` ungrouping output (override with `.groups` argument)
+\end{verbatim}
+
+\begin{verbatim}
+## # A tibble: 3 x 2
+##   species   mean_bill_length
+##   <chr>                <dbl>
+## 1 Adelie                38.8
+## 2 Chinstrap             48.8
+## 3 Gentoo                47.5
+\end{verbatim}
+
+Now each step in the pipeline is on its own line. Most \textbf{dplyr} users use this formatting convention to improve the readability of their R code.
+
+Finally, we do have to remember to assign the result of a chain of piped functions a name if we want to capture the result and use it later. We have to break the left to right rule a bit to do this, placing the assignment at the beginning\footnote{Actually, there is a rightward assignment operator, \texttt{-\textgreater{}}, but let's pretend that does not exist.}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{bill\_length\_means }\OtherTok{\textless{}{-}} 
+\NormalTok{  penguins }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{group\_by}\NormalTok{(species) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{summarise}\NormalTok{(}\AttributeTok{mean\_bill\_length =} \FunctionTok{mean}\NormalTok{(bill\_length\_mm, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## `summarise()` ungrouping output (override with `.groups` argument)
+\end{verbatim}
+
+\begin{infobox}{information}
+
+\hypertarget{why-is-called-the-pipe-operator}{%
+\subsubsection*{\texorpdfstring{Why is \texttt{\%\textgreater{}\%} called the `pipe' operator?}{Why is \%\textgreater\% called the `pipe' operator?}}\label{why-is-called-the-pipe-operator}}
+\addcontentsline{toc}{subsubsection}{Why is \texttt{\%\textgreater{}\%} called the `pipe' operator?}
+
+The \texttt{\%\textgreater{}\%} operator takes the output from one function and ``pipes it'' to another as the input. It's called `the pipe' for the simple reason that it allows us to create an analysis `pipeline' from a series of function calls. Incidentally, if you Google the phrase ``magrittr pipe'' you'll see why \textbf{magrittr} is a clever name for an R package.
+
+\end{infobox}
+
+One final piece of advice---make an effort to learn how to use the \texttt{\%\textgreater{}\%} method of piping together functions. Why? Because it's the simplest and cleanest method for doing this, many of the examples in the \textbf{dplyr} help files and on the web use it, and the majority of people carrying out real-world data wrangling with \textbf{dplyr} rely on piping.
+
+\hypertarget{helper-functions}{%
+\chapter{Helper functions}\label{helper-functions}}
+
+\hypertarget{introduction-5}{%
+\section{Introduction}\label{introduction-5}}
+
+In addition to the main \textbf{dplyr} verbs, the package provides quite a few \textbf{helper functions}. Helper functions are used in conjunction with the main verbs to make specific tasks and calculations a bit easier. Many of these are summarised in the \textbf{dplyr} \href{https://github.com/rstudio/cheatsheets/raw/master/data-transformation.pdf}{cheat sheat} (under \emph{Manipulate Variables}, \emph{Vector Functions} and \emph{Summary Functions}). We are not going to review every single one of them in this chapter. Instead, we aim to point out where helper functions tend to be used and highlight a few of the more useful ones.
+
+\hypertarget{working-with-select}{%
+\section{\texorpdfstring{Working with \texttt{select}}{Working with select}}\label{working-with-select}}
+
+There are a few helper functions that can be used with \texttt{select}. Their job is to make it easier to match variable names according to various criteria. We'll look at the three simplest of these---look at the examples in the help file for \texttt{select} and the \href{https://github.com/rstudio/cheatsheets/raw/master/data-transformation.pdf}{cheat sheat} to see what else is available.
+
+We can select variables according to the sequence of characters used at the start of their name with the \texttt{starts\_with} function. For example, to select all the variables in \texttt{penguins} that begin with the word ``bill'', we use:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{select}\NormalTok{(penguins, }\FunctionTok{starts\_with}\NormalTok{(}\StringTok{"Bill"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 344 x 2
+##    bill_length_mm bill_depth_mm
+##             <dbl>         <dbl>
+##  1           39.1          18.7
+##  2           39.5          17.4
+##  3           40.3          18  
+##  4           NA            NA  
+##  5           36.7          19.3
+##  6           39.3          20.6
+##  7           38.9          17.8
+##  8           39.2          19.6
+##  9           34.1          18.1
+## 10           42            20.2
+## # ... with 334 more rows
+\end{verbatim}
+
+This returns a tibble containing just \texttt{bill\_length\_mm} and \texttt{bill\_depth\_mm}. There is also a helper function to select variables according to characters used at the end of their name---the \texttt{ends\_with} function (no surprises there).
+
+Notice that we quote the name we want to match against because \texttt{starts\_with} expects a literal character value. This is not optional. Unusually, \texttt{starts\_with} and \texttt{ends\_with} are not case sensitive by default. For example, we passed \texttt{starts\_with} the argument \texttt{"Bill"} instead of \texttt{"bill"}, yet it still selected variables beginning with the character string \texttt{"bill"}. If we want to select variables on a case-sensitive basis, we need to set an argument \texttt{ignore.case} to \texttt{FALSE} in \texttt{starts\_with} and \texttt{ends\_with}.
+
+The last \texttt{select} helper function we'll look at is called \texttt{contains}. This one allows us to select variables based on a partial match \textbf{anywhere} in their name. Look at what happens if we pass \texttt{contains} the argument \texttt{"length"}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{select}\NormalTok{(penguins, }\FunctionTok{contains}\NormalTok{(}\StringTok{"length"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 344 x 2
+##    bill_length_mm flipper_length_mm
+##             <dbl>             <int>
+##  1           39.1               181
+##  2           39.5               186
+##  3           40.3               195
+##  4           NA                  NA
+##  5           36.7               193
+##  6           39.3               190
+##  7           38.9               181
+##  8           39.2               195
+##  9           34.1               193
+## 10           42                 190
+## # ... with 334 more rows
+\end{verbatim}
+
+This selects all the variables with the word `length' in their name.
+
+There is nothing to stop us combining the different variable selection methods. For example, we can use this approach to select all the variables that have some units at the end of their names (millimetres or grams):
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{select}\NormalTok{(penguins, }\FunctionTok{ends\_with}\NormalTok{(}\StringTok{"\_mm"}\NormalTok{), }\FunctionTok{ends\_with}\NormalTok{(}\StringTok{"\_g"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 344 x 4
+##    bill_length_mm bill_depth_mm flipper_length_mm body_mass_g
+##             <dbl>         <dbl>             <int>       <int>
+##  1           39.1          18.7               181        3750
+##  2           39.5          17.4               186        3800
+##  3           40.3          18                 195        3250
+##  4           NA            NA                  NA          NA
+##  5           36.7          19.3               193        3450
+##  6           39.3          20.6               190        3650
+##  7           38.9          17.8               181        3625
+##  8           39.2          19.6               195        4675
+##  9           34.1          18.1               193        3475
+## 10           42            20.2               190        4250
+## # ... with 334 more rows
+\end{verbatim}
+
+When we apply more than one selection criteria like this, the \texttt{select} function returns the variables that match any criteria, rather than the set that meets all of them.
+
+\hypertarget{working-with-mutate-and-transmute}{%
+\section{\texorpdfstring{Working with \texttt{mutate} and \texttt{transmute}}{Working with mutate and transmute}}\label{working-with-mutate-and-transmute}}
+
+There are quite a few \textbf{helper functions} that can be used with \texttt{mutate}. These make it easier to carry out certain calculations that aren't easy to do with base R. We won't explore these here as they tend to be needed only in quite specific circumstances. However, in situations where we need to construct an unusual variable, it's worth looking at that \href{https://github.com/rstudio/cheatsheets/raw/master/data-transformation.pdf}{handy cheat sheat} to see what options might be available.
+
+We will look at one particularly useful helper function that's used a lot when we need to recode a particular variable using \texttt{mutate}. The function is called \texttt{case\_when}. It works by setting up a series of paired matching criteria and replacement values. For example, imagine that we want to replace the names in \texttt{species} with three-letter shortcodes for each species. This is how to achieve that using \texttt{case\_when} with \texttt{mutate}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{penguins }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{species =} \FunctionTok{case\_when}\NormalTok{(}
+\NormalTok{           species }\SpecialCharTok{==} \StringTok{"Adelie"}    \SpecialCharTok{\textasciitilde{}} \StringTok{"ADL"}\NormalTok{,}
+\NormalTok{           species }\SpecialCharTok{==} \StringTok{"Gentoo"}    \SpecialCharTok{\textasciitilde{}} \StringTok{"GEN"}\NormalTok{,}
+\NormalTok{           species }\SpecialCharTok{==} \StringTok{"Chinstrap"} \SpecialCharTok{\textasciitilde{}} \StringTok{"CHN"}\NormalTok{,}
+           \ConstantTok{TRUE} \SpecialCharTok{\textasciitilde{}} \StringTok{"UNKNOWN"}
+\NormalTok{         )) }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 344 x 8
+##    species island bill_length_mm bill_depth_mm flipper_length_~ body_mass_g
+##    <chr>   <chr>           <dbl>         <dbl>            <int>       <int>
+##  1 ADL     Torge~           39.1          18.7              181        3750
+##  2 ADL     Torge~           39.5          17.4              186        3800
+##  3 ADL     Torge~           40.3          18                195        3250
+##  4 ADL     Torge~           NA            NA                 NA          NA
+##  5 ADL     Torge~           36.7          19.3              193        3450
+##  6 ADL     Torge~           39.3          20.6              190        3650
+##  7 ADL     Torge~           38.9          17.8              181        3625
+##  8 ADL     Torge~           39.2          19.6              195        4675
+##  9 ADL     Torge~           34.1          18.1              193        3475
+## 10 ADL     Torge~           42            20.2              190        4250
+## # ... with 334 more rows, and 2 more variables: sex <chr>, year <int>
+\end{verbatim}
+
+The \texttt{mutate} bit of this is not new. Look at the \texttt{case\_when} component---there are four criteria. The first of these is \texttt{species\ ==\ "Adelie"\ \ \ \ \textasciitilde{}\ "ADL"} . The way to read this is, ``look for cases where the value of \texttt{species} is equal to \texttt{"Adelie"}, and where that is true spit out the value \texttt{"ADL"}''. \texttt{case\_when} steps through each criterion like this in turn, trying to find a match. The last one \texttt{TRUE\ \textasciitilde{}\ "UNKNOWN"} acts as a catch-all for the non-matches.
+
+This looks confusing at first but it does make sense with a bit of practise, and recoding variables using \texttt{case\_when} is a lot easier than going through a spreadsheet by hand.
+
+\hypertarget{working-with-filter}{%
+\section{\texorpdfstring{Working with \texttt{filter}}{Working with filter}}\label{working-with-filter}}
+
+There aren't that many \textbf{dplyr} helper function that works with \texttt{filter}. In fact, we've already looked at the most useful one: the \texttt{between} function. This is used to identify cases where the values of a numeric variable lie inside a defined range. For example, if we want all the individuals that had a body mass in the 4-5kg range, we could use:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{filter}\NormalTok{(penguins, }\FunctionTok{between}\NormalTok{(body\_mass\_g, }\DecValTok{4000}\NormalTok{, }\DecValTok{5000}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 116 x 8
+##    species island bill_length_mm bill_depth_mm flipper_length_~ body_mass_g
+##    <chr>   <chr>           <dbl>         <dbl>            <int>       <int>
+##  1 Adelie  Torge~           39.2          19.6              195        4675
+##  2 Adelie  Torge~           42            20.2              190        4250
+##  3 Adelie  Torge~           34.6          21.1              198        4400
+##  4 Adelie  Torge~           42.5          20.7              197        4500
+##  5 Adelie  Torge~           46            21.5              194        4200
+##  6 Adelie  Dream            39.2          21.1              196        4150
+##  7 Adelie  Dream            39.8          19.1              184        4650
+##  8 Adelie  Dream            44.1          19.7              196        4400
+##  9 Adelie  Dream            39.6          18.8              190        4600
+## 10 Adelie  Dream            42.3          21.2              191        4150
+## # ... with 106 more rows, and 2 more variables: sex <chr>, year <int>
+\end{verbatim}
+
+\hypertarget{working-with-summarise}{%
+\section{\texorpdfstring{Working with \texttt{summarise}}{Working with summarise}}\label{working-with-summarise}}
+
+There are a small number \textbf{dplyr} helper functions that can be used with \texttt{summarise}. These generally provide summaries that aren't available directly using base R functions. For example, we've already seen the \texttt{n\_distinct} function in action. This can be used to calculate the number of distinct values of a variable:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{summarise}\NormalTok{(penguins, }
+          \AttributeTok{num\_species =} \FunctionTok{n\_distinct}\NormalTok{(species),}
+          \AttributeTok{num\_island  =} \FunctionTok{n\_distinct}\NormalTok{(island ))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 1 x 2
+##   num_species num_island
+##         <int>      <int>
+## 1           3          3
+\end{verbatim}
+
+This confirms what we already knew---that there are three unique species and three unique islands in the \texttt{penguins} data set.
+
 \hypertarget{data-wrangling-with-dplyr}{%
 \chapter{\texorpdfstring{Data wrangling with \textbf{dplyr}}{Data wrangling with dplyr}}\label{data-wrangling-with-dplyr}}
 
@@ -2414,6 +4240,11 @@ The \texttt{vignette} function is fine, but it is more convenient to browse the 
 \end{Shaded}
 
 This will open a page in our browser showing the vignettes we can view. As usual, we can narrow our options to a specific package by setting the \texttt{package} argument.
+
+\hypertarget{project-scripts-data}{%
+\chapter{Managing projects, scripts and data files}\label{project-scripts-data}}
+
+Content will be added in block three.
 
   \bibliography{book.bib,packages.bib}
 
