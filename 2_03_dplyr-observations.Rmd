@@ -19,7 +19,9 @@ We'll use the Palmer penguins data again to illustrate the ideas in this chapter
 
 ## Relational and logical operators
 
-Most `filter` operations rely on some combination of **relational and logical operators**. Remember these from last year?
+Most `filter` operations rely on some combination of **relational and logical operators**. Relational operators allow us to ask questions like, "are the values of 'x' greater than those of 'y': `x > y`". These sorts of comparisons are used by R to express whether or not a particular condition is met (because they generate a logical vector of TRUE/FALSE values). Logical operators allow us to combine such conditions, thereby building up complex conditions from simpler ones.
+
+This is best understood by example. We'll do that in a moment. For now, simply make a mental note of the different relational and logical operators:
 
 1.  Use **relational operators** to make comparisons between a pair of variables on the basis of conditions like 'less than' or 'equal to':
 
