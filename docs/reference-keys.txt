@@ -80,7 +80,6 @@ working-with-select
 working-with-mutate-and-transmute
 working-with-filter
 working-with-summarise
-data-wrangling-with-dplyr
 exploratory-data-analysis-with-ggplot2
 getting-help
 console-help

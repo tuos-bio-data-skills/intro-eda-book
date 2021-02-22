@@ -1,4 +1,4 @@
-# **Getting ready to use dplyr**
+# Getting ready to use **dplyr**
 
 ```{r, include=FALSE}
 library(dplyr)
