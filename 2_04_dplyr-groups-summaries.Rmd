@@ -1,0 +1,187 @@
+# Grouping and summarising data
+
+This chapter will explore the `summarise` and `group_by` verbs. We consider together because they are often used in combination. Their usage is also a bit different from the other **dplyr** verbs we've encountered. Here's a quick summary of what they do:
+
+-   The `group_by` function adds information to its input (a data frame or tibble), which makes subsequent calculations happen on a group-specific basis.
+
+-   The `summarise` function is a data reduction function that calculates single-number summaries of one or more variables, respecting the group structure if present.
+
+We illustrate these ideas using the Paler penguins data set, which we assume has been read into a tibble called `peguins`.
+
+## Summarising variables with `summarise`
+
+We use `summarise` to **calculate summaries of variables** in an object containing our data. We do this kind of calculation all the time when analysing data. In terms of pseudo-code, usage of `summarise` looks like this:
+
+```{r, eval=FALSE}
+summarise(<data>, <expression1>, <expression2>, ...)
+```
+
+The first argument, `<data>`, must be the name of the data frame or tibble containing our data. We then include a series of one or more additional arguments; each of these is a valid R expression involving at least one variable in `<data>`. These are given by the pseudo-code placeholder `<expression1>, <expression2>, ...`, where `<expression1>` and `<expression2>` represent the first two expressions, and the `...` is acting as placeholder for the remaining expressions. These expressions can be any calculation involving R functions that returns a vector of some kind.
+
+The `summarise` function seems to work a lot like `mutate`. The main difference is that the expressions `mutate` uses have to all return a vector of the same length as their inputs. In contrast, `summarise` expressions used all have to produce the same length output, but those outputs can be any length. They often return a single value because they are **summarising** the data in some way, but they don't have to.
+
+The `summarise` verb is best understood by example. The **dplyr** function `n_distinct` takes a calculates the number of distinct (i.e. unique) cases in a vector. We can use `n_distinct` with `summarise` to calculate the number of unique vales of the `bill_length_mm` and `bill_depth_mm` variables like this:
+
+```{r}
+summarise(penguins, n_distinct(bill_length_mm), n_distinct(bill_depth_mm))
+```
+
+Notice what kind of object `summarise` returns---it's a tibble with one row and two columns: two columns because we calculated two counts, and one row containing because we only one set of counts. There are a few other things to note about how `summarise` works:
+
+-   The expression that performs each calculation is not surrounded by quotes because it's an expression that it 'does a calculation'.
+-   The order of the columns in the output is the same as the order in which they were created in the `<expression1>, <expression2>, ...` list.
+-   `summarise` returns the same kind of data object as its input---it returns a data frame if our data was originally in a data frame, or a tibble if it was in a tibble.
+-   If we don't specify a name `summarise` uses the actual R expression to name the columns of its output (e.g. `n_distinct(bill_length_mm)`**)**
+
+Variable names based on the calculation (e.g. `n_distinct(bill_length_mm)`) are not ideal because they are long and contain special reserved characters like `(`. This makes it difficult refer to columns in the output because we have to remember to place back ticks (`` ` ``) around their name whenever we want to refer to them.
+
+Fortunately, the `summarise` function can name the new variables at the same time as they are created (just like `mutate`). We do this by naming the arguments using `=`, placing the name we require on the left hand side. For example:
+
+```{r}
+summarise(penguins, 
+          n_bill_length = n_distinct(bill_length_mm), 
+          n_bill_depth  = n_distinct(bill_depth_mm))
+```
+
+This time we end up with summary data set that has reasonable column names. Notice how we organised that example---we placed each calculation on a new line. We don't have to do this, but since R doesn't care about white space, we can use newlines and spaces to keep everything more human-readable. It pays to organise `summarise` calculations like this when they become longer.
+
+### More complicated calculations with `summarise`
+
+Many useful base R functions can be used with `summarise`. Of particular value are those that calculate various summaries of numeric variables are, such as:
+
+-   `min` and `max` calculate the minimum and maximum values,
+-   `mean` and `median` calculate the mean and median, and
+-   `sd` and `var` calculate the standard deviation and variance.
+
+We do need to pay attention when using base R functions with **dplyr**. Take a look at this attempt to use summarise to calculate the mean of `bill_length_mm` and `bill_length_mm`:
+
+```{r}
+summarise(penguins, 
+          n_bill_length = mean(bill_length_mm), 
+          n_bill_depth  = mean(bill_depth_mm))
+```
+
+No numbers---just a pair of `NA`s. We forgot about the presence of missing values in the `penguins` data. Both `bill_length_mm` and `bill_depth_mm` contain missing values. When the `mean` function encounters even one missing value in its input its default behaviour is to spit out `NA`. It is possible to change that behaviour by setting the `na.rm` argument of `mean`:
+
+```{r}
+summarise(penguins, 
+          n_bill_length = mean(bill_length_mm, na.rm = TRUE), 
+          n_bill_depth  = mean(bill_depth_mm,  na.rm = TRUE))
+```
+
+This example demonstrates something important---the functions we use within `summarise` often have their own arguments, and we sometimes need to set those arguments to perform the calculation we want.
+
+Almost any R code can be used as `summarise` expressions. This means we can combine more than one function to build up arbitrarily complicated calculations. For example, if we need to know the ratio of the mean bill length and mean bill width in `penguins`, we would use:
+
+```{r}
+summarise(penguins,
+  ratio = mean(bill_length_mm, na.rm = TRUE) / mean(bill_depth_mm,  na.rm = TRUE))
+```
+
+The ability to work with arbitrary expressions makes `summarise` (and `mutate`) very powerful.
+
+## Grouped operations using `group_by`
+
+Performing a calculation with one or more variables using the whole data set can be useful. However, we often need to carry out calculations on different subsets of our data. For example, it's more useful to know how the mean bill length and depth vary among the different species in the `penguins` data set, rather than knowing the overall mean of these traits. We could calculate separate means by using `filter` to create different subsets of `penguins`, and then use `summary` on each of these to calculate the means. This would get the job done, but it's inefficient and quickly becomes tiresome if we have to work with many groups.
+
+The `group_by` function provides an elegant solution to this kind of problem. All the `group_by` function does is add a bit of information to a tibble or data frame. In effect, it defines subsets of data based on one or more **grouping variables**. That's all it does. 
+
+The magic happens when the grouped object is used with a **dplyr** verb like `summarise` or `mutate`. Once a the data has been tagged with grouping information, operations that involve **dplyr** verbs are carried out on separate subsets of the data---defined by the values of the grouping variable(s)---and then combined.
+
+Basic usage of `group_by` looks like this:
+
+```{r, eval=FALSE}
+group_by(<data>, <variable-1>, <variable-2>, ...)
+```
+
+The first argument, `<data>`, must be the name of the object containing our data. We then have to include one or more additional arguments, where each one is the name of a variable in `<data>`. We have expressed this as `<variable-1>, <variable-2>, ...`, where `<variable-1>` and `<variable-2>` are names of the first two variables, and the `...` is acting as a placeholder for the remaining variables.
+
+We'll illustrate `group_by` by using it alongside `summarise`. We're aiming to calculate the mean bill length for each species in `penguins`. This is a two-step process. The first step uses `group_by` to add grouping information to `penguins`. Take a look at what we end up with when we do that:
+
+```{r}
+group_by(penguins, species)
+```
+
+Compare this to the output produced when we print the original `penguins` data set:
+
+```{r}
+penguins
+```
+
+There is very little difference---`group_by` really doesn't do much on its own. The main change is that printing the tibble resulting from the `group_by` operation shows a bit of additional information at the top: `Groups: species [3]`. This tells us that the tibble is now grouped by the `species` variable. The `[3]` part tells us that there are three different groups (i.e. species of penguin). The **only** thing `group_by` did was add this grouping information to a copy of `penguins`.
+
+The original `penguins` object was not altered in any way. If we want to do anything useful with the grouped tibble we need to assign it a name so that we can work with it:
+
+```{r}
+penguins_by_species <- group_by(penguins, species)
+```
+
+Now we have a grouped tibble called `penguins_by_species` in which the value of `species` define the different groups---any row where `species` is equal to 'Adelie' is assigned to the first group, any row where `species` is equal to 'Chinstrap' is assigned to a second group, and any row where `species` is equal to 'Gentoo' is assigned to a third group.
+
+**dplyr** operations on this tibble will now be performed on a 'by group' basis. To see this in action, we use `summarise` to calculate the mean bill length:
+
+```{r}
+summarise(penguins_by_species, 
+          mean_bill_length = mean(bill_length_mm, na.rm = TRUE))
+```
+
+This is part two of the two-step process mentioned above. When we used `summarise` on an ungrouped object, the result was a tibble with one row---the overall global mean. Now the resulting tibble has three rows, one for each species in the data set. The `mean_bill_length` column shows the mean bill lengths for each species. The `species` column tells us what species each mean belongs to. Notice that `summarise` also printed an (un)helpful message:
+
+    `summarise()` ungrouping output (override with `.groups` argument)
+
+There's no need to worry about this. It is simply saying that `summarise` has removed the grouping information from the resulting tibble.
+
+We can also carry out multiple calculations with grouped data if we need to. For example, if we need to calculate the mean bill length and mean bill depth for each species, we would use the grouped version of `penguins` like this:
+
+```{r}
+summarise(penguins_by_species, 
+          mean_bill_length = mean(bill_length_mm, na.rm = TRUE),
+          mean_bill_depth  = mean(bill_depth_mm,  na.rm = TRUE))
+```
+
+### More than one grouping variable
+
+What if we need to calculate summaries using more than one grouping variable? The workflow is unchanged. Assume we need to know the mean body mass of males and females of each penguin species. First, we make a grouped copy of `penguins` using the appropriate grouping variables:
+
+```{r}
+penguins_by_species_sex <- group_by(penguins, species, sex)
+```
+
+We called the grouped tibble `penguins_by_species_sex`. Look at what happens when we print this:
+
+```{r}
+penguins_by_species_sex
+```
+
+We see `Groups: species, sex [8]` near the top, which tells us that the tibble is grouped by two variables (`species` and `sex`) with eight unique combinations of values. That seems odd at first---there are three species and two sexes represented in this dataset, which gives six possible combinations at most.
+
+The reason for the discrepancy becomes clear when we move on to calculate the mean body mass for each sex-species combination:
+
+```{r}
+summarise(penguins_by_species_sex, 
+          body_mass_g = mean(body_mass_g, na.rm = TRUE))
+```
+
+This shows mean body mass for each unique combination of `species` and `sex`. The first line shows that the mean body mass associated with female Adelie penguins is 3369; the second line shows us the mean body mass associated with male Adelie penguins is 4043. The third line shows us the mean body mass of Adelie penguins where **sex is missing** (`NA`). That explains why we ended up with more groups than unique combinations of `species` and `sex` --- missing values create extra groups.
+
+### Using `group_by` with other verbs
+
+The `summarise` function is the **dplyr** verb that is most often used with grouped data. However, all the main **dplyr** verbs will alter their behaviour to respect group information when it is present. For example, when `mutate` or `transmute` are used with a grouped object the calculation of new variables occur "by group". Here's an example:
+
+```{r}
+# create a data set 'mean centred' bill length variable
+transmute(penguins_by_species_sex,
+          body_mass_cen = body_mass_g - mean(body_mass_g, na.rm = TRUE))
+```
+
+This calculated a standardised measure of body mass. The new `body_mass_cen` variable contains the difference between the original body mass and its mean in the appropriate species-sex group (rather than the overall mean).
+
+## Removing grouping information
+
+On occasion, it's necessary to remove grouping information and revert to operating on the whole data set. The `ungroup` function removes grouping information:
+
+```{r}
+ungroup(penguins_by_species)
+```
+
+Looking at the top right of the printed summary, we can see that the `Group:` part is now gone---the `ungroup` function effectively recreated the original `penguins` tibble.

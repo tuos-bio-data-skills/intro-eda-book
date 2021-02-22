@@ -1,4 +1,0 @@
-# Data wrangling with **dplyr**
-
-We describe how to use **readr** and **dplyr** to import and manipulate data in this section.
-

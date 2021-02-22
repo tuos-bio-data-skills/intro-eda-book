@@ -1,2 +1,6 @@
 
-This is a minimal example of a book based on R Markdown and **bookdown** (https://github.com/rstudio/bookdown). Please see the page "Get Started" at https://bookdown.org/home/about/ for how to compile this example.
+This is the Exploratory Data Analysis in R book provided by the School of Biosciences at the University of Sheffield. It is built using R Markdown and **bookdown** (https://github.com/rstudio/bookdown).
+
+TODO---
+
+(Re)introduce the data frames as collections of vectors and data frames as rectangular data objects comparison.

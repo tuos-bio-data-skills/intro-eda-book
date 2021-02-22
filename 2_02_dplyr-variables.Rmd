@@ -1,0 +1,167 @@
+# Working with variables
+
+## Introduction
+
+This chapter will explore the **dplyr** `select` and `mutate` verbs, and the closely related `rename` and `transmute` verbs. We consider these functions together because they operate on the variables (i.e. the columns) of a data frame or tibble:
+
+-   The `select` function selects a subset of variables to retain and (optionally) renames them in the process.
+-   The `mutate` function creates new variables from pre-existing ones and retains the original variables.
+-   The `rename` function renames one or more variables while keeping the remaining variable names unchanged.
+-   The `transmute` function creates new variables from pre-existing ones and drops the original variables.
+
+### Getting ready
+
+Obviously, we need to have first installed **dplyr** package to use it. Assuming that's been done, we need to load and attach the package in the current session:
+
+```{r, eval=FALSE}
+library("dplyr")
+```
+
+We will use the Palmer penguins data to illustrate the ideas in this chapter. Remember---the [previous chapter](#penguins-data-overview) described this data set and explained where to find it. The examples below assume it was read into R as a tibble with the name `penguins`.
+
+## Subset variables with `select`
+
+We use `select` to **select variables** from a data frame or tibble. This is used when we have a data set with many variables but only need to work with a subset of these. Basic usage of `select` looks like this:
+
+```{r, eval=FALSE}
+select(<data>, <variable-1>, <variable-2>, ...)
+```
+
+Remember---this is not an example we can run. This is a pseudocode designed to provide a generic description of how we use `select`. Let's look at the arguments of select:
+
+-   The first argument, `<data>`, must be the name of the object containing our data (usually a data frame or tibble). This is not optional---**dplyr** functions only exist to manipulate data.
+-   We then include a series of one or more additional arguments, where each one is the name of a variable in `<data>`. We've expressed this as `<variable-1>, <variable-2>, ...`, where `<variable-1>` and `<variable-2>` are names of the first two variables. The `...` is acting as a placeholder for the remaining variables. There could be any number of these.
+
+It's easiest to understand how a function like `select` works by seeing it in action. We select the `species`, `bill_length_mm` and `bill_depth_mm` variables from `penguins` like this:
+
+```{r}
+select(penguins, species, bill_length_mm, bill_depth_mm)
+```
+
+Hopefully, nothing about this example is too surprising. However, there are a few subtleties buried in that example:
+
+-   The `select` function is designed to work in a non-standard way which means variable names should **not** be surrounded by quotes. The one exception is when a name has a space in it. Under those circumstances, it has to be quoted with backticks, e.g. `` `variable 1` ``.
+-   The `select` function does not have 'side effects'. This means is that it does not change the original `penguins` object. We printed the result produced by `select` to the Console, so we can't access the modified data set. If we need to use the result, we have to assign it a name using `<-`.
+-   The order of variables (i.e. the column order) in the resulting object is the same as the order in which they were supplied to the argument list. This means we can reorder variables at the same time as selecting them if we need to.
+-   The `select` function will return the same kind of data object we give it to work on. It returns a data frame if our data was in a data frame and a tibble if it was a tibble. In this example, R prints a tibble because `penguins` was a tibble.
+
+That second point is important---we have to remember to assign the result a name using `<-` if we want to keep it and use it later. For example, we might call the result of that last example `penguins_bill`:
+
+```{r}
+penguins_bill <- select(penguins, species, bill_length_mm, bill_depth_mm)
+```
+
+Now that we've named the new data set created by `select` we can refer to it by that name whenever we need it:
+
+```{r}
+penguins_bill
+```
+
+Remember---the original `penguins` data is completely unchanged:
+
+```{r}
+penguins
+```
+
+### Alternative ways to identify variables with `select`
+
+It's sometimes more convenient to use `select` to subset variables by specifying those we do **not** need, rather than specifying of the ones to keep. We can use the `!` operator to indicate that certain variables should be dropped. For example, to get rid of the `bill_depth_mm` and `bill_length_mm` columns, we could use:
+
+```{r}
+select(penguins, !bill_depth_mm, !bill_length_mm)
+```
+
+This returns a tibble with all the other variables: `species`, `island`, `flipper_length_mm`, `body_mass_g`, `sex` and `year`.
+
+The `select` function can also be used to grab (or drop) a set of variables that occur in a sequence next to one another. We specify a series of adjacent variables using the `:` operator. We use this with two variable names, one on the left-hand side and one on the right. When we use `:` like this, `select` will subset both those two variables along with any others that fall in between them.
+
+For example, if we want only the morphometric variables (`bill_length_mm`, `bill_depth_mm`, `flipper_length_mm` and `body_mass_g`) we could use:
+
+```{r}
+select(penguins, bill_length_mm:body_mass_g)
+```
+
+The `:` operator can also be combined with `!` if we need to drop a series of variables according to their position in a data frame or tibble. For example, we can use this trick to get the complement of the previous example, i.e. throw away the morphometric variables:
+
+```{r}
+select(penguins, !bill_length_mm:body_mass_g)
+```
+
+### Renaming variables with `select` and `rename`
+
+The `select` function can also rename variables at the same time as selecting them. To do this, we name the arguments using the `name = value` construct, where the name of the selected variable is placed on the right-hand side (`value`), and the new name goes on the left-hand side (`name`).
+
+For example, to select the`species`, `bill_length_mm` and `bill_depth_mm` variables from `penguins`, and in the process, rename `bill_length_mm` and `bill_depth_mm` to `BillLength` and `BillDepth`, use:
+
+```{r}
+select(penguins, species, BillLength = bill_length_mm, BillDepth = bill_depth_mm)
+```
+
+Renaming the variables is a common task. What should we do if the only thing we want to achieve is to rename variables, rather than rename *and* select them? **dplyr** provides an additional function called `rename` for exactly this purpose. This function renames some variables while retaining all others. It works like `select`. For example, to rename `bill_length_mm` and `bill_depth_mm` to `BillLength` and `BillDepth` but keep all the variables, use:
+
+```{r}
+rename(penguins, BillLength = bill_length_mm, BillDepth = bill_depth_mm)
+```
+
+Notice `rename` also preserves the order of the variables found in the original data.
+
+## Creating variables with `mutate`
+
+We use `mutate` to **add new variables** to a data frame or tibble. This is useful if we need to construct one or more derived variables to support an analysis. Basic usage of `mutate` looks like this:
+
+```{r, eval=FALSE}
+mutate(<data>, <expression-1>, <expression-2>, ...)
+```
+
+Again, this is not an example we can run---it's pseudocode highlighting how to use `mutate` in abstract terms.
+
+The first argument, `<data>`, must be the name of the object containing our data. We then include a series of one or more additional arguments, where each of these is a valid R expression involving one or more variables in `<data>`. We've have expressed these as `<expression-1>, <expression-2>`, where `<expression-1>` and `<expression-2>` represent the first two expressions, and the `...` is acting as a placeholder for the remaining expressions. These can be any valid R code that refers to variables in `<data>`. This is often a simple calculation (e.g. involving arithmetic), but it can be arbitrarily complex.
+
+To see `mutate` in action, let's construct a new version of `penguins` that contains one extra variable---body mass measured in kilograms:
+
+```{r}
+mutate(penguins, body_mass_g / 1000)
+```
+
+This creates a copy of `penguins` with a new column called `body_mass_g/1000` (look at the bottom of the printed output). That is not a very good name but do not worry---we will improve on it in a moment. Most of the rules that apply to `select` also apply to `mutate`:
+
+-   Quotes must not be placed around an expression that performs a calculation.  This makes sense because the expression is meant to be evaluated so that it "does something". It is not a value.
+-   The `mutate` function does not have side effects, meaning it does not change the original `penguins` in any way. In the example, we printed the result produced by `mutate` rather than assigning it a name using `<-`, which means we have no way to access the result.
+-   The `mutate` function returns the same kind of object as the one it is working on: a data frame if our data was originally in a data frame, a tibble if it was a tibble.
+
+Creating a variable called something like `body_mass_g/1000` is not ideal because that is a difficult name to work with. Fortunately, the `mutate` function can name new variables at the same time as it creates them. We just name the arguments using `=`, placing the name on the left-hand side. Look at how to use this construct to name the new area variable `body_mass_kg`:
+
+```{r}
+mutate(penguins, body_mass_kg = body_mass_g / 1000)
+```
+
+We can create more than one variable by supplying `mutate` multiple (named) arguments:
+
+```{r}
+mutate(penguins, 
+       bill_size = bill_depth_mm * bill_length_mm,
+       scaled_bill_size = bill_size / body_mass_g)
+```
+
+Notice that we placed each calculation on a new line, remembering to use a comma to separate arguments. We can do this because R ignores white space. Splitting long a function call across multiple lines in this way is helpful because it makes it easier to read and understand the sequence of calculations.
+
+This last example reveals a nice feature of `mutate`---we can use newly created variables in further calculations. Here we constructed a synthetic bill size variable, and used that to calculate a second variable representing the ratio of bill size to body mass.
+
+### Transforming and dropping variables
+
+Occasionally we need to construct one or more new variables and then drop all the other ones in the original dataset. The `transmute` function is designed to do this. It works exactly like `mutate`, but it has a slightly different behaviour:
+
+```{r}
+transmute(penguins, 
+          bill_size = bill_depth_mm * bill_length_mm,
+          scaled_bill_size = bill_size / body_mass_g)
+```
+
+Here we repeated the previous example, but now only the new variables were retained in the resulting tibble. If we also want to retain additional variables without altering them, we can pass them as unnamed arguments. For example, to retain `species` identity in the output, use:
+
+```{r}
+transmute(penguins,
+          species,
+          bill_size = bill_depth_mm * bill_length_mm,
+          scaled_bill_size = bill_size / body_mass_g)
+```

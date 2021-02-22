@@ -5,26 +5,26 @@
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>A Getting help | Exploratory Data Analysis with R</title>
-  <meta name="description" content="This is…" />
+  <meta name="description" content="This is the Exploratory Data Analysis in R book provided by the School of Biosciences at the University of Sheffield." />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
   <meta property="og:title" content="A Getting help | Exploratory Data Analysis with R" />
   <meta property="og:type" content="book" />
   
   
-  <meta property="og:description" content="This is…" />
+  <meta property="og:description" content="This is the Exploratory Data Analysis in R book provided by the School of Biosciences at the University of Sheffield." />
   
 
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="A Getting help | Exploratory Data Analysis with R" />
   
-  <meta name="twitter:description" content="This is…" />
+  <meta name="twitter:description" content="This is the Exploratory Data Analysis in R book provided by the School of Biosciences at the University of Sheffield." />
   
 
 <meta name="author" content="Dylan Childs" />
 
 
-<meta name="date" content="2021-02-15" />
+<meta name="date" content="2021-02-20" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -32,7 +32,7 @@
   
   
 <link rel="prev" href="exploratory-data-analysis-with-ggplot2.html"/>
-<link rel="next" href="references.html"/>
+<link rel="next" href="project-scripts-data.html"/>
 <script src="libs/header-attrs-2.5/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -53,12 +53,15 @@
 
 <link href="libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
 <script src="libs/anchor-sections-1.0/anchor-sections.js"></script>
+<link href="libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet" />
+<script src="libs/pagedtable-1.1/js/pagedtable.js"></script>
 
 
 <style type="text/css">
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
 pre.sourceCode { margin: 0; }
 @media screen {
@@ -220,9 +223,74 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="5.5" data-path="packages.html"><a href="packages.html#the-tidyverse-ecosystem-of-packages"><i class="fa fa-check"></i><b>5.5</b> The tidyverse ecosystem of packages</a></li>
 </ul></li>
 <li class="part"><span><b>II Data Wrangling</b></span></li>
-<li class="chapter" data-level="6" data-path="data-wrangling-with-dplyr.html"><a href="data-wrangling-with-dplyr.html"><i class="fa fa-check"></i><b>6</b> Data wrangling with <strong>dplyr</strong></a></li>
+<li class="chapter" data-level="6" data-path="getting-ready-to-use-dplyr.html"><a href="getting-ready-to-use-dplyr.html"><i class="fa fa-check"></i><b>6</b> <strong>Getting ready to use dplyr</strong></a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="getting-ready-to-use-dplyr.html"><a href="getting-ready-to-use-dplyr.html#introduction-2"><i class="fa fa-check"></i><b>6.1</b> Introduction</a></li>
+<li class="chapter" data-level="6.2" data-path="getting-ready-to-use-dplyr.html"><a href="getting-ready-to-use-dplyr.html#tidy-data"><i class="fa fa-check"></i><b>6.2</b> Tidy data</a></li>
+<li class="chapter" data-level="6.3" data-path="getting-ready-to-use-dplyr.html"><a href="getting-ready-to-use-dplyr.html#penguins-data-overview"><i class="fa fa-check"></i><b>6.3</b> Penguins! 🐧+📊= 😃</a></li>
+<li class="chapter" data-level="6.4" data-path="getting-ready-to-use-dplyr.html"><a href="getting-ready-to-use-dplyr.html#um-tibbles"><i class="fa fa-check"></i><b>6.4</b> Um… tibbles?</a></li>
+<li class="chapter" data-level="6.5" data-path="getting-ready-to-use-dplyr.html"><a href="getting-ready-to-use-dplyr.html#missing-values"><i class="fa fa-check"></i><b>6.5</b> Missing values</a></li>
+<li class="chapter" data-level="6.6" data-path="getting-ready-to-use-dplyr.html"><a href="getting-ready-to-use-dplyr.html#why-dplyr"><i class="fa fa-check"></i><b>6.6</b> Introducing <strong>dplyr</strong></a>
+<ul>
+<li class="chapter" data-level="6.6.1" data-path="getting-ready-to-use-dplyr.html"><a href="getting-ready-to-use-dplyr.html#more-dplyr"><i class="fa fa-check"></i><b>6.6.1</b> A first look at <strong>dplyr</strong></a></li>
+<li class="chapter" data-level="6.6.2" data-path="getting-ready-to-use-dplyr.html"><a href="getting-ready-to-use-dplyr.html#dplyr-pseudocode"><i class="fa fa-check"></i><b>6.6.2</b> <strong>dplyr</strong> pseudocode</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="working-with-variables.html"><a href="working-with-variables.html"><i class="fa fa-check"></i><b>7</b> Working with variables</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="working-with-variables.html"><a href="working-with-variables.html#introduction-3"><i class="fa fa-check"></i><b>7.1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="7.1.1" data-path="working-with-variables.html"><a href="working-with-variables.html#getting-ready"><i class="fa fa-check"></i><b>7.1.1</b> Getting ready</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="working-with-variables.html"><a href="working-with-variables.html#subset-variables-with-select"><i class="fa fa-check"></i><b>7.2</b> Subset variables with <code>select</code></a>
+<ul>
+<li class="chapter" data-level="7.2.1" data-path="working-with-variables.html"><a href="working-with-variables.html#alternative-ways-to-identify-variables-with-select"><i class="fa fa-check"></i><b>7.2.1</b> Alternative ways to identify variables with <code>select</code></a></li>
+<li class="chapter" data-level="7.2.2" data-path="working-with-variables.html"><a href="working-with-variables.html#renaming-variables-with-select-and-rename"><i class="fa fa-check"></i><b>7.2.2</b> Renaming variables with <code>select</code> and <code>rename</code></a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="working-with-variables.html"><a href="working-with-variables.html#creating-variables-with-mutate"><i class="fa fa-check"></i><b>7.3</b> Creating variables with <code>mutate</code></a>
+<ul>
+<li class="chapter" data-level="7.3.1" data-path="working-with-variables.html"><a href="working-with-variables.html#transforming-and-dropping-variables"><i class="fa fa-check"></i><b>7.3.1</b> Transforming and dropping variables</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="working-with-observations.html"><a href="working-with-observations.html"><i class="fa fa-check"></i><b>8</b> Working with observations</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="working-with-observations.html"><a href="working-with-observations.html#introduction-4"><i class="fa fa-check"></i><b>8.1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="8.1.1" data-path="working-with-observations.html"><a href="working-with-observations.html#getting-ready-1"><i class="fa fa-check"></i><b>8.1.1</b> Getting ready</a></li>
+</ul></li>
+<li class="chapter" data-level="8.2" data-path="working-with-observations.html"><a href="working-with-observations.html#relational-and-logical-operators"><i class="fa fa-check"></i><b>8.2</b> Relational and logical operators</a></li>
+<li class="chapter" data-level="8.3" data-path="working-with-observations.html"><a href="working-with-observations.html#subset-observations-with-filter"><i class="fa fa-check"></i><b>8.3</b> Subset observations with <code>filter</code></a></li>
+<li class="chapter" data-level="8.4" data-path="working-with-observations.html"><a href="working-with-observations.html#reordering-observations-with-arrange"><i class="fa fa-check"></i><b>8.4</b> Reordering observations with <code>arrange</code></a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="grouping-and-summarising-data.html"><a href="grouping-and-summarising-data.html"><i class="fa fa-check"></i><b>9</b> Grouping and summarising data</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="grouping-and-summarising-data.html"><a href="grouping-and-summarising-data.html#summarising-variables-with-summarise"><i class="fa fa-check"></i><b>9.1</b> Summarising variables with <code>summarise</code></a>
+<ul>
+<li class="chapter" data-level="9.1.1" data-path="grouping-and-summarising-data.html"><a href="grouping-and-summarising-data.html#more-complicated-calculations-with-summarise"><i class="fa fa-check"></i><b>9.1.1</b> More complicated calculations with <code>summarise</code></a></li>
+</ul></li>
+<li class="chapter" data-level="9.2" data-path="grouping-and-summarising-data.html"><a href="grouping-and-summarising-data.html#grouped-operations-using-group_by"><i class="fa fa-check"></i><b>9.2</b> Grouped operations using <code>group_by</code></a>
+<ul>
+<li class="chapter" data-level="9.2.1" data-path="grouping-and-summarising-data.html"><a href="grouping-and-summarising-data.html#more-than-one-grouping-variable"><i class="fa fa-check"></i><b>9.2.1</b> More than one grouping variable</a></li>
+<li class="chapter" data-level="9.2.2" data-path="grouping-and-summarising-data.html"><a href="grouping-and-summarising-data.html#using-group_by-with-other-verbs"><i class="fa fa-check"></i><b>9.2.2</b> Using <code>group_by</code> with other verbs</a></li>
+</ul></li>
+<li class="chapter" data-level="9.3" data-path="grouping-and-summarising-data.html"><a href="grouping-and-summarising-data.html#removing-grouping-information"><i class="fa fa-check"></i><b>9.3</b> Removing grouping information</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="building-pipelines.html"><a href="building-pipelines.html"><i class="fa fa-check"></i><b>10</b> Building pipelines</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="building-pipelines.html"><a href="building-pipelines.html#why-do-we-need-pipes"><i class="fa fa-check"></i><b>10.1</b> Why do we need ‘pipes?’</a></li>
+<li class="chapter" data-level="10.2" data-path="building-pipelines.html"><a href="building-pipelines.html#using-pipes"><i class="fa fa-check"></i><b>10.2</b> Using pipes (<code>%&gt;%</code>)</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="helper-functions.html"><a href="helper-functions.html"><i class="fa fa-check"></i><b>11</b> Helper functions</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="helper-functions.html"><a href="helper-functions.html#introduction-5"><i class="fa fa-check"></i><b>11.1</b> Introduction</a></li>
+<li class="chapter" data-level="11.2" data-path="helper-functions.html"><a href="helper-functions.html#working-with-select"><i class="fa fa-check"></i><b>11.2</b> Working with <code>select</code></a></li>
+<li class="chapter" data-level="11.3" data-path="helper-functions.html"><a href="helper-functions.html#working-with-mutate-and-transmute"><i class="fa fa-check"></i><b>11.3</b> Working with <code>mutate</code> and <code>transmute</code></a></li>
+<li class="chapter" data-level="11.4" data-path="helper-functions.html"><a href="helper-functions.html#working-with-filter"><i class="fa fa-check"></i><b>11.4</b> Working with <code>filter</code></a></li>
+<li class="chapter" data-level="11.5" data-path="helper-functions.html"><a href="helper-functions.html#working-with-summarise"><i class="fa fa-check"></i><b>11.5</b> Working with <code>summarise</code></a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="data-wrangling-with-dplyr.html"><a href="data-wrangling-with-dplyr.html"><i class="fa fa-check"></i><b>12</b> Data wrangling with <strong>dplyr</strong></a></li>
 <li class="part"><span><b>III Exporing Data</b></span></li>
-<li class="chapter" data-level="7" data-path="exploratory-data-analysis-with-ggplot2.html"><a href="exploratory-data-analysis-with-ggplot2.html"><i class="fa fa-check"></i><b>7</b> Exploratory data analysis with <strong>ggplot2</strong></a></li>
+<li class="chapter" data-level="13" data-path="exploratory-data-analysis-with-ggplot2.html"><a href="exploratory-data-analysis-with-ggplot2.html"><i class="fa fa-check"></i><b>13</b> Exploratory data analysis with <strong>ggplot2</strong></a></li>
 <li class="appendix"><span><b>Supplementary Material</b></span></li>
 <li class="chapter" data-level="A" data-path="getting-help.html"><a href="getting-help.html"><i class="fa fa-check"></i><b>A</b> Getting help</a>
 <ul>
@@ -232,6 +300,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="A.4" data-path="getting-help.html"><a href="getting-help.html#nav-help"><i class="fa fa-check"></i><b>A.4</b> Navigating help files</a></li>
 <li class="chapter" data-level="A.5" data-path="getting-help.html"><a href="getting-help.html#vignettes"><i class="fa fa-check"></i><b>A.5</b> Vignettes and demos</a></li>
 </ul></li>
+<li class="chapter" data-level="B" data-path="project-scripts-data.html"><a href="project-scripts-data.html"><i class="fa fa-check"></i><b>B</b> Managing projects, scripts and data files</a></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -253,18 +322,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="getting-help" class="section level1" number="8">
+<div id="getting-help" class="section level1" number="14">
 <h1><span class="header-section-number">A</span> Getting help</h1>
-<div id="console-help" class="section level2" number="8.1">
+<div id="console-help" class="section level2" number="14.1">
 <h2><span class="header-section-number">A.1</span> Introduction</h2>
 <p>R has a comprehensive built-in help system orientated around the base R functions, and every good external package also comes with its own set of <strong>help files</strong>. These provide information about individual package functions and summarise the included data sets. They also sometimes give descriptions of how different parts of the package should be used, and if we’re lucky, one or more ‘vignettes’ that offer a practical demonstration of how to use the package.</p>
 <p>We may as well get something out of the way early on. The word ‘help’ in the phrase ‘help file’ is a bit of a misnomer. It’s more accurate to say R has an extensive <strong>documentation</strong> system. Help files are designed first and foremost to carefully document the different elements of a package, rather than explain how a particular function or the package as whole should be used to achieve a given end. They are aimed more at experienced users than novices. That said, help files often contain useful examples, and many package authors do try to make our life easier by providing functional demonstrations of their package.</p>
 <p>It is important to get to grips with the built in help system. It contains a great deal of useful information which we need to really start using R effectively. The road to enlightenment is bumpy though.</p>
 </div>
-<div id="browsing-the-help-system" class="section level2" number="8.2">
+<div id="browsing-the-help-system" class="section level2" number="14.2">
 <h2><span class="header-section-number">A.2</span> Browsing the help system</h2>
 <p>Help files are a little like mini web pages, which means we can navigate among them using hyperlinks. One way to begin browsing the help system uses the <code>help.start</code> function:</p>
-<div class="sourceCode" id="cb186"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb186-1"><a href="getting-help.html#cb186-1" aria-hidden="true" tabindex="-1"></a><span class="fu">help.start</span>() </span></code></pre></div>
+<div class="sourceCode" id="cb305"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb305-1"><a href="getting-help.html#cb305-1" aria-hidden="true" tabindex="-1"></a><span class="fu">help.start</span>() </span></code></pre></div>
 <p>When we run this function the <strong>Package Index</strong> page should open up in the <strong>Help</strong> tab of the bottom right pane in RStudio. This lists all the packages currently installed on a computer. We can view the help files associated with a package by clicking on the appropriate link. For example, all the functions that come with the base installation of R have a help file associated with them—we can click on the link to the R base package (<code>base</code>) to see these.</p>
 <p>The packages that we install separately each have their own set of associated help files. We will see how to navigate these in a moment.</p>
 <p>The help browser has Forward, Back, and Home buttons, just like a normal web browser. If we get lost in the mire of help pages we can always navigate backward until we get back to a familiar page. Clicking on the home button takes us to a page with three sections:</p>
@@ -274,24 +343,24 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><p>The <strong>Miscellaneous Material</strong> section has a couple of potentially useful links. The “User Manuals” link lists any user manuals supplied by package authors. The “Frequently Asked Questions” link is definitely worth reviewing at some point, tough again, most of the FAQs are a little difficult for novice users to fully understand.</p></li>
 </ol>
 </div>
-<div id="searching-for-help-files" class="section level2" number="8.3">
+<div id="searching-for-help-files" class="section level2" number="14.3">
 <h2><span class="header-section-number">A.3</span> Searching for help files</h2>
 <p>After browsing help files via <code>help.start</code> for a bit it quickly becomes apparent that this way of searching for help is very inefficient. We often know the name of the function we need to use and all we want to do is open that particular help file. We can do this using the <code>help</code> function:</p>
-<div class="sourceCode" id="cb187"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb187-1"><a href="getting-help.html#cb187-1" aria-hidden="true" tabindex="-1"></a><span class="fu">help</span>(<span class="at">topic =</span> Trig)</span></code></pre></div>
+<div class="sourceCode" id="cb306"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb306-1"><a href="getting-help.html#cb306-1" aria-hidden="true" tabindex="-1"></a><span class="fu">help</span>(<span class="at">topic =</span> Trig)</span></code></pre></div>
 <p>After we run this line RStudio opens up the help file for the trigonometry topic in the <strong>Help</strong> tab. This file provides information about the various trigonometric functions such as <code>sin</code> or <code>cos</code> (we’ll see how to make sense of such help pages in a bit).</p>
 <p>The <code>help</code> function needs a minimum of one argument: the name of the topic or function of interest. When we use it like this the help function searches across packages, looking for a help file whose name gives <strong>an exact match</strong> to the name we supplied. In this case, we opened the help file associated with the <code>Trig</code> topic.</p>
 <p>Most of the time we use the <code>help</code> function to find the help page for a specific function, rather than a general topic. This is fine if we can remember the name of the topic associated with different functions. Most of us cannot. Luckily, the help function will also match help pages by the name of the function(s) they cover:</p>
-<div class="sourceCode" id="cb188"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb188-1"><a href="getting-help.html#cb188-1" aria-hidden="true" tabindex="-1"></a><span class="fu">help</span>(<span class="at">topic =</span> sin)</span></code></pre></div>
+<div class="sourceCode" id="cb307"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb307-1"><a href="getting-help.html#cb307-1" aria-hidden="true" tabindex="-1"></a><span class="fu">help</span>(<span class="at">topic =</span> sin)</span></code></pre></div>
 <p>Here we searched for help on the <code>sin</code> function. This is part of the <code>Trig</code> topic so <code>help(topic = sin)</code> brings up the same page as the <code>help(topic = Trig)</code>.</p>
 <p>By default, the <code>help</code> function only searches for files associated with the base functions or with packages that we have loaded in the current session with the <code>library</code> function. If we want to search for help on the <code>mutate</code> function—part of the <strong>dplyr</strong> package—but we haven’t run <code>library(dplyr)</code> in the current session this will fail:</p>
-<div class="sourceCode" id="cb189"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb189-1"><a href="getting-help.html#cb189-1" aria-hidden="true" tabindex="-1"></a><span class="fu">help</span>(mutate)</span></code></pre></div>
+<div class="sourceCode" id="cb308"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb308-1"><a href="getting-help.html#cb308-1" aria-hidden="true" tabindex="-1"></a><span class="fu">help</span>(mutate)</span></code></pre></div>
 <p>Instead, we need tell <code>help</code> where to look by setting the <code>package</code> argument:</p>
-<div class="sourceCode" id="cb190"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb190-1"><a href="getting-help.html#cb190-1" aria-hidden="true" tabindex="-1"></a><span class="fu">help</span>(mutate, <span class="at">package =</span> <span class="st">&quot;dplyr&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb309"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb309-1"><a href="getting-help.html#cb309-1" aria-hidden="true" tabindex="-1"></a><span class="fu">help</span>(mutate, <span class="at">package =</span> <span class="st">&quot;dplyr&quot;</span>)</span></code></pre></div>
 <p>Even very experienced R users regularly forget how to use the odd function and have to dive into the help. It’s for this reason that R has a built in shortcut for <code>help</code> accessed via <code>?</code>. For example, instead of typing <code>help(topic = sin)</code> into the Console we can bring up the help page for the <code>sin</code> function by using <code>?</code> like this:</p>
-<div class="sourceCode" id="cb191"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb191-1"><a href="getting-help.html#cb191-1" aria-hidden="true" tabindex="-1"></a>?sin</span></code></pre></div>
+<div class="sourceCode" id="cb310"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb310-1"><a href="getting-help.html#cb310-1" aria-hidden="true" tabindex="-1"></a>?sin</span></code></pre></div>
 <p>This is just a convenient shortcut that does the same thing as <code>help</code>. The only difference is that <code>?</code> does not allow us to set arguments such as <code>package</code>.</p>
 </div>
-<div id="nav-help" class="section level2" number="8.4">
+<div id="nav-help" class="section level2" number="14.4">
 <h2><span class="header-section-number">A.4</span> Navigating help files</h2>
 <p>Navigating help files is a little daunting at first. These files can be quite long and contain a lot of technical jargon. The help files associated with functions—the most common type—do at least have a consistent structure with a number of distinct sections. Wrestling with a help file is much easier if we at least understand what each section is for. After the title, there are eight sections we need to know about:</p>
 <ol style="list-style-type: decimal">
@@ -305,15 +374,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><p><strong>Examples</strong> provides one or more examples of how to use the function. These are stand-alone examples, so there’s nothing to stop us running them. This is often the most useful section of all. Seeing a function in action is a very good way to cut through the jargon and understand how it works.</p></li>
 </ol>
 </div>
-<div id="vignettes" class="section level2" number="8.5">
+<div id="vignettes" class="section level2" number="14.5">
 <h2><span class="header-section-number">A.5</span> Vignettes and demos</h2>
 <p>The purpose of a package vignette is to provide a relatively brief, practical account of one or more of its features. Not all packages come with vignettes, though the best packages often do. We use the <code>vignette</code> function to view all the available vignettes in Rstudio. This will open up a tab that lists each vignette under their associated package name along with a brief description. A package will often have more than one vignette.</p>
 <p>If we just want to see the vignettes associated with a particular package, we have to set the <code>package</code> argument. For example, to see the vignettes associated with <strong>dplyr</strong> we use:</p>
-<div class="sourceCode" id="cb192"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb192-1"><a href="getting-help.html#cb192-1" aria-hidden="true" tabindex="-1"></a><span class="fu">vignette</span>(<span class="at">package =</span> <span class="st">&quot;dplyr&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb311"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb311-1"><a href="getting-help.html#cb311-1" aria-hidden="true" tabindex="-1"></a><span class="fu">vignette</span>(<span class="at">package =</span> <span class="st">&quot;dplyr&quot;</span>)</span></code></pre></div>
 <p>Each vignette has a name (the “topic”) and is available either as a PDF or HTML file (or both). We can view a particular vignette by passing the <code>vignette</code> function the <code>package</code> and <code>topic</code> arguments. For example, to view the “grouping” vignette in the <strong>dplyr</strong> package we would use:</p>
-<div class="sourceCode" id="cb193"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb193-1"><a href="getting-help.html#cb193-1" aria-hidden="true" tabindex="-1"></a><span class="fu">vignette</span>(<span class="at">topic =</span> <span class="st">&quot;grouping&quot;</span>, <span class="at">package =</span> <span class="st">&quot;dplyr&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb312"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb312-1"><a href="getting-help.html#cb312-1" aria-hidden="true" tabindex="-1"></a><span class="fu">vignette</span>(<span class="at">topic =</span> <span class="st">&quot;grouping&quot;</span>, <span class="at">package =</span> <span class="st">&quot;dplyr&quot;</span>)</span></code></pre></div>
 <p>The <code>vignette</code> function is fine, but it is more convenient to browse the list of vignettes inside a web browser. This allows us to open a particular vignette directly by clicking on its link, rather than working at the Console. We can use the <code>browseVignettes</code> function to do this:</p>
-<div class="sourceCode" id="cb194"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb194-1"><a href="getting-help.html#cb194-1" aria-hidden="true" tabindex="-1"></a><span class="fu">browseVignettes</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb313"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb313-1"><a href="getting-help.html#cb313-1" aria-hidden="true" tabindex="-1"></a><span class="fu">browseVignettes</span>()</span></code></pre></div>
 <p>This will open a page in our browser showing the vignettes we can view. As usual, we can narrow our options to a specific package by setting the <code>package</code> argument.</p>
 
 </div>
@@ -324,7 +393,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
         </div>
       </div>
 <a href="exploratory-data-analysis-with-ggplot2.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="references.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="project-scripts-data.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
