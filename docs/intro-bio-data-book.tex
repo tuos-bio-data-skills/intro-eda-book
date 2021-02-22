@@ -1238,7 +1238,7 @@ Here is another way to replicate the same calculation:
 ## [1] 3.2
 \end{verbatim}
 
-The technical name for this is \textbf{function composition} or \textbf{function nesting}: the \texttt{sqrt} function is `nested inside' the \texttt{round} function. The way we have to read these constructs is \textbf{from the inside out}. The \texttt{sqrt(10)} expression is on the right-hand side of an \texttt{=} symbol, so this is evaluated first. The result of \texttt{sqrt(10)} is then associated with the first argument of the \texttt{round} function, and only then does the \texttt{round} function do its job.
+The technical name for this is \textbf{function composition} or \textbf{function nesting}: the \texttt{sqrt} function is `nested inside' the \texttt{round} function. The way we have to read these constructs is \textbf{from the inside out}. The \texttt{sqrt(10)} expression is inside the \texttt{round} function, so this is evaluated first. The result of \texttt{sqrt(10)} is then associated with the first argument of the \texttt{round} function, and only then does the \texttt{round} function do its job.
 
 There aren't any new ideas here. We have already seen that R evaluates whatever is on the right-hand side of the \texttt{=} symbol first before associating the resulting value with the appropriate argument name.
 
