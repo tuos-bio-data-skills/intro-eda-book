@@ -13,10 +13,10 @@ We illustrate these ideas using the Paler penguins data set, which we assume has
 We use `summarise` to **calculate summaries of variables** in an object containing our data. We do this kind of calculation all the time when analysing data. In terms of pseudo-code, usage of `summarise` looks like this:
 
 ```{r, eval=FALSE}
-summarise(<data>, <expression1>, <expression2>, ...)
+summarise(<data>, <expression-1>, <expression-2>, ...)
 ```
 
-The first argument, `<data>`, must be the name of the data frame or tibble containing our data. We then include a series of one or more additional arguments; each of these is a valid R expression involving at least one variable in `<data>`. These are given by the pseudo-code placeholder `<expression1>, <expression2>, ...`, where `<expression1>` and `<expression2>` represent the first two expressions, and the `...` is acting as placeholder for the remaining expressions. These expressions can be any calculation involving R functions that returns a vector of some kind.
+The first argument, `<data>`, must be the name of the data frame or tibble containing our data. We then include a series of one or more additional arguments; each of these is a valid R expression involving at least one variable in `<data>`. These are given by the pseudo-code placeholder `<expression-1>, <expression-2>, ...`, where `<expression-1>` and `<expression-2>` represent the first two expressions, and the `...` is acting as placeholder for the remaining expressions. These expressions can be any calculation involving R functions that returns a vector of some kind.
 
 The `summarise` function seems to work a lot like `mutate`. The main difference is that the expressions `mutate` uses have to all return a vector of the same length as their inputs. In contrast, `summarise` expressions used all have to produce the same length output, but those outputs can be any length. They often return a single value because they are **summarising** the data in some way, but they don't have to.
 
@@ -29,7 +29,7 @@ summarise(penguins, n_distinct(bill_length_mm), n_distinct(bill_depth_mm))
 Notice what kind of object `summarise` returns---it's a tibble with one row and two columns: two columns because we calculated two counts, and one row containing because we only one set of counts. There are a few other things to note about how `summarise` works:
 
 -   The expression that performs each calculation is not surrounded by quotes because it's an expression that it 'does a calculation'.
--   The order of the columns in the output is the same as the order in which they were created in the `<expression1>, <expression2>, ...` list.
+-   The order of the columns in the output is the same as the order in which they were created in the `<expression-1>, <expression-2>, ...` list.
 -   `summarise` returns the same kind of data object as its input---it returns a data frame if our data was originally in a data frame, or a tibble if it was in a tibble.
 -   If we don't specify a name `summarise` uses the actual R expression to name the columns of its output (e.g. `n_distinct(bill_length_mm)`**)**
 

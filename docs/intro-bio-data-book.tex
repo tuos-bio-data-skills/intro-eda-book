@@ -145,7 +145,7 @@
 
 \title{Exploratory Data Analysis with R}
 \author{Dylan Childs}
-\date{2021-02-22}
+\date{2021-02-23}
 
 \begin{document}
 \maketitle
@@ -3320,11 +3320,11 @@ We use \texttt{summarise} to \textbf{calculate summaries of variables} in an obj
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{summarise}\NormalTok{(}\SpecialCharTok{\textless{}}\NormalTok{data}\SpecialCharTok{\textgreater{}}\NormalTok{, }\SpecialCharTok{\textless{}}\NormalTok{expression1}\SpecialCharTok{\textgreater{}}\NormalTok{, }\SpecialCharTok{\textless{}}\NormalTok{expression2}\SpecialCharTok{\textgreater{}}\NormalTok{, ...)}
+\FunctionTok{summarise}\NormalTok{(}\SpecialCharTok{\textless{}}\NormalTok{data}\SpecialCharTok{\textgreater{}}\NormalTok{, }\SpecialCharTok{\textless{}}\NormalTok{expression}\DecValTok{{-}1}\SpecialCharTok{\textgreater{}}\NormalTok{, }\SpecialCharTok{\textless{}}\NormalTok{expression}\DecValTok{{-}2}\SpecialCharTok{\textgreater{}}\NormalTok{, ...)}
 \end{Highlighting}
 \end{Shaded}
 
-The first argument, \texttt{\textless{}data\textgreater{}}, must be the name of the data frame or tibble containing our data. We then include a series of one or more additional arguments; each of these is a valid R expression involving at least one variable in \texttt{\textless{}data\textgreater{}}. These are given by the pseudo-code placeholder \texttt{\textless{}expression1\textgreater{},\ \textless{}expression2\textgreater{},\ ...}, where \texttt{\textless{}expression1\textgreater{}} and \texttt{\textless{}expression2\textgreater{}} represent the first two expressions, and the \texttt{...} is acting as placeholder for the remaining expressions. These expressions can be any calculation involving R functions that returns a vector of some kind.
+The first argument, \texttt{\textless{}data\textgreater{}}, must be the name of the data frame or tibble containing our data. We then include a series of one or more additional arguments; each of these is a valid R expression involving at least one variable in \texttt{\textless{}data\textgreater{}}. These are given by the pseudo-code placeholder \texttt{\textless{}expression-1\textgreater{},\ \textless{}expression-2\textgreater{},\ ...}, where \texttt{\textless{}expression-1\textgreater{}} and \texttt{\textless{}expression-2\textgreater{}} represent the first two expressions, and the \texttt{...} is acting as placeholder for the remaining expressions. These expressions can be any calculation involving R functions that returns a vector of some kind.
 
 The \texttt{summarise} function seems to work a lot like \texttt{mutate}. The main difference is that the expressions \texttt{mutate} uses have to all return a vector of the same length as their inputs. In contrast, \texttt{summarise} expressions used all have to produce the same length output, but those outputs can be any length. They often return a single value because they are \textbf{summarising} the data in some way, but they don't have to.
 
@@ -3350,7 +3350,7 @@ Notice what kind of object \texttt{summarise} returns---it's a tibble with one r
 \item
   The expression that performs each calculation is not surrounded by quotes because it's an expression that it `does a calculation'.
 \item
-  The order of the columns in the output is the same as the order in which they were created in the \texttt{\textless{}expression1\textgreater{},\ \textless{}expression2\textgreater{},\ ...} list.
+  The order of the columns in the output is the same as the order in which they were created in the \texttt{\textless{}expression-1\textgreater{},\ \textless{}expression-2\textgreater{},\ ...} list.
 \item
   \texttt{summarise} returns the same kind of data object as its input---it returns a data frame if our data was originally in a data frame, or a tibble if it was in a tibble.
 \item
