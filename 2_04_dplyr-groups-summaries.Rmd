@@ -1,4 +1,4 @@
-# Grouping and summarising data
+# Summarising and grouping
 
 This chapter will explore the `summarise` and `group_by` verbs. We consider together because they are often used in combination. Their usage is also a bit different from the other **dplyr** verbs we've encountered. Here's a quick summary of what they do:
 
