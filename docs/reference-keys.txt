@@ -64,7 +64,7 @@ getting-ready-1
 relational-and-logical-operators
 subset-observations-with-filter
 reordering-observations-with-arrange
-grouping-and-summarising-data
+summarising-and-grouping
 summarising-variables-with-summarise
 more-complicated-calculations-with-summarise
 grouped-operations-using-group_by
