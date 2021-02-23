@@ -24,7 +24,7 @@
 <meta name="author" content="Dylan Childs" />
 
 
-<meta name="date" content="2021-02-22" />
+<meta name="date" content="2021-02-23" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -332,8 +332,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="summarising-variables-with-summarise" class="section level2" number="9.1">
 <h2><span class="header-section-number">9.1</span> Summarising variables with <code>summarise</code></h2>
 <p>We use <code>summarise</code> to <strong>calculate summaries of variables</strong> in an object containing our data. We do this kind of calculation all the time when analysing data. In terms of pseudo-code, usage of <code>summarise</code> looks like this:</p>
-<div class="sourceCode" id="cb241"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb241-1"><a href="grouping-and-summarising-data.html#cb241-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summarise</span>(<span class="sc">&lt;</span>data<span class="sc">&gt;</span>, <span class="sc">&lt;</span>expression1<span class="sc">&gt;</span>, <span class="sc">&lt;</span>expression2<span class="sc">&gt;</span>, ...)</span></code></pre></div>
-<p>The first argument, <code>&lt;data&gt;</code>, must be the name of the data frame or tibble containing our data. We then include a series of one or more additional arguments; each of these is a valid R expression involving at least one variable in <code>&lt;data&gt;</code>. These are given by the pseudo-code placeholder <code>&lt;expression1&gt;, &lt;expression2&gt;, ...</code>, where <code>&lt;expression1&gt;</code> and <code>&lt;expression2&gt;</code> represent the first two expressions, and the <code>...</code> is acting as placeholder for the remaining expressions. These expressions can be any calculation involving R functions that returns a vector of some kind.</p>
+<div class="sourceCode" id="cb241"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb241-1"><a href="grouping-and-summarising-data.html#cb241-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summarise</span>(<span class="sc">&lt;</span>data<span class="sc">&gt;</span>, <span class="sc">&lt;</span>expression<span class="dv">-1</span><span class="sc">&gt;</span>, <span class="sc">&lt;</span>expression<span class="dv">-2</span><span class="sc">&gt;</span>, ...)</span></code></pre></div>
+<p>The first argument, <code>&lt;data&gt;</code>, must be the name of the data frame or tibble containing our data. We then include a series of one or more additional arguments; each of these is a valid R expression involving at least one variable in <code>&lt;data&gt;</code>. These are given by the pseudo-code placeholder <code>&lt;expression-1&gt;, &lt;expression-2&gt;, ...</code>, where <code>&lt;expression-1&gt;</code> and <code>&lt;expression-2&gt;</code> represent the first two expressions, and the <code>...</code> is acting as placeholder for the remaining expressions. These expressions can be any calculation involving R functions that returns a vector of some kind.</p>
 <p>The <code>summarise</code> function seems to work a lot like <code>mutate</code>. The main difference is that the expressions <code>mutate</code> uses have to all return a vector of the same length as their inputs. In contrast, <code>summarise</code> expressions used all have to produce the same length output, but those outputs can be any length. They often return a single value because they are <strong>summarising</strong> the data in some way, but they don’t have to.</p>
 <p>The <code>summarise</code> verb is best understood by example. The <strong>dplyr</strong> function <code>n_distinct</code> takes a calculates the number of distinct (i.e. unique) cases in a vector. We can use <code>n_distinct</code> with <code>summarise</code> to calculate the number of unique vales of the <code>bill_length_mm</code> and <code>bill_depth_mm</code> variables like this:</p>
 <div class="sourceCode" id="cb242"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb242-1"><a href="grouping-and-summarising-data.html#cb242-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summarise</span>(penguins, <span class="fu">n_distinct</span>(bill_length_mm), <span class="fu">n_distinct</span>(bill_depth_mm))</span></code></pre></div>
@@ -344,7 +344,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Notice what kind of object <code>summarise</code> returns—it’s a tibble with one row and two columns: two columns because we calculated two counts, and one row containing because we only one set of counts. There are a few other things to note about how <code>summarise</code> works:</p>
 <ul>
 <li>The expression that performs each calculation is not surrounded by quotes because it’s an expression that it ‘does a calculation.’</li>
-<li>The order of the columns in the output is the same as the order in which they were created in the <code>&lt;expression1&gt;, &lt;expression2&gt;, ...</code> list.</li>
+<li>The order of the columns in the output is the same as the order in which they were created in the <code>&lt;expression-1&gt;, &lt;expression-2&gt;, ...</code> list.</li>
 <li><code>summarise</code> returns the same kind of data object as its input—it returns a data frame if our data was originally in a data frame, or a tibble if it was in a tibble.</li>
 <li>If we don’t specify a name <code>summarise</code> uses the actual R expression to name the columns of its output (e.g. <code>n_distinct(bill_length_mm)</code><strong>)</strong></li>
 </ul>
