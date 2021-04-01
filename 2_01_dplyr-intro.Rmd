@@ -1,12 +1,5 @@
 # Getting ready to use **dplyr**
 
-```{r, include=FALSE}
-library(dplyr)
-penguins <- 
-  palmerpenguins::penguins %>%
-  mutate(across(where(is.factor), as.character))
-```
-
 ## Introduction
 
 Data wrangling is the process of cleaning and manipulating data to get it ready for analysis, for example, by creating derived variables and subsets of the data. Although not the most exciting part of a study---we want to answer questions, not format data---data wrangling is critical. This step in a data analysis workflow can become very time-consuming if not tackled with the right tools.
@@ -153,7 +146,7 @@ Our advice is to download this, print out a copy, and refer to it often as you s
 
 ### A first look at **dplyr** {#more-dplyr}
 
-We'll draw this chapter to a close by taking a preliminary look at the **dplyr** package. The package is not part of the base R installation, so we have to have installed it first. Remember, once installed, there is no need to install the package every time we need to use it. We do have to use `library` to load and attach the package every time we want to use it:
+Let's take a preliminary look at the **dplyr** package. The package is not part of the base R installation, so we have to have installed it first. Remember, once installed, there is no need to install the package every time we need to use it. We do have to use `library` to load and attach the package every time we want to use it:
 
 ```{r, eval=FALSE}
 library("dplyr")
