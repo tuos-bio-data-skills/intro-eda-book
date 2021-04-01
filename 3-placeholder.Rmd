@@ -1,4 +1,0 @@
-# Exploratory data analysis with **ggplot2**
-
-We describe how to use **ggplot2** to visually explore data in this section.
-
