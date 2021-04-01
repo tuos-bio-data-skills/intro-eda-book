@@ -1,4 +1,4 @@
-# Relationships between two variables
+# Exploring relationships between variables
 
 This chapter is about exploring the __associations__ between pairs of variables in a sample. These are called __bivariate associations__. An association is any relationship between two variables that makes them dependent, i.e. knowing the value of one variable gives us some information about the possible values of the second variable. The main goal of this chapter is to show how to use descriptive statistics and visualisations to explore associations among different kinds of variables.
 
@@ -225,6 +225,29 @@ ggplot(storms_alter, aes(x = wind))  +
 We can see quite a lot in this plot and the last. The tropical depression, tropical storm, and hurricane histograms do not overlap (with a few minor exceptions). These three storm categories are obviously defined with respect to wind speed. Perhaps they represent different phases of one underlying physical phenomenon? The extratropical storm system seems to be something altogether different. In fact, an extratropical storm is a different kind of weather system from the other three. It can turn into a tropical depression (winds < 39 mph) or a subtropical storm (winds > 39 mph), but only a subtropical can turn into a hurricane.
 
 We're oversimplifying, but the point is that the simple ordinal scale that we envisaged for the `type` variable is probably not very sensible. It's not really true that an extratropical is "greater than" a subtropical depression (or vice versa). We should probably have characterised `type` as a nominal variable, although this designation ignores the fact that three of the storm types have a clear ordering. The take home message is that we have to understand our data before we start to really analyse it. This is why exploratory data analysis is so important.
+
+## Multivariate relationships {#multivariate}
+
+We examined various plots that summarise associations between two variables in the last chapter. How do we explore relationships between more than two variables in a single graph? That is, how do we explore __multivariate associations__? It's difficult to give a concrete answer to this question, because it depends on the question we're trying to address, the kinds of variables we're working with, and to a large extent, our creativity and aptitude with an advanced graphing framework like **ggplot2**. Nonetheless, we already know enough about how **ggplot2** works to build some fairly sophisticated visualisations. There are two ways to add additional information to a visualisation: 
+
+1. Define aesthetic mappings to allow the properties of a layer to depend on the different values of one or more variable.
+
+2. Use faceting to construct a multipanel plot according to the values of categorical variables.
+
+We can adopt both of these approaches at the same time, meaning we can get information form 4-6 variables into a single graph if we need to (though this does not always produce an easy-to-read plot). We've already seen these two approaches used together in the [Introduction to **ggplot2**] chapter. We'll look at one more example to illustrate the approach again. 
+
+We want to understand how the sample distribution of wind speed during a storm varies over the course of a year. We also want to visualise how this differs among storm categories. One way to do this is to produce a stacked histogram for each month of the year, where the colour of the stacked histograms changes with respect to storm category. We do this using the `facet_wrap` function to specify separate panels for each month, colouring the histograms by the `type` variable. Stacking the histograms happens by default:
+
+```{r, fig.width=7}
+ggplot(storms_alter, aes(x = wind, fill = type)) +
+  geom_histogram(binwidth = 15) + 
+  xlab("Wind Speed (mph)") + ylab("Count") + 
+  labs(fill = "Storm Type") +
+  facet_wrap(~ month, ncol = 3)
+```
+
+Notice that we're using `storms_alter` from the last chapter, the version of `storms` where the `type` variable was converted to a factor. We haven't used any new tricks here though. We just set a couple of aesthetics and used faceting to squeeze many histograms onto one plot. It mostly shows that if we're planning a holiday in Central America we should probably avoid travelling from August to October...
+
 
 
 

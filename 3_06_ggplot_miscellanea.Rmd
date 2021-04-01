@@ -13,6 +13,62 @@ storms_alter <-
   mutate(type = factor(type, levels = storm_names)) 
 ```
 
+## Comparing descriptive statistics {#summaries}
+
+Until now we have been focusing on plots that display either the raw data (e.g. scatter plots), or a summary of the raw data that captures as much detail as possible (e.g. histograms and box plots). We've tended to treat descriptive statistics like the sample mean as 'a number' to be examined in isolation. These are often placed in the text of a report or in a table. However, there's nothing to stop us visualising a set of means (or any other descriptive statistics) and a figure is much more informative than than a table. Moreover, many common statistical tools focus on a few aspects of sample distributions (e.g. means and variances) so it's a good idea to plot these.
+
+We need to know how construct graphs that display such summaries. Let's start with a simple question: how does the (arithmetic) mean wind speed vary across different types of storm? One strategy is to produce a bar plot in which the lengths of the bars represent the mean wind speed in each category. There are two different ways to produce this with **ggplot2**.
+
+The first is simplest, but requires a new **ggplot2** trick. When we add a layer using `geom_bar` we have to set two new arguments. The first is `stat = "summary"`. This tells **ggplot2** not to plot the raw values of the y aesthetic mapping, but instead, to construct a summary of the 'y' variable. The second argument is `fun.y = mean`. This tells **ggplot2** how to summarise this variable. The part on the right hand side can be any R function that takes a vector of values and returns a single number. Obviously we want the `mean` function. See how this works in practice:
+
+```{r, fig.height=2.5}
+ggplot(storms_alter, aes(x = type, y = wind)) +
+  geom_bar(stat = "summary", fun.y = mean) +
+  coord_flip() + 
+  xlab("Storm Category") + ylab("Mean Wind Speed (mph)")
+```
+
+We also flipped the coordinates here with `coord_flip` to make this a horizontal bar plot. We've seen this before in the [Exploring categorical variables] chapter. The only new idea is our use of the `stat` and `fun.y` arguments.
+
+The second way to build a bar plot showing some kind of summary statistic breaks the problem into two steps. In the first step we have to calculate whatever it is we want to display, i.e. the category-specific mean in this case. This information needs to be stored in a data frame or tibble so **dplyr** is the best tool to use for this:
+```{r}
+storms_sum <- 
+  storms_alter %>% 
+  group_by(type) %>% 
+  summarise(mean_wind = mean(wind))
+storms_sum
+```
+
+We used `group_by` and `summarise` to calculate the set of means, which we called `mean_wind`. The second step uses the new data frame (called `storms_sum`) as the default data in a new graphical object, sets x and y aesthetic mappings from `type` and `mean_wind`, and adds a layer with `geom_col`: 
+
+```{r, fig.height=2.5}
+mean.plt <-
+  ggplot(storms_sum, aes(x = type, y = mean_wind)) +
+  geom_col() + 
+  coord_flip() + xlab("Storm Category") + ylab("Mean Wind Speed (mph)")
+mean.plt
+```
+
+The result is the same as the last plot. Note that we have used `geom_col` instead of `geom_bar` here. Remember here that the default behaviour of `geom_bar` is to count the observations in each category. Using the `geom_col` function tells it that the information in `mean_wind` must be plotted 'as is' instead.
+
+Which approach is better? The first approach is more compact though. We recommend the second long-winded way approach for new users because it separates the summary calculations from the plotting. This way, as long as we're comfortable with **dplyr**, we can get away with remembering less about how **ggplot2** works. It also makes it a bit easier to fix mistakes, as we can first check whether the right information is in the summary data frame, before we worry about plotting it.
+
+The two-step method is easy to extend to different kinds of plots as well. An example will help to clarify what we mean by this. Remember the wind speed vs. atmospheric pressure scatter plots we first produced? One criticism of those plots is that they don't really summarise differences among storm events. We plotted all the data, which means a storm system that lasts a long time contributes relatively more points to the plot than a short storm. 
+
+Why not plot the storm-specific means instead? We know how to do this using **dplyr** and **ggplot2**. First construct a new data frame containing the means:
+```{r}
+storms_means <- 
+  storms_alter %>% 
+  group_by(name) %>% 
+  summarise(wind = mean(wind), pressure = mean(pressure))
+```
+Then it is just a matter producing a scatter plot with the new data frame. There are no new tricks to learn:
+```{r}
+ggplot(storms_means, aes(x = pressure, y = wind)) + 
+  geom_point(alpha = 0.8) + 
+  xlab("Atmospheric Pressure (mbar)") + ylab("Wind Speed (mph)")
+```
+
 ## Adding error bars
 
 In the [Building in Complexity] chapter we learnt how to make a bar chart showing the means of our data. However, we generally want to show how variable the data are as well as the central tendency (e.g. mean) of the data. To do this we can include error bars showing for example the standard deviation or standard error of the mean. We'll demonstrate this using the storms data set again, by plotting the means and standard errors of wind speed for each storm type. 
