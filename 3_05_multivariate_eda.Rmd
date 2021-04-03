@@ -167,7 +167,7 @@ The `position = "dodge"` argument says that we want the bars to 'dodge' one anot
 
 This final figure shows that on average, storm systems spend more time as hurricanes and tropical storms than tropical depressions or extratropical systems. Other than that, the story is a little messy. For example, 1997 was an odd year, with few storm events and relatively few hurricanes.
 
-## Categorical-numerical associations {#categorical}
+## Categorical-numerical associations {#cat-num-association}
 
 We've seen how to summarise the relationship between a pair of variables when they are of the same type: numeric vs. numeric or categorical vs. categorical. The obvious next question is, "How do we display the relationship between a categorical and numeric variable?" As usual, there are a range of different options. 
 
