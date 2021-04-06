@@ -1,4 +1,4 @@
-# Introduction to **ggplot2**
+# Introduction to **ggplot2** {#chapter-ggplot2-intro}
 
 One of the main reasons data analysts turn to R is for its strong data visualisation capabilities. The R ecosystem includes many different packages that support data visualisation. The three most widely used are: 1) the base graphics system, which uses the **graphics** package; 2) the **lattice** package; and 3) the **ggplot2** package. Each system has its own strengths and weaknesses:
 
@@ -199,20 +199,18 @@ We didn't have to specify the stat or the position adjustment components of the 
 
 There's one last trick we need to learn to use **ggplot2** efficiently. We've been building a plot object in several steps, giving the intermediates the name `plt`, and then manually printing the object to display it when it's ready. This is useful if we want to make different versions of the same plot. However, we very often just want to build the plot and display it in one go. This is done by combining everything with `+` and printing the resulting object directly:
 
-```{r}
-ggplot(penguins, aes(x = bill_length_mm, y = bill_depth_mm)) + geom_point()
-```
-
-That code builds the **ggplot2** graphical object and renders it in one go. Notice that we didn't even have to use `print` to generate the output. We have seen a lot is going on underneath this, but this small snippet of R code contains everything **ggplot2** needs to construct and display a simple scatter plot.
-
-One last thing... The code for **ggplot2** can get quite complicated, and as always, it's a good idea to use newlines and white space to improve readability. The usual convention is to put each new function after a `+` on a new line, like this:
-
 ```{r, eval=FALSE}
 ggplot(penguins, aes(x = bill_length_mm, y = bill_depth_mm)) + 
   geom_point()
 ```
 
-Just remember that all the ggplot code joined by `+` symbols has to be run as one---it all belongs together even if we decide to place the component parts on different lines.
+That code builds the **ggplot2** graphical object and renders it in one go. Notice that we didn't even have to use `print` to generate the output. We have seen a lot is going on underneath this, but this small snippet of R code contains everything **ggplot2** needs to construct and display a simple scatter plot.
+
+::: {.infobox .information data-latex="{information}"}
+#### How should we format **ggplot2** code? {.unnumbered}
+
+Take another look at that last example. Notice that we split the **ggplot2** definition over two lines, placing each function on its own line. The whole thing will still be treated as a single expression when we do this because R doesn't care about white space. As long as we put a `+` at the end of a line R will assume the next line to be part of the same definition. Just remember that any **ggplot2** code joined by `+` symbols has to be run as one big expression. Splitting the different parts of a graphical object definition across lines like this is a good idea. It makes everything more readable and helps us spot errors. This way of formatting **ggplot2** code is pretty much essential once we start working with complex plots. We will always use this convention from now on.
+:::
 
 What does this scatter plot actually tell us about penguin bill morphology? It seems to suggest there isn't much of a relationship between bill depth and bill length. Does that seem sensible? Maybe we need a more informative plot...
 

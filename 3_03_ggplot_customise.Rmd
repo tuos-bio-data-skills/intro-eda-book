@@ -1,168 +1,248 @@
+```{r, echo=FALSE}
+opts_chunk$set(warning=FALSE)
+```
+
 # Customising plots
 
-The default formatting used by **ggplot2** is generally fine for exploratory purposes. In fact, although they aren't universally popular, the defaults are carefully chosen to ensure that the information in a plot is easy to discern. These choices are a little unconventional though. For example, published figures usually use a white background. For this reason, we often need to change the appearance of a plot once we're ready to include it in a report. 
+The default formatting conventions used by **ggplot2** have been carefully chosen to ensure the information in a plot is easy to discern. For example, by default, plots include a pale grey background and include gridlines. This is designed to emphasise the data while supporting comparisons. The grey highlights colour differences and ensures the gridlines have little visual impact beyond aiding in the assessment of position. Perfect for exploratory analysis!
 
-Our aim in this chapter is to learn a little bit about the underlying logic of how to customise **ggplot2**. We aren't going to attempt to cover the many different permutations. Instead, we'll focus on the main principles underlying the different routes to customisation. We'll build on these as we review a range of different visualisations in later chapters. Using the storms data once again, we'll work on improving the simple scatter plot initially produced in the [Introduction to **ggplot2**] chapter:
+Although we can justify these sorts of choices on the grounds that they improve the readability of a plot, the fact remains they are somewhat unconventional and not much-loved by many users. For this reason, we often need to change the appearance of a plot before we include it in a document or presentation---e.g. most published figures use a white, rather than grey, background.
 
-```{r}
-# 1. make the storms data available
-library(nasaweather)
-# 2. plot wind speed against atmospheric pressure
-ggplot(storms, aes(x = pressure, y = wind)) + geom_point()
-```
-
-## Working with layer specific geom properties
-
-What do we do if we if we need to change the properties of a geom? We're using the point geom at the moment. How might we change the colour or size of points in our scatter plot? It's quite intuitive---we set the appropriate arguments in the `geom_point` function. Let's rebuild our example, this time setting the colour, size and transparency of points:
-
-```{r}
-ggplot(storms, aes(x = pressure, y = wind)) + 
-  geom_point(colour = "steelblue", size = 1.5, alpha = 0.3)
-```
-
-The point colour is set with the `colour` argument. There are many ways to specify colours in R, but if we only need to specify a few the simplest is to use a name R recognises. The point size is specified with the `size` argument. The baseline is 1, and so here we increased the point size by assigning this a value of 1.5. Finally, we made the points somewhat transparent by setting the value of the `alpha` argument to be less than 1. In graphical systems the 'alpha channel' essentially specifies transparency of something---a value of 0 is taken to mean 'completely invisible' and a value of 1 means 'completely opaque'.
-
-::: {.infobox .information data-latex="{information}"}
-#### Built-in colours in R {-}
-There is nothing special about 'steelblue' other than the fact that it is colour name 'known' to R. There are over 650 colour names built-in to R. To see them, use a function called `colours` to print them all to the Console. Try it.
-:::
-
-There are other arguments---such as `fill` and `shape`---that can be used to adjust the way the points are rendered. We won't look at these here. The best way to learn how these work is to simply experiment with them. 
-
-The __key message__ to take away from this little customisation example is this: if we want to set the properties of a geom in a particular layer, we do so by specifying the appropriate arguments in the `geom_NAME` function that defines that layer. We __do not__ change the arguments passed to the `ggplot` function.
-
-::: {.infobox .information data-latex="{information}"}
-#### How should we format **ggplot2** code? {-}
-Take another look at that last example. Notice that we split the **ggplot2** definition over two lines, placing each function on its own line. The whole thing will still be treated as a single expression when we do this because each line, apart from the last one, ends in a `+`. R doesn't care about white space. As long as we leave the `+` at the end of each line R will consider each new line to be part of the same definition. Splitting the different parts of a graphical object definition across lines like this is a very good idea. It makes everything more readable and helps us spot errors. This way of formatting **ggplot2** code is pretty much essential once we start working with complex plots. We will always use this convention from now on.
-:::
-
-
-
-### The relationship between aesthetics and geom properties.
-
-We've seen that we can introduce new information into a plot by setting up additional aesthetics. In the previous chapter we added the information about the time of year an observation was made by mapping the `seasday` variable to the colour aesthetic. Let's try to add this to our new figure:
-
-```{r}
-ggplot(storms, aes(x = pressure, y = wind, colour = seasday)) + 
-  geom_point(colour = "steelblue", size = 1.5, alpha = 0.3)
-```
-
-This doesn't seem to have worked as hoped as the resulting scatter plot looks exactly like the previous one, i.e. all the points are the same colour. What went wrong? We're still setting the colour argument of `geom_point`. When we add a layer, any layer-specific properties that we set will override the aesthetic mappings. We need to remove the `colour = "steelblue"` from inside `geom_point` to remedy this:
+This chapter will demonstrate how to customise **ggplot2** plots. We are not going to cover every possible permutation. That would need its [own book](https://ggplot2-book.org/). Instead, we will explore the main routes to customisation so that we can demonstrate these as we review different visualisations later. Using the penguins data once again, we'll work on improving the following scatter plot from the [Introduction to **ggplot2**](#chapter-ggplot2-intro) chapter:
 
 ```{r, fig.width=4.5}
-ggplot(storms, aes(x = pressure, y = wind, colour = seasday)) + 
-  geom_point(size = 1.5, alpha = 0.3)
+ggplot(penguins, 
+       aes(x = bill_length_mm, y = bill_depth_mm, colour = species)) + 
+  geom_point()
 ```
 
-That's what we were aiming for. The points are now coloured again according to how they are associated with early (dark blue) or late (light blue) season observations.
+## Working with geom properties
 
-The __key message__ to take away from this example is this: if we decide to change the properties of the geom in a particular layer, we will override any aesthetic mappings that conflict with our choice of customisation.
+What do we do if we need to change the properties of a geom? For example, how might we change properties like the size or shape of points in our scatter plot? This is reasonably intuitive; we used the `geom_point` function to add points to the scatter plot, which means we have to set the arguments of `geom_point` to change their properties.
 
-## Working with layer specific position adjustments
+Let's rebuild the example scatter plot, this time setting the shape, size and transparency of points:
+
+```{r, fig.width=4.5}
+ggplot(penguins, 
+       aes(x = bill_length_mm, y = bill_depth_mm, colour = species)) + 
+  geom_point(shape = 17, size = 1.5, alpha = 0.85)
+```
+
+The point shape is set with the `shape` argument. There are a few different ways to specify point shapes in R. We used the numeric coding system in this example (17 = triangle). Unfortunately, the numeric codes aren't at all intuitive. Here are the more common ones:
+
+```{r, echo=FALSE, fig.width=7, fig.height=0.5}
+shapes <- data.frame(p = 0:25); ggplot() + scale_shape_identity() + geom_point(data=shapes, mapping=aes(x=p, y=1, shape=p), size=5, fill="red") + geom_text(data=shapes, mapping=aes(x=p, y=0, label=p), size=4) + ylim(-0.5, 1.5) + theme_void()
+```
+
+The point size is specified by the `size` argument. This has a baseline value is 1. We assigned `size` a value of 1.5, thereby increasing the point size relative to the default. We could make the points smaller than the default by using a value less than 1.
+
+We made the points semi-transparent by setting the value of the `alpha` argument to be less than 1. In graphical systems the 'alpha channel' specifies transparency---a value of 0 is taken to mean 'completely invisible' and a value of 1 means 'completely opaque'. Making objects semi-transparent can be particularly useful when there is a lot of over-plotting.
+
+There are other arguments---such as `fill` and `colour`---that can also be used to adjust the way the points are rendered. We won't look at these here. The best way to learn how these work is to simply experiment with them.
+
+The key message to take away from this little customisation example is this: if we want to set the properties of the geom associated with a particular layer, we do so by specifying the appropriate arguments in the `geom_NAME` function that defines the layer. This is the route we should use whenever we need to change the appearance of geometric objects, i.e. points, lines, bars, polygons, and so on.
+
+### The relationship between aesthetic mappings and geom properties.
+
+In the previous chapter, we saw that we could introduce information into a plot by setting aesthetic mappings in the `aes` part of its specification. In the scatter plot example, we included information about species identity by mapping the `species` variable to the colour aesthetic. What happens if we also try to set the colour within the `geom_point` part?
+
+```{r, fig.width=4.5}
+ggplot(penguins, 
+       aes(x = bill_length_mm, y = bill_depth_mm, colour = species)) + 
+  geom_point(colour = "skyblue", shape = 17, size = 1.5, alpha = 0.85)
+```
+
+All the points are now one colour ('sky blue') which means we have lost the species information. What does this example demonstrate? When we set the properties of a geom, this will override any aesthetic mappings that conflict with our choice of customisation. Try to remember that---failing to do so is a good way to become frustrated.
+
+::: {.infobox .information data-latex="{information}"}
+#### Built-in colours in R {.unnumbered}
+
+There is nothing special about 'skyblue' other than the fact that it is colour name known to R. There are over 650 built-in colour names. To see them, use a function called `colours` to print them all to the Console. Here are 25 selected at random:
 
 ```{r, echo=FALSE}
 set.seed(27081975)
 ```
 
-What else might we do to make the plot a little easier to read? Wind speed is only measured to the nearest 5 mph, which is causing many points to be plotted on top of one another. One option to solve this problem is to randomly shuffle the vertical position of each point a little to avoid this over-plotting. This is called 'jittering'. We do this by specifying a position adjustment in our layer. Remember, position adjustments are part of individual layers, not the whole plot. Here's one way to do this:
+```{r}
+sample(colours(), size = 25, replace = FALSE)
+```
+:::
+
+## Working with plot scales
+
+Setting the arguments of a `geom_` function applies changes in a layer-specific manner. Other kinds of customisation affect every layer in a plot. Remember what we said about **scales** in the previous chapter:
+
+> The scale part of a **ggplot2** object controls how the information in a variable is mapped to the aesthetic properties. A scale takes the data and converts it into something we can perceive, such as an x/y location or the colour and size of points in a plot.
+
+Every aesthetic mapping has a scale associated with it. We adjust 'how the information in a variable is mapped to the aesthetic properties' by changing its corresponding scale.
+
+As always, this kind of thing is best understood by example. Let's adjust the scale associated with the y axis aesthetic by increasing the number of the horizontal lines and their accompanying labels (the 'guides').
 
 ```{r, fig.width=4.5}
-ggplot(storms, aes(x = pressure, y = wind, colour = seasday)) + 
-  geom_point(alpha = 0.3, size = 1.5, position = position_jitter(w = 0, h = 4))
+ggplot(penguins, 
+       aes(x = bill_length_mm, y = bill_depth_mm, colour = species)) + 
+  geom_point(shape = 17, size = 1.5, alpha = 0.85) + 
+  scale_y_continuous(breaks = seq(14, 20, by = 2))
 ```
 
-We used the `position_jitter` function to associate the necessary information with the position argument of `geom_point`. The `w` ('w'idth) and `h` ('h'eight) arguments of the `position_jitter` function specify how much to jitter points in the x and y directions. The resulting plot is a little easier to read.
+What's going on here?
 
-The __key message__ to take away from this second customisation example is this: every layer has its own position adjustment, which we can change by setting the `position` argument inside the `geom_NAME` function that defines the corresponding layer. Just keep in mind that, very often, there's no need to mess about with position adjustments (the defaults are fine).
+-   The aesthetic we wanted to alter was the y axis position. The y axis in this particular plot is associated with a continuous scale because `bill_depth_mm` is a numeric variable. This means we have to apply the `scale_y_continuous` function to tweak the position of the y axis guides.
 
-## Working with plot specific scales
+-   The `breaks` argument of `scale_y_continuous` takes a numeric vector to specify where the guides should be drawn. We used the base R `seq` function to set up a numeric vector containing the sequence: 14, 16, 18 and 20. That tells **gglot2** to place the guides at 14, 16, 18 and 20 on the y axis.
 
-Let's look at a different way to tweak our plot. So far we have been focussing on customisations that apply in a layer specific manner (geom properties and position adjustments). A second class of customisation applies to the whole plot. Specifically, this new type of customisation applies to the scales used in the plot. Here's what we said about scales in the last chapter:
+The functions that adjust a scale all have the general form `scale_AES_TYP`, where:
 
-> The scale controls how the data is mapped to the aesthetic attributes. A scale takes the data and converts it into something we can perceive, such as an x/y location, or the colour and size of points in a plot. A scale must be defined for every aesthetic in a plot. 
+-   the `AES` bit in the name refers to the relevant aesthetic, and
+-   the `TYP` part refers to the kind of scale we want to define.
 
-Every aesthetic has a scale associated with it. We adjust 'how the data is mapped to the aesthetic attributes' by changing some aspect of the corresponding scale. This will seem very abstract at first. As always it's best understood by example. 
+Each kind of `scale_AES_TYP` function has its own set of arguments to control how the scale works. For example, the `breaks` argument of `scale_y_continuous` uses a numeric vector to specify where the guides should be drawn. We can do much fancier things if we want to. For example, the `trans` argument can be used to apply a particular transformation to an axis, such as a logarithm.
 
-We're going to adjust the scale associated y axis aesthetic ('y'). Specifically, we want to increase the number of 'guides' (the horizontal lines inside the plot) and their accompanying labels. Here is how we place guides at 20, 40, 60, 80, etc, on the y axis:
+Predictably, there is also a `scale_x_continuous` function. We can use this in exactly the same way to control where the guides on the x axis appear:
 
 ```{r, fig.width=4.5}
-ggplot(storms, aes(x = pressure, y = wind, colour = seasday)) + 
-  geom_point(alpha = 0.3, size = 1.5, position = position_jitter(w = 0, h = 4)) + 
-  scale_y_continuous(breaks = seq(20, 160, by = 20))
+ggplot(penguins, 
+       aes(x = bill_length_mm, y = bill_depth_mm, colour = species)) + 
+  geom_point(shape = 17, size = 1.5, alpha = 0.85) + 
+  scale_x_continuous(breaks = seq(34, 62, by = 4)) +
+  scale_y_continuous(breaks = seq(14, 20, by = 2))
 ```
 
-What's going on here? The functions that adjust a scale all have the general form `scale_XX_YY`. The `XX` bit in the name must reference the relevant aesthetics, while the `YY` part refers to the kind of scale we want to define. The aesthetic we wanted to alter was the y axis. It turns out (though it probably wasn't obvious) that this is a continuous scale because wind is a numeric variable. This means we had to use the `scale_y_continuous` function to tweak the y axis (there is a `scale_x_continuous` function for altering the x axis). The `breaks` argument just takes a vector containing a numeric sequence and uses this to specify where the guides should be drawn. 
+The key message to take away from this is that every aesthetic mapping has a scale associated with it. If we want to change how the information associated with an aesthetic mapping is displayed we have to change the corresponding scale. That suggests we can change the way point colours are associated with the `species` variable in our example by using one of the `scale_colour_YY` functions. That is correct:
 
-Scales are the hardest aspect of **ggplot2** to get to grips with. For one, there are a lot of them---type `scale_` at the Console and hit the tab key to see how many there are. Each of them can take a variety of different arguments. Luckily, the defaults used by **ggplot2** are often good enough that we can arrive at a good plot without having to manipulate the scales. We'll take a look at a few more options as we progress through different visualisations.
+```{r, fig.width=4.7}
+ggplot(penguins, 
+       aes(x = bill_length_mm, y = bill_depth_mm, colour = species)) + 
+  geom_point(shape = 17, size = 1.5, alpha = 0.85) + 
+  scale_x_continuous(breaks = seq(34, 62, by = 4)) +
+  scale_y_continuous(breaks = seq(14, 20, by = 2)) + 
+  scale_color_manual(
+    values = c("cornflowerblue", "seagreen", "orangered3"),
+    labels = c(Adelie = "P. adeliae", Chinstrap = "P. antarcticus", Gentoo = "P. papua")
+  )
+```
 
-The __key message__ to take away from this third customisation example is this: every aesthetic mapping has a scale associated with it. If we want to change how the information associated with an aesthetic is displayed we should change the corresponding scale. For example, if we want to change the way point colours are associated with the `seasday` variable we have to use one of the `scale_colour_YY` functions.
+This uses `scale_color_manual` to achieve two things---it sets up a custom colour palette (via `values`) and alters the species category names so that their scientific names are displayed (via `labels`). Notice we placed the arguments on different lines to make the code a bit easier to read.
+
+Scales are one of the hardest aspect of **ggplot2** to get to grips with. There are many different scales, each of which is controlled by a variety of arguments. Fortunately, the defaults used by **ggplot2** are often good enough to arrive at a reasonable plot without having to manipulate the scales.
 
 ## Adding titles and labels
 
-What else might we like to tweak? Look at the x and y axis labels. These are just the names of the data variables used to define the aesthetic mapping. These labels aren't too bad in this case, but they could be more informative. We know "wind" stands for "wind speed", but someone reading this figure may not realise this immediately. There are also no units -- generally a big no-no for serious figures. Here is how to set the axis labels: 
-```{r, fig.width=4.5}
-ggplot(storms, aes(x = pressure, y = wind, colour = seasday)) + 
-  geom_point(alpha = 0.3, size = 1.5, position = position_jitter(w = 0, h = 4)) + 
-  scale_y_continuous(breaks = seq(20, 160, by = 20)) + 
-  xlab("Atmospheric Pressure (mbar)") + ylab("Wind Speed (mph)")
+What else might we like to tweak? Look at the x and y axis labels. These are the names of the variables used in the x/y aesthetic mappings. These labels aren't too bad, but they could be a bit nicer to look at. We know 'bill_depth_mm' stands for 'bill depth (measured in mm)' so why not use an axis label more like that?
+
+The axes labels are a feature of the whole plot---i.e. they do not belong to a particular layer. This means we can't alter axis labels by passing arguments to the function that built a layer (`geom_point`). We have to use a labelling function. Here is one way to set the axis labels:
+
+```{r, fig.width=4.7}
+ggplot(penguins, 
+       aes(x = bill_length_mm, y = bill_depth_mm, colour = species)) + 
+  geom_point(shape = 17, size = 1.5, alpha = 0.85) + 
+  scale_x_continuous(breaks = seq(34, 62, by = 4)) +
+  scale_y_continuous(breaks = seq(14, 20, by = 2)) + 
+  scale_color_manual(
+    values = c("cornflowerblue", "seagreen", "orangered3"),
+    labels = c(Adelie = "P. adeliae", Chinstrap = "P. antarcticus", Gentoo = "P. papua")
+  ) + 
+  xlab("Bill length (mm)") + ylab("Bill depth (mm)")
 ```
 
-The axes labels are a feature of the whole plot. They do not belong to a particular layer. This is why we don't alter axis labels by passing arguments to the function that built a layer (`geom_point` in this case). Instead, we use the `xlab` and `ylab` functions to set the x and y labels, respectively, using `+` to add them to our graphical object. If we need to add a title to a graph we can use the `ggtitle` function in the same way.
+This uses the `xlab` and `ylab` functions to set the x and y labels, respectively, using `+` to add them to our graphical object. If we need to add a title to a graph we can use the `ggtitle` function in the same way. Simple!
 
-The `labs` function provides a more flexible alternative to `xlab` and `ylab`. It's more flexible because `labs` can be used to change the label of every aesthetic in the plot. For example, if we want to set the labels of the x and y axes, and the label associated with `seasday`, we use:
+The `labs` function is a flexible alternative to `xlab` and `ylab`. It's more flexible because `labs` can be used to change the label of every aesthetic in the plot. For example, if we want to set the labels of the x and y axes, and the label associated with `species`, we use:
 
-```{r, fig.width=4.5}
-ggplot(storms, aes(x = pressure, y = wind, colour = seasday)) + 
-  geom_point(alpha = 0.3, size = 1.5, position = position_jitter(w = 0, h = 4)) + 
-  scale_y_continuous(breaks = seq(20, 160, by = 20)) + 
-  labs(x = "Atmospheric Pressure (mbar)", 
-       y = "Wind Speed (mph)",
-       colour = "Day of \nSeason")
+```{r, fig.width=4.7}
+ggplot(penguins, 
+       aes(x = bill_length_mm, y = bill_depth_mm, colour = species)) + 
+  geom_point(shape = 17, size = 1.5, alpha = 0.85) + 
+  scale_x_continuous(breaks = seq(34, 62, by = 4)) +
+  scale_y_continuous(breaks = seq(14, 20, by = 2)) + 
+  scale_color_manual(
+    values = c("cornflowerblue", "seagreen", "orangered3"),
+    labels = c(Adelie = "P. adeliae", Chinstrap = "P. antarcticus", Gentoo = "P. papua")
+  ) + 
+  labs(x = "Bill length (mm)", y = "Bill depth (mm)", colour = "Penguin Species")
 ```
-
-We snuck one last trick into that last example. Notice that the "Day of Season" label is split over two lines. We did this by inserting the special sequnce `\n` into the label text. The `\n` inside a quoted label tells R to start a new line.
 
 ## Themes
 
-The final route to customisation we'll consider concerns something called the 'theme' of a plot. We haven't considered the **ggplot2** theme system at all yet. In simple terms, **ggplot2** themes deal with the visual aspects of a plot that aren't directly handled by adjusting geom properties or scales, i.e. the 'non-data' parts of a plot. This includes features such as the colour of the plotting region and the grid lines, whether or not those grid lines are even displayed, the position of labels, the font used in labels, and so on.
+The final route to customisation concerns the 'theme' of a plot. We haven't considered the **ggplot2** theme system at all yet. A theme in **ggplot2**-land deals with the visual elements of a plot that aren't directly handled by adjusting geom properties or scales. These are the 'non-data' parts of a plot---features such as the colour of the plotting region and the grid lines, whether or not those grid lines are even displayed, the position of labels, the font used in labels, and so on.
 
-The **ggplot2** theme system is extremely powerful. Once we know how to use it, we can set up a custom theme to meet our requirements and then apply it as needed with very little effort. However, it's not an entirely trivial thing to learn about because there are so many components of every plot. Fortunately there are a range of themes built into **ggplot2** that are easily good enough for producing publication ready figures. Let's assume we have made a plot object `final_plt` containing all the information and data formatting we want:
+Here's a short example that adjusts the legend of the example plot:
 
-```{r}
-final_plt <- 
-  ggplot(storms, aes(x = pressure, y = wind, colour = seasday)) + 
-  geom_point(alpha = 0.3, size = 1.5, position = position_jitter(w = 0, h = 4)) + 
-  scale_y_continuous(breaks = seq(20, 160, by = 20)) + 
-  labs(x = "Atmospheric Pressure (mbar)", 
-       y = "Wind Speed (mph)",
-       colour = "Day of \nSeason")
+```{r, fig.width=4.0, fig.asp=1.1}
+ggplot(penguins, 
+       aes(x = bill_length_mm, y = bill_depth_mm, colour = species)) + 
+  geom_point(shape = 17, size = 1.5, alpha = 0.85) + 
+  scale_x_continuous(breaks = seq(34, 62, by = 4)) +
+  scale_y_continuous(breaks = seq(14, 20, by = 2)) + 
+  scale_color_manual(
+    values = c("cornflowerblue", "seagreen", "orangered3"),
+    labels = c(Adelie = "P. adeliae", Chinstrap = "P. antarcticus", Gentoo = "P. papua")
+  ) + 
+  labs(x = "Bill length (mm)", y = "Bill depth (mm)", colour = "") +
+  theme(
+    legend.position = "top",
+    legend.text = element_text(face="italic")
+  )
 ```
 
-Here's how to use the built in themes to alter the themes used to plot the `final_plt` object:
+Changes to the theme are specified using... the `theme` function. We used `theme` to move the legend to the top of the plot (via `legend.position`) and show the species labels in italics (via `legend.text`).
 
-```{r, fig.width=4.5}
-final_plt + theme_bw()
+The **ggplot2** theme system is extremely powerful. Once we know how to use it, we can set up a custom theme and apply it with very little effort. However, that's not an entirely trivial thing to do because there are so many components of every plot, and most people just google whatever adjustment they want to make when the time comes.
+
+Tweaking each individual part of a theme can be very time consuming, even for experts. Fortunately, there are a range of standard themes built into **ggplot2** that produce publication ready figures. Here's how to apply a built-in theme:
+
+```{r, fig.width=4.0, fig.asp=1.1}
+ggplot(penguins, 
+       aes(x = bill_length_mm, y = bill_depth_mm, colour = species)) + 
+  geom_point(shape = 17, size = 1.5, alpha = 0.85) + 
+  scale_x_continuous(breaks = seq(34, 62, by = 4)) +
+  scale_y_continuous(breaks = seq(14, 20, by = 2)) + 
+  scale_color_manual(
+    values = c("cornflowerblue", "seagreen", "orangered3"),
+    labels = c(Adelie = "P. adeliae", Chinstrap = "P. antarcticus", Gentoo = "P. papua")
+  ) + 
+  labs(x = "Bill length (mm)", y = "Bill depth (mm)", colour = "") +
+  theme_bw(base_size = 13) +
+  theme(
+    legend.position = "top",
+    legend.text = element_text(face="italic")
+  )
 ```
 
-In this example we use `+` with the `theme_bw` function to use the built in 'black and white' theme. This removes the grey background that so many people dislike in **ggplot2**. 
+This uses `+` with the `theme_bw` function to add the built-in 'black and white' theme. This theme dispenses with the grey background that so many people dislike in **ggplot2**. There are a couple of things to note from this example:
 
-There aren't that many themes built into **ggplot2**---type `theme_` at the Console and hit the tab key to see the others. One popular alternative to `theme_bw` is the 'classic' theme, via `theme_classic`:
+-   To apply the changes to the legend position, we had to place the `theme` part **after** we set the overall theme using `theme_bw`. The `theme_bw` function will override the `theme` changes if we try to do it the other way round.
 
-```{r, fig.width=4.5}
-final_plt + theme_classic(base_size = 15)
+-   We set the `base_size` argument of `theme_bw`. This rescales the text in a plot, leaving the relative size of the different elements unchanged. We did not have to do this, but it is worth showing off because it is such a useful trick.
+
+There aren't that many themes built into **ggplot2**. Here's a quick look at them:
+
+```{r, echo=FALSE, fig.show="hold", out.width="33.3%", fig.align='default'}
+plt <- ggplot(penguins,
+       aes(x = bill_length_mm, y = bill_depth_mm, colour = species)) + 
+  geom_point(shape = 17, size = 1.5, alpha = 0.85) + 
+  scale_x_continuous(breaks = seq(34, 62, by = 4)) +
+  scale_y_continuous(breaks = seq(14, 20, by = 2)) + 
+  scale_color_manual(
+    values = c("cornflowerblue", "seagreen", "orangered3"),
+    labels = c(Adelie = "P. adeliae", Chinstrap = "P. antarcticus", Gentoo = "P. papua")
+  ) + 
+  labs(x = "Bill length (mm)", y = "Bill depth (mm)", colour = "") 
+
+my_theme <- 
+  theme(legend.position = "none",
+        plot.title = element_text(family = "Courier"))
+
+plt + theme_grey   (base_size = 14) + ggtitle("theme_grey")    + my_theme
+plt + theme_bw     (base_size = 14) + ggtitle("theme_bw")      + my_theme
+plt + theme_minimal(base_size = 14) + ggtitle("theme_minimal") + my_theme
+plt + theme_classic(base_size = 14) + ggtitle("theme_classic") + my_theme
+plt + theme_light  (base_size = 14) + ggtitle("theme_light")   + my_theme
+plt + theme_dark   (base_size = 14) + ggtitle("theme_dark")    + my_theme
 ```
 
-This produces a very stripped down plot that's much closer to those produced by the base graphics system. Notice that we did one more thing here: we set the `base_size` argument to 15 to increase the size of all the text in the figure (the default is 11). This can be used with any `theme_XX` function to quickly change the relative size of all the text in a plot.
+<!--# remember to switch warnings on again -->
 
-
-
-
-
-
-
-
-
-
-
-
-
+```{r, echo=FALSE}
+opts_chunk$set(warning=TRUE)
+```
