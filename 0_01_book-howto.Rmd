@@ -14,19 +14,16 @@ At various points in the text you will come across text in different coloured bo
 
 ::: {.infobox .action data-latex="{action}"}
 #### Action! {.unnumbered}
-
 This is an **action** box. We use these when we want you to do something. Do not ignore these boxes.
 :::
 
 ::: {.infobox .information data-latex="{information}"}
 #### Information! {.unnumbered}
-
 This is an **information** box. These aim to offer a discussion of why something works the way it does.
 :::
 
 ::: {.infobox .warning data-latex="{warning}"}
 #### Warning! {.unnumbered}
-
 This is a **warning** box. These usually highlight a common 'gotcha' that might trip up new users.
 :::
 

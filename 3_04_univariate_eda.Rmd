@@ -1,316 +1,296 @@
 # Exploring one variable
 
-This chapter will consider how to go about exploring the sample distribution of a single variable. Using the `storms` data from the **nasaweather** package (remember to load and attach the package), we'll review some basic descriptive statistics and visualisations that are appropriate for numeric and categorical variables.
+This chapter will consider how to go about exploring a single variable. Using the `penguins` data, we'll review some basic visualisations for exploring the sample distribution of numeric and categorical variables.
 
-## Understanding numerical variables {#explore-numeric}
+## Exploring numerical variables {#explore-numeric}
 
-We'll work with the `wind` and `pressure` variables in `storms` to illustrate the key ideas. Wind speed and atmospheric pressure are clearly numeric variables. We can say a bit more. They are both numeric variables that are measured on a ratio scale because zero really is zero: it makes sense to say that 20 mph is twice as fast as 10 mph and 1000 mbar exerts twice as much pressure on objects as 500 mbar. Are these continuous or discrete variables? Think about the possible values that wind speed and atmospheric pressure can take. A wind speed and atmospheric pressure of 40.52 mph and 1000.23 mbar are perfectly reasonable values, so fundamentally, these are continuous variables.
+We'll work with flipper length (`flipper_length_mm`) and body mass (`body_mass_g`) to demonstrate how to explore numeric variables.
 
-The simplest way to understand our data, if not the most effective, is to view it in its raw form. We can always use the `View` function to do this in RStudio. However, since this doesn't work on a web page, we'll take a quick look at the first 100 values of the `wind` and `pressure` variables in `storms`. We can print these to the Console by extracting each of them with the `$` operator, using the `[` construct to subset the first 100 elements of each vector:
+### What kind of numeric variable?
+
+The simplest way to explore data is to view it in its raw form. Take a quick look at the first 100 values of `flipper_length_mm` and `body_mass_g`. We can get these by extracting them with the `$` operator and using the `head` function:
+
+**flipper length** ---
+
 ```{r}
-# first 100 values of atmospheric pressure
-storms$pressure[1:100]
-# first 100 values of wind speed
-storms$wind[1:100]
+head(penguins$flipper_length_mm, 50)
 ```
-Notice that even though `pressure` is continuous variables it looks like a discrete variable because it has only been measured to the nearest whole millibar. Similarly, `wind` is only measured to the nearest 5 mph. These differences reflect the limitations of the methodology used to measure each variable, e.g. measuring wind speed is hard because it varies so much in space and time.
 
-This illustrates an important idea: we can't just look at the values a numeric variable takes in a sample to determine whether it is discrete or continuous. In one sense the `pressure` variable is a discrete variable because of the way it was measured, even though we know that atmospheric pressure is really continuous. 
+**body mass** ---
 
-Whether we treat it as continuous or discrete is an analysis decision. These sorts of distinctions often don't matter too much when we're exploring data, but they can matter when we're deciding how to analyse it statistically. We have to make a decision about how to classify a variable based on knowledge of its true nature and the measurement process. For example, imagine that we were only able to measure wind speed to the nearest 25 mph. In this situation we would only "see" a few different categories of wind speed, so it might be sensible to treat the `wind` variable as an ordinal, categorical variable.
-
-## Graphical summaries
-
-We only looked at the first 100 values of the `wind` and `pressure` variables because the `storms` data set is too large to look everything at once. It's hard to say much about the sample distribution of these two variables by just looking at such a small subset of values. If the data set has been sorted, these might not even be representative of the wider sample. 
-
-What else might we do? One useful tool is 'binning'. The idea behind binning a variable is very simple. It involves two steps. First, we take the set of possible values of our numeric variable and divide this into a equal sized, non-overlapping intervals. We can use any interval size we like, as long as it is large enough to span at least two observations some of the time, though in practice some choices are more sensible than others. We then have to work out how many values of the our variable fall inside each bin. The resulting set of counts tells us quiet a lot about the sample distribution.
-
-Let's see how this works with an example. Binning is very tedious to do by hand, but as we might expect, there are a couple of base R function that can do this for us: `cut` and `table`. Here's how to use these to bin the `pressure` variable into intervals of 10 mbar: 
 ```{r}
-presure_bins <- cut(storms$pressure, 
-                  breaks = seq(900, 1020, by = 5), right = FALSE)
-table(presure_bins)
+head(penguins$body_mass_g, 50)
 ```
-We won't explain how `cut` and `table` work as we only need to understand the output. The output of `table` is a named numeric vector. The names of each element describe an interval, and the corresponding values are the observation counts in that interval. What does this tell us? It shows that most pressure observations associated with storm systems are round about 1000 mbar. Values higher than 1000 mbar are rare, but a range of values below this are possible, with lower and lower values becoming less frequent.
 
-These binned data tell us quite a lot about the sample distribution of `pressure`. It's still difficult to perceive the information in this output when it is presented as a series of numbers. What we really need is some kind of visualisation to help us interpret these numbers. This is what a __histogram__ provides. Histograms are designed to summarise the sample distribution of a variable by showing the counts of binned data as a series of bars. The position and width of each bar corresponds to an interval and the height shows the count. Here's a histogram that corresponds to the binned data we just made:
+These are clearly both numeric variables, but we can say a bit more:
+
+-   They are both measured on a ratio scale. Zero really is zero, meaning that it makes sense to say that a length of 200 millimetres is twice as long as 100 millimetres or that 6000 grams is twice the mass of 3000 grams.
+-   They are continuous variables. Think about the possible values flipper length and body mass can take. A length of 200.52 millimetres and a mass of 3000.71 grams are both perfectly reasonable, so fundamentally, these are continuous variables.
+
+Notice that even though body mass is a continuous variable `body_mass_g` looks discrete because body mass measurements have been taken to the nearest 25 grams. This reflects methodological limitations---presumably, weighing a live penguin to more than 25 grams precision in the field is challenging. This illustrates an important idea: we can't just look at the values a numeric variable takes to determine whether it is discrete or continuous.
+
+Whether we treat a variable as continuous or discrete is sometimes an analysis decision. We have to decide based on knowledge of a variable's true nature and the measurement process. For example, if we were only able to measure body mass to the nearest 500 grams, we would only "see" a few different body mass categories. It might then be reasonable to treat the `body_mass_g` variable as an ordinal, categorical variable.
+
+### Histograms
+
+We only looked at the first 50 values of the `flipper_length_mm` and `body_mass_g` variables because the `penguins` data set is a bit too big to view everything at once easily. It's hard to say much about the sample distribution of the two variables by just looking at a small subset of values. Because the data are sorted by island and species, those first 50 values are also not representative of the whole sample.
+
+What else might we do? One useful tool is 'binning'. The idea behind binning a numeric variable is very simple. It involves two steps.
+
+1.  Take the range of the variable and divide this into equal-sized, non-overlapping intervals. These are the 'bins'. We can use any interval size as long as the resulting bins (typically) include a few observations.
+
+2.  We then have to count up the number of times the variable falls inside each bin. The resulting set of counts summarises the sample distribution of the numeric variable.
+
+Binning is very tedious to do by hand. Fortunately, R can do this for us. This shows how to use the `cut` function with the **dplyr** `transmute` and `count` verbs to bin the `flipper_length_mm` variable into 5 mm intervals:
+
+```{r}
+penguins %>% 
+  transmute(bins = cut(flipper_length_mm, breaks = seq(170, 235, by = 5))) %>%
+  count(bins)
+```
+
+We won't explain how this works because we only need to understand the output. This is a small tibble where the `bins` column shows the intervals, and the `n` column gives the associated counts. What does this tell us? It shows that the most common flipper length is around 190 mm. Values much below 190 mm are rare, but a range of values above this are possible, with higher values becoming less frequent. These binned data are telling us quite a lot about the sample distribution of `flipper_length_mm`.
+
+It is still difficult to perceive distributional information when it is presented as a series of numbers. What we need is a visualisation based on the above numbers. This is what a **histogram** provides. Histograms summarise the sample distribution of a variable by showing the counts of binned data as a series of bars. The position and width of each bar correspond to an interval and the height shows the count. Here is a histogram based on the binned data we made:
 
 ```{r, echo=FALSE}
-ggplot(storms, aes(x = pressure)) + 
-  geom_histogram(breaks = seq(900, 1020, by = 5))
+ggplot(penguins, aes(x = flipper_length_mm)) + 
+  geom_histogram(breaks = seq(170, 235, by = 5))
 ```
 
-This gives a clear summary of the sample distribution of pressure. It reveals: 1) the most common values, which are just above 1000 mbar; 2) the range of the data, which is about 100 mbar; and 3) the shape of the distribution, which is asymmetric, with a tendency toward low values.
+This gives a clear summary of the sample distribution of body mass. It reveals:
 
-We used `ggplot2` to make that histogram. We could do this by building a new data set with the binned data, and then use this with `ggplot2` to construct the histogram manually. There is a much easier way to achieve the same result though. Rather than do it one one step with a single R expression, we will break the process up into two steps, storing the the **ggplot2** object as we build it.
+1.  the most common values, which are round about 190 mm;
+2.  the range of the data, which is about 60 mm; and
+3.  the shape of the distribution, which appears to be **bimodal**---it has two peaks.
+
+That last observation wasn't immediately obvious when looking at the raw counts in the binned summary.
+
+We used **ggplot2** to make that histogram. We could have used **dplyr** to make the binned data set and then used this with **ggplot2** to construct the plot manually. However, there is a much easier way to make a histogram. We'll demonstrate this now. Rather than do it using one **ggplot2** expression we will break the process up to demonstrate how it works.
 
 The first step uses the `ggplot` function with `aes` to set up the default data and aesthetic mapping:
-```{r}
-plt_hist <- ggplot(storms, aes(x = pressure))
-```
-This is no different than the extended scatter plot example we stepped through earlier. The only difference is that a histogram requires only one aesthetic mapping. We supplied the argument `x = pressure` to `aes` because we want to display the map intervals associated with `pressure` to the x axis. We don't need to supply an aesthetic mapping for the y axis because `ggplot2` is going to handle this for us.
-
-The second step adds a layer to the `plt_hist` object. We need to find the right `geom_XX` function to do this. Unsurprisingly, this is called `geom_histogram`: 
-```{r}
-plt_hist <- plt_hist + geom_histogram()
-summary(plt_hist)
-```
-Look at the text of the summary of the added layer below the `----`. This shows that `geom_histogram` adds a stat to the layer, the `stat_bin`. What this means is that `ggplot2` is going to take the raw `pressure` data and bin it for us. Everything we need to plot a histogram is now set up. Here's the resulting plot:
-```{r}
-plt_hist
-```
-
-The resulting plot is not quite the same as the example we saw above because it uses different bins. It's a good idea to play around with the bin size to arrive at an informative histogram. We set the properties of the `geom_histogram` to tweak this kind of thing---the `binwidth` argument adjusts the width of the bins used. Let's construct the histogram again with 7 mbar wide bins, as well as adjust the colour scheme and axis labels a bit:
 
 ```{r}
-ggplot(storms, aes(x = pressure)) + 
-  geom_histogram(binwidth = 7, fill = "steelblue", colour="darkgrey", alpha = 0.8) + 
-  xlab("Atmospheric Pressure (mbar)") + ylab("Count")
+plot_hist <- ggplot(penguins, aes(x = flipper_length_mm))
 ```
 
-Whether or not that colour scheme is an improvement is a matter of taste. Mostly we wanted to demonstrate how the `fill`, `colour`, and `alpha` arguments change the output. Notice that the effect of increasing the bin width is to 'smooth' the histogram, i.e. this version looks less jagged than the last.
+This is no different than the scatter plot example we stepped through. The only difference is that a histogram requires only one aesthetic mapping. We supplied the argument `x = flipper_length_mm` to `aes` because we want to display the map intervals associated with `flipper_length_mm` to the x axis. We don't need to supply an aesthetic mapping for the y axis because **ggplot2** is going to handle this for us.
 
-We can use pretty much the same R code to produce a histogram summarising the wind speed sample distribution:
+The second step adds a layer to the `plot_hist` object. We need to find the right `geom_XX` function to do this. This is called `geom_histogram`:
 
 ```{r}
-ggplot(storms, aes(x = wind)) + 
-  geom_histogram(binwidth = 10, fill = "steelblue", colour="darkgrey", alpha = 0.8) +
-  xlab("Wind Speed (mph)") + ylab("Count")
+plot_hist <- plot_hist + geom_histogram()
 ```
 
-The only things that changed in this example were the aesthetic mapping and the bin width, which we set to 10. It reveals that the wind speed during a storm tends to be about 40 mph, though the range of wind speeds is about 100 mph and the shape of the distribution is asymmetric.
-
-We have to choose the bin widths carefully. Remember that wind speed is measured to the nearest 5 mph. This means we should choose a bin width that is a multiple of 5 to produce a meaningful histogram. Look what happens if we set the bin width to 3:
+It is instructive to look at the summary of the **ggplot2** object at this stage:
 
 ```{r}
-ggplot(storms, aes(x = wind)) + 
-  geom_histogram(binwidth = 3, fill = "steelblue", colour="darkgrey", alpha = 0.8) + 
-  xlab("Wind Speed (mph)") + ylab("Count")
+summary(plot_hist)
 ```
 
-We end up with gaps in the histogram because some intervals do not include multiples of 5. This is not a good histogram because it fails to reliably summarise the distribution. Similar problems would occur if we chose a bin width that is greater than, but not a multiple of 5, because different bins would cover a different number of values that make up the `wind` variable. The take home message is that we have to know our data in order to produce meaningful summaries of it.
+Look at the text below the `----`. This shows that `geom_histogram` adds a stat to the layer: `stat_bin`. This means **ggplot2** is going to take the raw `flipper_length_mm` data and bin it for us.
 
-We'll finish up this subsection by briefly reviewing one alternative to the histogram. Histograms are good for visualising sample distributions when we have a reasonable sample size (at least dozens, and ideally, hundreds of observations). They aren't very effective when the sample is quite small. In this 'small data' situation it's better to use something called a __dot plot__^[Not to be confused with the 'Cleveland dot plot'. A standard dot plot summarises a sample distribution. The Cleveland dot plot is something quite different, which summarises the frequencies of a categorical variable. It's meant to serve as a simple alternative to bar charts and pie charts.]. 
-
-Let's use **dplyr** to extract a small(ish) subset of the storms data:
-```{r}
-storms_small <- 
-  storms %>% 
-  filter(year == 1998, type == "Hurricane")
-```
-This just extracts the subset of hurricane observations from 1998. The **ggplot2** code to make a dot plot with these data is very similar to the histogram case: 
+Everything we need to plot a histogram is now set up. Here is the resulting plot:
 
 ```{r}
-ggplot(storms_small, aes(x = pressure)) + 
-  geom_dotplot(binwidth = 2) + 
-  xlab("Atmospheric Pressure (mbar)") + ylab("Count")
+plot_hist
 ```
 
-Here, each observation in the data adds one dot, and dots that fall into the same bin are stacked up on top of one another. The resulting plot displays the same information about a sample distribution as a histogram, but it tends to be more informative when there are relatively few observations.
+This is not quite the same as the example we saw above because it uses different bins. There is nothing special about the **ggplot2** default. It is usually a good idea to play around with the bin size to arrive at an informative histogram. We set the properties of the `geom_histogram` to tweak this kind of thing---the `binwidth` argument adjusts the width of the bins used.
 
-## Descriptive statistics
-
-So far we've been describing the properties of sample distributions in very general terms, using phrases like 'most common values' and 'the range of the data' without really saying what we mean. Statisticians have devised specific terms to describe these kinds of properties, as well as different descriptive statistics to quantify them. The two that matter most are the __central tendency__ and the __dispersion__:
-
-* A measure of __central tendency__ describes a typical ('central') value of a distribution. Most people know at least one measure of central tendency. The "average" that they calculated at school is the arithmetic mean of a sample. There are many different measures of central tendency, each with their own pros and cons. Take a look at the [Wikipedia](http://en.wikipedia.org/wiki/Central_tendency) to see the most common ones. Among these, the median is the one that is used most often in exploratory analyses.
-
-* A measure of __dispersion__ describes how spread out a distribution is. Dispersion measures quantify the variability or scatter of a variable. If one distribution is more dispersed than another it means that in some sense it encompasses a wider range of values. What this means in practice depends on the kind of measure we're working with. Basic statistics courses tend to focus on the variance, and its square root, the standard deviation. There [are others](http://en.wikipedia.org/wiki/Statistical_dispersion) though. 
-
-### Measuring central tendency
-
-There are two descriptive statistics that are typically used to describe the central tendency of the sample distribution of numeric variables. The first is the __arithmetic mean__ of a sample. People often say 'empirical mean', 'sample mean' or just 'the mean' when referring to the arithmetic sample mean. This is fine, but keep in mind that there are other kinds of mean (e.g. the harmonic mean and the geometric mean)^[There is also a very important distinction to be made between the sample mean and the (unobserved) population mean, but we can ignore this distinction for now as we are only concerned with samples. The distinction matters when thinking about statistical models and tests].
-
-How do we calculate the arithmetic sample mean of a variable? Here's the mathematical definition:
-$$
-\bar{x} = \frac{1}{N}\sum\limits_{i=1}^{N}{x_i}
-$$
-We need to define the terms to make sense of this. The $\bar{x}$ stands for the arithmetic sample mean. The $N$ in the right hand side of this expression is the sample size, i.e. the number of observations in a sample. The $x_i$ refer to the set of values the variable takes in the sample. The $i$ is an index used to reference each observation: the first observation has value $x_1$, the second has value $x_2$, and so on, up to the last value, $x_N$. Finally, the $\Sigma_{i=1}^{N}$ stands for summation ('adding up') from $i = 1$ to $N$. 
-
-Most people have used this formula at some point even though they may not have realised it. The `mean` function in R will calculate the arithmetic mean for us:
-```{r}
-mean(storms$wind)
-```
-This tells us that the arithmetic sample mean of wind speed is 55 mph. How useful is this?
-
-One limitation of the arithmetic mean is that it is affected by the shape of a distribution. It's very sensitive to the extremes of a sample distribution. This is why, for example, it does not make much sense to look at the mean income of workers in a country to get a sense of what a 'typical' person earns. Income distribution are highly asymmetric, and those few who are lucky enough to earn very good salaries tend to shift the mean upward and well past anything that is really 'typical'. The sample mean is also strongly affected by the presence of 'outliers'. It's difficult to give a precise definition of outliers---the appropriate definition depends on the context---but roughly speaking, these are unusually large or small values. 
-
-Because the sample mean is sensitive to the shape of a distribution and the presence of outliers we often prefer a second measure of central tendency: the __sample median__. The median of a sample is the number separating the upper half from the lower half^[If we have an even sample size, exactly half the data are larger than the median and half the data are smaller than the median. The sample median is then half way between the largest value of the lower half and the smallest value of the upper half. If a sample has an odd number of observations the sample median is just the value of the observation that divides the remaining data into two equal sized high- and low-value sets.]. We can find the sample median in R with the `median` function: 
-```{r}
-median(storms$wind)
-```
-The sample median of wind speed is 50 mph. This is still to the right of the most common values of wind speed, but it shifted less than the mean.
-
-#### What about 'the mode'?
-
-What does the phrase "the most common values" (e.g. of wind speed) really mean when describing a distribution? In fact, this is an indirect reference to something called the __mode__ of the distribution. The mode of a distribution is essentially its peak, i.e. it locates the most likely value of a variable. Notice that we didn't use the phrase 'sample mode'. It's easy to calculate the mode of a theoretical distribution. Unfortunately, it's not a simple matter to reliably estimate the mode of a sample from such a distribution.
-
-If a numeric variable is discrete, and we have a lot of data, we can sometimes arrive at an estimate of the mode by tabulating the number of observations in each numeric category. Although in truth wind speed is a continuous variable, it is only measured to the nearest 5mph in the `storms` data set. Therefore, it looks like a discrete variable. We can use the `table` function here to tabulate the number of observations at each value:
-```{r}
-table(storms$wind)
-```
-The names of each element in the resulting vector are the recorded wind speeds and the corresponding values are the associated counts of each value. The most common wind speed is 30 mph, with 345 observations. The categories either side of this (25 and 35 mph) contain much lower counts. This provides a fairly good indication that the mode of the `wind` distribution is about 30mph.
-
-Tabulating the counts in of numeric categories to identify the likely mode is only sensible when a numerical variable is genuinely discrete, or looks discrete as a result of how it was measured. Even then, there is no guarantee that this approach will produce a sensible estimate of the 'true' mode. If a variable is continuous then tabulating counts simply does not work. Methods exist to estimate a mode from a sample, but they are not simple. Nonetheless, it's important to know what the mode represents and to be able to identify its approximate value by inspecting a histogram.
-
-### Measuring dispersion
-
-There are many ways to quantify the dispersion of a sample distribution. The most important quantities from the standpoint of statistics are the sample __variance__ and __standard deviation__. The sample variance ($s^2$) is 'the sum of squared deviations' (i.e. the differences) of each observation from the sample mean, divided by the sample size minus one. Here's the mathematical definition:
-$$
-s^2 = \frac{1}{N-1}\sum\limits_{i=1}^{N}{(x_i-\bar{x})^2}
-$$
-The meaning of these terms is the same as for the sample mean. The $\bar{x}$ is the sample mean, the $N$ is the sample size, and the $x_i$ refers to the set of values the variable takes. We don't have to actually apply this formula in R. There's a function to calculate the sample variance:
-```{r}
-var(storms$wind)
-```
-
-What does that number actually mean? Variances are always non-negative. A small variance indicates that observations tend to be close to the mean (and to one another), while a high variance indicates that observations are very spread out. A variance of zero only occurs if all values are identical. However, it is difficult to interpret whether a sample variance is really "small" or "large" because the calculation involves squared deviations. For example, changing the measurement scale of a variable by 10 involves a 100-fold change (10^2^) in the variance.
-
-The variance is a important quantity in statistics that crops up over and over again. Many common statistical tools use changes in variance to formally compare how well different models describe a data set. However, it is very difficult to interpret variances, which is why we seldom use them in exploratory work. A better statistic is to describe sample dispersion is a closely related quantity called the __standard deviation__ of the sample, usually denoted $s$. The standard deviation is the square root of the variance. We calculate it using the `sd` function:
-```{r}
-sd(storms$wind)
-```
-
-Why do we prefer the standard deviation over the variance? Consider the wind speed again. The standard deviation of the wind speed sample is 26. Take another look at the wind speed histogram. This shows that the wind speed measurements span about 5 standard deviations. If we had instead measured wind speed in kilometers per hour (kph), the standard deviation of the sample would be 42, because 1 mph ~ 1.6 kph. If we plot the histogram of wind speed in kph it is still the case that the data are spanned by about 5 standard deviations. The variance on the other hand increases from to approximately 668 to 1730, a factor of 1.6^2^. This is the reason we often use the standard deviation compare dispersion: it reflects the dispersion we perceive in the data.
-
-The sample standard deviation is not without problems though. Like the sample mean, it is sensitive to the shape of a distribution and the presence of outliers. A measure of dispersion that is more robust to these kinds of features is the __interquartile range__. 
-
-::: {.infobox .information data-latex="{information}"}
-#### What are quartiles? {-}
-We need to know what a quartile is to understand the interquartile range. Three quartiles are defined for any sample. These divide the data into four equal sized groups, from the set of smallest numbers up to the set of largest numbers. The second quartile ($Q_2$) is the median, i.e. it divides the data into an upper and lower half. The first quartile ($Q_1$) is the number that divides the lower 50% of values into two equal sized groups. The third quartile ($Q_3$) is the number that divides the upper 50% of values into two equal sized groups.
-
-The quartiles also have other names. The first quartile is sometimes called the lower quartile, or the 25th percentile; the second quartile (the median) is the 50th percentile; and the third quartile is also called the upper quartile, or the 75th percentile.
-:::
-
-The interquartile range (IQR) is defined as the difference between the third and first quartile. This means the IQR contains the middle 50% of values of a variable. Obviously, the more spread out the data are, the larger the IQR will be. The reason we prefer to use IQR to measure dispersion is that it only depends on the data in the "middle" of a sample distribution. This makes it robust to the presence of outliers. We can use the `IQR` function to find the interquartile range of the wind variable:
-```{r}
-IQR(storms$wind)
-```
-The IQR is used as the basis for a useful data summary plot called a 'box and whiskers' plot. We'll see how to construct this in a later next chapter.
-
-```{r, eval = FALSE, echo = FALSE}
-# qrtl <- quantile(storms$pressure, probs = c(0.25, 0.75))
-# iqr <- qrtl[2]-qrtl[1]
-# mdn <- median(storms$pressure)
-# 
-# plt_hist <- ggplot(storms, aes(x = pressure)) + 
-#             geom_histogram(binwidth = 6, fill = "steelblue", 
-#                            colour="darkgrey", alpha = 0.8) + 
-#             xlab("Atmospheric Pressure (mbar)") + ylab("Count")
-# 
-# plt_hist <- plt_hist + 
-#             annotate("segment", 
-#                      x = mdn - 1.5 * iqr, xend = mdn + 1.5 * iqr, y = 1035, yend = 1035, 
-#                      colour = "black", lwd=0.8) +
-#             annotate("rect", fill = "white", colour = "black", 
-#                      xmin = qrtl[1], xmax= qrtl[2], ymin = 1020, ymax = 1050) + 
-#             annotate("segment", colour = "black", 
-#                      x = mdn, xend = mdn, y = 1020, yend = 1050)
-# 
-# 
-# plt_hist
-```
-
-### Skewness
-
-A well-defined hierarchy has been defined to describe and quantify the shape of distributions. It's essential to know about the first two, central tendency and dispersion, because these are the basis of many standard analyses. The next most important aspect of a distribution is its __skewness__ (or just 'skew'). Skewness describes the asymmetry of a distribution. Just as with central tendency and dispersion, there are many different ways to quantify the skewness of a sample distribution. These are quite difficult to interpret because their interpretation depends on other features of a distribution. We'll just explore skewness in the simplest case: the skewness of a __unimodal__ distribution.
-
-A unimodal distribution is one that has a single peak. We can never say for certain that a sample distribution is unimodal or not---unimodality is really a property of theoretical distributions---but with enough data and a sensible histogram we can at least say that a distribution is 'probably' unimodal. The histograms we produced to describe the sample distributions of `wind` and `pressure` certainly appear to be unimodal. Each has a single, distinct peak. 
-
-These two unimodal distributions are also asymmetric---they exhibit skewness. The `pressure` distribution is said to be skewed to the left because it has a long 'tail' that spreads out in this direction. In contrast, we say that the `wind` distribution is skewed to the right, because it has a long 'tail' that spreads out to right. Left skewness and right skewness are also called negative and positive skew, respectively. A sample distribution that looks symmetric is said to have (approximately) zero skew^[Strictly speaking the terms "negative" and "positive" are reserved for situations where we have calculated a quantitative measure of skew. However, they are often used informally in verbal descriptions of skewness.].
-
-The reason we care about skewness is that many common statistical models assume that the distributions we're sampling from, after controlling for other variables, are not skewed. This is an issue for a statistics course. For now we just need to understand what skewness means and be able to describe distributions in terms of left (negative) and right (positive) skew.
-
-## Understanding categorical variables {#explore-categorical}
-
-Exploring categorical variables is generally simpler than working with numeric variables because we have fewer options, or at least life is simpler if we only require basic summaries. We'll work with the `year` and `type` variables in `storms` to illustrate the key ideas.
-
-Which kind of categorical variable is `type`? There are four storm categories in type. We can use the `unique` function to print these for us:
-```{r}
-unique(storms$type)
-```
-The first question we should ask is, is `type` an ordinal or nominal variable? It's hard to know how to classify `type` without knowing something about tropical storms. Some googling indicates that `type` can reasonably be considered an ordinal variable: a tropical depression is the least severe storm and a hurricane is the most severe class; in between are extra tropical and tropical storm categories.
-
-What about the `year` variable? Years are obviously ordered from early to late and we might be interested in how some aspect of our data changes over time. In this case we might consider treating year either as a numeric variable, or perhaps as an ordinal categorical variable. Alternatively, if the question is simply, 'do the data vary from one year to the next' without any concern for trends, it's perfectly reasonable to treat year as a nominal categorical variable. 
-
-This illustrates an important idea: the classification of a variable will often depend on the objectives of an analysis. The classification of a variable matters because it influences how we choose to summarise it, how we interpret its relationship with other variables, and whether a specific statistical model is appropriate for our data or not. Fortunately, our choice of classification is less important when we are just trying to summarise the variable numerically or graphically. For now, let's assume that it's fine to treat year as a categorical variable.
-
-### Numerical summaries
-
-When we calculate summaries of categorical variables we are aiming to describe the sample distribution of the variable, just as with numeric variables. The general question we need to address is, 'what are the relative frequencies of different categories?' We need to understand which categories are common and which are rare. Since a categorical variable takes a finite number of possible values, the simplest thing to do is tabulate the number of occurances of each type. We've seen how the `table` function is used to do this:
-```{r}
-table(storms$type)
-```
-This shows that the number of observations associated with hurricanes and tropical storms are about equal, that the number of observations associated with extratropical and tropical systems is similar, and the former pair of categories are more common than the latter. This indicates that in general, storm systems in Central America spend relatively more time in the more severe classes.
-
-Raw frequencies give us information about the rates of occurance of different categories in a dataset. However, it's difficult to compare raw counts across different data sets if the sample sizes vary (which they usually do). This is why we often convert counts to proportions. To do this, we have to divide each count by the total count across all categories. This is easy to do in R because it's vectorised:
-```{r}
-type_counts <- table(storms$type)
-type_counts / sum(type_counts)
-```
-So about 2/3 of observations are associated with hurricanes and tropical storms, with a roughly equal split, and the remaining 1/3 associated with less severe storms.
-
-What about measuring the central tendency of a categorical sample distribution? Various measures exist, but these tend to be less useful than those used to describe numeric variables. We can find the __sample mode__ of ordinal and nominal variables easily though (in contrast to numeric variables, where it is difficult to define). This is just the most common category. For example, the tropical storm category is the modal value of the `type` variable. Only just though. The proportion of tropical storm observations is 0.34, while the proportion of hurricane observations is 0.33. These are very similar, and it's not hard to imagine that modal observation might have been the hurricane category in a different sample. The sample mode is sensitive to chance variation when two categories occur at similar frequencies.
-
-It is possible to calculate a __sample median__ of a categorical variable, but only for the ordinal case. The median value is the one that lies in the middle of an ordered set of values---it makes no sense to talk about "the middle" of a set of nominal values that have no inherent order. Unfortunately, even for ordinal variables the sample median is not precisely defined. Imagine that we're working with a variable with only two categories: 'big' vs. 'small', and exactly 50% of the values are 'small' value and 50% are large. What is the median in this case? Because the median is not always well-defined, the developers of base R have chosen not to implement a function to calculate the median of ordinal variables (a few packages contain functions to do this though). 
-
-::: {.infobox .warning data-latex="{warning}"}
-#### Be careful with `median` {-}
-Unfortunately, if we apply the `median` function to a character vector it will give us an answer, e.g. `median(storms$type)` will spit something out. It is very likely to give us the wrong answer though. R has no way of knowing which categories are "high" and which are "low", so just sorts the elements of `type` alphabetically and then finds the middle value of this vector. If we really have to find the median value of an ordinal value we can do it by first converting the categories to integers--- assigning 1 to the lowest category, 2 to the next lowest, and so on--- and then use the median function to find out which value is the median.
-:::
-
-## Graphical summaries of categorical variables
-
-The most common graphical tool used to summarise a categorical variable is a bar chart. A bar chart (or bar graph) is a plot that presents summaries of grouped data with rectangular bars. The lengths of the bars is proportional to the values they represent. When summarising a single categorical variable, the length of the bars should show the raw counts or proportions of each category. 
-
-Constructing a bar graph to display the counts is very easy with `ggplot2`. We will do this for the `type` variable. As always, we start by using the `ggplot` function to construct a graphical object containing the necessary default data and aesthetic mapping.
-```{r}
-bar_plt <- ggplot(storms, aes(x = type)) 
-```
-We've called the object `bar_plt`, for obvious reasons. Notice that we only need to define one aesthetic mapping: we mapped `type` to the x axis. This produces a bar plot with vertical bars.
-
-From here we follow the usual **ggplot2** workflow, meaning the next step is to add a layer using one of the `geom_XX` functions. There are two functions we can use to create bar charts in ggplot, `geom_bar` and `geom_col`. By default `geom_col` counts the number of observations in each category, whilst `geom_bar` plots the actual numbers in the data frame. In this case as we want the number of storms of each `type` we will use  `geom_bar`:
+Let's construct the histogram again with 5 mm wide bins, as well as adjust the colour scheme and axis labels a bit:
 
 ```{r}
-bar_plt <- bar_plt + geom_bar()
-summary(bar_plt) 
-```
-Look at the layer information below `----`. The `geom_bar` function sets the stat to "count". Counting a categorical variable is analogous to binning a numeric variable. The only difference is that there is no need to specify bin widths because `type` is categorical, i.e. `ggplot2` will sum up the number of observations associated with every category of `type`. Here's the resulting figure:
-```{r}
-bar_plt
+ggplot(penguins, aes(x = flipper_length_mm)) + 
+  geom_histogram(binwidth = 5, fill = "steelblue", colour="darkgrey") + 
+  xlab("Flipper length (mm)") + ylab("Count")
 ```
 
-This is the same summary information we produced using the `table` function, only now it's presented in graphical form. We can customise this bar graph if needed with functions like `xlab` and `ylab`, and by setting various properties inside `geom_bar`. For example:
+Whether or not that colour scheme is an improvement is a matter of taste. Mostly we wanted to demonstrate how the `fill` and `colour` arguments change the output--- `fill` sets the fill colour of the bar and `colour` deals with the line around each bar.
+
+Notice that the effect of increasing the bin width is to 'smooth' the histogram, i.e. this version looks less jagged than the last.
+
+We can use pretty much the same R code to produce a histogram summarising the body mass sample distribution:
+
 ```{r}
-ggplot(storms, aes(x = type)) + 
+ggplot(penguins, aes(x = body_mass_g)) + 
+  geom_histogram(binwidth = 250, fill = "steelblue", colour="darkgrey") +
+  xlab("Body mass (g)") + ylab("Count")
+```
+
+The only things that changed in this example were the aesthetic mapping and the bin width, which we set to 250 to reflect the range of observed body masses. The histogram reveals that the most common body mass (the mode) is around 3500 grams and the range of masses is also about 3500 grams. It also shows that the distribution is **skewed**, i.e. it is asymmetric. We can say even more---the distribution is right-skewed (a.k.a. positive-skewed) because the tail on the right gets further away from the mode than the left tail.
+
+We have to choose those bin widths carefully. Body mass is measured to the nearest 25 grams. This means we should choose a bin width that is some multiple of 25 to produce a meaningful histogram. Look what happens if we set the bin width to 25:
+
+```{r}
+ggplot(penguins, aes(x = body_mass_g)) + 
+  geom_histogram(binwidth = 25, fill = "steelblue", colour="darkgrey") + 
+  xlab("Body mass (g)") + ylab("Count")
+```
+
+We end up with gaps in the histogram because many bins do not include any data. The take-home message is that we have to pay attention to our data to produce meaningful summaries.
+
+### Dot plots
+
+Histograms are good for visualising sample distributions when we have a reasonable sample size (at least dozens, and ideally, hundreds of observations). They aren't very effective when the sample is quite small. In this 'small data' situation, it is better to use something called a **dot plot**[^univariate_eda-1].
+
+[^univariate_eda-1]: Not to be confused with the 'Cleveland dot plot'. A standard dot plot summarises a sample distribution. The Cleveland dot plot is something quite different, which summarises the frequencies of a categorical variable. It's meant to serve as a simple alternative to bar charts and pie charts.
+
+Let's first use **dplyr** to extract a small subset of the `penguins` data:
+
+```{r}
+penguins_subset <- penguins %>% 
+  filter(species == "Adelie", sex == "female", year == 2007)
+```
+
+This extracts the subset of female Adelie penguin observations from 2007. The resulting data set is considerably smaller than the original:
+
+```{r, echo=FALSE}
+penguins_subset
+```
+
+Making the dot plot with these data is simple. The **ggplot2** code is very similar to the histogram case:
+
+```{r}
+ggplot(penguins_subset, aes(x = body_mass_g)) + 
+  geom_dotplot(binwidth = 100) + 
+  xlab("Body mass (g)") + ylab("") + 
+  theme(axis.text.y = element_blank(), axis.ticks.y = element_blank())
+```
+
+Each observation in the data adds one dot, and dots that fall into the same bin are stacked up on top of one another. Notice the bins are not evenly spaced, however. The resulting plot displays the same information as a histogram but tends to be more informative when there are relatively few observations.
+
+The `theme` part of that example is entirely optional---it removes the grid lines and y axis labels because these are not needed. We removed the y axis label for the same reason.
+
+## Exploring categorical variables {#explore-categorical}
+
+We will work with the penguin species (`species`) and observation year (`year`) variables to demonstrate how to explore categorical variables.
+
+### What kind of categorical variable?
+
+Exploring categorical variables is generally simpler than the numeric case. The simplest thing we can do is examine the set of categories. For example, we can print these by extracting a variable with the `$` operator and using the `unique` function:
+
+**species** ---
+
+```{r}
+unique(penguins$species)
+```
+
+**observation year** ---
+
+```{r}
+unique(penguins$year)
+```
+
+These are obviously categorical---there are no numeric values associated with either variable. The obvious question to ask about each variable is, is it ordinal or nominal?
+
+It is probably safe to assume that `species` should be treated as a nominal variable. There is no reasonable way to order the three species---i.e. a statement such as 'Adelie \> Gentoo' is nonsense.
+
+What about `year`? That's a bit more tricky. If we were interested in how some aspect of the data changes over time, we might consider treating year as a numeric variable, or perhaps, as an ordinal categorical variable. Alternatively, if the question is simply, 'do the data vary from one year to the next' without any concern for trends, it's reasonable to treat year as a nominal categorical variable.
+
+This once again illustrates an important idea---the classification of a variable sometimes depends on the analysis goals. The decision matters because it influences how we choose to summarise a variable, how we interpret its relationship with other variables, and whether a specific statistical model is appropriate for our data or not.
+
+For now, let's assume it's fine to treat `year` as a nominal variable.
+
+### Bar plots
+
+We can't say anything about the sample distribution of a categorical variable by just looking at the possible categories. We need to explore the relative frequency of those categories. There is no need to carry out anything as complicated as binning. Instead, we simply count up the number of times each category occurs in the data. The **dplyr** `count` verb will does this:
+
+```{r}
+penguins %>% count(species)
+```
+
+This shows that the most common species in the data set is the Adelie, followed by the Gentoo and Chinstrap species. Gentoo is roughly as common as Adelie, whereas Chinstrap is about half as frequent.
+
+These numbers lead directly to an informative visualisation. The usual graphical tool for summarising categorical variables is the **bar chart**. A bar chart presents summaries of grouped data with rectangular bars. The lengths of each bar is proportional to the value it represents. When summarising categorical variables, the bar lengths show the raw counts or proportions of each category.
+
+Constructing a bar graph to display category counts is easy with **ggplot2**. We'll do this for the `species` variable. As always, we start by using the `ggplot` function to construct a graphical object containing the default data and aesthetic mapping.
+
+```{r}
+plot_bar <- ggplot(penguins, aes(x = species)) 
+```
+
+We've called the object `plot_bar` for the obvious reason. Notice that we only need to define one aesthetic mapping---we mapped `species` to the x axis. This will produce a bar plot with vertical bars.
+
+The next step is to add a layer using one of the `geom_XX` functions. There are two functions we can use to create bar charts in ggplot, `geom_bar` and `geom_col`. By default, `geom_col` counts the number of observations in each category, whereas `geom_bar` plots the actual numbers we provide.
+
+We want to show the counts of each `species` category, meaning we should use `geom_bar`:
+
+```{r}
+plot_bar <- plot_bar + geom_bar()
+```
+
+Now examine the summary of the **ggplot2** object:
+
+```{r}
+summary(plot_bar) 
+```
+
+Look at the layer information below `----`. The `geom_bar` function set the stat to "count". This means **ggplot2** summed the number of observations associated with each category of `species`. Counting a categorical variable is analogous to binning a numeric variable. The only difference is that there is no need to specify bin widths because `species` is categorical. Here's the resulting figure:
+
+```{r, fig.height=4, fig.width=2.2}
+plot_bar
+```
+
+This is exactly the same information produced by the `count` function, only now it's presented in graphical form. We can customise this bar graph with functions like `xlab` and `ylab`, and by setting various properties inside `geom_bar`. For example:
+
+```{r, fig.height=4, fig.width=2.2}
+ggplot(penguins, aes(x = species)) + 
   geom_bar(fill = "orange", width = 0.7) + 
-  xlab("Storm Type") + ylab("Number of Observations")
+  xlab("Species") + ylab("Number of Observations")
 ```
+
 The only new thing here is that we used the `width` argument of `geom_bar` to make the bars a little narrower than the default.
 
-There is one slight problem with this graph: the order in which the different groups is presented does not reflect the ordinal scale. This occurs because `ggplot2` does not "know" that we want to treat `type` as a ordinal variable. There is no way for `ggplot2` to "guess" the appropriate order, so it uses the alphabetical ordering of the category names to set the order of the bars.
+What else about this plot might we change? The different species appear in alphabetical order. There's nothing particularly meaningful about that order. Perhaps it would make more sense to show them in frequency order?
 
-To fix this we need to customise the scale associated with the 'x' aesthetic. We can start by making a short character vector containing all the category names in the focal variable, ensuring these are listed in the order they need to be plotted in:
+We need to customise the scale associated with the 'x' aesthetic to achieve this. We can start by making a short character vector containing the species names, listing them in the order they need to be shown:
+
 ```{r}
-ords <- c("Tropical Depression", "Extratropical", "Tropical Storm", "Hurricane")
+ords <- c("Chinstrap", "Gentoo", "Adelie")
 ```
-Keep an eye on the spelling too---R is not forgiving of spelling errors. We use this with the `limits` argument of the `scale_x_discrete` function to fix the ordering:
-```{r}
-ggplot(storms, aes(x = type)) + 
+
+Keep an eye on the spelling---R is not forgiving of spelling errors. We can use this with the `limits` argument of the `scale_x_discrete` function to adjust the ordering:
+
+```{r, fig.height=4, fig.width=2.2}
+ggplot(penguins, aes(x = species)) + 
   geom_bar(fill = "orange", width = 0.7) + 
   scale_x_discrete(limits = ords) +
-  xlab("Storm Type") + ylab("Number of Observations")
+  xlab("Species") + ylab("Number of Observations")
 ```
-We had to use one of the `scale_x_YY` functions here because we needed to change the way an aesthetic appears. We use `scale_x_discrete` because 'discrete' is **gplot2**-speak for 'categorical', which is what we have mapped to the 'x' aesthetic.
 
-What else might we change? The categories of `type` have quite long names, meaning the axis labels are all bunched together. One way to fix this is to make the labels smaller or rotate them via the 'themes' system. Here's an alternative solution: just flip the x and y axes to make a horizontal bar chart. We can do this with the `coord_flip` function (this is new):
+We had to use one of the `scale_x_YY` functions to change the way the 'x' aesthetic appears. We use `scale_x_discrete` because 'discrete' is **ggplot2**-speak for 'categorical'.
 
-```{r, fig.height=2.5, fig.width=5}
-ggplot(storms, aes(x = type)) + 
+Is there anything else we might we change? Sometimes it is clearer to plot horizontal bars, particularly if the categorical axis labels are all bunched together (not really the case here). Flipping the x and y axes makes a horizontal bar chart, which we can achieve with the `coord_flip` function (this is new):
+
+```{r, fig.height=1.8, fig.width=5}
+ggplot(penguins, aes(x = species)) + 
   geom_bar(fill = "orange", width = 0.7) + 
   scale_x_discrete(limits = ords) +
   coord_flip() + 
-  xlab("Storm Type") + ylab("Number of Observations")
+  xlab("Species") + ylab("Number of Observations")
 ```
 
+We use very similar R code to produce a bar plot summarising the annual counts, i.e. those associated with the `year` categories:
 
+```{r, fig.height=1.8, fig.width=5}
+ggplot(penguins, aes(x = year)) + 
+  geom_bar(fill = "steelblue", width = 0.7) + 
+  coord_flip() + 
+  xlab("Year") + ylab("Number of Observations")
+```
 
+To make this, we changed the aesthetic mapping, colour and the labels, and dropped the `scale_x_discrete` part because the default ordering is acceptable. The resulting plot shows that there are roughly equal numbers of penguins sampled in each year.
+
+There is one small irritation. Look at the year axis labels and guides. These include non-existent 'half years' (e.g. 2007.5) rather than being limited to only the observed years (2007, 2008 and 2009). This has happened because **ggplot2** doesn't know that `year` is meant to be treated as a categorical variable. It sees a number, and so it constructs a continuous numeric axis for `year`.
+
+We need to force **ggplot2** to treat `year` as a categorical 'thing' to avoid this behaviour. There is more than one way to do this. The simplest is to convert `year` into a character vector. The `as.character` function will do this. What's more, **ggplot2** will allow us to do this when we set up the aesthetic mappings within `aes`:
+
+```{r, fig.height=1.8, fig.width=5}
+ggplot(penguins, aes(x = as.character(year))) + 
+  geom_bar(fill = "steelblue", width = 0.7) + 
+  coord_flip() + 
+  xlab("Year") + ylab("Number of Observations")
+```
+
+That's better! This may seem like a bit of a special edge case, but it comes up often enough to be worth highlighting the fix. More generally, this example demonstrates that we must ensure our conception of a variable matches the way it is interpreted by **ggplot2** if we want to arrive at a 'sensible' plot.
