@@ -1,3 +1,7 @@
+```{r, echo=FALSE}
+opts_chunk$set(warning=FALSE)
+```
+
 # Exploring one variable
 
 This chapter will consider how to go about exploring a single variable. Using the `penguins` data, we'll review some basic visualisations for exploring the sample distribution of numeric and categorical variables.
@@ -294,3 +298,8 @@ ggplot(penguins, aes(x = as.character(year))) +
 ```
 
 That's better! This may seem like a bit of a special edge case, but it comes up often enough to be worth highlighting the fix. More generally, this example demonstrates that we must ensure our conception of a variable matches the way it is interpreted by **ggplot2** if we want to arrive at a 'sensible' plot.
+
+```{r, echo=FALSE}
+opts_chunk$set(warning=TRUE)
+```
+

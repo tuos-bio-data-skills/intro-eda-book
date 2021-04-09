@@ -2,7 +2,7 @@
 opts_chunk$set(warning=FALSE)
 ```
 
-# Customising plots
+# Customising plots {#chapter-customise-ggplot2}
 
 The default formatting conventions used by **ggplot2** have been carefully chosen to ensure the information in a plot is easy to discern. For example, by default, plots include a pale grey background and include gridlines. This is designed to emphasise the data while supporting comparisons. The grey highlights colour differences and ensures the gridlines have little visual impact beyond aiding in the assessment of position. Perfect for exploratory analysis!
 
