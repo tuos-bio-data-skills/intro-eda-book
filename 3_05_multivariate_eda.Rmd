@@ -204,13 +204,13 @@ We have now examined several ways for summarising associations between two varia
 We have already seen enough of **ggplot2** works to build some fairly sophisticated visualisations.The key point is that we don't really need to learn anything new to visualise multivariate associations. There are two ways to add additional information to a visualisation, both of which we have already reviewed:
 
 1.  Define aesthetic mappings to allow a layer's properties to depend on the values of one or more variables.
-2.  Use faceting to construct a multipanel plot according to the values of categorical variables.
+2.  Use faceting to construct a multi-panel plot according to the values of categorical variables.
 
 Constructing a multivariate visualisation is a matter of combining these approaches to squeeze information from several variables into a single graph.
 
 We saw these approaches used together in the [Introduction to ggplot2](#chapter-ggplot2-intro) chapter. Let's look at one more example to cement the idea. We want to understand how the flipper length relates to body mass and how this numeric-numeric relationship varies by species, sex and island. That's five variables in one plot!
 
-The obvious idea is to produce a multipanel scatter plot, where each panel is associated with combinations of the categorical variables. We have already seen how to do this kind of thing with `facet_wrap`. This time, we'll use the `facet_grid` function to organise separate panels for each sex-species combination into a nice 2d grid:
+The obvious idea is to produce a multi-panel scatter plot, where each panel is associated with combinations of the categorical variables. We have already seen how to do this kind of thing with `facet_wrap`. This time, we'll use the `facet_grid` function to organise separate panels for each sex-species combination into a nice 2d grid:
 
 ```{r, fig.width=7}
 ggplot(na.omit(penguins), 

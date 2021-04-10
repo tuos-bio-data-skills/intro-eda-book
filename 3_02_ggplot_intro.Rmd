@@ -204,7 +204,7 @@ ggplot(penguins, aes(x = bill_length_mm, y = bill_depth_mm)) +
   geom_point()
 ```
 
-That code builds the **ggplot2** graphical object and renders it in one go. Notice that we didn't even have to use `print` to generate the output. We have seen a lot is going on underneath this, but this small snippet of R code contains everything **ggplot2** needs to construct and display a simple scatter plot.
+That code builds the **ggplot2** graphical object and renders it in one go. We didn't even have to use `print` to generate the output. There is a lot is going on in the background, but this small snippet of R code contains everything **ggplot2** needs to construct and display a simple scatter plot.
 
 ::: {.infobox .information data-latex="{information}"}
 #### How should we format **ggplot2** code? {.unnumbered}
