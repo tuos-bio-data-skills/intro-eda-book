@@ -58,8 +58,7 @@ We won't explain how this works because we only need to understand the output. T
 It is still difficult to perceive distributional information when it is presented as a series of numbers. What we need is a visualisation based on the above numbers. This is what a **histogram** provides. Histograms summarise the sample distribution of a variable by showing the counts of binned data as a series of bars. The position and width of each bar correspond to an interval and the height shows the count. Here is a histogram based on the binned data we made:
 
 ```{r, echo=FALSE}
-ggplot(penguins, aes(x = flipper_length_mm)) + 
-  geom_histogram(breaks = seq(170, 235, by = 5))
+ggplot(penguins, aes(x = flipper_length_mm)) + geom_histogram(breaks = seq(170, 235, by = 5))
 ```
 
 This gives a clear summary of the sample distribution of body mass. It reveals:
@@ -75,20 +74,23 @@ We used **ggplot2** to make that histogram. We could have used **dplyr** to make
 The first step uses the `ggplot` function with `aes` to set up the default data and aesthetic mapping:
 
 ```{r}
+# create graphical object with data and aesthetic mapping
 plot_hist <- ggplot(penguins, aes(x = flipper_length_mm))
 ```
 
-This is no different than the scatter plot example we stepped through. The only difference is that a histogram requires only one aesthetic mapping. We supplied the argument `x = flipper_length_mm` to `aes` because we want to display the map intervals associated with `flipper_length_mm` to the x axis. We don't need to supply an aesthetic mapping for the y axis because **ggplot2** is going to handle this for us.
+This is no different than the scatter plot example we stepped through. The only difference is that a histogram requires only one aesthetic mapping. We supplied the argument `x = flipper_length_mm` to `aes` because we want to display the map intervals associated with `flipper_length_mm` to the x-axis. We don't need to supply an aesthetic mapping for the y-axis because **ggplot2** is going to handle this for us.
 
 The second step adds a layer to the `plot_hist` object. We need to find the right `geom_XX` function to do this. This is called `geom_histogram`:
 
 ```{r}
+# use geom_histogram to add histogram layer
 plot_hist <- plot_hist + geom_histogram()
 ```
 
 It is instructive to look at the summary of the **ggplot2** object at this stage:
 
 ```{r}
+# print summary of graphical object
 summary(plot_hist)
 ```
 
@@ -97,6 +99,7 @@ Look at the text below the `----`. This shows that `geom_histogram` adds a stat 
 Everything we need to plot a histogram is now set up. Here is the resulting plot:
 
 ```{r}
+# show the histogram
 plot_hist
 ```
 
@@ -105,8 +108,11 @@ This is not quite the same as the example we saw above because it uses different
 Let's construct the histogram again with 5 mm wide bins, as well as adjust the colour scheme and axis labels a bit:
 
 ```{r}
+# display flipper length histogram
 ggplot(penguins, aes(x = flipper_length_mm)) + 
+  # use geom_histogram to add histogram layer + customisation
   geom_histogram(binwidth = 5, fill = "steelblue", colour="darkgrey") + 
+  # set the the x- and y-axis labels
   xlab("Flipper length (mm)") + ylab("Count")
 ```
 
@@ -117,8 +123,11 @@ Notice that the effect of increasing the bin width is to 'smooth' the histogram,
 We can use pretty much the same R code to produce a histogram summarising the body mass sample distribution:
 
 ```{r}
+# display body mass histogram
 ggplot(penguins, aes(x = body_mass_g)) + 
+  # use geom_histogram to add histogram layer + customisation
   geom_histogram(binwidth = 250, fill = "steelblue", colour="darkgrey") +
+  # set the the x- and y-axis labels
   xlab("Body mass (g)") + ylab("Count")
 ```
 
@@ -127,8 +136,12 @@ The only things that changed in this example were the aesthetic mapping and the 
 We have to choose those bin widths carefully. Body mass is measured to the nearest 25 grams. This means we should choose a bin width that is some multiple of 25 to produce a meaningful histogram. Look what happens if we set the bin width to 25:
 
 ```{r}
+# display body mass histogram
 ggplot(penguins, aes(x = body_mass_g)) + 
+  # use geom_histogram to add histogram layer + customisation -- choose 
+  # a sensible bin width
   geom_histogram(binwidth = 25, fill = "steelblue", colour="darkgrey") + 
+  # set the the x- and y-axis labels
   xlab("Body mass (g)") + ylab("Count")
 ```
 
@@ -143,6 +156,7 @@ Histograms are good for visualising sample distributions when we have a reasonab
 Let's first use **dplyr** to extract a small subset of the `penguins` data:
 
 ```{r}
+# get a small subset of penguins
 penguins_subset <- penguins %>% 
   filter(species == "Adelie", sex == "female", year == 2007)
 ```
@@ -150,21 +164,26 @@ penguins_subset <- penguins %>%
 This extracts the subset of female Adelie penguin observations from 2007. The resulting data set is considerably smaller than the original:
 
 ```{r, echo=FALSE}
+# look ath the subset of penguins
 penguins_subset
 ```
 
 Making the dot plot with these data is simple. The **ggplot2** code is very similar to the histogram case:
 
 ```{r}
+# display body mass dot plot
 ggplot(penguins_subset, aes(x = body_mass_g)) + 
+  # use geom_dotplot to add layer + choose a sensible bin width!
   geom_dotplot(binwidth = 100) + 
+  # set the the x-axis label and remove y-axis label
   xlab("Body mass (g)") + ylab("") + 
+  # remove y-axis guides
   theme(axis.text.y = element_blank(), axis.ticks.y = element_blank())
 ```
 
 Each observation in the data adds one dot, and dots that fall into the same bin are stacked up on top of one another. Notice the bins are not evenly spaced, however. The resulting plot displays the same information as a histogram but tends to be more informative when there are relatively few observations.
 
-The `theme` part of that example is entirely optional---it removes the grid lines and y axis labels because these are not needed. We removed the y axis label for the same reason.
+The `theme` part of that example is entirely optional---it removes the grid lines and y-axis labels because these are not needed. We removed the y-axis label for the same reason.
 
 ## Exploring categorical variables {#explore-categorical}
 
@@ -211,36 +230,43 @@ These numbers lead directly to an informative visualisation. The usual graphical
 Constructing a bar graph to display category counts is easy with **ggplot2**. We'll do this for the `species` variable. As always, we start by using the `ggplot` function to construct a graphical object containing the default data and aesthetic mapping.
 
 ```{r}
+# create graphical object with data and aesthetic mapping
 plot_bar <- ggplot(penguins, aes(x = species)) 
 ```
 
-We've called the object `plot_bar` for the obvious reason. Notice that we only need to define one aesthetic mapping---we mapped `species` to the x axis. This will produce a bar plot with vertical bars.
+We've called the object `plot_bar` for the obvious reason. Notice that we only need to define one aesthetic mapping---we mapped `species` to the x-axis. This will produce a bar plot with vertical bars.
 
 The next step is to add a layer using one of the `geom_XX` functions. There are two functions we can use to create bar charts in ggplot, `geom_bar` and `geom_col`. By default, `geom_col` counts the number of observations in each category, whereas `geom_bar` plots the actual numbers we provide.
 
 We want to show the counts of each `species` category, meaning we should use `geom_bar`:
 
 ```{r}
+# use geom_bar to add bar plot layer
 plot_bar <- plot_bar + geom_bar()
 ```
 
 Now examine the summary of the **ggplot2** object:
 
 ```{r}
+# print summary of graphical object
 summary(plot_bar) 
 ```
 
 Look at the layer information below `----`. The `geom_bar` function set the stat to "count". This means **ggplot2** summed the number of observations associated with each category of `species`. Counting a categorical variable is analogous to binning a numeric variable. The only difference is that there is no need to specify bin widths because `species` is categorical. Here's the resulting figure:
 
 ```{r, fig.height=4, fig.width=2.2}
+# show the bar plot
 plot_bar
 ```
 
 This is exactly the same information produced by the `count` function, only now it's presented in graphical form. We can customise this bar graph with functions like `xlab` and `ylab`, and by setting various properties inside `geom_bar`. For example:
 
 ```{r, fig.height=4, fig.width=2.2}
+# display bar plot of species counts
 ggplot(penguins, aes(x = species)) + 
+  # use geom_bar to add bar plot layer of **counts**
   geom_bar(fill = "orange", width = 0.7) + 
+  # set the the x- and y-axis labels
   xlab("Species") + ylab("Number of Observations")
 ```
 
@@ -251,15 +277,20 @@ What else about this plot might we change? The different species appear in alpha
 We need to customise the scale associated with the 'x' aesthetic to achieve this. We can start by making a short character vector containing the species names, listing them in the order they need to be shown:
 
 ```{r}
+# character vector of species names **in required order**
 ords <- c("Chinstrap", "Gentoo", "Adelie")
 ```
 
 Keep an eye on the spelling---R is not forgiving of spelling errors. We can use this with the `limits` argument of the `scale_x_discrete` function to adjust the ordering:
 
 ```{r, fig.height=4, fig.width=2.2}
+# display bar plot of species counts
 ggplot(penguins, aes(x = species)) + 
+  # use geom_bar to add bar plot layer of **counts**
   geom_bar(fill = "orange", width = 0.7) + 
+  # customise order of x-axis (limits)
   scale_x_discrete(limits = ords) +
+  # set the the x- and y-axis labels
   xlab("Species") + ylab("Number of Observations")
 ```
 
@@ -268,20 +299,29 @@ We had to use one of the `scale_x_YY` functions to change the way the 'x' aesthe
 Is there anything else we might we change? Sometimes it is clearer to plot horizontal bars, particularly if the categorical axis labels are all bunched together (not really the case here). Flipping the x and y axes makes a horizontal bar chart, which we can achieve with the `coord_flip` function (this is new):
 
 ```{r, fig.height=1.8, fig.width=5}
+# display bar plot of species counts
 ggplot(penguins, aes(x = species)) + 
+  # use geom_bar to add bar plot layer of **counts**
   geom_bar(fill = "orange", width = 0.7) + 
+  # customise order of x-axis (limits)
   scale_x_discrete(limits = ords) +
-  coord_flip() + 
-  xlab("Species") + ylab("Number of Observations")
+  # set the the x- and y-axis labels
+  xlab("Species") + ylab("Number of Observations") +
+  # flip x- and y-axes
+  coord_flip()
 ```
 
 We use very similar R code to produce a bar plot summarising the annual counts, i.e. those associated with the `year` categories:
 
 ```{r, fig.height=1.8, fig.width=5}
+# display bar plot of year counts
 ggplot(penguins, aes(x = year)) + 
+  # use geom_bar to add bar plot layer of **counts**
   geom_bar(fill = "steelblue", width = 0.7) + 
-  coord_flip() + 
-  xlab("Year") + ylab("Number of Observations")
+  # set the the x- and y-axis labels
+  xlab("Year") + ylab("Number of Observations") +
+  # flip x- and y-axes
+  coord_flip()
 ```
 
 To make this, we changed the aesthetic mapping, colour and the labels, and dropped the `scale_x_discrete` part because the default ordering is acceptable. The resulting plot shows that there are roughly equal numbers of penguins sampled in each year.
@@ -291,15 +331,20 @@ There is one small irritation. Look at the year axis labels and guides. These in
 We need to force **ggplot2** to treat `year` as a categorical 'thing' to avoid this behaviour. There is more than one way to do this. The simplest is to convert `year` into a character vector. The `as.character` function will do this. What's more, **ggplot2** will allow us to do this when we set up the aesthetic mappings within `aes`:
 
 ```{r, fig.height=1.8, fig.width=5}
-ggplot(penguins, aes(x = as.character(year))) + 
+# display bar plot of year counts
+ggplot(penguins,
+       # convert year to character when setting up mapping
+       aes(x = as.character(year))) + 
+  # use geom_bar to add bar plot layer of **counts**
   geom_bar(fill = "steelblue", width = 0.7) + 
-  coord_flip() + 
-  xlab("Year") + ylab("Number of Observations")
+  # set the the x- and y-axis labels
+  xlab("Year") + ylab("Number of Observations") +
+  # flip x- and y-axes
+  coord_flip()
 ```
 
-That's better! This may seem like a bit of a special edge case, but it comes up often enough to be worth highlighting the fix. More generally, this example demonstrates that we must ensure our conception of a variable matches the way it is interpreted by **ggplot2** if we want to arrive at a 'sensible' plot.
+That's better! This may seem like a bit of an edge case but it comes up often enough to be worth highlighting. More generally, this example demonstrates that our conception of a variable needs to matches the way it is interpreted by **ggplot2** to arrive at a sensible plot.
 
 ```{r, echo=FALSE}
 opts_chunk$set(warning=TRUE)
 ```
-

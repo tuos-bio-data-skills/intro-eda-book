@@ -11,7 +11,11 @@ A pair of variables are said to be associated when knowing the value of one vari
 The standard graph for displaying an association among a pair of numeric variables is the scatter plot. This uses horizontal and vertical axes to show two variables as a series of points. We saw how to construct a scatter plot in the [Introduction to ggplot2](#chapter-ggplot2-intro) chapter. Here is the initial plot we made to show the association between bill depth and bill length (ignoring species information):
 
 ```{r}
-ggplot(penguins, aes(x = bill_length_mm, y = bill_depth_mm)) + 
+# display bill morphology scatter plot
+ggplot(penguins,
+       # aesthetic mappings: bill depth (y) vs bill length (x)
+       aes(x = bill_length_mm, y = bill_depth_mm)) + 
+  # geom_point to add points layer
   geom_point()
 ```
 
@@ -27,7 +31,11 @@ Two options for dealing with large data sets (problem \#1) are the `geom_bin_2d`
 Here's an example of `geom_hex` in action (n.b. `geom_hex` relies on the **hexbin** package, so this need to be installed to use it):
 
 ```{r, fig.width=4.5}
-ggplot(penguins, aes(x = bill_length_mm, y = bill_depth_mm)) +
+# display bill morphology scatter plot
+ggplot(penguins,
+       # aesthetic mappings: bill depth (y) vs bill length (x)
+       aes(x = bill_length_mm, y = bill_depth_mm)) + 
+  # add shaded hex bin layer
   geom_hex(bins = 12)
 ```
 
@@ -50,8 +58,11 @@ penguins_coarse
 A scatter plot `bill_depth_mm` against `bill_length_mm` produced with those coarsened data would look like this:
 
 ```{r, echo=FALSE}
-ggplot(penguins_coarse, 
+# display coarsened bill morphology scatter plot
+ggplot(penguins_coarse,
+       # aesthetic mappings: bill depth (y) vs bill length (x)
        aes(x = bill_length_mm, y = bill_depth_mm)) + 
+  # use geom_point to add points layer
   geom_point()
 ```
 
@@ -60,7 +71,11 @@ This is not very informative because groups of points appear in exactly the same
 The `geom_count` function solves this problem by producing a scatter plot where point sizes are scaled according to how many cases are associated with each point. For example, the following code produces a modified scatter plot using a coarsened bill morphology data set (called `penguins_coarse`):
 
 ```{r, fig.width=4.5}
-ggplot(penguins_coarse, aes(x = bill_length_mm, y = bill_depth_mm)) + 
+# display coarsened bill morphology scatter plot
+ggplot(penguins_coarse,
+       # aesthetic mappings: bill depth (y) vs bill length (x)
+       aes(x = bill_length_mm, y = bill_depth_mm)) + 
+  # use geom_count to add sample size scaled points layer
   geom_count()
 ```
 
@@ -73,7 +88,11 @@ Bar charts are often used to summarise associations between categorical variable
 Using **ggplot2** to display this information is not very different from producing a bar graph to summarise a single categorical variable. Let's do this for the `species` and `year` variables in `penguins`:
 
 ```{r, fig.width=3.5}
-ggplot(penguins, aes(x = year, fill = species)) +
+# display bar plot of year-species counts
+ggplot(penguins, 
+       # aesthetic mappings: year (x) by species (fill)
+       aes(x = year, fill = species)) +
+  # use geom_bar to add bar plot layer  with stacked bars
   geom_bar()
 ```
 
@@ -81,7 +100,7 @@ We want to display information from two categorical variables, so we have to def
 
 This produced a **stacked bar chart**. Each year has its own bar (`x = year`), and each bar has been divided up into different coloured segments, the length of which is determined by the number of observations associated with each species in that year (`fill = species`).
 
-We have all the right information in this graph, but it could be slightly improved in a couple of ways:
+We have all the right information in this graph, but it could be improved in a couple of ways:
 
 -   Look at the guides on the x axis. There are some pointless extra lines. We saw this issue in a different guise in the previous chapter. It occurs because `year` is stored as a numeric vector---**ggplot2** has no way of knowing we want to treat it as a non-numeric, categorical variable.
 -   The ordering of the species in the stacks does not reflect the relative frequency of each species. Again, we saw this problem in the previous chapter---**ggplot2** treats does not 'know' how we want to order the `species` categories, and so it uses alphabetical order.
@@ -93,15 +112,18 @@ We need to convert `year` and `species` to factors. How do we convert a numeric 
 One way to start is by setting up a character vector of species names **in the required order** (`species_names`):
 
 ```{r}
+# levels of new species factor **in required order**
 species_names <- c("Chinstrap", "Gentoo", "Adelie")
 ```
 
 We supplied the names in the order we want them to appear. Be careful with the spelling---the values of `species_names` have to match those used in `species`. We can now remake the bar plot, this time converting `species` and `year` to factors 'on the fly':
 
 ```{r, fig.width=5}
+# display bar plot of year-species counts
 ggplot(penguins, 
-       aes(x = factor(year), 
-           fill = factor(species, levels = species_names))) +
+       # aesthetic mappings: year (x) by species (fill) AND convert to factor
+       aes(x = factor(year), fill = factor(species, levels = species_names))) +
+  # use geom_bar to add bar plot layer with stacked bars
   geom_bar()
 ```
 
@@ -115,6 +137,7 @@ Factors are very useful and crop up all the time in R. A complete treatment of f
 One thing to be aware of is that it is sometimes simpler to convert variables to factors in a data set, rather than doing it every time we use them with **ggplot2**. For example, we could use `mutate` to create factor versions of `year` and `species`:
 
 ```{r, eval=FALSE}
+# convert year and species to factors to ensure correct ordering 
 penguins <- penguins %>% 
   mutate(year    = factor(year),
          species = factor(species, levels = species_names)) 
@@ -126,9 +149,11 @@ Any **ggplot2** code that uses the updated version of `penguins` would then auto
 A stacked bar chart is the `geom_bar` default. If we want to know how two categorical variables are associated it is sometimes better to plot all bars side-by-side. This is not hard to do. We switch to a side-by-side bar chart by assigning a value of `"dodge"` to the `position` argument of `geom_bar`:
 
 ```{r, fig.width=7}
+# display bar plot of year-species counts
 ggplot(penguins, 
-       aes(x = factor(year), 
-           fill = factor(species, levels = species_names))) +
+       # aesthetic mappings: year (x) by species (fill) AND convert to factor
+       aes(x = factor(year), fill = factor(species, levels = species_names))) +
+  # use geom_bar to add bar plot layer with adjacent fill bars
   geom_bar(position = "dodge")
 ```
 
@@ -137,12 +162,17 @@ The `position = "dodge"` argument says that we want the bars to 'dodge' one anot
 Remember---the customisation techniques introduced in the [Customising plots](#chapter-customise-ggplot2) chapter are completely general. For example, we could improve the plot by using `labs` to set the labels, setting custom fill colours with `scale_fill_manual`, and applying a theme via `theme_minimal`:
 
 ```{r, fig.width=5.5}
+# display bar plot of year-species counts
 ggplot(penguins, 
-       aes(x = factor(year), 
-           fill = factor(species, levels = species_names))) +
+       # aesthetic mappings: year (x) by species (fill) AND convert to factor
+       aes(x = factor(year), fill = factor(species, levels = species_names))) +
+  # use geom_bar to add bar plot layer with fill bars next to one another
   geom_bar(position = "dodge") +
+  # customise fill colour scale
   scale_fill_manual(values = c("cornflowerblue", "seagreen", "orangered3")) +
+  # specify labels for all mappings
   labs(x = "Year", y = "Number of cases", fill = "Species") +
+  # apply minimal theme
   theme_minimal()
 ```
 
@@ -153,8 +183,13 @@ The next obvious question is, "How do we display the association between a categ
 The most common is the 'box and whiskers plot' (or just 'box plot'). This is best understood by example. To construct a box and whiskers plot we need to set 'x' and 'y' axis aesthetics for the categorical and numeric variable; then use the `geom_boxplot` function to add the appropriate layer. To examine the association between penguin species (`species`) and body mass measurements (`body_mass_g`), use:
 
 ```{r}
-ggplot(penguins, aes(x = species, y = body_mass_g)) +
+# display box and whiskers plot of body mass for each species
+ggplot(penguins, 
+       # aesthetic mappings: body mass (y) vs species (x)
+       aes(x = species, y = body_mass_g)) +
+  # use geom_boxplot to add box plots layer
   geom_boxplot() + 
+  # specify labels for x- and y-axes
   xlab("Species") + ylab("Body mass (g)")
 ```
 
@@ -179,9 +214,14 @@ Box and whiskers plots are a good choice for exploring categorical-numerical ass
 We know how to make a histogram, and we have seen how aesthetic properties such as `colour` and `fill` are used to distinguish different categories of a variable. This suggests we could overlay more than one histogram on a single plot. Let's use this idea to see how the sample distribution of body mass differs among the species again:
 
 ```{r, fig.width=5.5}
-ggplot(penguins, aes(x = body_mass_g, fill = species))  +
-  geom_histogram(position = "identity", alpha = 0.6, binwidth = 200) + 
-  xlab("Body mass (g)")
+# display histogram of body mass for each species in one plot
+ggplot(penguins, 
+       # aesthetic mappings: body mass (x) by species groups (fill)
+       aes(x = body_mass_g, fill = species))  +
+  # use geom_histogram to add histogram layer with customisation
+  geom_histogram(position = "identity", alpha = 0.8, binwidth = 200) + 
+  # specify labels for all mappings
+  labs(x = "Body mass (g)", fill = "Species")
 ```
 
 We defined two mappings: the continuous variable (`body_mass_g`) was mapped to the x axis and the categorical variable (`species`) was mapped to the fill colour. Notice that we also set the `position` argument to `"identity"`. This tells **ggplot2** not to stack the histograms on top of one another. Instead, they are allowed to overlap. It's for this reason that we also made them semi-transparent by setting the `alpha` argument.
@@ -189,10 +229,16 @@ We defined two mappings: the continuous variable (`body_mass_g`) was mapped to t
 Plotting several histograms in one layer like this places a lot of information in one plot, but it can be hard to make sense of when the histograms overlap a lot. If the overlapping histograms are too difficult to interpret, we might consider producing a separate one for each category. We've already seen a quick way to do this. Faceting works well here:
 
 ```{r, fig.height=3, fig.width=7}
-ggplot(penguins, aes(x = body_mass_g))  +
+# display histogram of body mass for each species in separate panels
+ggplot(penguins,
+       # aesthetic mappings: body mass (x) (only one!)
+       aes(x = body_mass_g))  +
+  # use geom_histogram to add histogram layer with sensible bin width
   geom_histogram(binwidth = 200) + 
+  # specify label for x-axis
   xlab("Body mass (g)") +
-  facet_wrap(~ species)
+  # facet by species to get one panel per species
+  facet_wrap(vars(species))
 ```
 
 The two histogram plots tell much the same story as the box and whiskers plot. The body mass distributions of Chinstrap and Adelie penguins are very similar, Gentoo penguins are generally a bit larger, but all three distributions overlap to some extent.
@@ -213,13 +259,21 @@ We saw these approaches used together in the [Introduction to ggplot2](#chapter-
 The obvious idea is to produce a multi-panel scatter plot, where each panel is associated with combinations of the categorical variables. We have already seen how to do this kind of thing with `facet_wrap`. This time, we'll use the `facet_grid` function to organise separate panels for each sex-species combination into a nice 2d grid:
 
 ```{r, fig.width=7}
+# 
 ggplot(na.omit(penguins), 
-       aes(x = body_mass_g, y = flipper_length_mm, 
-           colour = island, shape = island)) +
+       # aesthetic mappings
+       aes(
+         # flipper length (y) vs body mass (x)
+         x = body_mass_g, y = flipper_length_mm, 
+         # colour AND shape of points vary by island
+         colour = island, shape = island)) +
+  # geom_point to add points layer
   geom_point() + 
+  # specify labels for ALL mappings (both Island labels required)
   labs(x = "Body size (g)", 
        y = "Flipper length (mm)",
        colour = "Island", shape = "Island") +
+  # facet on sex by species grid
   facet_grid(rows = vars(sex), cols = vars(species))
 ```
 
