@@ -30,7 +30,7 @@ Let's rebuild the example scatter plot, this time setting the shape, size and tr
 ggplot(penguins, 
        # vary colour by species
        aes(x = bill_length_mm, y = bill_depth_mm, colour = species)) + 
-  # add points layer and customise -ppearance of points
+  # add points layer and customise appearance of points
   geom_point(shape = 17, size = 1.5, alpha = 0.85)
 ```
 
