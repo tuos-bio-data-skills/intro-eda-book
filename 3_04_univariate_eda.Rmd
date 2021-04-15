@@ -37,12 +37,11 @@ Whether we treat a variable as continuous or discrete is sometimes an analysis d
 
 ### Histograms
 
-We only looked at the first 50 values of the `flipper_length_mm` and `body_mass_g` variables because the `penguins` data set is a bit too big to view everything at once easily. It's hard to say much about the sample distribution of the two variables by just looking at a small subset of values. Because the data are sorted by island and species, those first 50 values are also not representative of the whole sample.
+We only looked at the first 50 values of the `flipper_length_mm` and `body_mass_g` variables because the `penguins` data set is a bit too big to view everything at once easily. It's hard to say much about the sample distribution of a numeric variable by looking at the raw data because there are so many unique values. Those first 50 are also not representative of the whole sample.
 
 What else might we do? One useful tool is 'binning'. The idea behind binning a numeric variable is very simple. It involves two steps.
 
-1.  Take the range of the variable and divide this into equal-sized, non-overlapping intervals. These are the 'bins'. We can use any interval size as long as the resulting bins (typically) include a few observations.
-
+1.  Divide the number line into equal-sized, non-overlapping intervals. These are the 'bins'. We pick the interval size to ensure bins (typically) include at least a few cases.
 2.  We then have to count up the number of times the variable falls inside each bin. The resulting set of counts summarises the sample distribution of the numeric variable.
 
 Binning is very tedious to do by hand. Fortunately, R can do this for us. This shows how to use the `cut` function with the **dplyr** `transmute` and `count` verbs to bin the `flipper_length_mm` variable into 5 mm intervals:
@@ -53,9 +52,11 @@ penguins %>%
   count(bins)
 ```
 
-We won't explain how this works because we only need to understand the output. This is a small tibble where the `bins` column shows the intervals, and the `n` column gives the associated counts. What does this tell us? It shows that the most common flipper length is around 190 mm. Values much below 190 mm are rare, but a range of values above this are possible, with higher values becoming less frequent. These binned data are telling us quite a lot about the sample distribution of `flipper_length_mm`.
+We won't explain how this works because we only need to understand the output. This is a small tibble where the `bins` column shows the intervals, and the `n` column gives the associated counts.
 
-It is still difficult to perceive distributional information when it is presented as a series of numbers. What we need is a visualisation based on the above numbers. This is what a **histogram** provides. Histograms summarise the sample distribution of a variable by showing the counts of binned data as a series of bars. The position and width of each bar correspond to an interval and the height shows the count. Here is a histogram based on the binned data we made:
+What does this tell us? It shows that the most common flipper length is around 190 mm. Values much below 190 mm are rare, but a range of values above this are possible, with higher values becoming less frequent. These binned data are telling us a lot about the sample distribution of `flipper_length_mm`.
+
+It is still difficult to perceive distributional information when presented as a series of numbers. What we need is a visualisation based on the above numbers. This is what a **histogram** provides. Histograms summarise the sample distribution of a variable by showing the counts of binned data as a series of bars. The position and width of each bar correspond to an interval and the height shows the count. Here is a histogram based on the binned data we made:
 
 ```{r, echo=FALSE}
 ggplot(penguins, aes(x = flipper_length_mm)) + geom_histogram(breaks = seq(170, 235, by = 5))
@@ -94,13 +95,13 @@ It is instructive to look at the summary of the **ggplot2** object at this stage
 summary(plot_hist)
 ```
 
-Look at the text below the `----`. This shows that `geom_histogram` adds a stat to the layer: `stat_bin`. This means **ggplot2** is going to take the raw `flipper_length_mm` data and bin it for us.
+Look at the text below the `----`. This shows that `geom_histogram` adds a 'stat' to the layer: `stat_bin`. This means **ggplot2** is going to take the raw `flipper_length_mm` data and bin it for us. Remember---the stat facility of **ggplot2** is its mechanism for creating summaries of data from the raw inputs. `stat_bin` deals with the binning process for us.
 
 Everything we need to plot a histogram is now set up. Here is the resulting plot:
 
 ```{r}
 # show the histogram
-plot_hist
+print(plot_hist)
 ```
 
 This is not quite the same as the example we saw above because it uses different bins. There is nothing special about the **ggplot2** default. It is usually a good idea to play around with the bin size to arrive at an informative histogram. We set the properties of the `geom_histogram` to tweak this kind of thing---the `binwidth` argument adjusts the width of the bins used.
@@ -113,7 +114,7 @@ ggplot(penguins, aes(x = flipper_length_mm)) +
   # use geom_histogram to add histogram layer + customisation
   geom_histogram(binwidth = 5, fill = "steelblue", colour="darkgrey") + 
   # set the the x- and y-axis labels
-  xlab("Flipper length (mm)") + ylab("Count")
+  labs(x = "Flipper length (mm)", y = "Count")
 ```
 
 Whether or not that colour scheme is an improvement is a matter of taste. Mostly we wanted to demonstrate how the `fill` and `colour` arguments change the output--- `fill` sets the fill colour of the bar and `colour` deals with the line around each bar.
@@ -128,7 +129,7 @@ ggplot(penguins, aes(x = body_mass_g)) +
   # use geom_histogram to add histogram layer + customisation
   geom_histogram(binwidth = 250, fill = "steelblue", colour="darkgrey") +
   # set the the x- and y-axis labels
-  xlab("Body mass (g)") + ylab("Count")
+  labs(x = "Flipper length (mm)", y = "Count")
 ```
 
 The only things that changed in this example were the aesthetic mapping and the bin width, which we set to 250 to reflect the range of observed body masses. The histogram reveals that the most common body mass (the mode) is around 3500 grams and the range of masses is also about 3500 grams. It also shows that the distribution is **skewed**, i.e. it is asymmetric. We can say even more---the distribution is right-skewed (a.k.a. positive-skewed) because the tail on the right gets further away from the mode than the left tail.
@@ -142,7 +143,7 @@ ggplot(penguins, aes(x = body_mass_g)) +
   # a sensible bin width
   geom_histogram(binwidth = 25, fill = "steelblue", colour="darkgrey") + 
   # set the the x- and y-axis labels
-  xlab("Body mass (g)") + ylab("Count")
+  labs(x = "Flipper length (mm)", y = "Count")
 ```
 
 We end up with gaps in the histogram because many bins do not include any data. The take-home message is that we have to pay attention to our data to produce meaningful summaries.
@@ -174,9 +175,9 @@ Making the dot plot with these data is simple. The **ggplot2** code is very simi
 # display body mass dot plot
 ggplot(penguins_subset, aes(x = body_mass_g)) + 
   # use geom_dotplot to add layer + choose a sensible bin width!
-  geom_dotplot(binwidth = 100) + 
+  geom_dotplot(binwidth = 100) +
   # set the the x-axis label and remove y-axis label
-  xlab("Body mass (g)") + ylab("") + 
+  labs(x = "Body mass (g)", y = "") +
   # remove y-axis guides
   theme(axis.text.y = element_blank(), axis.ticks.y = element_blank())
 ```
@@ -252,14 +253,14 @@ Now examine the summary of the **ggplot2** object:
 summary(plot_bar) 
 ```
 
-Look at the layer information below `----`. The `geom_bar` function set the stat to "count". This means **ggplot2** summed the number of observations associated with each category of `species`. Counting a categorical variable is analogous to binning a numeric variable. The only difference is that there is no need to specify bin widths because `species` is categorical. Here's the resulting figure:
+Look at the layer information below `----`. The `geom_bar` function uses `stat_count`. This means **ggplot2** summed the number of observations associated with each category of `species`. Counting a categorical variable is analogous to binning a numeric variable. The only difference is that there is no need to specify bin widths because `species` is categorical. Here's the resulting figure:
 
 ```{r, fig.height=4, fig.width=2.2}
 # show the bar plot
-plot_bar
+print(plot_bar)
 ```
 
-This is exactly the same information produced by the `count` function, only now it's presented in graphical form. We can customise this bar graph with functions like `xlab` and `ylab`, and by setting various properties inside `geom_bar`. For example:
+This is exactly the same information produced by the `count` function, only now it's presented in graphical form. We can customise this bar graph with functions like `labs` and by setting various properties inside `geom_bar`. For example:
 
 ```{r, fig.height=4, fig.width=2.2}
 # display bar plot of species counts
@@ -267,7 +268,7 @@ ggplot(penguins, aes(x = species)) +
   # use geom_bar to add bar plot layer of **counts**
   geom_bar(fill = "orange", width = 0.7) + 
   # set the the x- and y-axis labels
-  xlab("Species") + ylab("Number of Observations")
+  labs(x = "Species", y = "Number of Observations")
 ```
 
 The only new thing here is that we used the `width` argument of `geom_bar` to make the bars a little narrower than the default.
@@ -291,7 +292,7 @@ ggplot(penguins, aes(x = species)) +
   # customise order of x-axis (limits)
   scale_x_discrete(limits = ords) +
   # set the the x- and y-axis labels
-  xlab("Species") + ylab("Number of Observations")
+  labs("Species", y = "Number of Observations")
 ```
 
 We had to use one of the `scale_x_YY` functions to change the way the 'x' aesthetic appears. We use `scale_x_discrete` because 'discrete' is **ggplot2**-speak for 'categorical'.
@@ -306,7 +307,7 @@ ggplot(penguins, aes(x = species)) +
   # customise order of x-axis (limits)
   scale_x_discrete(limits = ords) +
   # set the the x- and y-axis labels
-  xlab("Species") + ylab("Number of Observations") +
+  labs("Species", y = "Number of Observations") +
   # flip x- and y-axes
   coord_flip()
 ```
@@ -319,7 +320,7 @@ ggplot(penguins, aes(x = year)) +
   # use geom_bar to add bar plot layer of **counts**
   geom_bar(fill = "steelblue", width = 0.7) + 
   # set the the x- and y-axis labels
-  xlab("Year") + ylab("Number of Observations") +
+  labs("Year", y = "Number of Observations") +
   # flip x- and y-axes
   coord_flip()
 ```
@@ -338,7 +339,7 @@ ggplot(penguins,
   # use geom_bar to add bar plot layer of **counts**
   geom_bar(fill = "steelblue", width = 0.7) + 
   # set the the x- and y-axis labels
-  xlab("Year") + ylab("Number of Observations") +
+  labs("Year", y = "Number of Observations") +
   # flip x- and y-axes
   coord_flip()
 ```

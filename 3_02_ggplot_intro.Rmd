@@ -39,7 +39,7 @@ Each layer in a **ggplot2** plot has five different components, though we don't 
 
 ### Scales
 
-The scale part of a **ggplot2** object controls how the information in a variable is mapped to the aesthetic properties. A scale takes the data and converts it into something we can perceive, such as an x/y location, or the colour and size of points in a plot. The two most important things to understand about scales are:
+The scale part of a **ggplot2** object controls how the information in a variable is mapped to the aesthetic properties. A scale takes the data and converts it into variation we can perceive, such as an x/y location, or the colour and size of points in a plot. The two most important things to understand about scales are:
 
 1.  A scale must be defined for every aesthetic in a plot. It doesn't make sense to define an aesthetic mapping without a scale because there is no way for **ggplot2** to know how to go from the data to the aesthetics without one.
 2.  When we include two or more layers, they all have to use the same scale for any shared aesthetic mappings. This behaviour is necessary to ensure information is displayed consistently.
@@ -56,7 +56,7 @@ The idea behind faceting is very simple. Faceting allows us to break a data set 
 
 ## A quick introduction to ggplot2 {#quick}
 
-Now that we've briefly reviewed the **ggplot2** grammar, we can start learning how to use it. The package uses this grammar as the basis of a sort of mini-language within R. It uses functions to specify components like aesthetics and geoms, which are combined with data to define a **ggplot2** graphics object. Once we've constructed a suitable object, we can use it to display our graphic on the computer screen or save it using a common graphics format (e.g. PDF, PNG or JPEG).
+Now that we've briefly reviewed the **ggplot2** grammar, we can start learning how to use it. The package uses this grammar as the basis of a sort of mini-language within R. It uses functions to specify components like aesthetic mappings and geoms, which are combined with data to define a **ggplot2** graphics object. Once we've constructed a suitable object, we can use it to display our graphic on the computer screen or save it using a common graphics format (e.g. PDF, PNG or JPEG).
 
 Rather than orientating this introduction around each of the key functions we're going to develop a simple example to help us see how **ggplot2** works. Many of the key ideas about how **ggplot2** works can be taken away from this one example, so it's worth investing the time to understand it, i.e. use the example to understand how the different **ggplot2** functions are related to the grammar outlined above.
 
@@ -260,7 +260,7 @@ What does this scatter plot actually tell us about penguin bill morphology? It s
 ::: {.infobox .information data-latex="{information}"}
 #### How should we format **ggplot2** code? {.unnumbered}
 
-Take another look at that last example. Notice that we split the **ggplot2** definition over two lines, placing each function on its own line. The whole thing will still be treated as a single expression when we do this because R doesn't care about white space. As long as we put a `+` at the end of a line R will assume the next line to be part of the same definition. Just remember that any **ggplot2** code joined by `+` symbols has to be run as one big expression. Splitting the different parts of a graphical object definition across lines like this is a good idea. It makes everything more readable and helps us spot errors. This way of formatting **ggplot2** code is pretty much essential once we start working with complex plots. We will always use this convention from now on.
+Take another look at that last example. Notice that we split the **ggplot2** definition over two lines, placing each function on its own line. The whole thing was still be treated as a single expression when we do this because R doesn't care about white space. As long as we put a `+` at the end of a line R will assume the next line to be part of the same definition. Just remember that any **ggplot2** code joined by `+` symbols has to be run as one big expression. Splitting the different parts of a graphical object definition across lines like this is a good idea. It makes everything more readable and helps us spot errors. This way of formatting **ggplot2** code is pretty much essential once we start working with complex plots. We will always use this convention from now on.
 :::
 
 ::: {.infobox .information data-latex="{information}"}
@@ -297,11 +297,11 @@ We can see that **ggplot2** will try to plot something with the information it h
 
 We introduced the example by saying that we were interested in the relationship between bill depth and bill length, and how this might vary among species and islands. So far, we've only examined the bill depth-length part. We'll finish this chapter by investigating how this relationship depends on the remaining two variables (`species` and `island`). In doing so, we'll highlight approaches for increasing the amount of information in a visualisation---that's the real goal of this section.
 
-### Using additional aesthetics
+### ...via aesthetic mappings
 
 How might we learn whether the bill depth-length relationship varies by penguin species? We need to include information in the `species` variable in our scatter plot somehow. There are different ways to do this, but the basic trick is to **map the** `species` **variable to a new aesthetic**.
 
-One option is to map the `species` to colour so that the colour of the points correspond to different species. We achive this by changing the `aes` part:
+One option is to map the `species` to colour so that the colour of the points correspond to different species. We do this by changing the `aes` part:
 
 ```{r, fig.width=4.5}
 # display bill morphology scatter plot + colour points by species
@@ -310,9 +310,9 @@ ggplot(penguins,
   geom_point()
 ```
 
-Individual points are now coloured according to species identity. **ggplot2** also adds a legend to the figure---a colour scale is not much use without a legend. We can see that bill morphology is reasonably species-specific. Separating things by species suggests a (mild) positive association between bill length and bill depth *within species*. We couldn't see this before because it was hidden by the *among species* pattern.
+Individual points are now coloured according to the species they belong to. Notice **ggplot2** also adds a legend. This plot shows that bill morphology is reasonably species-specific. Separating things by species suggests a (mild) positive association between bill length and bill depth *within species*. This was not apparent before because it was hidden by the *among species* pattern.
 
-Notice that we put the `aes` argument on a new line. We did this because the first line was getting a bit long. This is just a readability thing---the `aes` part still belongs to `ggplot`.
+We put the `aes` argument on a new line in this example because the first line was getting a bit long. This is only a readability thing---the `aes` part still belongs to `ggplot`.
 
 We could certainly improve this visualisation. Nonetheless, it illustrates an important concept: we can easily add more information to a plot by mapping additional variables to new aesthetics. There is nothing to stop us using different aesthetics if we wanted to squeeze even more information into this plot. For example, we could map the sex variable (`sex`) to the point shape using `shape = sex` inside `aes`. That would allow us to see if the relationship differs by sex within and among species.
 
@@ -330,10 +330,10 @@ ggplot(penguins,
   geom_point()
 ```
 
-It's a good idea to document **ggplot2** code in this way as it starts to get more complicated. That way, when we come back to it after a while we can remember what we were trying to achieve! We will usually do from now on.
+It's a good idea to document **ggplot2** code in this way as it starts to get more complicated. That way, when we come back to it after a while we can remember what we were trying to achieve! We will include extensive comments from now on.
 :::
 
-### Using facets
+### ...via facets
 
 What if we want to see how the bill morphology varies across islands? One way to do this is to make a separate scatter plot for each island. The good news is we don't have to do this manually. We can use the **faceting** facility of **ggplot2** instead. Faceting allows us to define subsets of data according to the values of one or more variables and produce a separate plot for each subset, all without having to write much R code.
 

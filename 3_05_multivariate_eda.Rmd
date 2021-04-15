@@ -190,7 +190,7 @@ ggplot(penguins,
   # use geom_boxplot to add box plots layer
   geom_boxplot() + 
   # specify labels for x- and y-axes
-  xlab("Species") + ylab("Body mass (g)")
+  labs(x = "Species", y = "Body mass (g)")
 ```
 
 We can see why this is called a box and whiskers plot. There are four components of each box and whiskers:
@@ -236,7 +236,7 @@ ggplot(penguins,
   # use geom_histogram to add histogram layer with sensible bin width
   geom_histogram(binwidth = 200) + 
   # specify label for x-axis
-  xlab("Body mass (g)") +
+  labs(x = "Body mass (g)") +
   # facet by species to get one panel per species
   facet_wrap(vars(species))
 ```
