@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 17 Doing more with ggplot2 | Exploratory Data Analysis with R</title>
+  <meta name="description" content="This is the Exploratory Data Analysis in R book provided by the School of Biosciences at the University of Sheffield." />
+  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 17 Doing more with ggplot2 | Exploratory Data Analysis with R" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="This is the Exploratory Data Analysis in R book provided by the School of Biosciences at the University of Sheffield." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 17 Doing more with ggplot2 | Exploratory Data Analysis with R" />
+  
+  <meta name="twitter:description" content="This is the Exploratory Data Analysis in R book provided by the School of Biosciences at the University of Sheffield." />
+  
+
+<meta name="author" content="Dylan Childs" />
+
+
+<meta name="date" content="2021-04-17" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="exploring-associations.html"/>
+<link rel="next" href="getting-help.html"/>
+<script src="libs/header-attrs-2.7/header-attrs.js"></script>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<link href="libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet" />
+<script src="libs/pagedtable-1.1/js/pagedtable.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Exploratory Data Analysis with R</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>What you will learn</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#aims"><i class="fa fa-check"></i>Aims</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#topics"><i class="fa fa-check"></i>Topics</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#technologies"><i class="fa fa-check"></i>Technologies</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#what-is-r"><i class="fa fa-check"></i>What is R?</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#what-is-rstudio"><i class="fa fa-check"></i>What is RStudio?</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="how-to-use-this-book.html"><a href="how-to-use-this-book.html"><i class="fa fa-check"></i>How to use this book</a>
+<ul>
+<li class="chapter" data-level="" data-path="how-to-use-this-book.html"><a href="how-to-use-this-book.html#text-instructions-and-explanations"><i class="fa fa-check"></i>Text, instructions, and explanations</a></li>
+<li class="chapter" data-level="" data-path="how-to-use-this-book.html"><a href="how-to-use-this-book.html#r-code-and-output"><i class="fa fa-check"></i>R code and output</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="get-up-and-running.html"><a href="get-up-and-running.html"><i class="fa fa-check"></i>Get up and running</a>
+<ul>
+<li class="chapter" data-level="" data-path="get-up-and-running.html"><a href="get-up-and-running.html#different-ways-to-run-rstudio"><i class="fa fa-check"></i>Different ways to run RStudio</a></li>
+<li class="chapter" data-level="" data-path="get-up-and-running.html"><a href="get-up-and-running.html#installing-r-and-rstudio-locally"><i class="fa fa-check"></i>Installing R and RStudio locally</a>
+<ul>
+<li class="chapter" data-level="" data-path="get-up-and-running.html"><a href="get-up-and-running.html#installing-rstudio"><i class="fa fa-check"></i>Installing RStudio</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="get-up-and-running.html"><a href="get-up-and-running.html#a-quick-look-at-rstudio"><i class="fa fa-check"></i>A quick look at RStudio</a></li>
+<li class="chapter" data-level="" data-path="get-up-and-running.html"><a href="get-up-and-running.html#working-at-console"><i class="fa fa-check"></i>Working at the Console in RStudio</a></li>
+</ul></li>
+<li class="part"><span><b>I Introduction to R</b></span></li>
+<li class="chapter" data-level="1" data-path="quick-intro-to-r.html"><a href="quick-intro-to-r.html"><i class="fa fa-check"></i><b>1</b> A quick introduction to R</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="quick-intro-to-r.html"><a href="quick-intro-to-r.html#r-calculator"><i class="fa fa-check"></i><b>1.1</b> Using R as a big calculator</a>
+<ul>
+<li class="chapter" data-level="1.1.1" data-path="quick-intro-to-r.html"><a href="quick-intro-to-r.html#basic-arithmetic"><i class="fa fa-check"></i><b>1.1.1</b> Basic arithmetic</a></li>
+<li class="chapter" data-level="1.1.2" data-path="quick-intro-to-r.html"><a href="quick-intro-to-r.html#combining-arithmetic-operations"><i class="fa fa-check"></i><b>1.1.2</b> Combining arithmetic operations</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="quick-intro-to-r.html"><a href="quick-intro-to-r.html#problematic-calculations"><i class="fa fa-check"></i><b>1.2</b> Problematic calculations</a></li>
+<li class="chapter" data-level="1.3" data-path="quick-intro-to-r.html"><a href="quick-intro-to-r.html#assignment"><i class="fa fa-check"></i><b>1.3</b> Storing and reusing results</a></li>
+<li class="chapter" data-level="1.4" data-path="quick-intro-to-r.html"><a href="quick-intro-to-r.html#how-does-assignment-work"><i class="fa fa-check"></i><b>1.4</b> How does assignment work?</a></li>
+<li class="chapter" data-level="1.5" data-path="quick-intro-to-r.html"><a href="quick-intro-to-r.html#global-environment"><i class="fa fa-check"></i><b>1.5</b> Global environment</a></li>
+<li class="chapter" data-level="1.6" data-path="quick-intro-to-r.html"><a href="quick-intro-to-r.html#naming-rules-and-conventions"><i class="fa fa-check"></i><b>1.6</b> Naming rules and conventions</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="using-functions.html"><a href="using-functions.html"><i class="fa fa-check"></i><b>2</b> Using functions</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="using-functions.html"><a href="using-functions.html#intro-functions"><i class="fa fa-check"></i><b>2.1</b> Introduction</a></li>
+<li class="chapter" data-level="2.2" data-path="using-functions.html"><a href="using-functions.html#functions-and-arguments"><i class="fa fa-check"></i><b>2.2</b> Functions and arguments</a></li>
+<li class="chapter" data-level="2.3" data-path="using-functions.html"><a href="using-functions.html#evaluating-arguments-and-returning-results"><i class="fa fa-check"></i><b>2.3</b> Evaluating arguments and returning results</a></li>
+<li class="chapter" data-level="2.4" data-path="using-functions.html"><a href="using-functions.html#function-arguments"><i class="fa fa-check"></i><b>2.4</b> Specifying function arguments</a></li>
+<li class="chapter" data-level="2.5" data-path="using-functions.html"><a href="using-functions.html#combining-functions"><i class="fa fa-check"></i><b>2.5</b> Combining functions</a></li>
+<li class="chapter" data-level="2.6" data-path="using-functions.html"><a href="using-functions.html#functions-do-not-have-side-effects"><i class="fa fa-check"></i><b>2.6</b> Functions do not have ‘side effects’</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="vectors.html"><a href="vectors.html"><i class="fa fa-check"></i><b>3</b> Vectors</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="vectors.html"><a href="vectors.html#introduction"><i class="fa fa-check"></i><b>3.1</b> Introduction</a></li>
+<li class="chapter" data-level="3.2" data-path="vectors.html"><a href="vectors.html#atomic-vectors"><i class="fa fa-check"></i><b>3.2</b> Atomic vectors</a></li>
+<li class="chapter" data-level="3.3" data-path="vectors.html"><a href="vectors.html#intro-vectors"><i class="fa fa-check"></i><b>3.3</b> Numeric vectors</a></li>
+<li class="chapter" data-level="3.4" data-path="vectors.html"><a href="vectors.html#constructing-numeric-vectors"><i class="fa fa-check"></i><b>3.4</b> Constructing numeric vectors</a></li>
+<li class="chapter" data-level="3.5" data-path="vectors.html"><a href="vectors.html#named-vectors"><i class="fa fa-check"></i><b>3.5</b> Named vectors</a></li>
+<li class="chapter" data-level="3.6" data-path="vectors.html"><a href="vectors.html#vectorised-operations"><i class="fa fa-check"></i><b>3.6</b> Vectorised operations</a></li>
+<li class="chapter" data-level="3.7" data-path="vectors.html"><a href="vectors.html#other-vectors"><i class="fa fa-check"></i><b>3.7</b> Other kinds of atomic vectors</a>
+<ul>
+<li class="chapter" data-level="3.7.1" data-path="vectors.html"><a href="vectors.html#character-vectors"><i class="fa fa-check"></i><b>3.7.1</b> Character vectors</a></li>
+<li class="chapter" data-level="3.7.2" data-path="vectors.html"><a href="vectors.html#logical-vectors"><i class="fa fa-check"></i><b>3.7.2</b> Logical vectors</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="chapter-data-frames.html"><a href="chapter-data-frames.html"><i class="fa fa-check"></i><b>4</b> Data frames</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="chapter-data-frames.html"><a href="chapter-data-frames.html#introduction-1"><i class="fa fa-check"></i><b>4.1</b> Introduction</a></li>
+<li class="chapter" data-level="4.2" data-path="chapter-data-frames.html"><a href="chapter-data-frames.html#data-frames-intro"><i class="fa fa-check"></i><b>4.2</b> Data frames</a></li>
+<li class="chapter" data-level="4.3" data-path="chapter-data-frames.html"><a href="chapter-data-frames.html#exploring-data-frames"><i class="fa fa-check"></i><b>4.3</b> Exploring data frames</a></li>
+<li class="chapter" data-level="4.4" data-path="chapter-data-frames.html"><a href="chapter-data-frames.html#extracting-and-adding-a-single-variable"><i class="fa fa-check"></i><b>4.4</b> Extracting and adding a single variable</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="packages.html"><a href="packages.html"><i class="fa fa-check"></i><b>5</b> Packages</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="packages.html"><a href="packages.html#package-system"><i class="fa fa-check"></i><b>5.1</b> The R package system</a></li>
+<li class="chapter" data-level="5.2" data-path="packages.html"><a href="packages.html#task-views"><i class="fa fa-check"></i><b>5.2</b> Task views</a></li>
+<li class="chapter" data-level="5.3" data-path="packages.html"><a href="packages.html#use-packages"><i class="fa fa-check"></i><b>5.3</b> Using packages</a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="packages.html"><a href="packages.html#viewing-installed-packages"><i class="fa fa-check"></i><b>5.3.1</b> Viewing installed packages</a></li>
+<li class="chapter" data-level="5.3.2" data-path="packages.html"><a href="packages.html#installing-packages"><i class="fa fa-check"></i><b>5.3.2</b> Installing packages</a></li>
+<li class="chapter" data-level="5.3.3" data-path="packages.html"><a href="packages.html#loading-and-attaching-packages"><i class="fa fa-check"></i><b>5.3.3</b> Loading and attaching packages</a></li>
+<li class="chapter" data-level="5.3.4" data-path="packages.html"><a href="packages.html#dont-use-rstudio-for-loading-packages"><i class="fa fa-check"></i><b>5.3.4</b> Don’t use RStudio for loading packages!</a></li>
+<li class="chapter" data-level="5.3.5" data-path="packages.html"><a href="packages.html#an-analogy"><i class="fa fa-check"></i><b>5.3.5</b> An analogy</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="packages.html"><a href="packages.html#package-data"><i class="fa fa-check"></i><b>5.4</b> Package data</a></li>
+<li class="chapter" data-level="5.5" data-path="packages.html"><a href="packages.html#the-tidyverse-ecosystem-of-packages"><i class="fa fa-check"></i><b>5.5</b> The tidyverse ecosystem of packages</a></li>
+</ul></li>
+<li class="part"><span><b>II Data Wrangling</b></span></li>
+<li class="chapter" data-level="6" data-path="getting-ready-to-use-dplyr.html"><a href="getting-ready-to-use-dplyr.html"><i class="fa fa-check"></i><b>6</b> Getting ready to use <strong>dplyr</strong></a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="getting-ready-to-use-dplyr.html"><a href="getting-ready-to-use-dplyr.html#introduction-2"><i class="fa fa-check"></i><b>6.1</b> Introduction</a></li>
+<li class="chapter" data-level="6.2" data-path="getting-ready-to-use-dplyr.html"><a href="getting-ready-to-use-dplyr.html#tidy-data"><i class="fa fa-check"></i><b>6.2</b> Tidy data</a></li>
+<li class="chapter" data-level="6.3" data-path="getting-ready-to-use-dplyr.html"><a href="getting-ready-to-use-dplyr.html#penguins-data-overview"><i class="fa fa-check"></i><b>6.3</b> Penguins! 🐧+📊= 😃</a></li>
+<li class="chapter" data-level="6.4" data-path="getting-ready-to-use-dplyr.html"><a href="getting-ready-to-use-dplyr.html#um-tibbles"><i class="fa fa-check"></i><b>6.4</b> Um… tibbles?</a></li>
+<li class="chapter" data-level="6.5" data-path="getting-ready-to-use-dplyr.html"><a href="getting-ready-to-use-dplyr.html#missing-values"><i class="fa fa-check"></i><b>6.5</b> Missing values</a></li>
+<li class="chapter" data-level="6.6" data-path="getting-ready-to-use-dplyr.html"><a href="getting-ready-to-use-dplyr.html#why-dplyr"><i class="fa fa-check"></i><b>6.6</b> Introducing <strong>dplyr</strong></a>
+<ul>
+<li class="chapter" data-level="6.6.1" data-path="getting-ready-to-use-dplyr.html"><a href="getting-ready-to-use-dplyr.html#more-dplyr"><i class="fa fa-check"></i><b>6.6.1</b> A first look at <strong>dplyr</strong></a></li>
+<li class="chapter" data-level="6.6.2" data-path="getting-ready-to-use-dplyr.html"><a href="getting-ready-to-use-dplyr.html#dplyr-pseudocode"><i class="fa fa-check"></i><b>6.6.2</b> <strong>dplyr</strong> pseudocode</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="working-with-variables.html"><a href="working-with-variables.html"><i class="fa fa-check"></i><b>7</b> Working with variables</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="working-with-variables.html"><a href="working-with-variables.html#introduction-3"><i class="fa fa-check"></i><b>7.1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="7.1.1" data-path="working-with-variables.html"><a href="working-with-variables.html#getting-ready"><i class="fa fa-check"></i><b>7.1.1</b> Getting ready</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="working-with-variables.html"><a href="working-with-variables.html#subset-variables-with-select"><i class="fa fa-check"></i><b>7.2</b> Subset variables with <code>select</code></a>
+<ul>
+<li class="chapter" data-level="7.2.1" data-path="working-with-variables.html"><a href="working-with-variables.html#alternative-ways-to-identify-variables-with-select"><i class="fa fa-check"></i><b>7.2.1</b> Alternative ways to identify variables with <code>select</code></a></li>
+<li class="chapter" data-level="7.2.2" data-path="working-with-variables.html"><a href="working-with-variables.html#renaming-variables-with-select-and-rename"><i class="fa fa-check"></i><b>7.2.2</b> Renaming variables with <code>select</code> and <code>rename</code></a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="working-with-variables.html"><a href="working-with-variables.html#creating-variables-with-mutate"><i class="fa fa-check"></i><b>7.3</b> Creating variables with <code>mutate</code></a>
+<ul>
+<li class="chapter" data-level="7.3.1" data-path="working-with-variables.html"><a href="working-with-variables.html#transforming-and-dropping-variables"><i class="fa fa-check"></i><b>7.3.1</b> Transforming and dropping variables</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="working-with-observations.html"><a href="working-with-observations.html"><i class="fa fa-check"></i><b>8</b> Working with observations</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="working-with-observations.html"><a href="working-with-observations.html#introduction-4"><i class="fa fa-check"></i><b>8.1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="8.1.1" data-path="working-with-observations.html"><a href="working-with-observations.html#getting-ready-1"><i class="fa fa-check"></i><b>8.1.1</b> Getting ready</a></li>
+</ul></li>
+<li class="chapter" data-level="8.2" data-path="working-with-observations.html"><a href="working-with-observations.html#relational-and-logical-operators"><i class="fa fa-check"></i><b>8.2</b> Relational and logical operators</a></li>
+<li class="chapter" data-level="8.3" data-path="working-with-observations.html"><a href="working-with-observations.html#subset-observations-with-filter"><i class="fa fa-check"></i><b>8.3</b> Subset observations with <code>filter</code></a></li>
+<li class="chapter" data-level="8.4" data-path="working-with-observations.html"><a href="working-with-observations.html#reordering-observations-with-arrange"><i class="fa fa-check"></i><b>8.4</b> Reordering observations with <code>arrange</code></a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="summarising-and-grouping.html"><a href="summarising-and-grouping.html"><i class="fa fa-check"></i><b>9</b> Summarising and grouping</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="summarising-and-grouping.html"><a href="summarising-and-grouping.html#summarising-variables-with-summarise"><i class="fa fa-check"></i><b>9.1</b> Summarising variables with <code>summarise</code></a>
+<ul>
+<li class="chapter" data-level="9.1.1" data-path="summarising-and-grouping.html"><a href="summarising-and-grouping.html#more-complicated-calculations-with-summarise"><i class="fa fa-check"></i><b>9.1.1</b> More complicated calculations with <code>summarise</code></a></li>
+</ul></li>
+<li class="chapter" data-level="9.2" data-path="summarising-and-grouping.html"><a href="summarising-and-grouping.html#grouped-operations-using-group_by"><i class="fa fa-check"></i><b>9.2</b> Grouped operations using <code>group_by</code></a>
+<ul>
+<li class="chapter" data-level="9.2.1" data-path="summarising-and-grouping.html"><a href="summarising-and-grouping.html#more-than-one-grouping-variable"><i class="fa fa-check"></i><b>9.2.1</b> More than one grouping variable</a></li>
+<li class="chapter" data-level="9.2.2" data-path="summarising-and-grouping.html"><a href="summarising-and-grouping.html#using-group_by-with-other-verbs"><i class="fa fa-check"></i><b>9.2.2</b> Using <code>group_by</code> with other verbs</a></li>
+</ul></li>
+<li class="chapter" data-level="9.3" data-path="summarising-and-grouping.html"><a href="summarising-and-grouping.html#removing-grouping-information"><i class="fa fa-check"></i><b>9.3</b> Removing grouping information</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="building-pipelines.html"><a href="building-pipelines.html"><i class="fa fa-check"></i><b>10</b> Building pipelines</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="building-pipelines.html"><a href="building-pipelines.html#why-do-we-need-pipes"><i class="fa fa-check"></i><b>10.1</b> Why do we need ‘pipes?’</a></li>
+<li class="chapter" data-level="10.2" data-path="building-pipelines.html"><a href="building-pipelines.html#using-pipes"><i class="fa fa-check"></i><b>10.2</b> Using pipes (<code>%&gt;%</code>)</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="helper-functions.html"><a href="helper-functions.html"><i class="fa fa-check"></i><b>11</b> Helper functions</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="helper-functions.html"><a href="helper-functions.html#introduction-5"><i class="fa fa-check"></i><b>11.1</b> Introduction</a></li>
+<li class="chapter" data-level="11.2" data-path="helper-functions.html"><a href="helper-functions.html#working-with-select"><i class="fa fa-check"></i><b>11.2</b> Working with <code>select</code></a></li>
+<li class="chapter" data-level="11.3" data-path="helper-functions.html"><a href="helper-functions.html#working-with-mutate-and-transmute"><i class="fa fa-check"></i><b>11.3</b> Working with <code>mutate</code> and <code>transmute</code></a></li>
+<li class="chapter" data-level="11.4" data-path="helper-functions.html"><a href="helper-functions.html#working-with-filter"><i class="fa fa-check"></i><b>11.4</b> Working with <code>filter</code></a></li>
+<li class="chapter" data-level="11.5" data-path="helper-functions.html"><a href="helper-functions.html#working-with-summarise"><i class="fa fa-check"></i><b>11.5</b> Working with <code>summarise</code></a></li>
+</ul></li>
+<li class="part"><span><b>III Exporing Data</b></span></li>
+<li class="chapter" data-level="12" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html"><i class="fa fa-check"></i><b>12</b> Exploratory data analysis</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#introduction-6"><i class="fa fa-check"></i><b>12.1</b> Introduction</a></li>
+<li class="chapter" data-level="12.2" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#variables"><i class="fa fa-check"></i><b>12.2</b> Statistical variables and data</a>
+<ul>
+<li class="chapter" data-level="12.2.1" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#numeric-vs-categorical-variables"><i class="fa fa-check"></i><b>12.2.1</b> Numeric vs categorical variables</a></li>
+<li class="chapter" data-level="12.2.2" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#ratio-vs-interval-scales"><i class="fa fa-check"></i><b>12.2.2</b> Ratio vs interval scales</a></li>
+</ul></li>
+<li class="chapter" data-level="12.3" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#populations-samples"><i class="fa fa-check"></i><b>12.3</b> Populations and samples</a>
+<ul>
+<li class="chapter" data-level="12.3.1" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#sample-distributions"><i class="fa fa-check"></i><b>12.3.1</b> Sample distributions</a></li>
+<li class="chapter" data-level="12.3.2" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#associations"><i class="fa fa-check"></i><b>12.3.2</b> Associations</a></li>
+</ul></li>
+<li class="chapter" data-level="12.4" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#types-of-eda"><i class="fa fa-check"></i><b>12.4</b> Types of EDA</a></li>
+<li class="chapter" data-level="12.5" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#a-primer-of-descriptive-statistics"><i class="fa fa-check"></i><b>12.5</b> A primer of descriptive statistics</a>
+<ul>
+<li class="chapter" data-level="12.5.1" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#numeric-variables"><i class="fa fa-check"></i><b>12.5.1</b> Numeric variables</a></li>
+<li class="chapter" data-level="12.5.2" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#categorical-variables"><i class="fa fa-check"></i><b>12.5.2</b> Categorical variables</a></li>
+<li class="chapter" data-level="12.5.3" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#associations-1"><i class="fa fa-check"></i><b>12.5.3</b> Associations</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="chapter-ggplot2-intro.html"><a href="chapter-ggplot2-intro.html"><i class="fa fa-check"></i><b>13</b> Introduction to <strong>ggplot2</strong></a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="chapter-ggplot2-intro.html"><a href="chapter-ggplot2-intro.html#anatomy"><i class="fa fa-check"></i><b>13.1</b> The anatomy of ggplot2</a>
+<ul>
+<li class="chapter" data-level="13.1.1" data-path="chapter-ggplot2-intro.html"><a href="chapter-ggplot2-intro.html#layers"><i class="fa fa-check"></i><b>13.1.1</b> Layers</a></li>
+<li class="chapter" data-level="13.1.2" data-path="chapter-ggplot2-intro.html"><a href="chapter-ggplot2-intro.html#scales"><i class="fa fa-check"></i><b>13.1.2</b> Scales</a></li>
+<li class="chapter" data-level="13.1.3" data-path="chapter-ggplot2-intro.html"><a href="chapter-ggplot2-intro.html#coordinate-system"><i class="fa fa-check"></i><b>13.1.3</b> Coordinate system</a></li>
+<li class="chapter" data-level="13.1.4" data-path="chapter-ggplot2-intro.html"><a href="chapter-ggplot2-intro.html#faceting"><i class="fa fa-check"></i><b>13.1.4</b> Faceting</a></li>
+</ul></li>
+<li class="chapter" data-level="13.2" data-path="chapter-ggplot2-intro.html"><a href="chapter-ggplot2-intro.html#quick"><i class="fa fa-check"></i><b>13.2</b> A quick introduction to ggplot2</a>
+<ul>
+<li class="chapter" data-level="13.2.1" data-path="chapter-ggplot2-intro.html"><a href="chapter-ggplot2-intro.html#making-a-start"><i class="fa fa-check"></i><b>13.2.1</b> Making a start</a></li>
+</ul></li>
+<li class="chapter" data-level="13.3" data-path="chapter-ggplot2-intro.html"><a href="chapter-ggplot2-intro.html#a-standard-way-of-using-ggplot2"><i class="fa fa-check"></i><b>13.3</b> A standard way of using <strong>ggplot2</strong></a>
+<ul>
+<li class="chapter" data-level="13.3.1" data-path="chapter-ggplot2-intro.html"><a href="chapter-ggplot2-intro.html#how-should-we-format-ggplot2-code"><i class="fa fa-check"></i><b>13.3.1</b> How should we format <strong>ggplot2</strong> code?</a></li>
+</ul></li>
+<li class="chapter" data-level="13.4" data-path="chapter-ggplot2-intro.html"><a href="chapter-ggplot2-intro.html#increasing-the-information-density"><i class="fa fa-check"></i><b>13.4</b> Increasing the information density…</a>
+<ul>
+<li class="chapter" data-level="13.4.1" data-path="chapter-ggplot2-intro.html"><a href="chapter-ggplot2-intro.html#via-aesthetic-mappings"><i class="fa fa-check"></i><b>13.4.1</b> …via aesthetic mappings</a></li>
+<li class="chapter" data-level="13.4.2" data-path="chapter-ggplot2-intro.html"><a href="chapter-ggplot2-intro.html#via-facets"><i class="fa fa-check"></i><b>13.4.2</b> …via facets</a></li>
+<li class="chapter" data-level="13.4.3" data-path="chapter-ggplot2-intro.html"><a href="chapter-ggplot2-intro.html#via-multiple-layers"><i class="fa fa-check"></i><b>13.4.3</b> …via multiple layers</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="chapter-customise-ggplot2.html"><a href="chapter-customise-ggplot2.html"><i class="fa fa-check"></i><b>14</b> Customising plots</a>
+<ul>
+<li class="chapter" data-level="14.1" data-path="chapter-customise-ggplot2.html"><a href="chapter-customise-ggplot2.html#geom-properties"><i class="fa fa-check"></i><b>14.1</b> Geom properties</a>
+<ul>
+<li class="chapter" data-level="14.1.1" data-path="chapter-customise-ggplot2.html"><a href="chapter-customise-ggplot2.html#relationship-between-aesthetic-mappings-and-geom-properties"><i class="fa fa-check"></i><b>14.1.1</b> Relationship between aesthetic mappings and geom properties</a></li>
+</ul></li>
+<li class="chapter" data-level="14.2" data-path="chapter-customise-ggplot2.html"><a href="chapter-customise-ggplot2.html#plot-scales"><i class="fa fa-check"></i><b>14.2</b> Plot scales</a></li>
+<li class="chapter" data-level="14.3" data-path="chapter-customise-ggplot2.html"><a href="chapter-customise-ggplot2.html#labels"><i class="fa fa-check"></i><b>14.3</b> Labels</a></li>
+<li class="chapter" data-level="14.4" data-path="chapter-customise-ggplot2.html"><a href="chapter-customise-ggplot2.html#themes"><i class="fa fa-check"></i><b>14.4</b> Themes</a></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="exploring-one-variable.html"><a href="exploring-one-variable.html"><i class="fa fa-check"></i><b>15</b> Exploring one variable</a>
+<ul>
+<li class="chapter" data-level="15.1" data-path="exploring-one-variable.html"><a href="exploring-one-variable.html#explore-numeric"><i class="fa fa-check"></i><b>15.1</b> Exploring numerical variables</a>
+<ul>
+<li class="chapter" data-level="15.1.1" data-path="exploring-one-variable.html"><a href="exploring-one-variable.html#what-kind-of-numeric-variable"><i class="fa fa-check"></i><b>15.1.1</b> What kind of numeric variable?</a></li>
+<li class="chapter" data-level="15.1.2" data-path="exploring-one-variable.html"><a href="exploring-one-variable.html#histograms"><i class="fa fa-check"></i><b>15.1.2</b> Histograms</a></li>
+<li class="chapter" data-level="15.1.3" data-path="exploring-one-variable.html"><a href="exploring-one-variable.html#dot-plots"><i class="fa fa-check"></i><b>15.1.3</b> Dot plots</a></li>
+</ul></li>
+<li class="chapter" data-level="15.2" data-path="exploring-one-variable.html"><a href="exploring-one-variable.html#explore-categorical"><i class="fa fa-check"></i><b>15.2</b> Exploring categorical variables</a>
+<ul>
+<li class="chapter" data-level="15.2.1" data-path="exploring-one-variable.html"><a href="exploring-one-variable.html#what-kind-of-categorical-variable"><i class="fa fa-check"></i><b>15.2.1</b> What kind of categorical variable?</a></li>
+<li class="chapter" data-level="15.2.2" data-path="exploring-one-variable.html"><a href="exploring-one-variable.html#bar-plots"><i class="fa fa-check"></i><b>15.2.2</b> Bar plots</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="16" data-path="exploring-associations.html"><a href="exploring-associations.html"><i class="fa fa-check"></i><b>16</b> Exploring associations</a>
+<ul>
+<li class="chapter" data-level="16.1" data-path="exploring-associations.html"><a href="exploring-associations.html#numeric-association"><i class="fa fa-check"></i><b>16.1</b> Associations between numeric variables</a></li>
+<li class="chapter" data-level="16.2" data-path="exploring-associations.html"><a href="exploring-associations.html#categorical-association"><i class="fa fa-check"></i><b>16.2</b> Associations between categorical variables</a></li>
+<li class="chapter" data-level="16.3" data-path="exploring-associations.html"><a href="exploring-associations.html#cat-num-association"><i class="fa fa-check"></i><b>16.3</b> Categorical-numerical associations</a>
+<ul>
+<li class="chapter" data-level="16.3.1" data-path="exploring-associations.html"><a href="exploring-associations.html#alternatives-to-box-and-whiskers-plots"><i class="fa fa-check"></i><b>16.3.1</b> Alternatives to box and whiskers plots</a></li>
+</ul></li>
+<li class="chapter" data-level="16.4" data-path="exploring-associations.html"><a href="exploring-associations.html#multivariate"><i class="fa fa-check"></i><b>16.4</b> Multivariate associations</a></li>
+</ul></li>
+<li class="chapter" data-level="17" data-path="doing-more-with-ggplot2.html"><a href="doing-more-with-ggplot2.html"><i class="fa fa-check"></i><b>17</b> Doing more with <strong>ggplot2</strong></a>
+<ul>
+<li class="chapter" data-level="17.1" data-path="doing-more-with-ggplot2.html"><a href="doing-more-with-ggplot2.html#summaries"><i class="fa fa-check"></i><b>17.1</b> Comparing descriptive statistics</a>
+<ul>
+<li class="chapter" data-level="17.1.1" data-path="doing-more-with-ggplot2.html"><a href="doing-more-with-ggplot2.html#error-bars"><i class="fa fa-check"></i><b>17.1.1</b> Error bars</a></li>
+<li class="chapter" data-level="17.1.2" data-path="doing-more-with-ggplot2.html"><a href="doing-more-with-ggplot2.html#alternatives-to-bar-plots"><i class="fa fa-check"></i><b>17.1.2</b> Alternatives to bar plots</a></li>
+</ul></li>
+<li class="chapter" data-level="17.2" data-path="doing-more-with-ggplot2.html"><a href="doing-more-with-ggplot2.html#adding-text-annotations"><i class="fa fa-check"></i><b>17.2</b> Adding text annotations</a></li>
+<li class="chapter" data-level="17.3" data-path="doing-more-with-ggplot2.html"><a href="doing-more-with-ggplot2.html#saving-plots"><i class="fa fa-check"></i><b>17.3</b> Saving plots</a></li>
+<li class="chapter" data-level="17.4" data-path="doing-more-with-ggplot2.html"><a href="doing-more-with-ggplot2.html#multi-panel-plots"><i class="fa fa-check"></i><b>17.4</b> Multi-panel plots</a></li>
+</ul></li>
+<li class="appendix"><span><b>Supplementary Material</b></span></li>
+<li class="chapter" data-level="A" data-path="getting-help.html"><a href="getting-help.html"><i class="fa fa-check"></i><b>A</b> Getting help</a>
+<ul>
+<li class="chapter" data-level="A.1" data-path="getting-help.html"><a href="getting-help.html#console-help"><i class="fa fa-check"></i><b>A.1</b> Introduction</a></li>
+<li class="chapter" data-level="A.2" data-path="getting-help.html"><a href="getting-help.html#browsing-the-help-system"><i class="fa fa-check"></i><b>A.2</b> Browsing the help system</a></li>
+<li class="chapter" data-level="A.3" data-path="getting-help.html"><a href="getting-help.html#searching-for-help-files"><i class="fa fa-check"></i><b>A.3</b> Searching for help files</a></li>
+<li class="chapter" data-level="A.4" data-path="getting-help.html"><a href="getting-help.html#nav-help"><i class="fa fa-check"></i><b>A.4</b> Navigating help files</a></li>
+<li class="chapter" data-level="A.5" data-path="getting-help.html"><a href="getting-help.html#vignettes"><i class="fa fa-check"></i><b>A.5</b> Vignettes and demos</a></li>
+</ul></li>
+<li class="chapter" data-level="B" data-path="project-scripts-data.html"><a href="project-scripts-data.html"><i class="fa fa-check"></i><b>B</b> Managing projects, scripts and data files</a></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Exploratory Data Analysis with R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="doing-more-with-ggplot2" class="section level1" number="17">
+<h1><span class="header-section-number">Chapter 17</span> Doing more with <strong>ggplot2</strong></h1>
+<p>We have now seen a range of different ways to visualise and explore data using <strong>ggplot2</strong>. This last chapter will cover a few bits of miscellanea that don’t particularly fit anywhere else. That doesn’t mean the ideas aren’t important!</p>
+<div id="summaries" class="section level2" number="17.1">
+<h2><span class="header-section-number">17.1</span> Comparing descriptive statistics</h2>
+<p>So far, we have focussed on displaying the raw data (e.g. scatter plots) or a distributional summary (e.g. box plots). What other types of quantities might we need to visualise? Descriptive statistics such as the sample mean are one possibility. These often feature in data analysis when ‘comparing groups.’</p>
+<p>We need to know how to construct plots that display such summaries. Let’s start with a simple question: how does the (arithmetic) mean body mass varies by sex and across penguin species? One option is to produce a bar plot for which the lengths of bars represent the mean body mass in each category.</p>
+<p>There are two different routes to produce this with <strong>ggplot2</strong>. One way to build such a plot is to break the problem into two steps. In the first step, we calculate whatever it is we want to display, i.e. the species- and sex-specific mean body mass. <strong>dplyr</strong> is usually the best tool to use for this first step:</p>
+<div class="sourceCode" id="cb394"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb394-1"><a href="doing-more-with-ggplot2.html#cb394-1" aria-hidden="true" tabindex="-1"></a>penguins_summary <span class="ot">&lt;-</span> penguins <span class="sc">%&gt;%</span> </span>
+<span id="cb394-2"><a href="doing-more-with-ggplot2.html#cb394-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># group data by species and penguins</span></span>
+<span id="cb394-3"><a href="doing-more-with-ggplot2.html#cb394-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(species, sex) <span class="sc">%&gt;%</span> </span>
+<span id="cb394-4"><a href="doing-more-with-ggplot2.html#cb394-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># calculate mean body mass</span></span>
+<span id="cb394-5"><a href="doing-more-with-ggplot2.html#cb394-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mean_mass =</span> <span class="fu">mean</span>(body_mass_g)) <span class="sc">%&gt;%</span> </span>
+<span id="cb394-6"><a href="doing-more-with-ggplot2.html#cb394-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># remove rows generated by sex = NA cases</span></span>
+<span id="cb394-7"><a href="doing-more-with-ggplot2.html#cb394-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">na.omit</span>()</span></code></pre></div>
+<pre><code>## `summarise()` has grouped output by &#39;species&#39;. You can override using the `.groups` argument.</code></pre>
+<p>We used <code>group_by</code> and <code>summarise</code> to calculate the set of means, which we decided to call <code>mean_mass</code>. Notice that we used <code>na.omit</code> to exclude the <code>NA</code> categories that arise when sex is unknown. The resulting <code>penguins_summary</code> object is a small 6 row by 3 column tibble:</p>
+<div class="sourceCode" id="cb396"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb396-1"><a href="doing-more-with-ggplot2.html#cb396-1" aria-hidden="true" tabindex="-1"></a><span class="co"># show the summary data</span></span>
+<span id="cb396-2"><a href="doing-more-with-ggplot2.html#cb396-2" aria-hidden="true" tabindex="-1"></a>penguins_summary</span></code></pre></div>
+<pre><code>## # A tibble: 6 x 3
+## # Groups:   species [3]
+##   species   sex    mean_mass
+##   &lt;chr&gt;     &lt;chr&gt;      &lt;dbl&gt;
+## 1 Adelie    female     3369.
+## 2 Adelie    male       4043.
+## 3 Chinstrap female     3527.
+## 4 Chinstrap male       3939.
+## 5 Gentoo    female     4680.
+## 6 Gentoo    male       5485.</code></pre>
+<p>The second step uses <code>penguins_summary</code> with <strong>ggplot2</strong> to create the required bar plot:</p>
+<div class="sourceCode" id="cb398"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb398-1"><a href="doing-more-with-ggplot2.html#cb398-1" aria-hidden="true" tabindex="-1"></a><span class="co"># display bar plot of body mass means</span></span>
+<span id="cb398-2"><a href="doing-more-with-ggplot2.html#cb398-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins_summary,</span>
+<span id="cb398-3"><a href="doing-more-with-ggplot2.html#cb398-3" aria-hidden="true" tabindex="-1"></a>       <span class="co"># aesthetic mappings: mass (y) vs species (x) by sex (fill)</span></span>
+<span id="cb398-4"><a href="doing-more-with-ggplot2.html#cb398-4" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> species, <span class="at">fill =</span> sex, <span class="at">y =</span> mean_mass)) <span class="sc">+</span></span>
+<span id="cb398-5"><a href="doing-more-with-ggplot2.html#cb398-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># use geom_col to add bar plot layer &#39;as is&#39; with adjacent bars</span></span>
+<span id="cb398-6"><a href="doing-more-with-ggplot2.html#cb398-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">position =</span> <span class="st">&quot;dodge&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb398-7"><a href="doing-more-with-ggplot2.html#cb398-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># specify labels for all mappings</span></span>
+<span id="cb398-8"><a href="doing-more-with-ggplot2.html#cb398-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Species&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Mean body mass (g)&quot;</span>, <span class="at">fill =</span> <span class="st">&quot;Sex&quot;</span>)</span></code></pre></div>
+<p><img src="intro-bio-data-book_files/figure-html/unnamed-chunk-261-1.png" width="384" style="display: block; margin: auto;" /></p>
+<p>Two points about this are worth noting:</p>
+<ol style="list-style-type: decimal">
+<li>We used <code>geom_col</code> instead of <code>geom_bar</code>. <code>geom_bar</code> counts the observations in each category by default. Using <code>geom_col</code> tells <strong>ggplot2</strong> to plot the information in <code>mean_mass</code> ‘as is.’</li>
+<li>We paid close attention to the names of things. The plotting data lives in <code>penguins_summary</code> which means the y aesthetic must be associated with <code>mean_mass</code> rather than <code>body_mass_g</code>.</li>
+</ol>
+<p>It is possible to produce this plot with less code by using <strong>ggplot2</strong>’s built-in ‘stat’ facility (see box). We recommend the long-winded way when starting out with R because it makes it a bit easier to fix mistakes—we can check whether the right information is in a summary data set before plotting it.</p>
+<div id="using-ggplot2-stats" class="section level4 unnumbered infobox information">
+<h4>Using <strong>ggplot2</strong> ‘stats’</h4>
+<p>Another way to arrive at the above bar plot is by using the built-in <strong>ggplot2</strong> <code>stat</code> facility:</p>
+<div class="sourceCode" id="cb399"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb399-1"><a href="doing-more-with-ggplot2.html#cb399-1" aria-hidden="true" tabindex="-1"></a><span class="co"># display bar plot of body mass means</span></span>
+<span id="cb399-2"><a href="doing-more-with-ggplot2.html#cb399-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="fu">na.omit</span>(penguins), <span class="co"># &lt;- remove missing values</span></span>
+<span id="cb399-3"><a href="doing-more-with-ggplot2.html#cb399-3" aria-hidden="true" tabindex="-1"></a>       <span class="co"># aesthetic mappings: mass (y) vs species (x) by sex (fill)</span></span>
+<span id="cb399-4"><a href="doing-more-with-ggplot2.html#cb399-4" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> species, <span class="at">fill =</span> sex, <span class="at">y =</span> body_mass_g)) <span class="sc">+</span></span>
+<span id="cb399-5"><a href="doing-more-with-ggplot2.html#cb399-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># use geom_bar to add bar plot layer using a stats summary</span></span>
+<span id="cb399-6"><a href="doing-more-with-ggplot2.html#cb399-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">&quot;summary&quot;</span>, <span class="at">fun.y =</span> mean, <span class="at">position =</span> <span class="st">&quot;dodge&quot;</span>) <span class="sc">+</span></span>
+<span id="cb399-7"><a href="doing-more-with-ggplot2.html#cb399-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># specify labels for all mappings</span></span>
+<span id="cb399-8"><a href="doing-more-with-ggplot2.html#cb399-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Species&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Mean body mass (g)&quot;</span>, <span class="at">fill =</span> <span class="st">&quot;Sex&quot;</span>)</span></code></pre></div>
+<pre><code>## No summary function supplied, defaulting to `mean_se()`</code></pre>
+<p><img src="intro-bio-data-book_files/figure-html/unnamed-chunk-262-1.png" width="384" style="display: block; margin: auto;" /></p>
+<p>This involves a couple of new tricks. When we add a layer using <code>geom_bar</code> we set two additional arguments:</p>
+<ul>
+<li><code>stat = "summary"</code> tells <strong>ggplot2</strong> not to plot the raw values of the y aesthetic mapping, but instead, to calculate and then plot a summary of the ‘y’ variable.</li>
+<li><code>fun.y = mean</code> tells <strong>ggplot2</strong> how to summarise the ‘y’ variable. The function on the right-hand side can be any function that takes a vector of values and returns a single number. We want the <code>mean</code> function.</li>
+</ul>
+<p>Notice that this works on the raw data (<code>penguins</code>)—there is no need to manually calculate the means because that happens inside <strong>ggplot2</strong>.</p>
+</div>
+<div id="error-bars" class="section level3" number="17.1.1">
+<h3><span class="header-section-number">17.1.1</span> Error bars</h3>
+<p>A descriptive statistic like the mean isn’t much use on its own. To properly interpret means we also need to know something about their uncertainty. There are many ways to quantify the uncertainty of an estimate. Whichever one we are using, displaying the uncertainty typically involves adding <strong>error bars</strong> to a plot.</p>
+<p>We’ll demonstrate how to do this by extending the previous example to show the mean and standard error of body mass for each species.</p>
+<div id="er.-standard-error" class="section level4 unnumbered infobox information">
+<h4>Er…. standard error?</h4>
+<p>The standard error is a measure of how precise an estimate like the sample mean is. A small standard error indicates that we can have more confidence the estimate reflects the ‘true’ value. The standard error of the mean can be calculated from a well-known formula: <span class="math display">\[
+\text{Standard Error} = \frac{\text{Standard Deviation}}{\sqrt{(\text{Sample Size})}} = \frac{\sigma}{\sqrt{n}}
+\]</span> It is hard to give an explanation of that formula without knowing a bit of statistical theory—it is just one of those things we have to learn. In terms of code that works with <strong>dplyr</strong>, that calculation looks like this:</p>
+<div class="sourceCode" id="cb401"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb401-1"><a href="doing-more-with-ggplot2.html#cb401-1" aria-hidden="true" tabindex="-1"></a>standard_error <span class="ot">=</span> <span class="fu">sd</span>(x) <span class="sc">/</span> <span class="fu">sqrt</span>(<span class="fu">n</span>())</span></code></pre></div>
+<p>This assumes the numeric variable we are working with is called <code>x</code>, and we want the result to be called <code>standard_error</code>. Notice this uses a special <strong>dplyr</strong> function called <code>n</code> to find the sample size.</p>
+</div>
+<p>Once again, constructing the plot is a two-step process. Start by calculating the means and standard error of body mass for each species and sex combination:</p>
+<div class="sourceCode" id="cb402"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb402-1"><a href="doing-more-with-ggplot2.html#cb402-1" aria-hidden="true" tabindex="-1"></a>penguins_summary <span class="ot">&lt;-</span> penguins <span class="sc">%&gt;%</span> </span>
+<span id="cb402-2"><a href="doing-more-with-ggplot2.html#cb402-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># group data by species and penguins</span></span>
+<span id="cb402-3"><a href="doing-more-with-ggplot2.html#cb402-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(species, sex) <span class="sc">%&gt;%</span> </span>
+<span id="cb402-4"><a href="doing-more-with-ggplot2.html#cb402-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># calculate summaries</span></span>
+<span id="cb402-5"><a href="doing-more-with-ggplot2.html#cb402-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb402-6"><a href="doing-more-with-ggplot2.html#cb402-6" aria-hidden="true" tabindex="-1"></a>    <span class="co"># mean mass</span></span>
+<span id="cb402-7"><a href="doing-more-with-ggplot2.html#cb402-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">mean_mass =</span> <span class="fu">mean</span>(body_mass_g, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb402-8"><a href="doing-more-with-ggplot2.html#cb402-8" aria-hidden="true" tabindex="-1"></a>    <span class="co"># standard error</span></span>
+<span id="cb402-9"><a href="doing-more-with-ggplot2.html#cb402-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">ster_mass =</span> <span class="fu">sd</span>(body_mass_g, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">/</span> <span class="fu">sqrt</span>(<span class="fu">n</span>())</span>
+<span id="cb402-10"><a href="doing-more-with-ggplot2.html#cb402-10" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span> </span>
+<span id="cb402-11"><a href="doing-more-with-ggplot2.html#cb402-11" aria-hidden="true" tabindex="-1"></a>  <span class="co"># remove rows generated by sex = NA cases</span></span>
+<span id="cb402-12"><a href="doing-more-with-ggplot2.html#cb402-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">na.omit</span>()</span></code></pre></div>
+<pre><code>## `summarise()` has grouped output by &#39;species&#39;. You can override using the `.groups` argument.</code></pre>
+<p>We use <strong>dplyr</strong> to calculate the means and standard errors of each species’ body mass, which we called <code>mean_mass</code> and <code>ster_mass</code>, respectively. Again, we used <code>na.omit</code> to exclude the <code>NA</code> categories cases. The new <code>penguins_summary</code> object is a 6 row by 4 column tibble:</p>
+<div class="sourceCode" id="cb404"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb404-1"><a href="doing-more-with-ggplot2.html#cb404-1" aria-hidden="true" tabindex="-1"></a><span class="co"># show the new summary data</span></span>
+<span id="cb404-2"><a href="doing-more-with-ggplot2.html#cb404-2" aria-hidden="true" tabindex="-1"></a>penguins_summary</span></code></pre></div>
+<pre><code>## # A tibble: 6 x 4
+## # Groups:   species [3]
+##   species   sex    mean_mass ster_mass
+##   &lt;chr&gt;     &lt;chr&gt;      &lt;dbl&gt;     &lt;dbl&gt;
+## 1 Adelie    female     3369.      31.5
+## 2 Adelie    male       4043.      40.6
+## 3 Chinstrap female     3527.      48.9
+## 4 Chinstrap male       3939.      62.1
+## 5 Gentoo    female     4680.      37.0
+## 6 Gentoo    male       5485.      40.1</code></pre>
+<p>Next we use <code>penguins_summary</code> to make the plot. We can use <code>geom_col</code> to show the means as a bar plot, but what about the error bars? Use the unsurprisingly named <code>geom_errorbar</code> to add those! Here is the code:</p>
+<div class="sourceCode" id="cb406"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb406-1"><a href="doing-more-with-ggplot2.html#cb406-1" aria-hidden="true" tabindex="-1"></a><span class="co"># display bar plot of body mass means + SE&#39;s</span></span>
+<span id="cb406-2"><a href="doing-more-with-ggplot2.html#cb406-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins_summary, </span>
+<span id="cb406-3"><a href="doing-more-with-ggplot2.html#cb406-3" aria-hidden="true" tabindex="-1"></a>       <span class="co"># aesthetic mappings: mass (y) vs species (x) by sex (fill)</span></span>
+<span id="cb406-4"><a href="doing-more-with-ggplot2.html#cb406-4" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> species, <span class="at">fill =</span> sex, <span class="at">y =</span> mean_mass)) <span class="sc">+</span> </span>
+<span id="cb406-5"><a href="doing-more-with-ggplot2.html#cb406-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># use geom_col to add an adjacent bar plot layer</span></span>
+<span id="cb406-6"><a href="doing-more-with-ggplot2.html#cb406-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">position =</span> <span class="st">&quot;dodge&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb406-7"><a href="doing-more-with-ggplot2.html#cb406-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># use geom_errorbar to add an error bar layer</span></span>
+<span id="cb406-8"><a href="doing-more-with-ggplot2.html#cb406-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(<span class="fu">aes</span>(<span class="at">ymin =</span> mean_mass <span class="sc">-</span> ster_mass, <span class="at">ymax =</span> mean_mass <span class="sc">+</span> ster_mass),</span>
+<span id="cb406-9"><a href="doing-more-with-ggplot2.html#cb406-9" aria-hidden="true" tabindex="-1"></a>                <span class="co"># customise size of hat + ensure error bars are centred</span></span>
+<span id="cb406-10"><a href="doing-more-with-ggplot2.html#cb406-10" aria-hidden="true" tabindex="-1"></a>                <span class="at">width =</span> <span class="fl">0.2</span>, <span class="at">position =</span> <span class="fu">position_dodge</span>(<span class="fl">0.9</span>)) <span class="sc">+</span> </span>
+<span id="cb406-11"><a href="doing-more-with-ggplot2.html#cb406-11" aria-hidden="true" tabindex="-1"></a>  <span class="co"># use a more professional theme </span></span>
+<span id="cb406-12"><a href="doing-more-with-ggplot2.html#cb406-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>(<span class="at">base_size =</span> <span class="dv">12</span>) <span class="sc">+</span> </span>
+<span id="cb406-13"><a href="doing-more-with-ggplot2.html#cb406-13" aria-hidden="true" tabindex="-1"></a>  <span class="co"># specify labels for all mappings</span></span>
+<span id="cb406-14"><a href="doing-more-with-ggplot2.html#cb406-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Species&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Mean body mass (g)&quot;</span>, <span class="at">fill =</span> <span class="st">&quot;Sex&quot;</span>)</span></code></pre></div>
+<p><img src="intro-bio-data-book_files/figure-html/unnamed-chunk-266-1.png" width="384" style="display: block; margin: auto;" /></p>
+<p>The only new things appear in the <code>geom_errorbar</code> part:</p>
+<ul>
+<li>The <code>ymin</code> and <code>ymax</code> arguments of the <code>geom_errorbar</code> function give the lower and upper limits of error bars. Here, we have plotted the mean +/- 1 standard error, i.e. each error bar is two standard errors long.</li>
+<li>Use the <code>width</code> argument to set the width of the ‘hat’ on each error bar. A value of zero gets rid of it altogether.</li>
+<li>The position has to be set in two places: <code>geom_col</code> and <code>geom_errorbar</code>. For a bar plot, we use the not-at-all-intuitive <code>position = position_dodge(0.9)</code> to locate the error bars at the centre of each bar.</li>
+</ul>
+<div id="warning-1" class="section level4 unnumbered infobox warning">
+<h4>Warning!</h4>
+<p>Data visualisations can include many different kinds of ‘error bar’— standard deviation, standard error, 95% confidence intervals, etc. When we include any error bars on a plot, we must remember to state which kind was used in the figure legend. Otherwise, readers will have no way of knowing how to interpret the plot.</p>
+</div>
+<!-- Showing data and descriptive statistics--dropped as too much  -->
+</div>
+<div id="alternatives-to-bar-plots" class="section level3" number="17.1.2">
+<h3><span class="header-section-number">17.1.2</span> Alternatives to bar plots</h3>
+<p>Do we have to use a bar plot to display means? Certainly not. In some ways bar plots are a bit old fashioned. People often prefer to show a set of means as points with error bars. This kind of visualisation is very easy to make now that we already have working bar plot code:</p>
+<div class="sourceCode" id="cb407"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb407-1"><a href="doing-more-with-ggplot2.html#cb407-1" aria-hidden="true" tabindex="-1"></a><span class="co"># display points plot of body mass means + SE&#39;s</span></span>
+<span id="cb407-2"><a href="doing-more-with-ggplot2.html#cb407-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins_summary, </span>
+<span id="cb407-3"><a href="doing-more-with-ggplot2.html#cb407-3" aria-hidden="true" tabindex="-1"></a>       <span class="co"># aesthetic mappings: mass (y) vs species (x) by sex (colour)</span></span>
+<span id="cb407-4"><a href="doing-more-with-ggplot2.html#cb407-4" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> species, <span class="at">colour =</span> sex, <span class="at">y =</span> mean_mass)) <span class="sc">+</span> </span>
+<span id="cb407-5"><a href="doing-more-with-ggplot2.html#cb407-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># use geom_col to add an adjacent bar plot layer</span></span>
+<span id="cb407-6"><a href="doing-more-with-ggplot2.html#cb407-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">position =</span> <span class="fu">position_dodge</span>(<span class="fl">0.5</span>)) <span class="sc">+</span></span>
+<span id="cb407-7"><a href="doing-more-with-ggplot2.html#cb407-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># use geom_errorbar to add an error bar layer</span></span>
+<span id="cb407-8"><a href="doing-more-with-ggplot2.html#cb407-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(<span class="fu">aes</span>(<span class="at">ymin =</span> mean_mass <span class="sc">-</span> ster_mass, <span class="at">ymax =</span> mean_mass <span class="sc">+</span> ster_mass),</span>
+<span id="cb407-9"><a href="doing-more-with-ggplot2.html#cb407-9" aria-hidden="true" tabindex="-1"></a>                <span class="co"># customise size of hat + ensure error bars are centred</span></span>
+<span id="cb407-10"><a href="doing-more-with-ggplot2.html#cb407-10" aria-hidden="true" tabindex="-1"></a>                <span class="at">width =</span> <span class="fl">0.2</span>, <span class="at">position =</span> <span class="fu">position_dodge</span>(<span class="fl">0.5</span>)) <span class="sc">+</span> </span>
+<span id="cb407-11"><a href="doing-more-with-ggplot2.html#cb407-11" aria-hidden="true" tabindex="-1"></a>  <span class="co"># use a more professional theme </span></span>
+<span id="cb407-12"><a href="doing-more-with-ggplot2.html#cb407-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>(<span class="at">base_size =</span> <span class="dv">12</span>) <span class="sc">+</span> </span>
+<span id="cb407-13"><a href="doing-more-with-ggplot2.html#cb407-13" aria-hidden="true" tabindex="-1"></a>  <span class="co"># specify labels for all mappings</span></span>
+<span id="cb407-14"><a href="doing-more-with-ggplot2.html#cb407-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Species&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Mean body mass (g)&quot;</span>, <span class="at">colour =</span> <span class="st">&quot;Sex&quot;</span>)</span></code></pre></div>
+<p><img src="intro-bio-data-book_files/figure-html/unnamed-chunk-268-1.png" width="384" style="display: block; margin: auto;" /></p>
+<p>We made three small changes to the bar plot code to produce this. We…</p>
+<ul>
+<li>mapped <code>sex</code> to the <code>colour</code> aesthetic instead of <code>fill</code>,</li>
+<li>switched from using <code>geom_col</code> to <code>geom_point</code>, and</li>
+<li>altered the position adjustments to ‘dodge’ by a smaller amount.</li>
+</ul>
+<p>That’s it!</p>
+</div>
+</div>
+<div id="adding-text-annotations" class="section level2" number="17.2">
+<h2><span class="header-section-number">17.2</span> Adding text annotations</h2>
+<p>We often need to include text annotations on a plot. For example, we might want to show sample sizes or highlight ‘statistically significant’ differences. Adding text is no different from adding other kinds of objects to a plot—we use an appropriate geom (e.g. <code>geom_text</code>) to include textual information. Let’s see how this works by adding sample size labels the bar chart we’ve been building.</p>
+<p>We start by placing the labels we want to use in a data frame (or tibble) alongside any other variables used in aesthetic mappings. This can be distinct from the data set used to construct the plot but its often simplest to put everything together in one place. Let’s do that by rebuilding the <code>penguins_summary</code> data set to include the mean body mass, standard error and sample size for each group.</p>
+<div class="sourceCode" id="cb408"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb408-1"><a href="doing-more-with-ggplot2.html#cb408-1" aria-hidden="true" tabindex="-1"></a>penguins_summary <span class="ot">&lt;-</span> penguins <span class="sc">%&gt;%</span> </span>
+<span id="cb408-2"><a href="doing-more-with-ggplot2.html#cb408-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># group data by species and penguins</span></span>
+<span id="cb408-3"><a href="doing-more-with-ggplot2.html#cb408-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(species, sex) <span class="sc">%&gt;%</span> </span>
+<span id="cb408-4"><a href="doing-more-with-ggplot2.html#cb408-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># calculate summaries</span></span>
+<span id="cb408-5"><a href="doing-more-with-ggplot2.html#cb408-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb408-6"><a href="doing-more-with-ggplot2.html#cb408-6" aria-hidden="true" tabindex="-1"></a>    <span class="co"># mean mass</span></span>
+<span id="cb408-7"><a href="doing-more-with-ggplot2.html#cb408-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">mean_mass =</span> <span class="fu">mean</span>(body_mass_g, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb408-8"><a href="doing-more-with-ggplot2.html#cb408-8" aria-hidden="true" tabindex="-1"></a>    <span class="co"># sample size</span></span>
+<span id="cb408-9"><a href="doing-more-with-ggplot2.html#cb408-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">samp_size =</span> <span class="fu">n</span>(),</span>
+<span id="cb408-10"><a href="doing-more-with-ggplot2.html#cb408-10" aria-hidden="true" tabindex="-1"></a>    <span class="co"># standard error</span></span>
+<span id="cb408-11"><a href="doing-more-with-ggplot2.html#cb408-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">ster_mass =</span> <span class="fu">sd</span>(body_mass_g, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">/</span> <span class="fu">sqrt</span>(<span class="fu">n</span>())</span>
+<span id="cb408-12"><a href="doing-more-with-ggplot2.html#cb408-12" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span> </span>
+<span id="cb408-13"><a href="doing-more-with-ggplot2.html#cb408-13" aria-hidden="true" tabindex="-1"></a>  <span class="co"># remove rows generated by sex = NA cases</span></span>
+<span id="cb408-14"><a href="doing-more-with-ggplot2.html#cb408-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">na.omit</span>()</span></code></pre></div>
+<pre><code>## `summarise()` has grouped output by &#39;species&#39;. You can override using the `.groups` argument.</code></pre>
+<p>Then we add the text showing the sample size to our plot using the function <code>geom_text</code>:</p>
+<div class="sourceCode" id="cb410"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb410-1"><a href="doing-more-with-ggplot2.html#cb410-1" aria-hidden="true" tabindex="-1"></a><span class="co"># display bar plot of body mass means + SE&#39;s + sample sizes</span></span>
+<span id="cb410-2"><a href="doing-more-with-ggplot2.html#cb410-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins_summary, </span>
+<span id="cb410-3"><a href="doing-more-with-ggplot2.html#cb410-3" aria-hidden="true" tabindex="-1"></a>       <span class="co"># aesthetic mappings: mass (y) vs species (x) by sex (fill)</span></span>
+<span id="cb410-4"><a href="doing-more-with-ggplot2.html#cb410-4" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> species, <span class="at">fill =</span> sex, <span class="at">y =</span> mean_mass)) <span class="sc">+</span> </span>
+<span id="cb410-5"><a href="doing-more-with-ggplot2.html#cb410-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># use geom_col to add an adjacent bar plot layer</span></span>
+<span id="cb410-6"><a href="doing-more-with-ggplot2.html#cb410-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">position =</span> <span class="st">&quot;dodge&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb410-7"><a href="doing-more-with-ggplot2.html#cb410-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># use geom_errorbar to add an error bar layer</span></span>
+<span id="cb410-8"><a href="doing-more-with-ggplot2.html#cb410-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(<span class="fu">aes</span>(<span class="at">ymin =</span> mean_mass <span class="sc">-</span> ster_mass, <span class="at">ymax =</span> mean_mass <span class="sc">+</span> ster_mass),</span>
+<span id="cb410-9"><a href="doing-more-with-ggplot2.html#cb410-9" aria-hidden="true" tabindex="-1"></a>                <span class="co"># customise size of hat + ensure error bars are centred</span></span>
+<span id="cb410-10"><a href="doing-more-with-ggplot2.html#cb410-10" aria-hidden="true" tabindex="-1"></a>                <span class="at">width =</span> <span class="fl">0.2</span>, <span class="at">position =</span> <span class="fu">position_dodge</span>(<span class="fl">0.9</span>)) <span class="sc">+</span> </span>
+<span id="cb410-11"><a href="doing-more-with-ggplot2.html#cb410-11" aria-hidden="true" tabindex="-1"></a>  <span class="co"># place sample size annotations above error bars</span></span>
+<span id="cb410-12"><a href="doing-more-with-ggplot2.html#cb410-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> samp_size, <span class="at">y =</span> mean_mass <span class="sc">+</span> ster_mass <span class="sc">+</span> <span class="dv">200</span>),</span>
+<span id="cb410-13"><a href="doing-more-with-ggplot2.html#cb410-13" aria-hidden="true" tabindex="-1"></a>            <span class="at">size =</span> <span class="dv">3</span>, <span class="at">colour =</span> <span class="st">&quot;darkgrey&quot;</span>, <span class="at">position =</span> <span class="fu">position_dodge</span>(<span class="fl">0.9</span>)) <span class="sc">+</span> </span>
+<span id="cb410-14"><a href="doing-more-with-ggplot2.html#cb410-14" aria-hidden="true" tabindex="-1"></a>  <span class="co"># use a more professional theme </span></span>
+<span id="cb410-15"><a href="doing-more-with-ggplot2.html#cb410-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>(<span class="at">base_size =</span> <span class="dv">12</span>) <span class="sc">+</span> </span>
+<span id="cb410-16"><a href="doing-more-with-ggplot2.html#cb410-16" aria-hidden="true" tabindex="-1"></a>  <span class="co"># specify labels for all mappings</span></span>
+<span id="cb410-17"><a href="doing-more-with-ggplot2.html#cb410-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Species&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Mean body mass (g)&quot;</span>, <span class="at">fill =</span> <span class="st">&quot;Sex&quot;</span>)</span></code></pre></div>
+<p><img src="intro-bio-data-book_files/figure-html/unnamed-chunk-270-1.png" width="384" style="display: block; margin: auto;" /></p>
+<p>The <code>y = mean_mass + ster_mass + 200</code> aesthetic mapping in <code>geom_text</code> positions each number just above the error bar. This works because we placed the textual information in the plotting data set, meaning we can use the x/y variables to set the position of the annotations. We also have to use the correct position adjustment to ensure the annotations are located at each bar’s centre. Everything else inside <code>geom_text</code> is adjusting the appearance of the actual text.</p>
+</div>
+<div id="saving-plots" class="section level2" number="17.3">
+<h2><span class="header-section-number">17.3</span> Saving plots</h2>
+<p>Plots can be saved using the <strong>Export</strong> button in the RStudio <strong>Plots</strong> tab. However, saving plots this way often leads to a pixelated, low resolution image. The <code>ggsave</code> function in <strong>ggplot2</strong> produces much better output and supports a wide range of image file types. There’s not much to it. Using <code>ggsave</code> looks like this:</p>
+<div class="sourceCode" id="cb411"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb411-1"><a href="doing-more-with-ggplot2.html#cb411-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">&quot;penguins-plot.pdf&quot;</span>, <span class="at">height =</span> <span class="dv">5</span>, <span class="at">width =</span> <span class="dv">5</span>)</span></code></pre></div>
+<p>By default, <code>ggsave</code> will save the last plot we made to file. If we had made the bar chart and then ran that <code>ggsave</code> line, R would save a copy of the plot to as a PDF file called <a href="images/penguins-plot.pdf">penguins-plot.pdf</a>.</p>
+<p>Here is a quick summary of how the function works:</p>
+<ul>
+<li><p>The first argument is the path and name of the file we want to create. This example would save the plot to a file called <u>penguins-plot.pdf</u>. Because we only provide a file name, <code>ggsave</code> would save it to the current working directory.</p></li>
+<li><p><code>ggsave</code> supports many different formats (e.g. “pdf,” “jpeg,” “png,” “svg”). This can be set via the <code>device</code> argument (e.g. <code>device = "jpeg"</code>). Alternatively, if we don’t set the format, <strong>ggplot2</strong> will guess it from the file extension.</p></li>
+<li><p>The <code>width</code> and <code>height</code> arguments specify the plot dimensions. These usually require a bit of experimentation to get right. If we do not specify them, <code>ggsave</code> will use the current size of the plotting window.</p></li>
+</ul>
+</div>
+<div id="multi-panel-plots" class="section level2" number="17.4">
+<h2><span class="header-section-number">17.4</span> Multi-panel plots</h2>
+<p>We have seen how to use <code>facet_wrap</code> and <code>facet_grid</code> to produce multi-panel plots. These functions are useful when a plot needs to show the same visualisation for different subsets of data. How do we produce a figure that shows a different visualisation in each panel?</p>
+<p>There are many ways to do this using an external add-on package. We’ll examine the framework provided by the <a href="https://wilkelab.org/cowplot/articles/index.html"><strong>cowplot</strong> package</a>. Cowplot provides various features that help create high-quality figures, including custom themes and facilities to arrange plots into multi-panel figures.</p>
+<p>Constructing a multi-panel plot with <strong>cowplot</strong> happens in two stages. First, make the individual component plots using <strong>ggplot2</strong> as usual, but instead of ‘printing’ them, assign each graphical object a name. Then use the <code>plot_grid</code> function from <strong>cowplot</strong> to construct the multi-panel plot from the stored objects.</p>
+<p>For example, assume we want to display at the bill morphology scatter plot and the mean body mass bar chart side-by-side. First we make the two plots assign them names (with minimal commenting to save space):</p>
+<div class="sourceCode" id="cb412"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb412-1"><a href="doing-more-with-ggplot2.html#cb412-1" aria-hidden="true" tabindex="-1"></a><span class="co"># first plot</span></span>
+<span id="cb412-2"><a href="doing-more-with-ggplot2.html#cb412-2" aria-hidden="true" tabindex="-1"></a>plt_a <span class="ot">&lt;-</span> </span>
+<span id="cb412-3"><a href="doing-more-with-ggplot2.html#cb412-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(penguins, </span>
+<span id="cb412-4"><a href="doing-more-with-ggplot2.html#cb412-4" aria-hidden="true" tabindex="-1"></a>         <span class="fu">aes</span>(<span class="at">x =</span> bill_length_mm, <span class="at">y =</span> bill_depth_mm, <span class="at">colour =</span> species)) <span class="sc">+</span> </span>
+<span id="cb412-5"><a href="doing-more-with-ggplot2.html#cb412-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
+<span id="cb412-6"><a href="doing-more-with-ggplot2.html#cb412-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">&quot;cornflowerblue&quot;</span>, <span class="st">&quot;seagreen&quot;</span>, <span class="st">&quot;orangered3&quot;</span>)) <span class="sc">+</span></span>
+<span id="cb412-7"><a href="doing-more-with-ggplot2.html#cb412-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Bill length (mm)&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Bill depth (mm)&quot;</span>, <span class="at">colour =</span> <span class="st">&quot;Species&quot;</span>) <span class="sc">+</span></span>
+<span id="cb412-8"><a href="doing-more-with-ggplot2.html#cb412-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>(<span class="at">base_size =</span> <span class="dv">12</span>)</span>
+<span id="cb412-9"><a href="doing-more-with-ggplot2.html#cb412-9" aria-hidden="true" tabindex="-1"></a><span class="co"># second plot</span></span>
+<span id="cb412-10"><a href="doing-more-with-ggplot2.html#cb412-10" aria-hidden="true" tabindex="-1"></a>plt_b <span class="ot">&lt;-</span> </span>
+<span id="cb412-11"><a href="doing-more-with-ggplot2.html#cb412-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(penguins_summary, </span>
+<span id="cb412-12"><a href="doing-more-with-ggplot2.html#cb412-12" aria-hidden="true" tabindex="-1"></a>         <span class="fu">aes</span>(<span class="at">x =</span> species, <span class="at">fill =</span> sex, <span class="at">y =</span> mean_mass)) <span class="sc">+</span> </span>
+<span id="cb412-13"><a href="doing-more-with-ggplot2.html#cb412-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">position =</span> <span class="st">&quot;dodge&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb412-14"><a href="doing-more-with-ggplot2.html#cb412-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(<span class="fu">aes</span>(<span class="at">ymin =</span> mean_mass <span class="sc">-</span> ster_mass, <span class="at">ymax =</span> mean_mass <span class="sc">+</span> ster_mass), </span>
+<span id="cb412-15"><a href="doing-more-with-ggplot2.html#cb412-15" aria-hidden="true" tabindex="-1"></a>                <span class="at">width =</span> <span class="fl">0.2</span>, <span class="at">position =</span> <span class="fu">position_dodge</span>(<span class="fl">0.9</span>)) <span class="sc">+</span> </span>
+<span id="cb412-16"><a href="doing-more-with-ggplot2.html#cb412-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Species&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Mean body mass (g)&quot;</span>, <span class="at">fill =</span> <span class="st">&quot;Sex&quot;</span>) <span class="sc">+</span></span>
+<span id="cb412-17"><a href="doing-more-with-ggplot2.html#cb412-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>(<span class="at">base_size =</span> <span class="dv">12</span>)</span></code></pre></div>
+<p>Then we use <strong>cowplot</strong>’s <code>plot_grid</code> to produce the two-panel plot:</p>
+<div class="sourceCode" id="cb413"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb413-1"><a href="doing-more-with-ggplot2.html#cb413-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_grid</span>(</span>
+<span id="cb413-2"><a href="doing-more-with-ggplot2.html#cb413-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># two-panel plot</span></span>
+<span id="cb413-3"><a href="doing-more-with-ggplot2.html#cb413-3" aria-hidden="true" tabindex="-1"></a>  plt_a, plt_b, </span>
+<span id="cb413-4"><a href="doing-more-with-ggplot2.html#cb413-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># set location and size of panels</span></span>
+<span id="cb413-5"><a href="doing-more-with-ggplot2.html#cb413-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">nrow =</span> <span class="dv">1</span>, <span class="at">rel_widths =</span> <span class="fu">c</span>(<span class="dv">60</span>, <span class="dv">40</span>), </span>
+<span id="cb413-6"><a href="doing-more-with-ggplot2.html#cb413-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># set the panel labels</span></span>
+<span id="cb413-7"><a href="doing-more-with-ggplot2.html#cb413-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;a)&quot;</span>, <span class="st">&quot;b)&quot;</span>), <span class="at">label_size =</span> <span class="dv">14</span></span>
+<span id="cb413-8"><a href="doing-more-with-ggplot2.html#cb413-8" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<p><img src="intro-bio-data-book_files/figure-html/unnamed-chunk-273-1.png" width="864" style="display: block; margin: auto;" /></p>
+<p>Once we’ve made a multi-panel plot, we can use the <code>ggsave</code> function to save it as before. The <code>plot_grid</code> function allows the figure to be customised in various ways. For example:</p>
+<ul>
+<li><code>nrow</code> and <code>ncol</code> control the number of plots in each row/column,</li>
+<li><code>labels</code> sets the labels used for each panel,</li>
+<li><code>label_size</code> controls the size of the label font, and</li>
+<li><code>rel_widths</code> and <code>rel_heights</code> control how much space each plot gets.</li>
+</ul>
+<p>The package website has some <a href="https://wilkelab.org/cowplot/articles/index.html">good articles</a> that explain how this all works (along with the many other <strong>cowplot</strong> facilities).</p>
+
+</div>
+</div>
+
+
+
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="exploring-associations.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="getting-help.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["intro-bio-data-book.pdf", "intro-bio-data-book.epub"],
+"toc": {
+"collapse": "section"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 15 Exploring one numeric variable | Exploratory Data Analysis with R</title>
+  <meta name="description" content="This is the Exploratory Data Analysis in R book provided by the School of Biosciences at the University of Sheffield." />
+  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 15 Exploring one numeric variable | Exploratory Data Analysis with R" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="This is the Exploratory Data Analysis in R book provided by the School of Biosciences at the University of Sheffield." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 15 Exploring one numeric variable | Exploratory Data Analysis with R" />
+  
+  <meta name="twitter:description" content="This is the Exploratory Data Analysis in R book provided by the School of Biosciences at the University of Sheffield." />
+  
+
+<meta name="author" content="Dylan Childs" />
+
+
+<meta name="date" content="2021-04-01" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="customising-plots.html"/>
+<link rel="next" href="relationships-between-two-variables.html"/>
+<script src="libs/header-attrs-2.5/header-attrs.js"></script>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0/anchor-sections.js"></script>
+<link href="libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet" />
+<script src="libs/pagedtable-1.1/js/pagedtable.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Exploratory Data Analysis with R</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>What you will learn</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#aims"><i class="fa fa-check"></i>Aims</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#topics"><i class="fa fa-check"></i>Topics</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#technologies"><i class="fa fa-check"></i>Technologies</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#what-is-r"><i class="fa fa-check"></i>What is R?</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#what-is-rstudio"><i class="fa fa-check"></i>What is RStudio?</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="how-to-use-this-book.html"><a href="how-to-use-this-book.html"><i class="fa fa-check"></i>How to use this book</a>
+<ul>
+<li class="chapter" data-level="" data-path="how-to-use-this-book.html"><a href="how-to-use-this-book.html#text-instructions-and-explanations"><i class="fa fa-check"></i>Text, instructions, and explanations</a></li>
+<li class="chapter" data-level="" data-path="how-to-use-this-book.html"><a href="how-to-use-this-book.html#r-code-and-output"><i class="fa fa-check"></i>R code and output</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="get-up-and-running.html"><a href="get-up-and-running.html"><i class="fa fa-check"></i>Get up and running</a>
+<ul>
+<li class="chapter" data-level="" data-path="get-up-and-running.html"><a href="get-up-and-running.html#different-ways-to-run-rstudio"><i class="fa fa-check"></i>Different ways to run RStudio</a></li>
+<li class="chapter" data-level="" data-path="get-up-and-running.html"><a href="get-up-and-running.html#installing-r-and-rstudio-locally"><i class="fa fa-check"></i>Installing R and RStudio locally</a>
+<ul>
+<li class="chapter" data-level="" data-path="get-up-and-running.html"><a href="get-up-and-running.html#installing-rstudio"><i class="fa fa-check"></i>Installing RStudio</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="get-up-and-running.html"><a href="get-up-and-running.html#a-quick-look-at-rstudio"><i class="fa fa-check"></i>A quick look at RStudio</a></li>
+<li class="chapter" data-level="" data-path="get-up-and-running.html"><a href="get-up-and-running.html#working-at-console"><i class="fa fa-check"></i>Working at the Console in RStudio</a></li>
+</ul></li>
+<li class="part"><span><b>I Introduction to R</b></span></li>
+<li class="chapter" data-level="1" data-path="quick-intro-to-r.html"><a href="quick-intro-to-r.html"><i class="fa fa-check"></i><b>1</b> A quick introduction to R</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="quick-intro-to-r.html"><a href="quick-intro-to-r.html#r-calculator"><i class="fa fa-check"></i><b>1.1</b> Using R as a big calculator</a>
+<ul>
+<li class="chapter" data-level="1.1.1" data-path="quick-intro-to-r.html"><a href="quick-intro-to-r.html#basic-arithmetic"><i class="fa fa-check"></i><b>1.1.1</b> Basic arithmetic</a></li>
+<li class="chapter" data-level="1.1.2" data-path="quick-intro-to-r.html"><a href="quick-intro-to-r.html#combining-arithmetic-operations"><i class="fa fa-check"></i><b>1.1.2</b> Combining arithmetic operations</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="quick-intro-to-r.html"><a href="quick-intro-to-r.html#problematic-calculations"><i class="fa fa-check"></i><b>1.2</b> Problematic calculations</a></li>
+<li class="chapter" data-level="1.3" data-path="quick-intro-to-r.html"><a href="quick-intro-to-r.html#assignment"><i class="fa fa-check"></i><b>1.3</b> Storing and reusing results</a></li>
+<li class="chapter" data-level="1.4" data-path="quick-intro-to-r.html"><a href="quick-intro-to-r.html#how-does-assignment-work"><i class="fa fa-check"></i><b>1.4</b> How does assignment work?</a></li>
+<li class="chapter" data-level="1.5" data-path="quick-intro-to-r.html"><a href="quick-intro-to-r.html#global-environment"><i class="fa fa-check"></i><b>1.5</b> Global environment</a></li>
+<li class="chapter" data-level="1.6" data-path="quick-intro-to-r.html"><a href="quick-intro-to-r.html#naming-rules-and-conventions"><i class="fa fa-check"></i><b>1.6</b> Naming rules and conventions</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="using-functions.html"><a href="using-functions.html"><i class="fa fa-check"></i><b>2</b> Using functions</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="using-functions.html"><a href="using-functions.html#intro-functions"><i class="fa fa-check"></i><b>2.1</b> Introduction</a></li>
+<li class="chapter" data-level="2.2" data-path="using-functions.html"><a href="using-functions.html#functions-and-arguments"><i class="fa fa-check"></i><b>2.2</b> Functions and arguments</a></li>
+<li class="chapter" data-level="2.3" data-path="using-functions.html"><a href="using-functions.html#evaluating-arguments-and-returning-results"><i class="fa fa-check"></i><b>2.3</b> Evaluating arguments and returning results</a></li>
+<li class="chapter" data-level="2.4" data-path="using-functions.html"><a href="using-functions.html#function-arguments"><i class="fa fa-check"></i><b>2.4</b> Specifying function arguments</a></li>
+<li class="chapter" data-level="2.5" data-path="using-functions.html"><a href="using-functions.html#combining-functions"><i class="fa fa-check"></i><b>2.5</b> Combining functions</a></li>
+<li class="chapter" data-level="2.6" data-path="using-functions.html"><a href="using-functions.html#functions-do-not-have-side-effects"><i class="fa fa-check"></i><b>2.6</b> Functions do not have ‘side effects’</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="vectors.html"><a href="vectors.html"><i class="fa fa-check"></i><b>3</b> Vectors</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="vectors.html"><a href="vectors.html#introduction"><i class="fa fa-check"></i><b>3.1</b> Introduction</a></li>
+<li class="chapter" data-level="3.2" data-path="vectors.html"><a href="vectors.html#atomic-vectors"><i class="fa fa-check"></i><b>3.2</b> Atomic vectors</a></li>
+<li class="chapter" data-level="3.3" data-path="vectors.html"><a href="vectors.html#intro-vectors"><i class="fa fa-check"></i><b>3.3</b> Numeric vectors</a></li>
+<li class="chapter" data-level="3.4" data-path="vectors.html"><a href="vectors.html#constructing-numeric-vectors"><i class="fa fa-check"></i><b>3.4</b> Constructing numeric vectors</a></li>
+<li class="chapter" data-level="3.5" data-path="vectors.html"><a href="vectors.html#named-vectors"><i class="fa fa-check"></i><b>3.5</b> Named vectors</a></li>
+<li class="chapter" data-level="3.6" data-path="vectors.html"><a href="vectors.html#vectorised-operations"><i class="fa fa-check"></i><b>3.6</b> Vectorised operations</a></li>
+<li class="chapter" data-level="3.7" data-path="vectors.html"><a href="vectors.html#other-vectors"><i class="fa fa-check"></i><b>3.7</b> Other kinds of atomic vectors</a>
+<ul>
+<li class="chapter" data-level="3.7.1" data-path="vectors.html"><a href="vectors.html#character-vectors"><i class="fa fa-check"></i><b>3.7.1</b> Character vectors</a></li>
+<li class="chapter" data-level="3.7.2" data-path="vectors.html"><a href="vectors.html#logical-vectors"><i class="fa fa-check"></i><b>3.7.2</b> Logical vectors</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="data-frames.html"><a href="data-frames.html"><i class="fa fa-check"></i><b>4</b> Data frames</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="data-frames.html"><a href="data-frames.html#introduction-1"><i class="fa fa-check"></i><b>4.1</b> Introduction</a></li>
+<li class="chapter" data-level="4.2" data-path="data-frames.html"><a href="data-frames.html#data-frames-intro"><i class="fa fa-check"></i><b>4.2</b> Data frames</a></li>
+<li class="chapter" data-level="4.3" data-path="data-frames.html"><a href="data-frames.html#exploring-data-frames"><i class="fa fa-check"></i><b>4.3</b> Exploring data frames</a></li>
+<li class="chapter" data-level="4.4" data-path="data-frames.html"><a href="data-frames.html#extracting-and-adding-a-single-variable"><i class="fa fa-check"></i><b>4.4</b> Extracting and adding a single variable</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="packages.html"><a href="packages.html"><i class="fa fa-check"></i><b>5</b> Packages</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="packages.html"><a href="packages.html#package-system"><i class="fa fa-check"></i><b>5.1</b> The R package system</a></li>
+<li class="chapter" data-level="5.2" data-path="packages.html"><a href="packages.html#task-views"><i class="fa fa-check"></i><b>5.2</b> Task views</a></li>
+<li class="chapter" data-level="5.3" data-path="packages.html"><a href="packages.html#use-packages"><i class="fa fa-check"></i><b>5.3</b> Using packages</a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="packages.html"><a href="packages.html#viewing-installed-packages"><i class="fa fa-check"></i><b>5.3.1</b> Viewing installed packages</a></li>
+<li class="chapter" data-level="5.3.2" data-path="packages.html"><a href="packages.html#installing-packages"><i class="fa fa-check"></i><b>5.3.2</b> Installing packages</a></li>
+<li class="chapter" data-level="5.3.3" data-path="packages.html"><a href="packages.html#loading-and-attaching-packages"><i class="fa fa-check"></i><b>5.3.3</b> Loading and attaching packages</a></li>
+<li class="chapter" data-level="5.3.4" data-path="packages.html"><a href="packages.html#dont-use-rstudio-for-loading-packages"><i class="fa fa-check"></i><b>5.3.4</b> Don’t use RStudio for loading packages!</a></li>
+<li class="chapter" data-level="5.3.5" data-path="packages.html"><a href="packages.html#an-analogy"><i class="fa fa-check"></i><b>5.3.5</b> An analogy</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="packages.html"><a href="packages.html#package-data"><i class="fa fa-check"></i><b>5.4</b> Package data</a></li>
+<li class="chapter" data-level="5.5" data-path="packages.html"><a href="packages.html#the-tidyverse-ecosystem-of-packages"><i class="fa fa-check"></i><b>5.5</b> The tidyverse ecosystem of packages</a></li>
+</ul></li>
+<li class="part"><span><b>II Data Wrangling</b></span></li>
+<li class="chapter" data-level="6" data-path="getting-ready-to-use-dplyr.html"><a href="getting-ready-to-use-dplyr.html"><i class="fa fa-check"></i><b>6</b> Getting ready to use <strong>dplyr</strong></a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="getting-ready-to-use-dplyr.html"><a href="getting-ready-to-use-dplyr.html#introduction-2"><i class="fa fa-check"></i><b>6.1</b> Introduction</a></li>
+<li class="chapter" data-level="6.2" data-path="getting-ready-to-use-dplyr.html"><a href="getting-ready-to-use-dplyr.html#tidy-data"><i class="fa fa-check"></i><b>6.2</b> Tidy data</a></li>
+<li class="chapter" data-level="6.3" data-path="getting-ready-to-use-dplyr.html"><a href="getting-ready-to-use-dplyr.html#penguins-data-overview"><i class="fa fa-check"></i><b>6.3</b> Penguins! 🐧+📊= 😃</a></li>
+<li class="chapter" data-level="6.4" data-path="getting-ready-to-use-dplyr.html"><a href="getting-ready-to-use-dplyr.html#um-tibbles"><i class="fa fa-check"></i><b>6.4</b> Um… tibbles?</a></li>
+<li class="chapter" data-level="6.5" data-path="getting-ready-to-use-dplyr.html"><a href="getting-ready-to-use-dplyr.html#missing-values"><i class="fa fa-check"></i><b>6.5</b> Missing values</a></li>
+<li class="chapter" data-level="6.6" data-path="getting-ready-to-use-dplyr.html"><a href="getting-ready-to-use-dplyr.html#why-dplyr"><i class="fa fa-check"></i><b>6.6</b> Introducing <strong>dplyr</strong></a>
+<ul>
+<li class="chapter" data-level="6.6.1" data-path="getting-ready-to-use-dplyr.html"><a href="getting-ready-to-use-dplyr.html#more-dplyr"><i class="fa fa-check"></i><b>6.6.1</b> A first look at <strong>dplyr</strong></a></li>
+<li class="chapter" data-level="6.6.2" data-path="getting-ready-to-use-dplyr.html"><a href="getting-ready-to-use-dplyr.html#dplyr-pseudocode"><i class="fa fa-check"></i><b>6.6.2</b> <strong>dplyr</strong> pseudocode</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="working-with-variables.html"><a href="working-with-variables.html"><i class="fa fa-check"></i><b>7</b> Working with variables</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="working-with-variables.html"><a href="working-with-variables.html#introduction-3"><i class="fa fa-check"></i><b>7.1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="7.1.1" data-path="working-with-variables.html"><a href="working-with-variables.html#getting-ready"><i class="fa fa-check"></i><b>7.1.1</b> Getting ready</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="working-with-variables.html"><a href="working-with-variables.html#subset-variables-with-select"><i class="fa fa-check"></i><b>7.2</b> Subset variables with <code>select</code></a>
+<ul>
+<li class="chapter" data-level="7.2.1" data-path="working-with-variables.html"><a href="working-with-variables.html#alternative-ways-to-identify-variables-with-select"><i class="fa fa-check"></i><b>7.2.1</b> Alternative ways to identify variables with <code>select</code></a></li>
+<li class="chapter" data-level="7.2.2" data-path="working-with-variables.html"><a href="working-with-variables.html#renaming-variables-with-select-and-rename"><i class="fa fa-check"></i><b>7.2.2</b> Renaming variables with <code>select</code> and <code>rename</code></a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="working-with-variables.html"><a href="working-with-variables.html#creating-variables-with-mutate"><i class="fa fa-check"></i><b>7.3</b> Creating variables with <code>mutate</code></a>
+<ul>
+<li class="chapter" data-level="7.3.1" data-path="working-with-variables.html"><a href="working-with-variables.html#transforming-and-dropping-variables"><i class="fa fa-check"></i><b>7.3.1</b> Transforming and dropping variables</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="working-with-observations.html"><a href="working-with-observations.html"><i class="fa fa-check"></i><b>8</b> Working with observations</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="working-with-observations.html"><a href="working-with-observations.html#introduction-4"><i class="fa fa-check"></i><b>8.1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="8.1.1" data-path="working-with-observations.html"><a href="working-with-observations.html#getting-ready-1"><i class="fa fa-check"></i><b>8.1.1</b> Getting ready</a></li>
+</ul></li>
+<li class="chapter" data-level="8.2" data-path="working-with-observations.html"><a href="working-with-observations.html#relational-and-logical-operators"><i class="fa fa-check"></i><b>8.2</b> Relational and logical operators</a></li>
+<li class="chapter" data-level="8.3" data-path="working-with-observations.html"><a href="working-with-observations.html#subset-observations-with-filter"><i class="fa fa-check"></i><b>8.3</b> Subset observations with <code>filter</code></a></li>
+<li class="chapter" data-level="8.4" data-path="working-with-observations.html"><a href="working-with-observations.html#reordering-observations-with-arrange"><i class="fa fa-check"></i><b>8.4</b> Reordering observations with <code>arrange</code></a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="summarising-and-grouping.html"><a href="summarising-and-grouping.html"><i class="fa fa-check"></i><b>9</b> Summarising and grouping</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="summarising-and-grouping.html"><a href="summarising-and-grouping.html#summarising-variables-with-summarise"><i class="fa fa-check"></i><b>9.1</b> Summarising variables with <code>summarise</code></a>
+<ul>
+<li class="chapter" data-level="9.1.1" data-path="summarising-and-grouping.html"><a href="summarising-and-grouping.html#more-complicated-calculations-with-summarise"><i class="fa fa-check"></i><b>9.1.1</b> More complicated calculations with <code>summarise</code></a></li>
+</ul></li>
+<li class="chapter" data-level="9.2" data-path="summarising-and-grouping.html"><a href="summarising-and-grouping.html#grouped-operations-using-group_by"><i class="fa fa-check"></i><b>9.2</b> Grouped operations using <code>group_by</code></a>
+<ul>
+<li class="chapter" data-level="9.2.1" data-path="summarising-and-grouping.html"><a href="summarising-and-grouping.html#more-than-one-grouping-variable"><i class="fa fa-check"></i><b>9.2.1</b> More than one grouping variable</a></li>
+<li class="chapter" data-level="9.2.2" data-path="summarising-and-grouping.html"><a href="summarising-and-grouping.html#using-group_by-with-other-verbs"><i class="fa fa-check"></i><b>9.2.2</b> Using <code>group_by</code> with other verbs</a></li>
+</ul></li>
+<li class="chapter" data-level="9.3" data-path="summarising-and-grouping.html"><a href="summarising-and-grouping.html#removing-grouping-information"><i class="fa fa-check"></i><b>9.3</b> Removing grouping information</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="building-pipelines.html"><a href="building-pipelines.html"><i class="fa fa-check"></i><b>10</b> Building pipelines</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="building-pipelines.html"><a href="building-pipelines.html#why-do-we-need-pipes"><i class="fa fa-check"></i><b>10.1</b> Why do we need ‘pipes?’</a></li>
+<li class="chapter" data-level="10.2" data-path="building-pipelines.html"><a href="building-pipelines.html#using-pipes"><i class="fa fa-check"></i><b>10.2</b> Using pipes (<code>%&gt;%</code>)</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="helper-functions.html"><a href="helper-functions.html"><i class="fa fa-check"></i><b>11</b> Helper functions</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="helper-functions.html"><a href="helper-functions.html#introduction-5"><i class="fa fa-check"></i><b>11.1</b> Introduction</a></li>
+<li class="chapter" data-level="11.2" data-path="helper-functions.html"><a href="helper-functions.html#working-with-select"><i class="fa fa-check"></i><b>11.2</b> Working with <code>select</code></a></li>
+<li class="chapter" data-level="11.3" data-path="helper-functions.html"><a href="helper-functions.html#working-with-mutate-and-transmute"><i class="fa fa-check"></i><b>11.3</b> Working with <code>mutate</code> and <code>transmute</code></a></li>
+<li class="chapter" data-level="11.4" data-path="helper-functions.html"><a href="helper-functions.html#working-with-filter"><i class="fa fa-check"></i><b>11.4</b> Working with <code>filter</code></a></li>
+<li class="chapter" data-level="11.5" data-path="helper-functions.html"><a href="helper-functions.html#working-with-summarise"><i class="fa fa-check"></i><b>11.5</b> Working with <code>summarise</code></a></li>
+</ul></li>
+<li class="part"><span><b>III Exporing Data</b></span></li>
+<li class="chapter" data-level="12" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html"><i class="fa fa-check"></i><b>12</b> Exploratory data analysis</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#introduction-6"><i class="fa fa-check"></i><b>12.1</b> Introduction</a></li>
+<li class="chapter" data-level="12.2" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#variables"><i class="fa fa-check"></i><b>12.2</b> Statistical variables and data</a>
+<ul>
+<li class="chapter" data-level="12.2.1" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#numeric-vs.-categorical-variables"><i class="fa fa-check"></i><b>12.2.1</b> Numeric vs. categorical variables</a></li>
+<li class="chapter" data-level="12.2.2" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#ratio-vs.-interval-scales"><i class="fa fa-check"></i><b>12.2.2</b> Ratio vs. interval scales</a></li>
+</ul></li>
+<li class="chapter" data-level="12.3" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#populations-samples"><i class="fa fa-check"></i><b>12.3</b> Populations, samples and distributions</a></li>
+<li class="chapter" data-level="12.4" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#relationships"><i class="fa fa-check"></i><b>12.4</b> Relationships</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="introduction-to-ggplot2.html"><a href="introduction-to-ggplot2.html"><i class="fa fa-check"></i><b>13</b> Introduction to <strong>ggplot2</strong></a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="introduction-to-ggplot2.html"><a href="introduction-to-ggplot2.html#anatomy"><i class="fa fa-check"></i><b>13.1</b> The anatomy of ggplot2</a>
+<ul>
+<li class="chapter" data-level="13.1.1" data-path="introduction-to-ggplot2.html"><a href="introduction-to-ggplot2.html#layers"><i class="fa fa-check"></i><b>13.1.1</b> Layers</a></li>
+<li class="chapter" data-level="13.1.2" data-path="introduction-to-ggplot2.html"><a href="introduction-to-ggplot2.html#scales"><i class="fa fa-check"></i><b>13.1.2</b> Scales</a></li>
+<li class="chapter" data-level="13.1.3" data-path="introduction-to-ggplot2.html"><a href="introduction-to-ggplot2.html#coordinate-system"><i class="fa fa-check"></i><b>13.1.3</b> Coordinate system</a></li>
+<li class="chapter" data-level="13.1.4" data-path="introduction-to-ggplot2.html"><a href="introduction-to-ggplot2.html#faceting"><i class="fa fa-check"></i><b>13.1.4</b> Faceting</a></li>
+</ul></li>
+<li class="chapter" data-level="13.2" data-path="introduction-to-ggplot2.html"><a href="introduction-to-ggplot2.html#quick"><i class="fa fa-check"></i><b>13.2</b> A quick introduction to ggplot2</a>
+<ul>
+<li class="chapter" data-level="13.2.1" data-path="introduction-to-ggplot2.html"><a href="introduction-to-ggplot2.html#making-a-start"><i class="fa fa-check"></i><b>13.2.1</b> Making a start</a></li>
+<li class="chapter" data-level="13.2.2" data-path="introduction-to-ggplot2.html"><a href="introduction-to-ggplot2.html#the-standard-way-of-using-ggplot2"><i class="fa fa-check"></i><b>13.2.2</b> The standard way of using <strong>ggplot2</strong></a></li>
+</ul></li>
+<li class="chapter" data-level="13.3" data-path="introduction-to-ggplot2.html"><a href="introduction-to-ggplot2.html#increasing-the-information-density"><i class="fa fa-check"></i><b>13.3</b> Increasing the information density</a>
+<ul>
+<li class="chapter" data-level="13.3.1" data-path="introduction-to-ggplot2.html"><a href="introduction-to-ggplot2.html#using-additional-aesthetics"><i class="fa fa-check"></i><b>13.3.1</b> Using additional aesthetics</a></li>
+<li class="chapter" data-level="13.3.2" data-path="introduction-to-ggplot2.html"><a href="introduction-to-ggplot2.html#using-facets"><i class="fa fa-check"></i><b>13.3.2</b> Using facets</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="customising-plots.html"><a href="customising-plots.html"><i class="fa fa-check"></i><b>14</b> Customising plots</a>
+<ul>
+<li class="chapter" data-level="14.1" data-path="customising-plots.html"><a href="customising-plots.html#working-with-layer-specific-geom-properties"><i class="fa fa-check"></i><b>14.1</b> Working with layer specific geom properties</a>
+<ul>
+<li class="chapter" data-level="14.1.1" data-path="customising-plots.html"><a href="customising-plots.html#the-relationship-between-aesthetics-and-geom-properties."><i class="fa fa-check"></i><b>14.1.1</b> The relationship between aesthetics and geom properties.</a></li>
+</ul></li>
+<li class="chapter" data-level="14.2" data-path="customising-plots.html"><a href="customising-plots.html#working-with-layer-specific-position-adjustments"><i class="fa fa-check"></i><b>14.2</b> Working with layer specific position adjustments</a></li>
+<li class="chapter" data-level="14.3" data-path="customising-plots.html"><a href="customising-plots.html#working-with-plot-specific-scales"><i class="fa fa-check"></i><b>14.3</b> Working with plot specific scales</a></li>
+<li class="chapter" data-level="14.4" data-path="customising-plots.html"><a href="customising-plots.html#adding-titles-and-labels"><i class="fa fa-check"></i><b>14.4</b> Adding titles and labels</a></li>
+<li class="chapter" data-level="14.5" data-path="customising-plots.html"><a href="customising-plots.html#themes"><i class="fa fa-check"></i><b>14.5</b> Themes</a></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="exploring-one-numeric-variable.html"><a href="exploring-one-numeric-variable.html"><i class="fa fa-check"></i><b>15</b> Exploring one numeric variable</a>
+<ul>
+<li class="chapter" data-level="15.1" data-path="exploring-one-numeric-variable.html"><a href="exploring-one-numeric-variable.html#explore-numeric"><i class="fa fa-check"></i><b>15.1</b> Understanding numerical variables</a></li>
+<li class="chapter" data-level="15.2" data-path="exploring-one-numeric-variable.html"><a href="exploring-one-numeric-variable.html#graphical-summaries"><i class="fa fa-check"></i><b>15.2</b> Graphical summaries</a></li>
+<li class="chapter" data-level="15.3" data-path="exploring-one-numeric-variable.html"><a href="exploring-one-numeric-variable.html#descriptive-statistics"><i class="fa fa-check"></i><b>15.3</b> Descriptive statistics</a>
+<ul>
+<li class="chapter" data-level="15.3.1" data-path="exploring-one-numeric-variable.html"><a href="exploring-one-numeric-variable.html#measuring-central-tendency"><i class="fa fa-check"></i><b>15.3.1</b> Measuring central tendency</a></li>
+<li class="chapter" data-level="15.3.2" data-path="exploring-one-numeric-variable.html"><a href="exploring-one-numeric-variable.html#measuring-dispersion"><i class="fa fa-check"></i><b>15.3.2</b> Measuring dispersion</a></li>
+<li class="chapter" data-level="15.3.3" data-path="exploring-one-numeric-variable.html"><a href="exploring-one-numeric-variable.html#skewness"><i class="fa fa-check"></i><b>15.3.3</b> Skewness</a></li>
+</ul></li>
+<li class="chapter" data-level="15.4" data-path="exploring-one-numeric-variable.html"><a href="exploring-one-numeric-variable.html#explore-categorical"><i class="fa fa-check"></i><b>15.4</b> Understanding categorical variables</a>
+<ul>
+<li class="chapter" data-level="15.4.1" data-path="exploring-one-numeric-variable.html"><a href="exploring-one-numeric-variable.html#numerical-summaries"><i class="fa fa-check"></i><b>15.4.1</b> Numerical summaries</a></li>
+</ul></li>
+<li class="chapter" data-level="15.5" data-path="exploring-one-numeric-variable.html"><a href="exploring-one-numeric-variable.html#graphical-summaries-of-categorical-variables"><i class="fa fa-check"></i><b>15.5</b> Graphical summaries of categorical variables</a></li>
+</ul></li>
+<li class="chapter" data-level="16" data-path="relationships-between-two-variables.html"><a href="relationships-between-two-variables.html"><i class="fa fa-check"></i><b>16</b> Relationships between two variables</a>
+<ul>
+<li class="chapter" data-level="16.1" data-path="relationships-between-two-variables.html"><a href="relationships-between-two-variables.html#numeric"><i class="fa fa-check"></i><b>16.1</b> Associations between numeric variables</a>
+<ul>
+<li class="chapter" data-level="16.1.1" data-path="relationships-between-two-variables.html"><a href="relationships-between-two-variables.html#descriptive-statistics-1"><i class="fa fa-check"></i><b>16.1.1</b> Descriptive statistics</a></li>
+<li class="chapter" data-level="16.1.2" data-path="relationships-between-two-variables.html"><a href="relationships-between-two-variables.html#graphical-summaries-1"><i class="fa fa-check"></i><b>16.1.2</b> Graphical summaries</a></li>
+</ul></li>
+<li class="chapter" data-level="16.2" data-path="relationships-between-two-variables.html"><a href="relationships-between-two-variables.html#categorical"><i class="fa fa-check"></i><b>16.2</b> Associations between categorical variables</a>
+<ul>
+<li class="chapter" data-level="16.2.1" data-path="relationships-between-two-variables.html"><a href="relationships-between-two-variables.html#numerical-summaries-1"><i class="fa fa-check"></i><b>16.2.1</b> Numerical summaries</a></li>
+<li class="chapter" data-level="16.2.2" data-path="relationships-between-two-variables.html"><a href="relationships-between-two-variables.html#graphical-summaries-2"><i class="fa fa-check"></i><b>16.2.2</b> Graphical summaries</a></li>
+</ul></li>
+<li class="chapter" data-level="16.3" data-path="relationships-between-two-variables.html"><a href="relationships-between-two-variables.html#categorical"><i class="fa fa-check"></i><b>16.3</b> Categorical-numerical associations</a>
+<ul>
+<li class="chapter" data-level="16.3.1" data-path="relationships-between-two-variables.html"><a href="relationships-between-two-variables.html#descriptive-statistics-2"><i class="fa fa-check"></i><b>16.3.1</b> Descriptive statistics</a></li>
+<li class="chapter" data-level="16.3.2" data-path="relationships-between-two-variables.html"><a href="relationships-between-two-variables.html#graphical-summaries-3"><i class="fa fa-check"></i><b>16.3.2</b> Graphical summaries</a></li>
+<li class="chapter" data-level="16.3.3" data-path="relationships-between-two-variables.html"><a href="relationships-between-two-variables.html#alternatives-to-box-and-whiskers-plots"><i class="fa fa-check"></i><b>16.3.3</b> Alternatives to box and whiskers plots</a></li>
+</ul></li>
+<li class="chapter" data-level="16.4" data-path="relationships-between-two-variables.html"><a href="relationships-between-two-variables.html#multivariate"><i class="fa fa-check"></i><b>16.4</b> Multivariate relationships</a></li>
+</ul></li>
+<li class="chapter" data-level="17" data-path="doing-more-with-ggplot2.html"><a href="doing-more-with-ggplot2.html"><i class="fa fa-check"></i><b>17</b> Doing more with <strong>ggplot2</strong></a>
+<ul>
+<li class="chapter" data-level="17.1" data-path="doing-more-with-ggplot2.html"><a href="doing-more-with-ggplot2.html#summaries"><i class="fa fa-check"></i><b>17.1</b> Comparing descriptive statistics</a></li>
+<li class="chapter" data-level="17.2" data-path="doing-more-with-ggplot2.html"><a href="doing-more-with-ggplot2.html#adding-error-bars"><i class="fa fa-check"></i><b>17.2</b> Adding error bars</a></li>
+<li class="chapter" data-level="17.3" data-path="doing-more-with-ggplot2.html"><a href="doing-more-with-ggplot2.html#adding-text-to-plots"><i class="fa fa-check"></i><b>17.3</b> Adding text to plots</a></li>
+<li class="chapter" data-level="17.4" data-path="doing-more-with-ggplot2.html"><a href="doing-more-with-ggplot2.html#customising-text"><i class="fa fa-check"></i><b>17.4</b> Customising text</a></li>
+<li class="chapter" data-level="17.5" data-path="doing-more-with-ggplot2.html"><a href="doing-more-with-ggplot2.html#saving-plots"><i class="fa fa-check"></i><b>17.5</b> Saving plots</a></li>
+<li class="chapter" data-level="17.6" data-path="doing-more-with-ggplot2.html"><a href="doing-more-with-ggplot2.html#panel-plots"><i class="fa fa-check"></i><b>17.6</b> Panel plots</a></li>
+</ul></li>
+<li class="appendix"><span><b>Supplementary Material</b></span></li>
+<li class="chapter" data-level="A" data-path="getting-help.html"><a href="getting-help.html"><i class="fa fa-check"></i><b>A</b> Getting help</a>
+<ul>
+<li class="chapter" data-level="A.1" data-path="getting-help.html"><a href="getting-help.html#console-help"><i class="fa fa-check"></i><b>A.1</b> Introduction</a></li>
+<li class="chapter" data-level="A.2" data-path="getting-help.html"><a href="getting-help.html#browsing-the-help-system"><i class="fa fa-check"></i><b>A.2</b> Browsing the help system</a></li>
+<li class="chapter" data-level="A.3" data-path="getting-help.html"><a href="getting-help.html#searching-for-help-files"><i class="fa fa-check"></i><b>A.3</b> Searching for help files</a></li>
+<li class="chapter" data-level="A.4" data-path="getting-help.html"><a href="getting-help.html#nav-help"><i class="fa fa-check"></i><b>A.4</b> Navigating help files</a></li>
+<li class="chapter" data-level="A.5" data-path="getting-help.html"><a href="getting-help.html#vignettes"><i class="fa fa-check"></i><b>A.5</b> Vignettes and demos</a></li>
+</ul></li>
+<li class="chapter" data-level="B" data-path="project-scripts-data.html"><a href="project-scripts-data.html"><i class="fa fa-check"></i><b>B</b> Managing projects, scripts and data files</a></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Exploratory Data Analysis with R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="exploring-one-numeric-variable" class="section level1" number="15">
+<h1><span class="header-section-number">Chapter 15</span> Exploring one numeric variable</h1>
+<p>This chapter will consider how to go about exploring the sample distribution of a single variable. Using the <code>storms</code> data from the <strong>nasaweather</strong> package (remember to load and attach the package), we’ll review some basic descriptive statistics and visualisations that are appropriate for numeric and categorical variables.</p>
+<div id="explore-numeric" class="section level2" number="15.1">
+<h2><span class="header-section-number">15.1</span> Understanding numerical variables</h2>
+<p>We’ll work with the <code>wind</code> and <code>pressure</code> variables in <code>storms</code> to illustrate the key ideas. Wind speed and atmospheric pressure are clearly numeric variables. We can say a bit more. They are both numeric variables that are measured on a ratio scale because zero really is zero: it makes sense to say that 20 mph is twice as fast as 10 mph and 1000 mbar exerts twice as much pressure on objects as 500 mbar. Are these continuous or discrete variables? Think about the possible values that wind speed and atmospheric pressure can take. A wind speed and atmospheric pressure of 40.52 mph and 1000.23 mbar are perfectly reasonable values, so fundamentally, these are continuous variables.</p>
+<p>The simplest way to understand our data, if not the most effective, is to view it in its raw form. We can always use the <code>View</code> function to do this in RStudio. However, since this doesn’t work on a web page, we’ll take a quick look at the first 100 values of the <code>wind</code> and <code>pressure</code> variables in <code>storms</code>. We can print these to the Console by extracting each of them with the <code>$</code> operator, using the <code>[</code> construct to subset the first 100 elements of each vector:</p>
+<div class="sourceCode" id="cb326"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb326-1"><a href="exploring-one-numeric-variable.html#cb326-1" aria-hidden="true" tabindex="-1"></a><span class="co"># first 100 values of atmospheric pressure</span></span>
+<span id="cb326-2"><a href="exploring-one-numeric-variable.html#cb326-2" aria-hidden="true" tabindex="-1"></a>storms<span class="sc">$</span>pressure[<span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>]</span></code></pre></div>
+<pre><code>##   [1] 1005 1004 1003 1001  997  995  987  988  988  990  990  993  993  994  995
+##  [16]  995  992  990  988  984  982  984  989  993  995  996  997 1000  997  990
+##  [31]  992  992  993 1019 1019 1018 1017 1016 1013 1011 1009 1007 1004 1001  997
+##  [46]  997  997  997  996  995  993  991  990  989 1012 1012 1012 1011 1011 1011
+##  [61] 1010 1010 1006 1008 1009 1010 1009 1006 1006 1005 1004  999  999  997  991
+##  [76]  995  997  995  994  994  995  996  997  997  998  998  999  999 1000 1000
+##  [91] 1001 1002 1003 1005 1005 1009 1008 1008 1008 1007</code></pre>
+<div class="sourceCode" id="cb328"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb328-1"><a href="exploring-one-numeric-variable.html#cb328-1" aria-hidden="true" tabindex="-1"></a><span class="co"># first 100 values of wind speed</span></span>
+<span id="cb328-2"><a href="exploring-one-numeric-variable.html#cb328-2" aria-hidden="true" tabindex="-1"></a>storms<span class="sc">$</span>wind[<span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>]</span></code></pre></div>
+<pre><code>##   [1] 30 30 35 40 50 60 65 65 65 60 60 45 30 35 35 40 40 45 45 45 50 50 50 45 40
+##  [26] 40 40 40 40 40 40 35 35 20 20 20 25 25 30 30 30 35 40 60 60 55 50 50 50 50
+##  [51] 50 50 45 40 25 25 25 30 30 30 30 30 35 35 35 40 40 45 45 45 45 50 50 55 60
+##  [76] 60 60 55 55 55 50 50 50 50 50 50 50 50 50 50 50 50 50 50 50 25 30 30 30 30</code></pre>
+<p>Notice that even though <code>pressure</code> is continuous variables it looks like a discrete variable because it has only been measured to the nearest whole millibar. Similarly, <code>wind</code> is only measured to the nearest 5 mph. These differences reflect the limitations of the methodology used to measure each variable, e.g. measuring wind speed is hard because it varies so much in space and time.</p>
+<p>This illustrates an important idea: we can’t just look at the values a numeric variable takes in a sample to determine whether it is discrete or continuous. In one sense the <code>pressure</code> variable is a discrete variable because of the way it was measured, even though we know that atmospheric pressure is really continuous.</p>
+<p>Whether we treat it as continuous or discrete is an analysis decision. These sorts of distinctions often don’t matter too much when we’re exploring data, but they can matter when we’re deciding how to analyse it statistically. We have to make a decision about how to classify a variable based on knowledge of its true nature and the measurement process. For example, imagine that we were only able to measure wind speed to the nearest 25 mph. In this situation we would only “see” a few different categories of wind speed, so it might be sensible to treat the <code>wind</code> variable as an ordinal, categorical variable.</p>
+</div>
+<div id="graphical-summaries" class="section level2" number="15.2">
+<h2><span class="header-section-number">15.2</span> Graphical summaries</h2>
+<p>We only looked at the first 100 values of the <code>wind</code> and <code>pressure</code> variables because the <code>storms</code> data set is too large to look everything at once. It’s hard to say much about the sample distribution of these two variables by just looking at such a small subset of values. If the data set has been sorted, these might not even be representative of the wider sample.</p>
+<p>What else might we do? One useful tool is ‘binning.’ The idea behind binning a variable is very simple. It involves two steps. First, we take the set of possible values of our numeric variable and divide this into a equal sized, non-overlapping intervals. We can use any interval size we like, as long as it is large enough to span at least two observations some of the time, though in practice some choices are more sensible than others. We then have to work out how many values of the our variable fall inside each bin. The resulting set of counts tells us quiet a lot about the sample distribution.</p>
+<p>Let’s see how this works with an example. Binning is very tedious to do by hand, but as we might expect, there are a couple of base R function that can do this for us: <code>cut</code> and <code>table</code>. Here’s how to use these to bin the <code>pressure</code> variable into intervals of 10 mbar:</p>
+<div class="sourceCode" id="cb330"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb330-1"><a href="exploring-one-numeric-variable.html#cb330-1" aria-hidden="true" tabindex="-1"></a>presure_bins <span class="ot">&lt;-</span> <span class="fu">cut</span>(storms<span class="sc">$</span>pressure, </span>
+<span id="cb330-2"><a href="exploring-one-numeric-variable.html#cb330-2" aria-hidden="true" tabindex="-1"></a>                  <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">900</span>, <span class="dv">1020</span>, <span class="at">by =</span> <span class="dv">5</span>), <span class="at">right =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb330-3"><a href="exploring-one-numeric-variable.html#cb330-3" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(presure_bins)</span></code></pre></div>
+<pre><code>## presure_bins
+##   [900,905)   [905,910)   [910,915)   [915,920)   [920,925)   [925,930) 
+##           0           1           2           2           7           4 
+##   [930,935)   [935,940)   [940,945)   [945,950)   [950,955)   [955,960) 
+##          14          23          35          44          47          39 
+##   [960,965)   [965,970)   [970,975)   [975,980)   [980,985)   [985,990) 
+##          79          81         156         127         170         240 
+##   [990,995)  [995,1000) [1000,1005) [1005,1010) [1010,1015) [1015,1020) 
+##         252         291         466         515         134          18</code></pre>
+<p>We won’t explain how <code>cut</code> and <code>table</code> work as we only need to understand the output. The output of <code>table</code> is a named numeric vector. The names of each element describe an interval, and the corresponding values are the observation counts in that interval. What does this tell us? It shows that most pressure observations associated with storm systems are round about 1000 mbar. Values higher than 1000 mbar are rare, but a range of values below this are possible, with lower and lower values becoming less frequent.</p>
+<p>These binned data tell us quite a lot about the sample distribution of <code>pressure</code>. It’s still difficult to perceive the information in this output when it is presented as a series of numbers. What we really need is some kind of visualisation to help us interpret these numbers. This is what a <strong>histogram</strong> provides. Histograms are designed to summarise the sample distribution of a variable by showing the counts of binned data as a series of bars. The position and width of each bar corresponds to an interval and the height shows the count. Here’s a histogram that corresponds to the binned data we just made:</p>
+<p><img src="intro-bio-data-book_files/figure-html/unnamed-chunk-192-1.png" width="336" style="display: block; margin: auto;" /></p>
+<p>This gives a clear summary of the sample distribution of pressure. It reveals: 1) the most common values, which are just above 1000 mbar; 2) the range of the data, which is about 100 mbar; and 3) the shape of the distribution, which is asymmetric, with a tendency toward low values.</p>
+<p>We used <code>ggplot2</code> to make that histogram. We could do this by building a new data set with the binned data, and then use this with <code>ggplot2</code> to construct the histogram manually. There is a much easier way to achieve the same result though. Rather than do it one one step with a single R expression, we will break the process up into two steps, storing the the <strong>ggplot2</strong> object as we build it.</p>
+<p>The first step uses the <code>ggplot</code> function with <code>aes</code> to set up the default data and aesthetic mapping:</p>
+<div class="sourceCode" id="cb332"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb332-1"><a href="exploring-one-numeric-variable.html#cb332-1" aria-hidden="true" tabindex="-1"></a>plt_hist <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(storms, <span class="fu">aes</span>(<span class="at">x =</span> pressure))</span></code></pre></div>
+<p>This is no different than the extended scatter plot example we stepped through earlier. The only difference is that a histogram requires only one aesthetic mapping. We supplied the argument <code>x = pressure</code> to <code>aes</code> because we want to display the map intervals associated with <code>pressure</code> to the x axis. We don’t need to supply an aesthetic mapping for the y axis because <code>ggplot2</code> is going to handle this for us.</p>
+<p>The second step adds a layer to the <code>plt_hist</code> object. We need to find the right <code>geom_XX</code> function to do this. Unsurprisingly, this is called <code>geom_histogram</code>:</p>
+<div class="sourceCode" id="cb333"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb333-1"><a href="exploring-one-numeric-variable.html#cb333-1" aria-hidden="true" tabindex="-1"></a>plt_hist <span class="ot">&lt;-</span> plt_hist <span class="sc">+</span> <span class="fu">geom_histogram</span>()</span>
+<span id="cb333-2"><a href="exploring-one-numeric-variable.html#cb333-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(plt_hist)</span></code></pre></div>
+<pre><code>## data: name, year, month, day, hour, lat, long, pressure, wind, type,
+##   seasday [2747x11]
+## mapping:  x = ~pressure
+## faceting: &lt;ggproto object: Class FacetNull, Facet, gg&gt;
+##     compute_layout: function
+##     draw_back: function
+##     draw_front: function
+##     draw_labels: function
+##     draw_panels: function
+##     finish_data: function
+##     init_scales: function
+##     map_data: function
+##     params: list
+##     setup_data: function
+##     setup_params: function
+##     shrink: TRUE
+##     train_scales: function
+##     vars: function
+##     super:  &lt;ggproto object: Class FacetNull, Facet, gg&gt;
+## -----------------------------------
+## geom_bar: na.rm = FALSE, orientation = NA
+## stat_bin: binwidth = NULL, bins = NULL, na.rm = FALSE, orientation = NA, pad = FALSE
+## position_stack</code></pre>
+<p>Look at the text of the summary of the added layer below the <code>----</code>. This shows that <code>geom_histogram</code> adds a stat to the layer, the <code>stat_bin</code>. What this means is that <code>ggplot2</code> is going to take the raw <code>pressure</code> data and bin it for us. Everything we need to plot a histogram is now set up. Here’s the resulting plot:</p>
+<div class="sourceCode" id="cb335"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb335-1"><a href="exploring-one-numeric-variable.html#cb335-1" aria-hidden="true" tabindex="-1"></a>plt_hist</span></code></pre></div>
+<pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+<p><img src="intro-bio-data-book_files/figure-html/unnamed-chunk-195-1.png" width="336" style="display: block; margin: auto;" /></p>
+<p>The resulting plot is not quite the same as the example we saw above because it uses different bins. It’s a good idea to play around with the bin size to arrive at an informative histogram. We set the properties of the <code>geom_histogram</code> to tweak this kind of thing—the <code>binwidth</code> argument adjusts the width of the bins used. Let’s construct the histogram again with 7 mbar wide bins, as well as adjust the colour scheme and axis labels a bit:</p>
+<div class="sourceCode" id="cb337"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb337-1"><a href="exploring-one-numeric-variable.html#cb337-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(storms, <span class="fu">aes</span>(<span class="at">x =</span> pressure)) <span class="sc">+</span> </span>
+<span id="cb337-2"><a href="exploring-one-numeric-variable.html#cb337-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="dv">7</span>, <span class="at">fill =</span> <span class="st">&quot;steelblue&quot;</span>, <span class="at">colour=</span><span class="st">&quot;darkgrey&quot;</span>, <span class="at">alpha =</span> <span class="fl">0.8</span>) <span class="sc">+</span> </span>
+<span id="cb337-3"><a href="exploring-one-numeric-variable.html#cb337-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;Atmospheric Pressure (mbar)&quot;</span>) <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">&quot;Count&quot;</span>)</span></code></pre></div>
+<p><img src="intro-bio-data-book_files/figure-html/unnamed-chunk-196-1.png" width="336" style="display: block; margin: auto;" /></p>
+<p>Whether or not that colour scheme is an improvement is a matter of taste. Mostly we wanted to demonstrate how the <code>fill</code>, <code>colour</code>, and <code>alpha</code> arguments change the output. Notice that the effect of increasing the bin width is to ‘smooth’ the histogram, i.e. this version looks less jagged than the last.</p>
+<p>We can use pretty much the same R code to produce a histogram summarising the wind speed sample distribution:</p>
+<div class="sourceCode" id="cb338"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb338-1"><a href="exploring-one-numeric-variable.html#cb338-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(storms, <span class="fu">aes</span>(<span class="at">x =</span> wind)) <span class="sc">+</span> </span>
+<span id="cb338-2"><a href="exploring-one-numeric-variable.html#cb338-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="dv">10</span>, <span class="at">fill =</span> <span class="st">&quot;steelblue&quot;</span>, <span class="at">colour=</span><span class="st">&quot;darkgrey&quot;</span>, <span class="at">alpha =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
+<span id="cb338-3"><a href="exploring-one-numeric-variable.html#cb338-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;Wind Speed (mph)&quot;</span>) <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">&quot;Count&quot;</span>)</span></code></pre></div>
+<p><img src="intro-bio-data-book_files/figure-html/unnamed-chunk-197-1.png" width="336" style="display: block; margin: auto;" /></p>
+<p>The only things that changed in this example were the aesthetic mapping and the bin width, which we set to 10. It reveals that the wind speed during a storm tends to be about 40 mph, though the range of wind speeds is about 100 mph and the shape of the distribution is asymmetric.</p>
+<p>We have to choose the bin widths carefully. Remember that wind speed is measured to the nearest 5 mph. This means we should choose a bin width that is a multiple of 5 to produce a meaningful histogram. Look what happens if we set the bin width to 3:</p>
+<div class="sourceCode" id="cb339"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb339-1"><a href="exploring-one-numeric-variable.html#cb339-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(storms, <span class="fu">aes</span>(<span class="at">x =</span> wind)) <span class="sc">+</span> </span>
+<span id="cb339-2"><a href="exploring-one-numeric-variable.html#cb339-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="dv">3</span>, <span class="at">fill =</span> <span class="st">&quot;steelblue&quot;</span>, <span class="at">colour=</span><span class="st">&quot;darkgrey&quot;</span>, <span class="at">alpha =</span> <span class="fl">0.8</span>) <span class="sc">+</span> </span>
+<span id="cb339-3"><a href="exploring-one-numeric-variable.html#cb339-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;Wind Speed (mph)&quot;</span>) <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">&quot;Count&quot;</span>)</span></code></pre></div>
+<p><img src="intro-bio-data-book_files/figure-html/unnamed-chunk-198-1.png" width="336" style="display: block; margin: auto;" /></p>
+<p>We end up with gaps in the histogram because some intervals do not include multiples of 5. This is not a good histogram because it fails to reliably summarise the distribution. Similar problems would occur if we chose a bin width that is greater than, but not a multiple of 5, because different bins would cover a different number of values that make up the <code>wind</code> variable. The take home message is that we have to know our data in order to produce meaningful summaries of it.</p>
+<p>We’ll finish up this subsection by briefly reviewing one alternative to the histogram. Histograms are good for visualising sample distributions when we have a reasonable sample size (at least dozens, and ideally, hundreds of observations). They aren’t very effective when the sample is quite small. In this ‘small data’ situation it’s better to use something called a <strong>dot plot</strong><a href="#fn8" class="footnote-ref" id="fnref8"><sup>8</sup></a>.</p>
+<p>Let’s use <strong>dplyr</strong> to extract a small(ish) subset of the storms data:</p>
+<div class="sourceCode" id="cb340"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb340-1"><a href="exploring-one-numeric-variable.html#cb340-1" aria-hidden="true" tabindex="-1"></a>storms_small <span class="ot">&lt;-</span> </span>
+<span id="cb340-2"><a href="exploring-one-numeric-variable.html#cb340-2" aria-hidden="true" tabindex="-1"></a>  storms <span class="sc">%&gt;%</span> </span>
+<span id="cb340-3"><a href="exploring-one-numeric-variable.html#cb340-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(year <span class="sc">==</span> <span class="dv">1998</span>, type <span class="sc">==</span> <span class="st">&quot;Hurricane&quot;</span>)</span></code></pre></div>
+<p>This just extracts the subset of hurricane observations from 1998. The <strong>ggplot2</strong> code to make a dot plot with these data is very similar to the histogram case:</p>
+<div class="sourceCode" id="cb341"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb341-1"><a href="exploring-one-numeric-variable.html#cb341-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(storms_small, <span class="fu">aes</span>(<span class="at">x =</span> pressure)) <span class="sc">+</span> </span>
+<span id="cb341-2"><a href="exploring-one-numeric-variable.html#cb341-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_dotplot</span>(<span class="at">binwidth =</span> <span class="dv">2</span>) <span class="sc">+</span> </span>
+<span id="cb341-3"><a href="exploring-one-numeric-variable.html#cb341-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;Atmospheric Pressure (mbar)&quot;</span>) <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">&quot;Count&quot;</span>)</span></code></pre></div>
+<p><img src="intro-bio-data-book_files/figure-html/unnamed-chunk-200-1.png" width="336" style="display: block; margin: auto;" /></p>
+<p>Here, each observation in the data adds one dot, and dots that fall into the same bin are stacked up on top of one another. The resulting plot displays the same information about a sample distribution as a histogram, but it tends to be more informative when there are relatively few observations.</p>
+</div>
+<div id="descriptive-statistics" class="section level2" number="15.3">
+<h2><span class="header-section-number">15.3</span> Descriptive statistics</h2>
+<p>So far we’ve been describing the properties of sample distributions in very general terms, using phrases like ‘most common values’ and ‘the range of the data’ without really saying what we mean. Statisticians have devised specific terms to describe these kinds of properties, as well as different descriptive statistics to quantify them. The two that matter most are the <strong>central tendency</strong> and the <strong>dispersion</strong>:</p>
+<ul>
+<li><p>A measure of <strong>central tendency</strong> describes a typical (‘central’) value of a distribution. Most people know at least one measure of central tendency. The “average” that they calculated at school is the arithmetic mean of a sample. There are many different measures of central tendency, each with their own pros and cons. Take a look at the <a href="http://en.wikipedia.org/wiki/Central_tendency">Wikipedia</a> to see the most common ones. Among these, the median is the one that is used most often in exploratory analyses.</p></li>
+<li><p>A measure of <strong>dispersion</strong> describes how spread out a distribution is. Dispersion measures quantify the variability or scatter of a variable. If one distribution is more dispersed than another it means that in some sense it encompasses a wider range of values. What this means in practice depends on the kind of measure we’re working with. Basic statistics courses tend to focus on the variance, and its square root, the standard deviation. There <a href="http://en.wikipedia.org/wiki/Statistical_dispersion">are others</a> though.</p></li>
+</ul>
+<div id="measuring-central-tendency" class="section level3" number="15.3.1">
+<h3><span class="header-section-number">15.3.1</span> Measuring central tendency</h3>
+<p>There are two descriptive statistics that are typically used to describe the central tendency of the sample distribution of numeric variables. The first is the <strong>arithmetic mean</strong> of a sample. People often say ‘empirical mean,’ ‘sample mean’ or just ‘the mean’ when referring to the arithmetic sample mean. This is fine, but keep in mind that there are other kinds of mean (e.g. the harmonic mean and the geometric mean)<a href="#fn9" class="footnote-ref" id="fnref9"><sup>9</sup></a>.</p>
+<p>How do we calculate the arithmetic sample mean of a variable? Here’s the mathematical definition:
+<span class="math display">\[
+\bar{x} = \frac{1}{N}\sum\limits_{i=1}^{N}{x_i}
+\]</span>
+We need to define the terms to make sense of this. The <span class="math inline">\(\bar{x}\)</span> stands for the arithmetic sample mean. The <span class="math inline">\(N\)</span> in the right hand side of this expression is the sample size, i.e. the number of observations in a sample. The <span class="math inline">\(x_i\)</span> refer to the set of values the variable takes in the sample. The <span class="math inline">\(i\)</span> is an index used to reference each observation: the first observation has value <span class="math inline">\(x_1\)</span>, the second has value <span class="math inline">\(x_2\)</span>, and so on, up to the last value, <span class="math inline">\(x_N\)</span>. Finally, the <span class="math inline">\(\Sigma_{i=1}^{N}\)</span> stands for summation (‘adding up’) from <span class="math inline">\(i = 1\)</span> to <span class="math inline">\(N\)</span>.</p>
+<p>Most people have used this formula at some point even though they may not have realised it. The <code>mean</code> function in R will calculate the arithmetic mean for us:</p>
+<div class="sourceCode" id="cb342"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb342-1"><a href="exploring-one-numeric-variable.html#cb342-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(storms<span class="sc">$</span>wind)</span></code></pre></div>
+<pre><code>## [1] 54.68329</code></pre>
+<p>This tells us that the arithmetic sample mean of wind speed is 55 mph. How useful is this?</p>
+<p>One limitation of the arithmetic mean is that it is affected by the shape of a distribution. It’s very sensitive to the extremes of a sample distribution. This is why, for example, it does not make much sense to look at the mean income of workers in a country to get a sense of what a ‘typical’ person earns. Income distribution are highly asymmetric, and those few who are lucky enough to earn very good salaries tend to shift the mean upward and well past anything that is really ‘typical.’ The sample mean is also strongly affected by the presence of ‘outliers.’ It’s difficult to give a precise definition of outliers—the appropriate definition depends on the context—but roughly speaking, these are unusually large or small values.</p>
+<p>Because the sample mean is sensitive to the shape of a distribution and the presence of outliers we often prefer a second measure of central tendency: the <strong>sample median</strong>. The median of a sample is the number separating the upper half from the lower half<a href="#fn10" class="footnote-ref" id="fnref10"><sup>10</sup></a>. We can find the sample median in R with the <code>median</code> function:</p>
+<div class="sourceCode" id="cb344"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb344-1"><a href="exploring-one-numeric-variable.html#cb344-1" aria-hidden="true" tabindex="-1"></a><span class="fu">median</span>(storms<span class="sc">$</span>wind)</span></code></pre></div>
+<pre><code>## [1] 50</code></pre>
+<p>The sample median of wind speed is 50 mph. This is still to the right of the most common values of wind speed, but it shifted less than the mean.</p>
+<div id="what-about-the-mode" class="section level4" number="15.3.1.1">
+<h4><span class="header-section-number">15.3.1.1</span> What about ‘the mode?’</h4>
+<p>What does the phrase “the most common values” (e.g. of wind speed) really mean when describing a distribution? In fact, this is an indirect reference to something called the <strong>mode</strong> of the distribution. The mode of a distribution is essentially its peak, i.e. it locates the most likely value of a variable. Notice that we didn’t use the phrase ‘sample mode.’ It’s easy to calculate the mode of a theoretical distribution. Unfortunately, it’s not a simple matter to reliably estimate the mode of a sample from such a distribution.</p>
+<p>If a numeric variable is discrete, and we have a lot of data, we can sometimes arrive at an estimate of the mode by tabulating the number of observations in each numeric category. Although in truth wind speed is a continuous variable, it is only measured to the nearest 5mph in the <code>storms</code> data set. Therefore, it looks like a discrete variable. We can use the <code>table</code> function here to tabulate the number of observations at each value:</p>
+<div class="sourceCode" id="cb346"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb346-1"><a href="exploring-one-numeric-variable.html#cb346-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(storms<span class="sc">$</span>wind)</span></code></pre></div>
+<pre><code>## 
+##  15  20  25  30  35  40  45  50  55  60  65  70  75  80  85  90  95 100 105 110 
+##   3 122 168 345 234 212 228 208 136 154 189 136 119  94  61  76  40  57  26  30 
+## 115 120 125 130 135 140 145 150 155 
+##  42  27  20   8   5   1   2   2   2</code></pre>
+<p>The names of each element in the resulting vector are the recorded wind speeds and the corresponding values are the associated counts of each value. The most common wind speed is 30 mph, with 345 observations. The categories either side of this (25 and 35 mph) contain much lower counts. This provides a fairly good indication that the mode of the <code>wind</code> distribution is about 30mph.</p>
+<p>Tabulating the counts in of numeric categories to identify the likely mode is only sensible when a numerical variable is genuinely discrete, or looks discrete as a result of how it was measured. Even then, there is no guarantee that this approach will produce a sensible estimate of the ‘true’ mode. If a variable is continuous then tabulating counts simply does not work. Methods exist to estimate a mode from a sample, but they are not simple. Nonetheless, it’s important to know what the mode represents and to be able to identify its approximate value by inspecting a histogram.</p>
+</div>
+</div>
+<div id="measuring-dispersion" class="section level3" number="15.3.2">
+<h3><span class="header-section-number">15.3.2</span> Measuring dispersion</h3>
+<p>There are many ways to quantify the dispersion of a sample distribution. The most important quantities from the standpoint of statistics are the sample <strong>variance</strong> and <strong>standard deviation</strong>. The sample variance (<span class="math inline">\(s^2\)</span>) is ‘the sum of squared deviations’ (i.e. the differences) of each observation from the sample mean, divided by the sample size minus one. Here’s the mathematical definition:
+<span class="math display">\[
+s^2 = \frac{1}{N-1}\sum\limits_{i=1}^{N}{(x_i-\bar{x})^2}
+\]</span>
+The meaning of these terms is the same as for the sample mean. The <span class="math inline">\(\bar{x}\)</span> is the sample mean, the <span class="math inline">\(N\)</span> is the sample size, and the <span class="math inline">\(x_i\)</span> refers to the set of values the variable takes. We don’t have to actually apply this formula in R. There’s a function to calculate the sample variance:</p>
+<div class="sourceCode" id="cb348"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb348-1"><a href="exploring-one-numeric-variable.html#cb348-1" aria-hidden="true" tabindex="-1"></a><span class="fu">var</span>(storms<span class="sc">$</span>wind)</span></code></pre></div>
+<pre><code>## [1] 668.1444</code></pre>
+<p>What does that number actually mean? Variances are always non-negative. A small variance indicates that observations tend to be close to the mean (and to one another), while a high variance indicates that observations are very spread out. A variance of zero only occurs if all values are identical. However, it is difficult to interpret whether a sample variance is really “small” or “large” because the calculation involves squared deviations. For example, changing the measurement scale of a variable by 10 involves a 100-fold change (10<sup>2</sup>) in the variance.</p>
+<p>The variance is a important quantity in statistics that crops up over and over again. Many common statistical tools use changes in variance to formally compare how well different models describe a data set. However, it is very difficult to interpret variances, which is why we seldom use them in exploratory work. A better statistic is to describe sample dispersion is a closely related quantity called the <strong>standard deviation</strong> of the sample, usually denoted <span class="math inline">\(s\)</span>. The standard deviation is the square root of the variance. We calculate it using the <code>sd</code> function:</p>
+<div class="sourceCode" id="cb350"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb350-1"><a href="exploring-one-numeric-variable.html#cb350-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sd</span>(storms<span class="sc">$</span>wind)</span></code></pre></div>
+<pre><code>## [1] 25.84849</code></pre>
+<p>Why do we prefer the standard deviation over the variance? Consider the wind speed again. The standard deviation of the wind speed sample is 26. Take another look at the wind speed histogram. This shows that the wind speed measurements span about 5 standard deviations. If we had instead measured wind speed in kilometers per hour (kph), the standard deviation of the sample would be 42, because 1 mph ~ 1.6 kph. If we plot the histogram of wind speed in kph it is still the case that the data are spanned by about 5 standard deviations. The variance on the other hand increases from to approximately 668 to 1730, a factor of 1.6<sup>2</sup>. This is the reason we often use the standard deviation compare dispersion: it reflects the dispersion we perceive in the data.</p>
+<p>The sample standard deviation is not without problems though. Like the sample mean, it is sensitive to the shape of a distribution and the presence of outliers. A measure of dispersion that is more robust to these kinds of features is the <strong>interquartile range</strong>.</p>
+<div id="what-are-quartiles" class="section level4 unnumbered infobox information">
+<h4>What are quartiles?</h4>
+<p>We need to know what a quartile is to understand the interquartile range. Three quartiles are defined for any sample. These divide the data into four equal sized groups, from the set of smallest numbers up to the set of largest numbers. The second quartile (<span class="math inline">\(Q_2\)</span>) is the median, i.e. it divides the data into an upper and lower half. The first quartile (<span class="math inline">\(Q_1\)</span>) is the number that divides the lower 50% of values into two equal sized groups. The third quartile (<span class="math inline">\(Q_3\)</span>) is the number that divides the upper 50% of values into two equal sized groups.</p>
+<p>The quartiles also have other names. The first quartile is sometimes called the lower quartile, or the 25th percentile; the second quartile (the median) is the 50th percentile; and the third quartile is also called the upper quartile, or the 75th percentile.</p>
+</div>
+<p>The interquartile range (IQR) is defined as the difference between the third and first quartile. This means the IQR contains the middle 50% of values of a variable. Obviously, the more spread out the data are, the larger the IQR will be. The reason we prefer to use IQR to measure dispersion is that it only depends on the data in the “middle” of a sample distribution. This makes it robust to the presence of outliers. We can use the <code>IQR</code> function to find the interquartile range of the wind variable:</p>
+<div class="sourceCode" id="cb352"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb352-1"><a href="exploring-one-numeric-variable.html#cb352-1" aria-hidden="true" tabindex="-1"></a><span class="fu">IQR</span>(storms<span class="sc">$</span>wind)</span></code></pre></div>
+<pre><code>## [1] 35</code></pre>
+<p>The IQR is used as the basis for a useful data summary plot called a ‘box and whiskers’ plot. We’ll see how to construct this in a later next chapter.</p>
+</div>
+<div id="skewness" class="section level3" number="15.3.3">
+<h3><span class="header-section-number">15.3.3</span> Skewness</h3>
+<p>A well-defined hierarchy has been defined to describe and quantify the shape of distributions. It’s essential to know about the first two, central tendency and dispersion, because these are the basis of many standard analyses. The next most important aspect of a distribution is its <strong>skewness</strong> (or just ‘skew’). Skewness describes the asymmetry of a distribution. Just as with central tendency and dispersion, there are many different ways to quantify the skewness of a sample distribution. These are quite difficult to interpret because their interpretation depends on other features of a distribution. We’ll just explore skewness in the simplest case: the skewness of a <strong>unimodal</strong> distribution.</p>
+<p>A unimodal distribution is one that has a single peak. We can never say for certain that a sample distribution is unimodal or not—unimodality is really a property of theoretical distributions—but with enough data and a sensible histogram we can at least say that a distribution is ‘probably’ unimodal. The histograms we produced to describe the sample distributions of <code>wind</code> and <code>pressure</code> certainly appear to be unimodal. Each has a single, distinct peak.</p>
+<p>These two unimodal distributions are also asymmetric—they exhibit skewness. The <code>pressure</code> distribution is said to be skewed to the left because it has a long ‘tail’ that spreads out in this direction. In contrast, we say that the <code>wind</code> distribution is skewed to the right, because it has a long ‘tail’ that spreads out to right. Left skewness and right skewness are also called negative and positive skew, respectively. A sample distribution that looks symmetric is said to have (approximately) zero skew<a href="#fn11" class="footnote-ref" id="fnref11"><sup>11</sup></a>.</p>
+<p>The reason we care about skewness is that many common statistical models assume that the distributions we’re sampling from, after controlling for other variables, are not skewed. This is an issue for a statistics course. For now we just need to understand what skewness means and be able to describe distributions in terms of left (negative) and right (positive) skew.</p>
+</div>
+</div>
+<div id="explore-categorical" class="section level2" number="15.4">
+<h2><span class="header-section-number">15.4</span> Understanding categorical variables</h2>
+<p>Exploring categorical variables is generally simpler than working with numeric variables because we have fewer options, or at least life is simpler if we only require basic summaries. We’ll work with the <code>year</code> and <code>type</code> variables in <code>storms</code> to illustrate the key ideas.</p>
+<p>Which kind of categorical variable is <code>type</code>? There are four storm categories in type. We can use the <code>unique</code> function to print these for us:</p>
+<div class="sourceCode" id="cb354"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb354-1"><a href="exploring-one-numeric-variable.html#cb354-1" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(storms<span class="sc">$</span>type)</span></code></pre></div>
+<pre><code>## [1] &quot;Tropical Depression&quot; &quot;Tropical Storm&quot;      &quot;Hurricane&quot;          
+## [4] &quot;Extratropical&quot;</code></pre>
+<p>The first question we should ask is, is <code>type</code> an ordinal or nominal variable? It’s hard to know how to classify <code>type</code> without knowing something about tropical storms. Some googling indicates that <code>type</code> can reasonably be considered an ordinal variable: a tropical depression is the least severe storm and a hurricane is the most severe class; in between are extra tropical and tropical storm categories.</p>
+<p>What about the <code>year</code> variable? Years are obviously ordered from early to late and we might be interested in how some aspect of our data changes over time. In this case we might consider treating year either as a numeric variable, or perhaps as an ordinal categorical variable. Alternatively, if the question is simply, ‘do the data vary from one year to the next’ without any concern for trends, it’s perfectly reasonable to treat year as a nominal categorical variable.</p>
+<p>This illustrates an important idea: the classification of a variable will often depend on the objectives of an analysis. The classification of a variable matters because it influences how we choose to summarise it, how we interpret its relationship with other variables, and whether a specific statistical model is appropriate for our data or not. Fortunately, our choice of classification is less important when we are just trying to summarise the variable numerically or graphically. For now, let’s assume that it’s fine to treat year as a categorical variable.</p>
+<div id="numerical-summaries" class="section level3" number="15.4.1">
+<h3><span class="header-section-number">15.4.1</span> Numerical summaries</h3>
+<p>When we calculate summaries of categorical variables we are aiming to describe the sample distribution of the variable, just as with numeric variables. The general question we need to address is, ‘what are the relative frequencies of different categories?’ We need to understand which categories are common and which are rare. Since a categorical variable takes a finite number of possible values, the simplest thing to do is tabulate the number of occurances of each type. We’ve seen how the <code>table</code> function is used to do this:</p>
+<div class="sourceCode" id="cb356"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb356-1"><a href="exploring-one-numeric-variable.html#cb356-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(storms<span class="sc">$</span>type)</span></code></pre></div>
+<pre><code>## 
+##       Extratropical           Hurricane Tropical Depression      Tropical Storm 
+##                 412                 896                 513                 926</code></pre>
+<p>This shows that the number of observations associated with hurricanes and tropical storms are about equal, that the number of observations associated with extratropical and tropical systems is similar, and the former pair of categories are more common than the latter. This indicates that in general, storm systems in Central America spend relatively more time in the more severe classes.</p>
+<p>Raw frequencies give us information about the rates of occurance of different categories in a dataset. However, it’s difficult to compare raw counts across different data sets if the sample sizes vary (which they usually do). This is why we often convert counts to proportions. To do this, we have to divide each count by the total count across all categories. This is easy to do in R because it’s vectorised:</p>
+<div class="sourceCode" id="cb358"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb358-1"><a href="exploring-one-numeric-variable.html#cb358-1" aria-hidden="true" tabindex="-1"></a>type_counts <span class="ot">&lt;-</span> <span class="fu">table</span>(storms<span class="sc">$</span>type)</span>
+<span id="cb358-2"><a href="exploring-one-numeric-variable.html#cb358-2" aria-hidden="true" tabindex="-1"></a>type_counts <span class="sc">/</span> <span class="fu">sum</span>(type_counts)</span></code></pre></div>
+<pre><code>## 
+##       Extratropical           Hurricane Tropical Depression      Tropical Storm 
+##           0.1499818           0.3261740           0.1867492           0.3370950</code></pre>
+<p>So about 2/3 of observations are associated with hurricanes and tropical storms, with a roughly equal split, and the remaining 1/3 associated with less severe storms.</p>
+<p>What about measuring the central tendency of a categorical sample distribution? Various measures exist, but these tend to be less useful than those used to describe numeric variables. We can find the <strong>sample mode</strong> of ordinal and nominal variables easily though (in contrast to numeric variables, where it is difficult to define). This is just the most common category. For example, the tropical storm category is the modal value of the <code>type</code> variable. Only just though. The proportion of tropical storm observations is 0.34, while the proportion of hurricane observations is 0.33. These are very similar, and it’s not hard to imagine that modal observation might have been the hurricane category in a different sample. The sample mode is sensitive to chance variation when two categories occur at similar frequencies.</p>
+<p>It is possible to calculate a <strong>sample median</strong> of a categorical variable, but only for the ordinal case. The median value is the one that lies in the middle of an ordered set of values—it makes no sense to talk about “the middle” of a set of nominal values that have no inherent order. Unfortunately, even for ordinal variables the sample median is not precisely defined. Imagine that we’re working with a variable with only two categories: ‘big’ vs. ‘small,’ and exactly 50% of the values are ‘small’ value and 50% are large. What is the median in this case? Because the median is not always well-defined, the developers of base R have chosen not to implement a function to calculate the median of ordinal variables (a few packages contain functions to do this though).</p>
+<div id="be-careful-with-median" class="section level4 unnumbered infobox warning">
+<h4>Be careful with <code>median</code></h4>
+<p>Unfortunately, if we apply the <code>median</code> function to a character vector it will give us an answer, e.g. <code>median(storms$type)</code> will spit something out. It is very likely to give us the wrong answer though. R has no way of knowing which categories are “high” and which are “low,” so just sorts the elements of <code>type</code> alphabetically and then finds the middle value of this vector. If we really have to find the median value of an ordinal value we can do it by first converting the categories to integers— assigning 1 to the lowest category, 2 to the next lowest, and so on— and then use the median function to find out which value is the median.</p>
+</div>
+</div>
+</div>
+<div id="graphical-summaries-of-categorical-variables" class="section level2" number="15.5">
+<h2><span class="header-section-number">15.5</span> Graphical summaries of categorical variables</h2>
+<p>The most common graphical tool used to summarise a categorical variable is a bar chart. A bar chart (or bar graph) is a plot that presents summaries of grouped data with rectangular bars. The lengths of the bars is proportional to the values they represent. When summarising a single categorical variable, the length of the bars should show the raw counts or proportions of each category.</p>
+<p>Constructing a bar graph to display the counts is very easy with <code>ggplot2</code>. We will do this for the <code>type</code> variable. As always, we start by using the <code>ggplot</code> function to construct a graphical object containing the necessary default data and aesthetic mapping.</p>
+<div class="sourceCode" id="cb360"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb360-1"><a href="exploring-one-numeric-variable.html#cb360-1" aria-hidden="true" tabindex="-1"></a>bar_plt <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(storms, <span class="fu">aes</span>(<span class="at">x =</span> type)) </span></code></pre></div>
+<p>We’ve called the object <code>bar_plt</code>, for obvious reasons. Notice that we only need to define one aesthetic mapping: we mapped <code>type</code> to the x axis. This produces a bar plot with vertical bars.</p>
+<p>From here we follow the usual <strong>ggplot2</strong> workflow, meaning the next step is to add a layer using one of the <code>geom_XX</code> functions. There are two functions we can use to create bar charts in ggplot, <code>geom_bar</code> and <code>geom_col</code>. By default <code>geom_col</code> counts the number of observations in each category, whilst <code>geom_bar</code> plots the actual numbers in the data frame. In this case as we want the number of storms of each <code>type</code> we will use <code>geom_bar</code>:</p>
+<div class="sourceCode" id="cb361"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb361-1"><a href="exploring-one-numeric-variable.html#cb361-1" aria-hidden="true" tabindex="-1"></a>bar_plt <span class="ot">&lt;-</span> bar_plt <span class="sc">+</span> <span class="fu">geom_bar</span>()</span>
+<span id="cb361-2"><a href="exploring-one-numeric-variable.html#cb361-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(bar_plt) </span></code></pre></div>
+<pre><code>## data: name, year, month, day, hour, lat, long, pressure, wind, type,
+##   seasday [2747x11]
+## mapping:  x = ~type
+## faceting: &lt;ggproto object: Class FacetNull, Facet, gg&gt;
+##     compute_layout: function
+##     draw_back: function
+##     draw_front: function
+##     draw_labels: function
+##     draw_panels: function
+##     finish_data: function
+##     init_scales: function
+##     map_data: function
+##     params: list
+##     setup_data: function
+##     setup_params: function
+##     shrink: TRUE
+##     train_scales: function
+##     vars: function
+##     super:  &lt;ggproto object: Class FacetNull, Facet, gg&gt;
+## -----------------------------------
+## geom_bar: width = NULL, na.rm = FALSE, orientation = NA
+## stat_count: width = NULL, na.rm = FALSE, orientation = NA
+## position_stack</code></pre>
+<p>Look at the layer information below <code>----</code>. The <code>geom_bar</code> function sets the stat to “count.” Counting a categorical variable is analogous to binning a numeric variable. The only difference is that there is no need to specify bin widths because <code>type</code> is categorical, i.e. <code>ggplot2</code> will sum up the number of observations associated with every category of <code>type</code>. Here’s the resulting figure:</p>
+<div class="sourceCode" id="cb363"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb363-1"><a href="exploring-one-numeric-variable.html#cb363-1" aria-hidden="true" tabindex="-1"></a>bar_plt</span></code></pre></div>
+<p><img src="intro-bio-data-book_files/figure-html/unnamed-chunk-213-1.png" width="336" style="display: block; margin: auto;" /></p>
+<p>This is the same summary information we produced using the <code>table</code> function, only now it’s presented in graphical form. We can customise this bar graph if needed with functions like <code>xlab</code> and <code>ylab</code>, and by setting various properties inside <code>geom_bar</code>. For example:</p>
+<div class="sourceCode" id="cb364"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb364-1"><a href="exploring-one-numeric-variable.html#cb364-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(storms, <span class="fu">aes</span>(<span class="at">x =</span> type)) <span class="sc">+</span> </span>
+<span id="cb364-2"><a href="exploring-one-numeric-variable.html#cb364-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">fill =</span> <span class="st">&quot;orange&quot;</span>, <span class="at">width =</span> <span class="fl">0.7</span>) <span class="sc">+</span> </span>
+<span id="cb364-3"><a href="exploring-one-numeric-variable.html#cb364-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;Storm Type&quot;</span>) <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">&quot;Number of Observations&quot;</span>)</span></code></pre></div>
+<p><img src="intro-bio-data-book_files/figure-html/unnamed-chunk-214-1.png" width="336" style="display: block; margin: auto;" />
+The only new thing here is that we used the <code>width</code> argument of <code>geom_bar</code> to make the bars a little narrower than the default.</p>
+<p>There is one slight problem with this graph: the order in which the different groups is presented does not reflect the ordinal scale. This occurs because <code>ggplot2</code> does not “know” that we want to treat <code>type</code> as a ordinal variable. There is no way for <code>ggplot2</code> to “guess” the appropriate order, so it uses the alphabetical ordering of the category names to set the order of the bars.</p>
+<p>To fix this we need to customise the scale associated with the ‘x’ aesthetic. We can start by making a short character vector containing all the category names in the focal variable, ensuring these are listed in the order they need to be plotted in:</p>
+<div class="sourceCode" id="cb365"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb365-1"><a href="exploring-one-numeric-variable.html#cb365-1" aria-hidden="true" tabindex="-1"></a>ords <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Tropical Depression&quot;</span>, <span class="st">&quot;Extratropical&quot;</span>, <span class="st">&quot;Tropical Storm&quot;</span>, <span class="st">&quot;Hurricane&quot;</span>)</span></code></pre></div>
+<p>Keep an eye on the spelling too—R is not forgiving of spelling errors. We use this with the <code>limits</code> argument of the <code>scale_x_discrete</code> function to fix the ordering:</p>
+<div class="sourceCode" id="cb366"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb366-1"><a href="exploring-one-numeric-variable.html#cb366-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(storms, <span class="fu">aes</span>(<span class="at">x =</span> type)) <span class="sc">+</span> </span>
+<span id="cb366-2"><a href="exploring-one-numeric-variable.html#cb366-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">fill =</span> <span class="st">&quot;orange&quot;</span>, <span class="at">width =</span> <span class="fl">0.7</span>) <span class="sc">+</span> </span>
+<span id="cb366-3"><a href="exploring-one-numeric-variable.html#cb366-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_discrete</span>(<span class="at">limits =</span> ords) <span class="sc">+</span></span>
+<span id="cb366-4"><a href="exploring-one-numeric-variable.html#cb366-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;Storm Type&quot;</span>) <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">&quot;Number of Observations&quot;</span>)</span></code></pre></div>
+<p><img src="intro-bio-data-book_files/figure-html/unnamed-chunk-216-1.png" width="336" style="display: block; margin: auto;" />
+We had to use one of the <code>scale_x_YY</code> functions here because we needed to change the way an aesthetic appears. We use <code>scale_x_discrete</code> because ‘discrete’ is <strong>gplot2</strong>-speak for ‘categorical,’ which is what we have mapped to the ‘x’ aesthetic.</p>
+<p>What else might we change? The categories of <code>type</code> have quite long names, meaning the axis labels are all bunched together. One way to fix this is to make the labels smaller or rotate them via the ‘themes’ system. Here’s an alternative solution: just flip the x and y axes to make a horizontal bar chart. We can do this with the <code>coord_flip</code> function (this is new):</p>
+<div class="sourceCode" id="cb367"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb367-1"><a href="exploring-one-numeric-variable.html#cb367-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(storms, <span class="fu">aes</span>(<span class="at">x =</span> type)) <span class="sc">+</span> </span>
+<span id="cb367-2"><a href="exploring-one-numeric-variable.html#cb367-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">fill =</span> <span class="st">&quot;orange&quot;</span>, <span class="at">width =</span> <span class="fl">0.7</span>) <span class="sc">+</span> </span>
+<span id="cb367-3"><a href="exploring-one-numeric-variable.html#cb367-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_discrete</span>(<span class="at">limits =</span> ords) <span class="sc">+</span></span>
+<span id="cb367-4"><a href="exploring-one-numeric-variable.html#cb367-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span> </span>
+<span id="cb367-5"><a href="exploring-one-numeric-variable.html#cb367-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;Storm Type&quot;</span>) <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">&quot;Number of Observations&quot;</span>)</span></code></pre></div>
+<p><img src="intro-bio-data-book_files/figure-html/unnamed-chunk-217-1.png" width="480" style="display: block; margin: auto;" /></p>
+
+</div>
+</div>
+<div class="footnotes">
+<hr />
+<ol start="8">
+<li id="fn8"><p>Not to be confused with the ‘Cleveland dot plot.’ A standard dot plot summarises a sample distribution. The Cleveland dot plot is something quite different, which summarises the frequencies of a categorical variable. It’s meant to serve as a simple alternative to bar charts and pie charts.<a href="exploring-one-numeric-variable.html#fnref8" class="footnote-back">↩︎</a></p></li>
+<li id="fn9"><p>There is also a very important distinction to be made between the sample mean and the (unobserved) population mean, but we can ignore this distinction for now as we are only concerned with samples. The distinction matters when thinking about statistical models and tests<a href="exploring-one-numeric-variable.html#fnref9" class="footnote-back">↩︎</a></p></li>
+<li id="fn10"><p>If we have an even sample size, exactly half the data are larger than the median and half the data are smaller than the median. The sample median is then half way between the largest value of the lower half and the smallest value of the upper half. If a sample has an odd number of observations the sample median is just the value of the observation that divides the remaining data into two equal sized high- and low-value sets.<a href="exploring-one-numeric-variable.html#fnref10" class="footnote-back">↩︎</a></p></li>
+<li id="fn11"><p>Strictly speaking the terms “negative” and “positive” are reserved for situations where we have calculated a quantitative measure of skew. However, they are often used informally in verbal descriptions of skewness.<a href="exploring-one-numeric-variable.html#fnref11" class="footnote-back">↩︎</a></p></li>
+</ol>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="customising-plots.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="relationships-between-two-variables.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["intro-bio-data-book.pdf", "intro-bio-data-book.epub"],
+"toc": {
+"collapse": "section"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
