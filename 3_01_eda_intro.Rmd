@@ -29,15 +29,15 @@ There are different ways to describe statistical variables according to how they
 
 ### Numeric vs categorical variables
 
-**Numeric variables** have values that describe a measurable quantity as a number, like 'how many' or 'how much'. Numeric variables are also called quantitative variables; the data collected containing numeric variables are called quantitative data. Numeric variables may be further described as either continuous or discrete:
+**Numeric variables** have values that describe a measurable quantity like 'how many' or 'how much' as a number. Numeric variables are also called quantitative variables; the data collected containing numeric variables are called quantitative data. Numeric variables may be classified as either continuous or discrete:
 
--   **Continuous numeric variable**: Observations can take any value in a set of real numbers, i.e. numbers represented with decimals. Examples of continuous variables include concentration, mass, age, time, and temperature. The set of numbers a continuous variable takes is typically either 'every possible number' or 'just positive numbers'. For example, a concentration may be very large or very small, but it is strictly positive quantity, whereas a change in concentration can be positive or negative.
+-   **Continuous numeric variable**: Observations can take any value in a set of real numbers, i.e. numbers represented with decimals. Examples of continuous variables include concentration, mass, age, time, and temperature. The set of numbers a continuous variable takes is typically either 'every possible number' or 'just positive numbers'. For example, a concentration may be very large or very small, but it is strictly positive, whereas a change in concentration can be positive or negative.
 
 -   **Discrete numeric variable**: Observations can take a value based on a count from a set of whole values, e.g. 1, 2, 3, 4, 5, and so on. A discrete variable cannot take the value of a fraction between one value and the next closest value. Examples of discrete variables include the number of individuals in a population, the number of offspring produced ('reproductive fitness'), and the number of infected individuals in an experiment. All of these are measured as whole units.
 
 **Categorical variables** take values that describe a characteristic of a data unit, like 'what type' or 'which category'. Categorical variables fall into mutually exclusive (in one category or in another) and exhaustive (include all possible options) categories. Categorical variables are qualitative variables and tend to be represented by a non-numeric value; the data collected for a categorical variable are called qualitative data. Categorical variables may be further described as ordinal or nominal:
 
--   **Ordinal variable**: Categories can be logically ordered or ranked. The categories associated with ordinal variables can be ranked higher or lower than another, but do not necessarily establish a numeric difference between each category. Examples of ordinal categorical variables include academic grades (e.g. A, B, C) and size classes (e.g. small, medium, large).
+-   **Ordinal variable**: Categories can be logically ordered or ranked. The categories associated with ordinal variables can be ranked higher or lower than another but do not necessarily establish a numeric difference between each category. Examples of ordinal categorical variables include academic grades (e.g. A, B, C) and size classes (e.g. small, medium, large).
 
 -   **Nominal variable**: Categories cannot be organised into a logical sequence. Examples of nominal categorical variables include sex (see *C. elegans* example), human blood group (A, B, AB and O), genotype (e.g. AA, Aa, aa), experimental conditions (e.g. control vs enhanced nutrition), and mortality status (alive vs dead).
 
@@ -65,13 +65,13 @@ We mention the distinction between populations and samples because EDA is concer
 
 ### Sample distributions
 
-When we say that 'EDA is concerned with exploring the properties samples,' we actually mean that EDA is concerned with the properties of **variables** in one or more samples. In fact, we can be even more precise---property we are alluding to is the variable's **sample distribution**. The distribution of a variable describes the relative frequency with which different values occur. This is best understood by example...
+When we say that 'EDA is concerned with exploring the properties samples,' we actually mean that EDA is concerned with the properties of **variables** in one or more samples. We can be even more precise---the property we are alluding to is the variable's **sample distribution**. The distribution of a variable describes the relative frequency with which different values occur. This is best understood by example...
 
 Imagine we took a sample of undergraduates and measured their height. The majority of students would be around about 1.7m tall, even though there would be plenty of variation among students. Men would tend to be slightly taller than women, and very small or very tall people would be rare. We know from experience that no one in this sample would be over 3 meters tall. These are all statements about a hypothetical sample distribution of undergraduate heights.
 
 ### Associations
 
-We've been talking about statistical variables as though we study them one at a time. However, most interesting samples involve more than one variable, and the goal of the ensuing data analysis is to understand associations among those variables. These associations might involve the same (e.g. numeric vs numeric) or different (e.g. numeric vs categorical) types of variable. In any case, the aim of EDA is often to explore how the values of one variable in a sample are related to another.
+We've been talking about statistical variables as though we study them one at a time. However, most interesting samples involve more than one variable, and the goal of the ensuing data analysis is to understand associations among those variables. These associations might involve the same (e.g. numeric vs numeric) or different (e.g. numeric vs categorical) types of variable. Whatever the details, the aim of EDA is often to understand how each variable in a sample relates to the others.
 
 ## Types of EDA
 
@@ -87,7 +87,7 @@ Rather than describe the answers to such questions in purely verbal terms, as we
 
 2.  **Graphical summaries**. Descriptive statistics are not much use on their own---a few numbers can't capture every aspect of a distribution. Graphical summaries are a powerful complement to descriptive statistics because they capture a lot of information about a sample in a way that is easy for people to understand.
 
-Descriptive statistics are important but they are not the main focus of this book. The next few chapters will set out how to construct a range of useful graphical data summaries. Indeed, this book's overarching goal is to demonstrate an workflow that starts with raw data and ends in one or more exploratory plots. We do need to know a bit about descriptive statistics to understand some of those plots. To that end, we'll finish this chapter with a quick survey of descriptive statistics that will pop up later.
+Descriptive statistics are important, but they are not the main focus of this book. The next few chapters will set out how to construct a range of useful graphical data summaries. Indeed, this book's overarching goal is to demonstrate a workflow that starts with raw data and ends in one or more exploratory plots. We do need to know a bit about descriptive statistics to understand some of those plots. To that end, we'll finish this chapter with a quick survey of descriptive statistics that will pop up later.
 
 ## A primer of descriptive statistics
 
@@ -102,7 +102,7 @@ So far, we've only mentioned the properties of sample distributions in very gene
 ::: {.infobox .information data-latex="{information}"}
 #### Beyond central tendency and dispersion {.unnumbered}
 
-Another important aspect of a distribution is its **skewness** (a.k.a. 'skew'). There are many different ways to quantify skewness. Unfortunately, these are quite difficult to make sense of. For now, we only need to understand what skewness means in qualitative terms. Skewness refers to the (a)symmetry of a distribution. When we talk about distributions with high skew we mean they are very asymmetric. This will make more sense when we learn how to visualise distributions later.
+Another important aspect of a distribution is its **skewness** (a.k.a. 'skew'). There are many different ways to quantify skewness. Unfortunately, these are quite difficult to make sense of. For now, we only need to understand what skewness means in qualitative terms. Skewness refers to the (a)symmetry of a distribution. When we talk about distributions with high skew, we mean they are very asymmetric.
 :::
 
 #### Central tendency
@@ -166,7 +166,7 @@ The IQR is used as the basis for a useful data summary plot called a 'box and wh
 ::: {.infobox .information data-latex="{information}"}
 #### What are quartiles? {.unnumbered}
 
-We need to know what a quartile is to understand the interquartile range. Three quartiles are defined for any sample. These divide the data into four equal-sized groups, from the set of smallest numbers up to the set of largest numbers. The second quartile ($Q_2$) is the median, i.e. it divides the data into an upper and lower half. The first quartile ($Q_1$) is the number that divides the lower 50% of values into two equal sized groups. The third quartile ($Q_3$) is the number that divides the upper 50% of values into two equal-sized groups.
+We need to know what a quartile is to understand the interquartile range. Three quartiles are defined for any sample. These divide the data into four equal-sized groups, from the set of smallest numbers up to the set of largest numbers. The second quartile ($Q_2$) is the median, i.e. it divides the data into an upper and lower half. The first quartile ($Q_1$) is the number that divides the lower 50% of values into two equal-sized groups. The third quartile ($Q_3$) is the number that divides the upper 50% of values into two equal-sized groups.
 :::
 
 ### Categorical variables
@@ -185,13 +185,13 @@ What about dispersion? Well, measures of dispersion for categorical variables do
 
 ### Associations
 
-Statisticians have devised different ways to quantify an association between variables. The common measures calculate some kind of **correlation coefficient**. The terms 'association' and 'correlation' are closely related; so much so they are often used interchangeably. Strictly speaking, correlation has a narrower definition: a correlation is defined by a metric (the 'correlation coefficient') that quantifies the degree to which an association tends to a certain pattern.
+Statisticians have devised different ways to quantify an association between variables. The common measures calculate some kind of **correlation coefficient**. The terms 'association' and 'correlation' are closely related, so they are often used interchangeably. Strictly speaking, correlation has a narrower definition: a correlation is defined by a metric (the 'correlation coefficient') that quantifies the degree to which an association tends to a certain pattern.
 
 #### Pairs of numeric variables
 
 A widely used measure of correlation for pairs of numeric variables is **Pearson's correlation coefficient** (a.k.a. Pearson product-moment correlation coefficient, or Pearson's $r$). Remember, a correlation coefficient quantifies the degree to which an association tends to a certain pattern. Pearson's correlation coefficient is designed to summarise the strength of a **linear** (i.e. straight line) association.
 
-Pearson's correlation coefficient takes a value of 0 if two variables are not linearly associated and a value of +1 or -1 if they are perfectly related and represent a straight line. A positive value indicates that high values in one variable are associated with high values of the second; a negative value indicates that high values of one variable is associated with low values of the second. A high values are those that are greater than the mean; low values are those that are less than the mean.
+Pearson's correlation coefficient takes a value of 0 if two variables are not linearly associated and a value of +1 or -1 if they are perfectly related and represent a straight line. A positive value indicates that high values in one variable are associated with high values of the second; a negative value indicates that high values of one variable is associated with low values of the second. High values are those that are greater than the mean; low values are those that are less than the mean.
 
 We can use the `cor` function to calculate Pearson's correlation coefficient. For example, the Pearson correlation coefficient between flipper length and body mass is given by:
 
@@ -204,7 +204,7 @@ This is positive, indicating flipper length tends to increase with body mass. It
 ::: {.infobox .warning data-latex="{warning}"}
 #### Other measures of correlation {.unnumbered}
 
-What should we do if we think the relationship between two variables is non-linear? Calculate something called a **rank correlation**. The idea is quite simple. Instead of working with the actual values of each variable we rank them by value, i.e. sort each variable from lowest to highest and the assign the labels 1^st^ , 2^nd^, 3^rd^, ... to observations. Rank correlations are based on the association among the ranks of two variables.
+What should we do if we think the relationship between two variables is non-linear? Calculate something called a **rank correlation**. The idea is quite simple. Instead of working with the actual values of each variable, we rank them by value, i.e. sort each variable from lowest to highest and the assign the labels 1^st^ , 2^nd^, 3^rd^, ... to observations. Rank correlations are based on the association among the ranks of two variables.
 
 The two most popular rank correlation coefficients are Spearman's $\rho$ ('rho') and Kendall's $\tau$ ('tau'). The differences are minimal:
 
@@ -228,4 +228,4 @@ The first argument sets the variables to cross-tabulate. `xtabs` uses R's specia
 
 The table above shows us how many observations are associated with each combination of the `species` and `island` categories. This particular case represents a fairly extreme example of (dis)association; the Chinstrap and Gentoo species simply don't occur on certain islands (or perhaps they weren't sampled on those islands for some reason).
 
-What about measures of association such as correlation coefficients? Spearman's $\rho$ and Kendall's $\tau$ are designed for numeric variables, but these can also be used to measure correlation between ordinal variables (Kendall's $\tau$ is best). Various measures of association have been constructed for pairs of nominal variables (e.g. [Cramér's V](https://en.wikipedia.org/wiki/Cram%C3%A9r%27s_V)). However, none of these are widely used in exploratory data analyses---people tend to stick with graphical tools for categorical data.
+What about measures of association such as correlation coefficients? Spearman's $\rho$ and Kendall's $\tau$ are designed for numeric variables, but these can also be used to measure the correlation between ordinal variables (Kendall's $\tau$ is best). Various measures of association have been constructed for pairs of nominal variables (e.g. [Cramér's V](https://en.wikipedia.org/wiki/Cram%C3%A9r%27s_V)). However, none of these are widely used in exploratory data analyses---people tend to stick with graphical tools for categorical data.

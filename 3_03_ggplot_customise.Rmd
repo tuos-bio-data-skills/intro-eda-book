@@ -4,16 +4,16 @@ opts_chunk$set(warning=FALSE)
 
 # Customising plots {#chapter-customise-ggplot2}
 
-The default formatting used by **ggplot2** have been carefully chosen to ensure the information in a plot is easy to discern. For example, by default, plots include a pale grey background and include grid lines. This is designed to emphasise the data while supporting comparisons. The grey highlights colour differences and ensures the grid lines have little visual impact beyond aiding in the assessment of position. Perfect for exploratory analysis!
+The default formatting used by **ggplot2** has been carefully chosen to ensure the information in a plot is easy to discern. For example, by default, plots include a pale grey background and include grid lines. This is designed to emphasise the data while supporting comparisons. The grey highlights colour differences and ensures the grid lines have little visual impact beyond aiding in the assessment of position. Perfect for exploratory analysis!
 
-Although we can justify these sorts of choices on the grounds that they improve the readability of a plot, the fact remains they are somewhat unconventional and not much-loved by many users. For this reason, we often need to change the appearance of a plot before we include it in a document or presentation---e.g. most published figures use a white, rather than grey, background.
+Although we can justify these sorts of choices on the grounds they improve the readability of a plot, the fact remains they are somewhat unconventional and not much-loved by many users. For this reason, we often need to change the appearance of a plot before we include it in a document or presentation---e.g. most published figures use a white, rather than grey, background.
 
-This chapter will demonstrate how to customise **ggplot2** plots. We are not going to cover every possible permutation. That would need its [own book](https://ggplot2-book.org/). Instead, we will explore the main routes to customisation so that we can demonstrate these as we review different visualisations later. Using the penguins data once again, we'll work on improving the following scatter plot from the [Introduction to **ggplot2**](#chapter-ggplot2-intro) chapter:
+This chapter will demonstrate how to customise **ggplot2** plots. We are not going to cover every possible permutation. That would need its [own book](https://ggplot2-book.org/). Instead, we will explore the main routes to customisation so that we can use these as we review different visualisations later. Using the `penguins` data once again, we'll work on improving the following scatter plot from the [Introduction to **ggplot2**](#chapter-ggplot2-intro) chapter:
 
 ```{r, fig.width=4.5}
-# display bill morphology scatter plot + colour points by species
+# display bill morphology scatter plot
 ggplot(penguins, 
-       # vary colour by species
+       # bill depth (y) vs bill length (x) by species (colour)
        aes(x = bill_length_mm, y = bill_depth_mm, colour = species)) + 
   # add points layer
   geom_point()
@@ -26,9 +26,9 @@ One common way to change a plot's appearance is by altering the properties of on
 For example, how might we change properties like the size or shape of points in our scatter plot? We used the `geom_point` function to add points to the scatter plot, which means we have to set the arguments of `geom_point` to change the point properties. We can use this idea to rebuild the example scatter plot, setting the shape, size and transparency of points:
 
 ```{r, fig.width=4.5}
-# display bill morphology scatter plot + colour points by species
+# display bill morphology scatter plot
 ggplot(penguins, 
-       # vary colour by species
+       # bill depth (y) vs bill length (x) by species (colour)
        aes(x = bill_length_mm, y = bill_depth_mm, colour = species)) + 
   # add points layer and customise appearance of points
   geom_point(shape = 17, size = 1.5, alpha = 0.85)
@@ -42,20 +42,20 @@ shapes <- data.frame(p = 0:25); ggplot() + scale_shape_identity() + geom_point(d
 
 The point size is specified by the `size` argument. This has a baseline default value of 1. We assigned `size` a value of 1.5, thereby increasing the point size relative to the default. We could make the points smaller by using a value less than 1.
 
-We made the points semi-transparent by setting the value of the `alpha` argument to be less than 1. In graphical systems the 'alpha channel' specifies transparency---a value of 0 is taken to mean 'completely invisible' and a value of 1 means 'completely opaque'.
+We made the points semi-transparent by setting the value of the `alpha` argument to be less than 1. In graphical systems, the 'alpha channel' specifies transparency---a value of 0 is taken to mean 'completely invisible', and a value of 1 means 'completely opaque'.
 
 There are other arguments---such as `fill` and `colour`---that can also be used to adjust the way the points are rendered. We'll look at these later.
 
-The key message to take away from this customisation example is this---if we need to alter the properties of the a geometric object (points, lines, ect), we do so by specifying the appropriate arguments in the `geom_NAME` function that defines the layer it belongs to.
+The key message to take away from this customisation example is this---if we need to alter the properties of a geometric object (points, lines, ect), we do so by specifying the appropriate arguments in the `geom_NAME` function that defines the layer it belongs to.
 
-### The relationship between aesthetic mappings and geom properties.
+### Relationship between aesthetic mappings and geom properties
 
 In the previous chapter, we saw that we could introduce information into a plot by setting aesthetic mappings in the `aes` part of its specification. In the scatter plot example, we included information about species identity by mapping the `species` variable to the colour aesthetic. What happens if we also try to set the colour within the `geom_point` part?
 
 ```{r, fig.width=3.7}
-# display bill morphology scatter plot + colour points by species
+# display bill morphology scatter plot
 ggplot(penguins, 
-       # vary colour by species
+       # bill depth (y) vs bill length (x) by species (colour) + sex (shape)
        aes(x = bill_length_mm, y = bill_depth_mm, colour = species)) + 
   # add points layer and customise appearance of points (including colour)
   geom_point(colour = "skyblue", shape = 17, size = 1.5, alpha = 0.85)
@@ -88,9 +88,9 @@ Every aesthetic mapping has a scale associated with it. We adjust 'how the infor
 As always, this kind of thing is best understood by example. Let's adjust the scale associated with the y-axis aesthetic by increasing the number of the horizontal lines and their accompanying labels (the 'guides').
 
 ```{r, fig.width=4.5}
-# display bill morphology scatter plot + colour points by species
+# display bill morphology scatter plot
 ggplot(penguins, 
-       # vary colour by species
+       # bill depth (y) vs bill length (x) by species (colour)
        aes(x = bill_length_mm, y = bill_depth_mm, colour = species)) + 
   # add points layer and customise appearance of points
   geom_point(shape = 17, size = 1.5, alpha = 0.85) + 
@@ -114,9 +114,9 @@ Each kind of `scale_AES_TYP` function has its own set of arguments to control ho
 Predictably, there is also a `scale_x_continuous` function. We can use this in exactly the same way to control where the guides on the x-axis appear:
 
 ```{r, fig.width=4.5}
-# display bill morphology scatter plot + colour points by species
+# display bill morphology scatter plot
 ggplot(penguins, 
-       # vary colour by species
+       # bill depth (y) vs bill length (x) by species (colour)
        aes(x = bill_length_mm, y = bill_depth_mm, colour = species)) + 
   # add points layer and customise appearance of points
   geom_point(shape = 17, size = 1.5, alpha = 0.85) + 
@@ -128,9 +128,9 @@ ggplot(penguins,
 The key message to take away from this is that every aesthetic mapping has a scale associated with it. If we want to change how the information associated with an aesthetic mapping is displayed we have to change the corresponding scale. That suggests we can change the way point colours are associated with the `species` variable in our example by using one of the `scale_colour_YY` functions. That is correct:
 
 ```{r, fig.width=4.7}
-# display bill morphology scatter plot + colour points by species
+# display bill morphology scatter plot
 ggplot(penguins, 
-       # vary colour by species
+       # bill depth (y) vs bill length (x) by species (colour)
        aes(x = bill_length_mm, y = bill_depth_mm, colour = species)) + 
   # add points layer and customise appearance of points
   geom_point(shape = 17, size = 1.5, alpha = 0.85) + 
@@ -151,18 +151,18 @@ This uses `scale_color_manual` to achieve three things:
 -   it sets up a custom colour palette via `values`, and
 -   it alters the category labels via `labels` (so that their scientific names are used).
 
-Scales are one of the hardest aspect of **ggplot2** to get to grips with. There are many different scales, each controlled by its own unique set of arguments. Fortunately, the defaults used by **ggplot2** are often good enough to arrive at a reasonable plot without having to manipulate the scales.
+Scales are one of the hardest aspects of **ggplot2** to master. There are many different scales, each controlled by its own unique set of arguments. Fortunately, the defaults used by **ggplot2** are often good enough to arrive at a reasonable plot without having to manipulate the scales.
 
 ## Labels
 
-What else might we like to tweak? Look at the x and y-axis labels. These are the names of the variables used in the x/y aesthetic mappings. These labels aren't too bad but they could be nicer to look at. We know 'bill_depth_mm' stands for 'bill depth (measured in mm)' so why not use an axis label more like that?
+What else might we like to tweak? Look at the x and y-axis labels. These are the names of the variables used in the x/y aesthetic mappings. These labels aren't too bad, but they could be nicer to look at. We know 'bill_depth_mm' stands for 'bill depth (measured in mm)', so why not use an axis label more like that?
 
 The axes labels are a feature of the whole plot---i.e. they do not belong to a particular layer. This means we can't alter axis labels by passing arguments to the function that built a layer (`geom_point`). We have to use the labelling function: `labs`. This sets the label of any mapped aesthetics. For example, to set the labels of the x and y axes and the label associated with the colour mapping (i.e. the `species` legend title), use:
 
 ```{r, fig.width=4.7}
-# display bill morphology scatter plot + colour points by species
+# display bill morphology scatter plot
 ggplot(penguins, 
-       # vary colour by species
+       # bill depth (y) vs bill length (x) by species (colour)
        aes(x = bill_length_mm, y = bill_depth_mm, colour = species)) + 
   # add points layer and customise appearance of points
   geom_point(shape = 17, size = 1.5, alpha = 0.85) + 
@@ -179,7 +179,7 @@ ggplot(penguins,
   labs(x = "Bill length (mm)", y = "Bill depth (mm)", colour = "Penguin Species")
 ```
 
-Using `labs` is easy---if a mapping was set up in `aes` we can change its label via a 'name = value' construct in `labs`. That's it. 
+Using `labs` is easy---if a mapping was set up in `aes` we can change its label via a 'name = value' construct in `labs`. That's it.
 
 Finally, another way to set the axis labels is via the `xlab` and `ylab`. We tend not to use these because `labs` deals with all our labelling needs on its own. Why waste effort remembering three things if you only need to remember one?
 
@@ -190,9 +190,9 @@ The final route to customisation happens via the 'theme' of a plot. We haven't c
 Here's a short example that adjusts the legend of the example plot:
 
 ```{r, fig.width=4.0, fig.asp=1.1}
-# display bill morphology scatter plot + colour points by species
+# display bill morphology scatter plot
 ggplot(penguins, 
-       # vary colour by species
+       # bill depth (y) vs bill length (x) by species (colour)
        aes(x = bill_length_mm, y = bill_depth_mm, colour = species)) + 
   # add points layer and customise appearance of points
   geom_point(shape = 17, size = 1.5, alpha = 0.85) + 
@@ -214,14 +214,14 @@ ggplot(penguins,
   )
 ```
 
-Changes to the theme are specified using... the `theme` function. We used `theme` to move the legend to the top of the plot (via `legend.position`) and show the species labels in italics (via `legend.text`). We also got rid of the legend title by setting an the colour label to empty character string in `labs`. We could do that via `theme` but using `labs` is simpler.
+Changes to the theme are specified using... the `theme` function. We used `theme` to move the legend to the top of the plot (via `legend.position`) and show the species labels in italics (via `legend.text`). We also got rid of the legend title by setting the colour label to empty character string in `labs`. We could do that via `theme` but using `labs` is simpler.
 
 The **ggplot2** theme system is extremely powerful. Once we know how to use it, we can set up a custom theme and apply it with very little effort. However, that's not an entirely trivial thing to do because there are just so many components of every plot. Most people just google whatever adjustment they want to make when the time comes. Even then, tweaking each individual part of a theme can be very time consuming. Fortunately, there are a range of standard themes built into **ggplot2**. Here's how to apply a built-in theme:
 
 ```{r, fig.width=4.0, fig.asp=1.1}
-# display bill morphology scatter plot + colour points by species
+# display bill morphology scatter plot
 ggplot(penguins, 
-       # vary colour by species
+       # bill depth (y) vs bill length (x) by species (colour)
        aes(x = bill_length_mm, y = bill_depth_mm, colour = species)) + 
   # add points layer and customise appearance of points
   geom_point(shape = 17, size = 1.5, alpha = 0.85) + 

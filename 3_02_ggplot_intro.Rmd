@@ -6,15 +6,15 @@ One of the main reasons data analysts turn to R is for its strong data visualisa
 
 -   Deepayan Sarkar developed the **lattice** package to implement the ideas of Bill Cleveland in his 1993 book, Visualizing Data. The package implements something called Trellis graphics, a very useful approach for graphical exploratory data analysis. Trellis graphics are designed to help us visualise complicated, multiple variable relationships. The **lattice** package has many "high level" functions to make this process easy. The **lattice** package is very powerful, but it is hard to master.
 
--   Hadley Wickham developed the **ggplot2** package to implement the ideas in a book called The Grammar of Graphics by Wilkinson (2005). It produces Trellis-like graphics but is quite different from **lattice** in the way it goes about this. It uses its own mini-language to define graphical objects, adopting the language of Wilkinson's book to define these. It takes a little while to learn the basics, but once these have been mastered it's very easy to produce sophisticated plots with very little R code. The downside of working with **ggplot2** is that it isn't as flexible as base graphics.
+-   Hadley Wickham developed the **ggplot2** package to implement the ideas in a book called The Grammar of Graphics by Wilkinson (2005). It produces Trellis-like graphics but is quite different from **lattice** in the way it goes about this. It uses its own mini-language to define graphical objects, adopting the language of Wilkinson's book to define these. It takes a little while to learn the basics, but once these have been mastered, it's very easy to produce sophisticated plots with very little R code. The downside of working with **ggplot2** is that it isn't as flexible as base graphics.
 
-We are not going to survey all these plotting systems. It's entirely possible to meet most data visualisation needs by becoming proficient with just one of them. This book focuses on the **ggplot2** package. In many ways, **ggplot2** hits the 'sweet spot' between base graphics and **lattice**. It enables complex visualisations without the need to write many lines of R code, but flexible enough to permit the kind of customisation required to produce publication quality figures.
+We are not going to survey all these plotting systems. It's entirely possible to meet most data visualisation needs by becoming proficient with just one of them. This book focuses on the **ggplot2** package. In many ways, **ggplot2** hits the 'sweet spot' between base graphics and **lattice**. It enables complex visualisations without the need to write many lines of R code, but remains flexible enough to allow the kind of customisation required to produce publication-quality figures.
 
 ## The anatomy of ggplot2 {#anatomy}
 
-The easiest way to learn **ggplot2** is by using it. However, before we dive into **ggplot2** code we need to review the essential features of its 'grammar'---the rules of how to specify a graph. This grammar is fairly abstract and won't make much sense on first reading. That is fine. Ideas like 'aesthetic mappings' and 'geoms' will start to make sense as we work through various examples.
+The easiest way to learn **ggplot2** is by using it. However, before we dive into **ggplot2** code, we need to review the essential features of its 'grammar'---the rules of how to specify a graph. This grammar is fairly abstract and won't make much sense on first reading. That is fine. Ideas like 'aesthetic mappings' and 'geoms' will start to make sense as we work through various examples.
 
-The design of **ggplot2** reflect Wilkinson's grammar of graphics. A complete **ggplot2** object is defined by a combination of:
+The design of **ggplot2** reflects Wilkinson's grammar of graphics. A complete **ggplot2** object is defined by a combination of:
 
 1)  one or more **layers**,
 2)  a set of **scales** (one for each 'aesthetic mapping'),
@@ -27,19 +27,19 @@ The underlying idea is that we construct a visualisation by defining one or more
 
 Each layer in a **ggplot2** plot has five different components, though we don't necessarily have to specify all of these because most have some kind of default setting:
 
--   The **data**. At a minimum, every plot needs some data. Unlike base R graphics, **ggplot2** always accepts data in one format, an R data frame (or tibble). Each layer can be associated with its own data set. We don't have to explicitly add data to each layer. If we choose not to specify the data set for a layer, **ggplot2** will use the default data (if defined).
+-   The **data**. At a minimum, every plot needs some data. Unlike base R graphics, **ggplot2** always accepts data in one format, an R data frame (or tibble). Each layer can be associated with its own data set. We don't have to add data to each layer explicitly. If we choose not to specify the data set for a layer, **ggplot2** will use the default data (if defined).
 
 -   A set of **aesthetic mappings**. These describe how variables in the data are associated with the aesthetic properties of the layer. Aesthetic properties include things we perceive, such as position, colour, and size of the points. Each layer can be associated with its own unique aesthetic mappings. When we choose not to specify these for a layer **ggplot2** will use the defaults (if defined).
 
--   A **geometric object** (a.k.a. 'geom'). The geom part of layer tells **ggplot2** how to actually represent the information---i.e. it refers to the objects we see on a plot, such as points, lines, bars or even text. Each geom only works with a particular subset of aesthetic mappings. We always have to define a geom when specifying a layer.
+-   A **geometric object** (a.k.a. 'geom'). The geom part of layer tells **ggplot2** how to represent the information---i.e. it refers to the objects we see on a plot, such as points, lines, bars or even text. Each geom only works with a particular subset of aesthetic mappings. We always have to define a geom when specifying a layer.
 
--   A **statistical transformation** (a.k.a. 'stat'). A stat takes the raw data and transforms it in some way. A stat allows us to plot useful summaries of our raw data. We won't explicitly make use of them in this book because we prefer to produce summary figures by first processing the data with **dplyr**. Nonetheless, the stat facility is often doing useful work in the background for some kinds of plots.
+-   A **statistical transformation** (a.k.a. 'stat'). A stat takes the raw data and transforms it in some way. A stat allows us to plot useful summaries of our raw data. We won't explicitly use them in this book because we prefer to produce summary figures by first processing the data with **dplyr**. Nonetheless, the stat facility is often doing useful work in the background for some kinds of plots.
 
--   A **position adjustment**. These apply small tweaks to the position of layer elements. These are typically used when we need to define how the information for different categories are separated. For example, when making a bar plot we may need to specify whether bars should be stacked on top of one another (the default) or plotted side-by-side.
+-   A **position adjustment**. These apply small tweaks to the position of layer elements. These are typically used when we need to define how the information for different categories are separated. For example, when making a bar plot, we may need to specify whether bars should be stacked on top of one another (the default) or plotted side-by-side.
 
 ### Scales
 
-The scale part of a **ggplot2** object controls how the information in a variable is mapped to the aesthetic properties. A scale takes the data and converts it into variation we can perceive, such as an x/y location, or the colour and size of points in a plot. The two most important things to understand about scales are:
+The scale part of a **ggplot2** object controls how the information in a variable is mapped to the aesthetic properties. A scale takes the data and converts it into variation we can perceive, such as an x/y location or the colour and size of points in a plot. The two most important things to understand about scales are:
 
 1.  A scale must be defined for every aesthetic in a plot. It doesn't make sense to define an aesthetic mapping without a scale because there is no way for **ggplot2** to know how to go from the data to the aesthetics without one.
 2.  When we include two or more layers, they all have to use the same scale for any shared aesthetic mappings. This behaviour is necessary to ensure information is displayed consistently.
@@ -48,26 +48,26 @@ If we choose not to explicitly define a scale for an aesthetic **ggplot2** will 
 
 ### Coordinate system
 
-A **ggplot2** coordinate system takes the position of objects (e.g. points and lines) and maps them onto the 2d plane a plot lives on. Most people are already very familiar with the most common coordinate system (even if they didn't realise it). That's the Cartesian coordinate system. This is the one we've all been using since we first constructed a graph with paper and pencil at school. All the most common statistical plots use this coordinate system so we won't consider any others in this book.
+A **ggplot2** coordinate system takes the position of objects (e.g. points and lines) and maps them onto the 2d plane a plot lives on. Most people are already very familiar with the most common coordinate system (even if they didn't realise it). That's the Cartesian coordinate system. This is the one we've all been using since we first constructed a graph with paper and pencil at school. All the most common statistical plots use this coordinate system, so we won't consider any others in this book.
 
 ### Faceting
 
-The idea behind faceting is very simple. Faceting allows us to break a data set up into subsets according to the unique values of one or more variables and then produce a separate plot for each subset. The result is a multi-panel plot where each panel shares the same layers, scales, etc. The data is the only thing that varies from panel to panel. The result is a kind of 'Trellis plot', similar to those produced by the **lattice** package. Faceting is a very powerful tool that allows us to slice up our data in different ways and really understand the relationship between different variables.
+The idea behind faceting is very simple. Faceting allows us to break a data set up into subsets according to the unique values of one or more variables and then produce a separate plot for each subset. The result is a multi-panel plot where each panel shares the same layers, scales, etc. The data is the only thing that varies from panel to panel. The result is a kind of 'Trellis plot', similar to those produced by the **lattice** package. Faceting is a very powerful tool that allows us to slice up our data in different ways and understand the relationship between different variables.
 
 ## A quick introduction to ggplot2 {#quick}
 
 Now that we've briefly reviewed the **ggplot2** grammar, we can start learning how to use it. The package uses this grammar as the basis of a sort of mini-language within R. It uses functions to specify components like aesthetic mappings and geoms, which are combined with data to define a **ggplot2** graphics object. Once we've constructed a suitable object, we can use it to display our graphic on the computer screen or save it using a common graphics format (e.g. PDF, PNG or JPEG).
 
-Rather than orientating this introduction around each of the key functions we're going to develop a simple example to help us see how **ggplot2** works. Many of the key ideas about how **ggplot2** works can be taken away from this one example, so it's worth investing the time to understand it, i.e. use the example to understand how the different **ggplot2** functions are related to the grammar outlined above.
+Rather than orientating this introduction around each of the key functions, we're going to develop a simple example to help us see how **ggplot2** works. Many of the key ideas about how **ggplot2** works can be taken away from this one example. Hence, it's worth investing the time to understand it---i.e. use the example to understand how the different **ggplot2** functions are related to the grammar outlined above.
 
 Our goal is to produce a simple scatter plot. The scatter plot is one of the most commonly used visualisation tools in the EDA toolbox. A scatter plot uses horizontal and vertical positions (the 'x' and 'y' axes) to visualise pairs of related observations as a series of points in two dimensions. It's designed to show how one numeric variable is associated with another. We'll use the `penguins` data to construct the scatter plot. The questions we want to explore are:
 
 -   what is the relationship between bill depth and bill length, and
--   does this vary among species and locations (islands)?
+-   how does this vary in relation to other variables?
 
 ### Making a start
 
-We will our work with **ggplot2** by setting up a minimal **graphical object**. That's a job for the `ggplot` function. Using `ggplot` without any arguments builds an empty graphical object:
+We will begin our work with **ggplot2** by setting up a minimal **graphical object**. That's a job for the `ggplot` function. Using `ggplot` without any arguments builds an empty graphical object:
 
 ```{r}
 # construct empty ggplot2 graphical object
@@ -98,7 +98,7 @@ How can we improve on this? We could add a default data set. This is easy. We do
 plot_obj <- ggplot(penguins)
 ```
 
-Then Then print out the summary of the updated `plot_obj`:
+Then print out the summary of the updated `plot_obj`:
 
 ```{r, eval=FALSE}
 # print summary of updated graphical object
@@ -114,9 +114,9 @@ for (i in seq_along(out)) {cat(out[i]); cat("\n")}
 
 We suppressed the facet information this time because it takes up a lot of space and we're not interested in it. The important point is that the `plot_obj` summary now contains some information related to the data. The variables from `penguins` now comprise the data associated with the `plot_obj` object.
 
-The next step is to add a default aesthetic mapping to the graphical object. Remember, this describe how variables in the data are mapped to the aesthetic properties of the layer(s).
+The next step is to add a default aesthetic mapping to the graphical object. Remember, this describes how variables in the data are mapped to the aesthetic properties of the layer(s).
 
-One way to think about aesthetic mappings is that they define what kind of relationships the plot will describe. Since we're making a scatter plot, we need to define mappings for positions on the 'x' and 'y' axes. We want to investigate how bill depth depends on bill length, so we need to associate`bill_length_mm` with the x position and `bill_depth_mm` with the y position.
+One way to think about aesthetic mappings is they define what kind of relationships the plot will describe. Since we're making a scatter plot, we need to define mappings for positions on the 'x' and 'y' axes. We want to investigate how bill depth depends on bill length, so we need to associate`bill_length_mm` with the x position and `bill_depth_mm` with the y position.
 
 We define an aesthetic mapping with the `aes` function. One way to use `aes` is like this:
 
@@ -150,11 +150,11 @@ The data (`data:`) from the original `plot_obj` are still there, but now we can 
 
 **Any layers that we now add will use these data and mappings unless we choose to override them by specifying different options.**
 
-We now need to specify a layer to tell **ggplot2** how to visualise the data. Remember, each layer has five different components: data, aesthetic mappings, a geom, a stat and a position adjustment. Since we have already set up the default data and aesthetic mappings, there's no need to define these again---**ggplot2** will use the defaults if we leave them out of the layer definition. This leaves the geom, stat and position adjustment.
+We now need to specify a layer to tell **ggplot2** how to visualise the data. Remember, each layer has five components: data, aesthetic mappings, a geom, a stat and a position adjustment. Since we have already set up the default data and aesthetic mappings, there's no need to define these again---**ggplot2** will use the defaults if we leave them out of the layer definition. This leaves the geom, stat and position adjustment.
 
 What kind of geom do we need? A scatter plot allows us to explore a relationship as a series of points. That means we need to add a layer that uses the 'point' geom. Simple.
 
-What about the stat and position? Not so simple. These are difficult to explain without drilling down into how **ggplot2** works. A key insight is that both the stat and the position adjustment change the data in some way before plotting it. When we want to stop **ggplot2** doing anything to our data, the keyword is 'identity'. We use this value whenever we want **ggplot2** to plot the data without modification.
+What about the stat and position? Not so simple. These are difficult to explain without drilling down into how **ggplot2** works. A key insight is that both the stat and the position adjustment change the data somehow before plotting it. When we want to stop **ggplot2** from doing anything to our data, the keyword is 'identity'. We use this value whenever we want **ggplot2** to plot the data without modification.
 
 We will examine the easy way to add a layer in a moment. However, we'll use the long-winded approach first because this reveals what happens whenever we build a **ggplot2** object. The general function for adding a layer is simply called `layer`. Here's how it works in its most basic usage:
 
@@ -213,14 +213,14 @@ print(plot_obj)
 ::: {.infobox .warning data-latex="{warning}"}
 #### Don't use this workflow! {.unnumbered}
 
-It's possible to construct any **ggplot2** visualisation using the workflow outlined in this subsection, but **this is not the recommended approach**. The workflow we adopted here was used to reveal how the grammar works, rather than for its efficiency. A more concise, standard approach to using **ggplot2** is outlined next. Use that for real-world analysis.
+It's possible to construct any **ggplot2** visualisation using the workflow outlined in this subsection, but **this is not the recommended approach**. The workflow we adopted here was used to reveal how the grammar works, rather than its efficiency. A more concise, standard approach to using **ggplot2** is outlined next. Use that for real-world analysis.
 :::
 
 ```{r, echo=FALSE}
 opts_chunk$set(warning=FALSE)
 ```
 
-### A standard way of using **ggplot2**
+## A standard way of using **ggplot2**
 
 The **ggplot2** package is quite flexible, which means we can specify a visualisation in more than one way. To keep life simple, we're going to adopt a consistent workflow from now on. This won't reveal the full array of **ggplot2** tricks, but it is sufficient to construct a wide range of standard visualisations. Let's make the same bill depth vs. bill length scatter plot again to see the workflow in action.
 
@@ -233,9 +233,7 @@ plot_obj <- ggplot(penguins, aes(x = bill_length_mm, y = bill_depth_mm))
 
 In this form, the `aes` function appears inside `ggplot` as a second argument. This sets up a graphical object with default data and aesthetic mappings in a single step. We will always use this approach from now on.
 
-The next step adds a layer. We saw that the `layer` function can be used to construct one from its component parts. However, **ggplot2** provides many convenience functions that construct layers according to the type of geom they need.
-
-They all look like this: `geom_TYPE`, where `TYPE` stands for the name of the geom we want to use. For example, a point geom is specified using `geom_point`. Using this function, an alternative to the last line of the example is therefore:
+The next step adds a layer. We saw that the `layer` function could be used to construct one from its component parts. However, **ggplot2** provides many convenience functions that construct layers according to the type of geom they need. They all look like this: `geom_TYPE`, where `TYPE` stands for the name of the geom we want to use. For example, a point geom is specified using `geom_point`. Using this function, an alternative to the last line of the example is therefore:
 
 ```{r, eval=FALSE}
 # use geom_point to add a points layer to graphical object
@@ -255,13 +253,7 @@ ggplot(penguins,
 
 That code builds the **ggplot2** graphical object and renders it in one go. We didn't even have to use `print` to generate the output. There is a lot is going on in the background, but this small snippet of R code contains everything **ggplot2** needs to construct and display a simple scatter plot.
 
-What does this scatter plot actually tell us about penguin bill morphology? It seems to suggest there isn't much of a relationship between bill depth and bill length. Does that seem sensible? Maybe we need a more informative plot...
-
-::: {.infobox .information data-latex="{information}"}
-#### How should we format **ggplot2** code? {.unnumbered}
-
-Take another look at that last example. Notice that we split the **ggplot2** definition over two lines, placing each function on its own line. The whole thing was still be treated as a single expression when we do this because R doesn't care about white space. As long as we put a `+` at the end of a line R will assume the next line to be part of the same definition. Just remember that any **ggplot2** code joined by `+` symbols has to be run as one big expression. Splitting the different parts of a graphical object definition across lines like this is a good idea. It makes everything more readable and helps us spot errors. This way of formatting **ggplot2** code is pretty much essential once we start working with complex plots. We will always use this convention from now on.
-:::
+What does this scatter plot actually tell us about penguin bill morphology? It seems to suggest there isn't much of a relationship between bill depth and bill length. Does that seem sensible? Maybe we need a more informative plot.
 
 ::: {.infobox .information data-latex="{information}"}
 #### Plotting incomplete **ggplot2** objects {.unnumbered}
@@ -293,20 +285,37 @@ plot_grid(
 We can see that **ggplot2** will try to plot something with the information it has, but we only end up with an informative plot when we specify data, aesthetic mappings, and a geom. That is the minimum we need to specify to arrive at a useful plot.
 :::
 
-## Increasing the information density
+### How should we format **ggplot2** code?
 
-We introduced the example by saying that we were interested in the relationship between bill depth and bill length, and how this might vary among species and islands. So far, we've only examined the bill depth-length part. We'll finish this chapter by investigating how this relationship depends on the remaining two variables (`species` and `island`). In doing so, we'll highlight approaches for increasing the amount of information in a visualisation---that's the real goal of this section.
+Take another look at that last example. We split the **ggplot2** definition over two lines, placing each function on its own line. R doesn't care about those extra newlines. As long as we put a `+` at the end of a line R will assume the next line is part of the same plot definition. Splitting the different parts of a graphical object definition across lines like this makes everything more readable and helps us spot errors.
+
+Once we split the definition across lines we can place comments between the lines of **ggplot2** code. For example, we could add comments to state what the `aes` and `geom_point` parts are doing:
+
+```{r, eval=FALSE}
+# display bill morphology scatter plot
+ggplot(penguins, 
+       # bill depth (y) vs bill length (x)
+       aes(x = bill_length_mm, y = bill_depth_mm)) + 
+  # add points layer
+  geom_point()
+```
+
+It's a very good idea to format and document **ggplot2** code in this way. That way, when we come back to it after a while, we can remember what we were trying to achieve! We will always use these conventions from now on.
+
+## Increasing the information density...
+
+One of the great strengths of **ggplot2** is the ease with which it allows us to incorporate information from several variables into a single plot. So far, we have made a simple two-variable scatter plot to examine bill morphology---the bill depth-length relationship. There are clearly other variables in the `penguins` data set that might influence this relationship. In this section, we will highlight three approaches for including additional variables in a visualisation. That is, we will see how to increase the **information density** of a plot.
 
 ### ...via aesthetic mappings
 
-How might we learn whether the bill depth-length relationship varies by penguin species? We need to include information in the `species` variable in our scatter plot somehow. There are different ways to do this, but the basic trick is to **map the** `species` **variable to a new aesthetic**.
-
-One option is to map the `species` to colour so that the colour of the points correspond to different species. We do this by changing the `aes` part:
+The most straightforward way to increase the information in a plot is by mapping a new variable to an unused aesthetic. For example, how might we learn whether the bill depth-length relationship varies by penguin species? We need to include information in the `species` variable in our scatter plot somehow. One option is to map the `species` to the colour aesthetic, so that the colour of the points correspond to different species. We do this by altering the `aes` part of the plot specification:
 
 ```{r, fig.width=4.5}
-# display bill morphology scatter plot + colour points by species
+# display bill morphology scatter plot
 ggplot(penguins, 
+       # bill depth (y) vs bill length (x) by species (colour)
        aes(x = bill_length_mm, y = bill_depth_mm, colour = species)) + 
+  # add points layer
   geom_point()
 ```
 
@@ -314,38 +323,30 @@ Individual points are now coloured according to the species they belong to. Noti
 
 We put the `aes` argument on a new line in this example because the first line was getting a bit long. This is only a readability thing---the `aes` part still belongs to `ggplot`.
 
-We could certainly improve this visualisation. Nonetheless, it illustrates an important concept: we can easily add more information to a plot by mapping additional variables to new aesthetics. There is nothing to stop us using different aesthetics if we wanted to squeeze even more information into this plot. For example, we could map the sex variable (`sex`) to the point shape using `shape = sex` inside `aes`. That would allow us to see if the relationship differs by sex within and among species.
+We could certainly improve this visualisation. Nonetheless, it illustrates an important concept: we can add information to a plot by mapping additional variables to new aesthetics. There is nothing to stop us from using different aesthetics if we wanted to squeeze even more information into this plot. For example, we could map the sex variable (`sex`) to the point shape using `shape = sex` inside `aes`:
 
-::: {.infobox .information data-latex="{information}"}
-#### Commenting **ggplot2** code {.unnumbered}
-
-We can place comments between the lines of **ggplot2** code. For example, we could add comments to state what the `aes` and `geom_point` parts are doing:
-
-```{r, eval=FALSE}
+```{r, fig.width=4.5}
 # display bill morphology scatter plot
 ggplot(penguins, 
-       # vary colour by species
-       aes(x = bill_length_mm, y = bill_depth_mm, colour = species)) + 
+       # bill depth (y) vs bill length (x) by species (colour) + sex (shape)
+       aes(x = bill_length_mm, y = bill_depth_mm, colour = species, shape = sex)) + 
   # add points layer
   geom_point()
 ```
 
-It's a good idea to document **ggplot2** code in this way as it starts to get more complicated. That way, when we come back to it after a while we can remember what we were trying to achieve! We will include extensive comments from now on.
-:::
-
 ### ...via facets
 
-What if we want to see how the bill morphology varies across islands? One way to do this is to make a separate scatter plot for each island. The good news is we don't have to do this manually. We can use the **faceting** facility of **ggplot2** instead. Faceting allows us to define subsets of data according to the values of one or more variables and produce a separate plot for each subset, all without having to write much R code.
+A second way to increase the amount of information on display is by making separate plots for meaningful subsets of the data. We can use the **faceting** facility of **ggplot2** to do this. Faceting allows us to define subsets of data according to the values of one or more variables and produce a separate plot for each subset, all without having to write much R code.
 
 Faceting operates on the whole figure, which means we can't apply it by changing the properties of a layer. Instead, we have to use a new function to add the faceting information. There are two different ways to facet in **ggplot2**:
 
 -   `facet_wrap` forms a matrix of panels by wrapping the 1d sequence of panels into a 2d matrix with rows and columns. It is typically used with a single categorical faceting variable (though it works with two or more faceting variables).
 -   `facet_grid` forms a 2d matrix of panels defined by row and column variables. It is typically used when we have two or more categorical variables, and all combinations of the variables exist in the data.
 
-This is best understood by example. Here's how we split things up by `island` using the `facet_wrap` function:
+This is best understood by example. What if we want to see how the bill morphology varies across islands? Here's how we split things up by `island` using the `facet_wrap` function:
 
 ```{r, fig.height=2.4, fig.width=6.8}
-# display bill morphology scatter plot by species and island
+# display facetted bill morphology scatter plot
 ggplot(penguins, 
        # species info via colour aesthetic
        aes(x = bill_length_mm, y = bill_depth_mm, colour = species)) + 
@@ -355,15 +356,39 @@ ggplot(penguins,
   facet_wrap(vars(island))
 ```
 
-The first argument of `facet_wrap` (`~ island`) says to split up the data set according to the values of island. Notice that the panels share the same scales for the 'x' and 'y' axes. This makes it easy to compare information.
+That first `vars(island)` argument of `facet_wrap` says to split up the data set according to the values of island. Simple. Notice that the panels share the same scales for the 'x' and 'y' axes. Using a common scale makes it easy to compare bill morphology across islands, but this can also be changed if necessary. For example, setting `scales = "free"` would ensure each panel uses its own x/y scale.
 
 The plot indicates that bill morphology is roughly invariant across the three islands. It also inadvertently reveals something else about these penguins---the Gentoo and Chinstrap species are only found on a single island, which is different for each one, whereas Adelie penguins are found on all three islands. That's one reason exploratory analysis is so important---it throws up unexpected findings.
 
 ::: {.infobox .warning data-latex="{warning}"}
-#### Don't forget the `vars` part {.unnumbered}
+#### Don't forget the `vars` part! {.unnumbered}
 
 We have to wrap the name of the faceting variable with the `vars` function in the `facet_wrap` specification. Trust us, `facet_wrap` won't work without it.
 :::
+
+### ...via multiple layers
+
+A third way to add additional information to a plot is by including multiple layers. So far, we have only seen examples with a single layer---only one `geom_` function is involved in creating the plot. There is no reason we can't add multiple layers to a plot by 'adding' two or more `geom_` functions. We're not yet in a position to demonstrate how to make such multi-layer plots because they require additional skills covered in later chapters. However, as a taster, here is an example of the kind of thing we can do with this idea (we have deliberately hidden the code):
+
+```{r, echo=FALSE, eval=TRUE, fig.width=4.5, message=FALSE, warning=FALSE}
+# calculate means
+penguins_summary <- penguins %>% 
+  group_by(species, sex) %>% 
+  summarise(
+    bill_depth_mm  = mean(bill_depth_mm,  na.rm = TRUE),
+    bill_length_mm = mean(bill_length_mm, na.rm = TRUE)
+  ) %>% na.omit()
+# display bill morphology scatter plot
+ggplot(penguins, 
+       # bill depth (y) vs bill length (x) by species (colour) + sex (shape)
+       aes(x = bill_length_mm, y = bill_depth_mm, colour = species, shape = sex)) + 
+  # add points layer
+  geom_point(alpha = 0.3) + 
+  # 
+  geom_point(data = penguins_summary, size = 4)
+```
+
+This shows how bill morphology varies by penguin species and sex, but now these relationships are summarised in two points layers. The first layer displays the raw data (small transparent points). The second layer adds the species/sex-specific means (large solid points). This places the average differences in the context of the overall variation in the raw data. Nice!
 
 ```{r, echo=FALSE}
 opts_chunk$set(warning=TRUE)
