@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 14 Customising plots | Exploratory Data Analysis with R</title>
+  <meta name="description" content="This is the Exploratory Data Analysis in R book provided by the School of Biosciences at the University of Sheffield." />
+  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 14 Customising plots | Exploratory Data Analysis with R" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="This is the Exploratory Data Analysis in R book provided by the School of Biosciences at the University of Sheffield." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 14 Customising plots | Exploratory Data Analysis with R" />
+  
+  <meta name="twitter:description" content="This is the Exploratory Data Analysis in R book provided by the School of Biosciences at the University of Sheffield." />
+  
+
+<meta name="author" content="Dylan Childs" />
+
+
+<meta name="date" content="2021-04-08" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="chapter-ggplot2-intro.html"/>
+<link rel="next" href="exploring-one-variable.html"/>
+<script src="libs/header-attrs-2.5/header-attrs.js"></script>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0/anchor-sections.js"></script>
+<link href="libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet" />
+<script src="libs/pagedtable-1.1/js/pagedtable.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Exploratory Data Analysis with R</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>What you will learn</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#aims"><i class="fa fa-check"></i>Aims</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#topics"><i class="fa fa-check"></i>Topics</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#technologies"><i class="fa fa-check"></i>Technologies</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#what-is-r"><i class="fa fa-check"></i>What is R?</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#what-is-rstudio"><i class="fa fa-check"></i>What is RStudio?</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="how-to-use-this-book.html"><a href="how-to-use-this-book.html"><i class="fa fa-check"></i>How to use this book</a>
+<ul>
+<li class="chapter" data-level="" data-path="how-to-use-this-book.html"><a href="how-to-use-this-book.html#text-instructions-and-explanations"><i class="fa fa-check"></i>Text, instructions, and explanations</a></li>
+<li class="chapter" data-level="" data-path="how-to-use-this-book.html"><a href="how-to-use-this-book.html#r-code-and-output"><i class="fa fa-check"></i>R code and output</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="get-up-and-running.html"><a href="get-up-and-running.html"><i class="fa fa-check"></i>Get up and running</a>
+<ul>
+<li class="chapter" data-level="" data-path="get-up-and-running.html"><a href="get-up-and-running.html#different-ways-to-run-rstudio"><i class="fa fa-check"></i>Different ways to run RStudio</a></li>
+<li class="chapter" data-level="" data-path="get-up-and-running.html"><a href="get-up-and-running.html#installing-r-and-rstudio-locally"><i class="fa fa-check"></i>Installing R and RStudio locally</a>
+<ul>
+<li class="chapter" data-level="" data-path="get-up-and-running.html"><a href="get-up-and-running.html#installing-rstudio"><i class="fa fa-check"></i>Installing RStudio</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="get-up-and-running.html"><a href="get-up-and-running.html#a-quick-look-at-rstudio"><i class="fa fa-check"></i>A quick look at RStudio</a></li>
+<li class="chapter" data-level="" data-path="get-up-and-running.html"><a href="get-up-and-running.html#working-at-console"><i class="fa fa-check"></i>Working at the Console in RStudio</a></li>
+</ul></li>
+<li class="part"><span><b>I Introduction to R</b></span></li>
+<li class="chapter" data-level="1" data-path="quick-intro-to-r.html"><a href="quick-intro-to-r.html"><i class="fa fa-check"></i><b>1</b> A quick introduction to R</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="quick-intro-to-r.html"><a href="quick-intro-to-r.html#r-calculator"><i class="fa fa-check"></i><b>1.1</b> Using R as a big calculator</a>
+<ul>
+<li class="chapter" data-level="1.1.1" data-path="quick-intro-to-r.html"><a href="quick-intro-to-r.html#basic-arithmetic"><i class="fa fa-check"></i><b>1.1.1</b> Basic arithmetic</a></li>
+<li class="chapter" data-level="1.1.2" data-path="quick-intro-to-r.html"><a href="quick-intro-to-r.html#combining-arithmetic-operations"><i class="fa fa-check"></i><b>1.1.2</b> Combining arithmetic operations</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="quick-intro-to-r.html"><a href="quick-intro-to-r.html#problematic-calculations"><i class="fa fa-check"></i><b>1.2</b> Problematic calculations</a></li>
+<li class="chapter" data-level="1.3" data-path="quick-intro-to-r.html"><a href="quick-intro-to-r.html#assignment"><i class="fa fa-check"></i><b>1.3</b> Storing and reusing results</a></li>
+<li class="chapter" data-level="1.4" data-path="quick-intro-to-r.html"><a href="quick-intro-to-r.html#how-does-assignment-work"><i class="fa fa-check"></i><b>1.4</b> How does assignment work?</a></li>
+<li class="chapter" data-level="1.5" data-path="quick-intro-to-r.html"><a href="quick-intro-to-r.html#global-environment"><i class="fa fa-check"></i><b>1.5</b> Global environment</a></li>
+<li class="chapter" data-level="1.6" data-path="quick-intro-to-r.html"><a href="quick-intro-to-r.html#naming-rules-and-conventions"><i class="fa fa-check"></i><b>1.6</b> Naming rules and conventions</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="using-functions.html"><a href="using-functions.html"><i class="fa fa-check"></i><b>2</b> Using functions</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="using-functions.html"><a href="using-functions.html#intro-functions"><i class="fa fa-check"></i><b>2.1</b> Introduction</a></li>
+<li class="chapter" data-level="2.2" data-path="using-functions.html"><a href="using-functions.html#functions-and-arguments"><i class="fa fa-check"></i><b>2.2</b> Functions and arguments</a></li>
+<li class="chapter" data-level="2.3" data-path="using-functions.html"><a href="using-functions.html#evaluating-arguments-and-returning-results"><i class="fa fa-check"></i><b>2.3</b> Evaluating arguments and returning results</a></li>
+<li class="chapter" data-level="2.4" data-path="using-functions.html"><a href="using-functions.html#function-arguments"><i class="fa fa-check"></i><b>2.4</b> Specifying function arguments</a></li>
+<li class="chapter" data-level="2.5" data-path="using-functions.html"><a href="using-functions.html#combining-functions"><i class="fa fa-check"></i><b>2.5</b> Combining functions</a></li>
+<li class="chapter" data-level="2.6" data-path="using-functions.html"><a href="using-functions.html#functions-do-not-have-side-effects"><i class="fa fa-check"></i><b>2.6</b> Functions do not have ‘side effects’</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="vectors.html"><a href="vectors.html"><i class="fa fa-check"></i><b>3</b> Vectors</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="vectors.html"><a href="vectors.html#introduction"><i class="fa fa-check"></i><b>3.1</b> Introduction</a></li>
+<li class="chapter" data-level="3.2" data-path="vectors.html"><a href="vectors.html#atomic-vectors"><i class="fa fa-check"></i><b>3.2</b> Atomic vectors</a></li>
+<li class="chapter" data-level="3.3" data-path="vectors.html"><a href="vectors.html#intro-vectors"><i class="fa fa-check"></i><b>3.3</b> Numeric vectors</a></li>
+<li class="chapter" data-level="3.4" data-path="vectors.html"><a href="vectors.html#constructing-numeric-vectors"><i class="fa fa-check"></i><b>3.4</b> Constructing numeric vectors</a></li>
+<li class="chapter" data-level="3.5" data-path="vectors.html"><a href="vectors.html#named-vectors"><i class="fa fa-check"></i><b>3.5</b> Named vectors</a></li>
+<li class="chapter" data-level="3.6" data-path="vectors.html"><a href="vectors.html#vectorised-operations"><i class="fa fa-check"></i><b>3.6</b> Vectorised operations</a></li>
+<li class="chapter" data-level="3.7" data-path="vectors.html"><a href="vectors.html#other-vectors"><i class="fa fa-check"></i><b>3.7</b> Other kinds of atomic vectors</a>
+<ul>
+<li class="chapter" data-level="3.7.1" data-path="vectors.html"><a href="vectors.html#character-vectors"><i class="fa fa-check"></i><b>3.7.1</b> Character vectors</a></li>
+<li class="chapter" data-level="3.7.2" data-path="vectors.html"><a href="vectors.html#logical-vectors"><i class="fa fa-check"></i><b>3.7.2</b> Logical vectors</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="chapter-data-frames.html"><a href="chapter-data-frames.html"><i class="fa fa-check"></i><b>4</b> Data frames</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="chapter-data-frames.html"><a href="chapter-data-frames.html#introduction-1"><i class="fa fa-check"></i><b>4.1</b> Introduction</a></li>
+<li class="chapter" data-level="4.2" data-path="chapter-data-frames.html"><a href="chapter-data-frames.html#data-frames-intro"><i class="fa fa-check"></i><b>4.2</b> Data frames</a></li>
+<li class="chapter" data-level="4.3" data-path="chapter-data-frames.html"><a href="chapter-data-frames.html#exploring-data-frames"><i class="fa fa-check"></i><b>4.3</b> Exploring data frames</a></li>
+<li class="chapter" data-level="4.4" data-path="chapter-data-frames.html"><a href="chapter-data-frames.html#extracting-and-adding-a-single-variable"><i class="fa fa-check"></i><b>4.4</b> Extracting and adding a single variable</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="packages.html"><a href="packages.html"><i class="fa fa-check"></i><b>5</b> Packages</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="packages.html"><a href="packages.html#package-system"><i class="fa fa-check"></i><b>5.1</b> The R package system</a></li>
+<li class="chapter" data-level="5.2" data-path="packages.html"><a href="packages.html#task-views"><i class="fa fa-check"></i><b>5.2</b> Task views</a></li>
+<li class="chapter" data-level="5.3" data-path="packages.html"><a href="packages.html#use-packages"><i class="fa fa-check"></i><b>5.3</b> Using packages</a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="packages.html"><a href="packages.html#viewing-installed-packages"><i class="fa fa-check"></i><b>5.3.1</b> Viewing installed packages</a></li>
+<li class="chapter" data-level="5.3.2" data-path="packages.html"><a href="packages.html#installing-packages"><i class="fa fa-check"></i><b>5.3.2</b> Installing packages</a></li>
+<li class="chapter" data-level="5.3.3" data-path="packages.html"><a href="packages.html#loading-and-attaching-packages"><i class="fa fa-check"></i><b>5.3.3</b> Loading and attaching packages</a></li>
+<li class="chapter" data-level="5.3.4" data-path="packages.html"><a href="packages.html#dont-use-rstudio-for-loading-packages"><i class="fa fa-check"></i><b>5.3.4</b> Don’t use RStudio for loading packages!</a></li>
+<li class="chapter" data-level="5.3.5" data-path="packages.html"><a href="packages.html#an-analogy"><i class="fa fa-check"></i><b>5.3.5</b> An analogy</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="packages.html"><a href="packages.html#package-data"><i class="fa fa-check"></i><b>5.4</b> Package data</a></li>
+<li class="chapter" data-level="5.5" data-path="packages.html"><a href="packages.html#the-tidyverse-ecosystem-of-packages"><i class="fa fa-check"></i><b>5.5</b> The tidyverse ecosystem of packages</a></li>
+</ul></li>
+<li class="part"><span><b>II Data Wrangling</b></span></li>
+<li class="chapter" data-level="6" data-path="getting-ready-to-use-dplyr.html"><a href="getting-ready-to-use-dplyr.html"><i class="fa fa-check"></i><b>6</b> Getting ready to use <strong>dplyr</strong></a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="getting-ready-to-use-dplyr.html"><a href="getting-ready-to-use-dplyr.html#introduction-2"><i class="fa fa-check"></i><b>6.1</b> Introduction</a></li>
+<li class="chapter" data-level="6.2" data-path="getting-ready-to-use-dplyr.html"><a href="getting-ready-to-use-dplyr.html#tidy-data"><i class="fa fa-check"></i><b>6.2</b> Tidy data</a></li>
+<li class="chapter" data-level="6.3" data-path="getting-ready-to-use-dplyr.html"><a href="getting-ready-to-use-dplyr.html#penguins-data-overview"><i class="fa fa-check"></i><b>6.3</b> Penguins! 🐧+📊= 😃</a></li>
+<li class="chapter" data-level="6.4" data-path="getting-ready-to-use-dplyr.html"><a href="getting-ready-to-use-dplyr.html#um-tibbles"><i class="fa fa-check"></i><b>6.4</b> Um… tibbles?</a></li>
+<li class="chapter" data-level="6.5" data-path="getting-ready-to-use-dplyr.html"><a href="getting-ready-to-use-dplyr.html#missing-values"><i class="fa fa-check"></i><b>6.5</b> Missing values</a></li>
+<li class="chapter" data-level="6.6" data-path="getting-ready-to-use-dplyr.html"><a href="getting-ready-to-use-dplyr.html#why-dplyr"><i class="fa fa-check"></i><b>6.6</b> Introducing <strong>dplyr</strong></a>
+<ul>
+<li class="chapter" data-level="6.6.1" data-path="getting-ready-to-use-dplyr.html"><a href="getting-ready-to-use-dplyr.html#more-dplyr"><i class="fa fa-check"></i><b>6.6.1</b> A first look at <strong>dplyr</strong></a></li>
+<li class="chapter" data-level="6.6.2" data-path="getting-ready-to-use-dplyr.html"><a href="getting-ready-to-use-dplyr.html#dplyr-pseudocode"><i class="fa fa-check"></i><b>6.6.2</b> <strong>dplyr</strong> pseudocode</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="working-with-variables.html"><a href="working-with-variables.html"><i class="fa fa-check"></i><b>7</b> Working with variables</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="working-with-variables.html"><a href="working-with-variables.html#introduction-3"><i class="fa fa-check"></i><b>7.1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="7.1.1" data-path="working-with-variables.html"><a href="working-with-variables.html#getting-ready"><i class="fa fa-check"></i><b>7.1.1</b> Getting ready</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="working-with-variables.html"><a href="working-with-variables.html#subset-variables-with-select"><i class="fa fa-check"></i><b>7.2</b> Subset variables with <code>select</code></a>
+<ul>
+<li class="chapter" data-level="7.2.1" data-path="working-with-variables.html"><a href="working-with-variables.html#alternative-ways-to-identify-variables-with-select"><i class="fa fa-check"></i><b>7.2.1</b> Alternative ways to identify variables with <code>select</code></a></li>
+<li class="chapter" data-level="7.2.2" data-path="working-with-variables.html"><a href="working-with-variables.html#renaming-variables-with-select-and-rename"><i class="fa fa-check"></i><b>7.2.2</b> Renaming variables with <code>select</code> and <code>rename</code></a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="working-with-variables.html"><a href="working-with-variables.html#creating-variables-with-mutate"><i class="fa fa-check"></i><b>7.3</b> Creating variables with <code>mutate</code></a>
+<ul>
+<li class="chapter" data-level="7.3.1" data-path="working-with-variables.html"><a href="working-with-variables.html#transforming-and-dropping-variables"><i class="fa fa-check"></i><b>7.3.1</b> Transforming and dropping variables</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="working-with-observations.html"><a href="working-with-observations.html"><i class="fa fa-check"></i><b>8</b> Working with observations</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="working-with-observations.html"><a href="working-with-observations.html#introduction-4"><i class="fa fa-check"></i><b>8.1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="8.1.1" data-path="working-with-observations.html"><a href="working-with-observations.html#getting-ready-1"><i class="fa fa-check"></i><b>8.1.1</b> Getting ready</a></li>
+</ul></li>
+<li class="chapter" data-level="8.2" data-path="working-with-observations.html"><a href="working-with-observations.html#relational-and-logical-operators"><i class="fa fa-check"></i><b>8.2</b> Relational and logical operators</a></li>
+<li class="chapter" data-level="8.3" data-path="working-with-observations.html"><a href="working-with-observations.html#subset-observations-with-filter"><i class="fa fa-check"></i><b>8.3</b> Subset observations with <code>filter</code></a></li>
+<li class="chapter" data-level="8.4" data-path="working-with-observations.html"><a href="working-with-observations.html#reordering-observations-with-arrange"><i class="fa fa-check"></i><b>8.4</b> Reordering observations with <code>arrange</code></a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="summarising-and-grouping.html"><a href="summarising-and-grouping.html"><i class="fa fa-check"></i><b>9</b> Summarising and grouping</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="summarising-and-grouping.html"><a href="summarising-and-grouping.html#summarising-variables-with-summarise"><i class="fa fa-check"></i><b>9.1</b> Summarising variables with <code>summarise</code></a>
+<ul>
+<li class="chapter" data-level="9.1.1" data-path="summarising-and-grouping.html"><a href="summarising-and-grouping.html#more-complicated-calculations-with-summarise"><i class="fa fa-check"></i><b>9.1.1</b> More complicated calculations with <code>summarise</code></a></li>
+</ul></li>
+<li class="chapter" data-level="9.2" data-path="summarising-and-grouping.html"><a href="summarising-and-grouping.html#grouped-operations-using-group_by"><i class="fa fa-check"></i><b>9.2</b> Grouped operations using <code>group_by</code></a>
+<ul>
+<li class="chapter" data-level="9.2.1" data-path="summarising-and-grouping.html"><a href="summarising-and-grouping.html#more-than-one-grouping-variable"><i class="fa fa-check"></i><b>9.2.1</b> More than one grouping variable</a></li>
+<li class="chapter" data-level="9.2.2" data-path="summarising-and-grouping.html"><a href="summarising-and-grouping.html#using-group_by-with-other-verbs"><i class="fa fa-check"></i><b>9.2.2</b> Using <code>group_by</code> with other verbs</a></li>
+</ul></li>
+<li class="chapter" data-level="9.3" data-path="summarising-and-grouping.html"><a href="summarising-and-grouping.html#removing-grouping-information"><i class="fa fa-check"></i><b>9.3</b> Removing grouping information</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="building-pipelines.html"><a href="building-pipelines.html"><i class="fa fa-check"></i><b>10</b> Building pipelines</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="building-pipelines.html"><a href="building-pipelines.html#why-do-we-need-pipes"><i class="fa fa-check"></i><b>10.1</b> Why do we need ‘pipes?’</a></li>
+<li class="chapter" data-level="10.2" data-path="building-pipelines.html"><a href="building-pipelines.html#using-pipes"><i class="fa fa-check"></i><b>10.2</b> Using pipes (<code>%&gt;%</code>)</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="helper-functions.html"><a href="helper-functions.html"><i class="fa fa-check"></i><b>11</b> Helper functions</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="helper-functions.html"><a href="helper-functions.html#introduction-5"><i class="fa fa-check"></i><b>11.1</b> Introduction</a></li>
+<li class="chapter" data-level="11.2" data-path="helper-functions.html"><a href="helper-functions.html#working-with-select"><i class="fa fa-check"></i><b>11.2</b> Working with <code>select</code></a></li>
+<li class="chapter" data-level="11.3" data-path="helper-functions.html"><a href="helper-functions.html#working-with-mutate-and-transmute"><i class="fa fa-check"></i><b>11.3</b> Working with <code>mutate</code> and <code>transmute</code></a></li>
+<li class="chapter" data-level="11.4" data-path="helper-functions.html"><a href="helper-functions.html#working-with-filter"><i class="fa fa-check"></i><b>11.4</b> Working with <code>filter</code></a></li>
+<li class="chapter" data-level="11.5" data-path="helper-functions.html"><a href="helper-functions.html#working-with-summarise"><i class="fa fa-check"></i><b>11.5</b> Working with <code>summarise</code></a></li>
+</ul></li>
+<li class="part"><span><b>III Exporing Data</b></span></li>
+<li class="chapter" data-level="12" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html"><i class="fa fa-check"></i><b>12</b> Exploratory data analysis</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#introduction-6"><i class="fa fa-check"></i><b>12.1</b> Introduction</a></li>
+<li class="chapter" data-level="12.2" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#variables"><i class="fa fa-check"></i><b>12.2</b> Statistical variables and data</a>
+<ul>
+<li class="chapter" data-level="12.2.1" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#numeric-vs-categorical-variables"><i class="fa fa-check"></i><b>12.2.1</b> Numeric vs categorical variables</a></li>
+<li class="chapter" data-level="12.2.2" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#ratio-vs-interval-scales"><i class="fa fa-check"></i><b>12.2.2</b> Ratio vs interval scales</a></li>
+</ul></li>
+<li class="chapter" data-level="12.3" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#populations-samples"><i class="fa fa-check"></i><b>12.3</b> Populations and samples</a>
+<ul>
+<li class="chapter" data-level="12.3.1" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#sample-distributions"><i class="fa fa-check"></i><b>12.3.1</b> Sample distributions</a></li>
+<li class="chapter" data-level="12.3.2" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#relationships"><i class="fa fa-check"></i><b>12.3.2</b> Relationships</a></li>
+</ul></li>
+<li class="chapter" data-level="12.4" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#types-of-eda"><i class="fa fa-check"></i><b>12.4</b> Types of EDA</a></li>
+<li class="chapter" data-level="12.5" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#a-primer-of-descriptive-statistics"><i class="fa fa-check"></i><b>12.5</b> A primer of descriptive statistics</a>
+<ul>
+<li class="chapter" data-level="12.5.1" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#numeric-variables"><i class="fa fa-check"></i><b>12.5.1</b> Numeric variables</a></li>
+<li class="chapter" data-level="12.5.2" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#categorical-variables"><i class="fa fa-check"></i><b>12.5.2</b> Categorical variables</a></li>
+<li class="chapter" data-level="12.5.3" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#associations"><i class="fa fa-check"></i><b>12.5.3</b> Associations</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="chapter-ggplot2-intro.html"><a href="chapter-ggplot2-intro.html"><i class="fa fa-check"></i><b>13</b> Introduction to <strong>ggplot2</strong></a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="chapter-ggplot2-intro.html"><a href="chapter-ggplot2-intro.html#anatomy"><i class="fa fa-check"></i><b>13.1</b> The anatomy of ggplot2</a>
+<ul>
+<li class="chapter" data-level="13.1.1" data-path="chapter-ggplot2-intro.html"><a href="chapter-ggplot2-intro.html#layers"><i class="fa fa-check"></i><b>13.1.1</b> Layers</a></li>
+<li class="chapter" data-level="13.1.2" data-path="chapter-ggplot2-intro.html"><a href="chapter-ggplot2-intro.html#scales"><i class="fa fa-check"></i><b>13.1.2</b> Scales</a></li>
+<li class="chapter" data-level="13.1.3" data-path="chapter-ggplot2-intro.html"><a href="chapter-ggplot2-intro.html#coordinate-system"><i class="fa fa-check"></i><b>13.1.3</b> Coordinate system</a></li>
+<li class="chapter" data-level="13.1.4" data-path="chapter-ggplot2-intro.html"><a href="chapter-ggplot2-intro.html#faceting"><i class="fa fa-check"></i><b>13.1.4</b> Faceting</a></li>
+</ul></li>
+<li class="chapter" data-level="13.2" data-path="chapter-ggplot2-intro.html"><a href="chapter-ggplot2-intro.html#quick"><i class="fa fa-check"></i><b>13.2</b> A quick introduction to ggplot2</a>
+<ul>
+<li class="chapter" data-level="13.2.1" data-path="chapter-ggplot2-intro.html"><a href="chapter-ggplot2-intro.html#making-a-start"><i class="fa fa-check"></i><b>13.2.1</b> Making a start</a></li>
+<li class="chapter" data-level="13.2.2" data-path="chapter-ggplot2-intro.html"><a href="chapter-ggplot2-intro.html#a-standard-way-of-using-ggplot2"><i class="fa fa-check"></i><b>13.2.2</b> A standard way of using <strong>ggplot2</strong></a></li>
+</ul></li>
+<li class="chapter" data-level="13.3" data-path="chapter-ggplot2-intro.html"><a href="chapter-ggplot2-intro.html#increasing-the-information-density"><i class="fa fa-check"></i><b>13.3</b> Increasing the information density</a>
+<ul>
+<li class="chapter" data-level="13.3.1" data-path="chapter-ggplot2-intro.html"><a href="chapter-ggplot2-intro.html#using-additional-aesthetics"><i class="fa fa-check"></i><b>13.3.1</b> Using additional aesthetics</a></li>
+<li class="chapter" data-level="13.3.2" data-path="chapter-ggplot2-intro.html"><a href="chapter-ggplot2-intro.html#using-facets"><i class="fa fa-check"></i><b>13.3.2</b> Using facets</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="customising-plots.html"><a href="customising-plots.html"><i class="fa fa-check"></i><b>14</b> Customising plots</a>
+<ul>
+<li class="chapter" data-level="14.1" data-path="customising-plots.html"><a href="customising-plots.html#working-with-geom-properties"><i class="fa fa-check"></i><b>14.1</b> Working with geom properties</a>
+<ul>
+<li class="chapter" data-level="14.1.1" data-path="customising-plots.html"><a href="customising-plots.html#the-relationship-between-aesthetic-mappings-and-geom-properties."><i class="fa fa-check"></i><b>14.1.1</b> The relationship between aesthetic mappings and geom properties.</a></li>
+</ul></li>
+<li class="chapter" data-level="14.2" data-path="customising-plots.html"><a href="customising-plots.html#working-with-plot-scales"><i class="fa fa-check"></i><b>14.2</b> Working with plot scales</a></li>
+<li class="chapter" data-level="14.3" data-path="customising-plots.html"><a href="customising-plots.html#adding-titles-and-labels"><i class="fa fa-check"></i><b>14.3</b> Adding titles and labels</a></li>
+<li class="chapter" data-level="14.4" data-path="customising-plots.html"><a href="customising-plots.html#themes"><i class="fa fa-check"></i><b>14.4</b> Themes</a></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="exploring-one-variable.html"><a href="exploring-one-variable.html"><i class="fa fa-check"></i><b>15</b> Exploring one variable</a>
+<ul>
+<li class="chapter" data-level="15.1" data-path="exploring-one-variable.html"><a href="exploring-one-variable.html#explore-numeric"><i class="fa fa-check"></i><b>15.1</b> Exploring numerical variables</a>
+<ul>
+<li class="chapter" data-level="15.1.1" data-path="exploring-one-variable.html"><a href="exploring-one-variable.html#what-kind-of-numeric-variable"><i class="fa fa-check"></i><b>15.1.1</b> What kind of numeric variable?</a></li>
+<li class="chapter" data-level="15.1.2" data-path="exploring-one-variable.html"><a href="exploring-one-variable.html#histograms"><i class="fa fa-check"></i><b>15.1.2</b> Histograms</a></li>
+<li class="chapter" data-level="15.1.3" data-path="exploring-one-variable.html"><a href="exploring-one-variable.html#dot-plots"><i class="fa fa-check"></i><b>15.1.3</b> Dot plots</a></li>
+</ul></li>
+<li class="chapter" data-level="15.2" data-path="exploring-one-variable.html"><a href="exploring-one-variable.html#explore-categorical"><i class="fa fa-check"></i><b>15.2</b> Exploring categorical variables</a>
+<ul>
+<li class="chapter" data-level="15.2.1" data-path="exploring-one-variable.html"><a href="exploring-one-variable.html#what-kind-of-categorical-variable"><i class="fa fa-check"></i><b>15.2.1</b> What kind of categorical variable?</a></li>
+<li class="chapter" data-level="15.2.2" data-path="exploring-one-variable.html"><a href="exploring-one-variable.html#bar-plots"><i class="fa fa-check"></i><b>15.2.2</b> Bar plots</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="16" data-path="exploring-associations.html"><a href="exploring-associations.html"><i class="fa fa-check"></i><b>16</b> Exploring associations</a>
+<ul>
+<li class="chapter" data-level="16.1" data-path="exploring-associations.html"><a href="exploring-associations.html#numeric-association"><i class="fa fa-check"></i><b>16.1</b> Associations between numeric variables</a></li>
+<li class="chapter" data-level="16.2" data-path="exploring-associations.html"><a href="exploring-associations.html#categorical-association"><i class="fa fa-check"></i><b>16.2</b> Associations between categorical variables</a></li>
+<li class="chapter" data-level="16.3" data-path="exploring-associations.html"><a href="exploring-associations.html#cat-num-association"><i class="fa fa-check"></i><b>16.3</b> Categorical-numerical associations</a>
+<ul>
+<li class="chapter" data-level="16.3.1" data-path="exploring-associations.html"><a href="exploring-associations.html#alternatives-to-box-and-whiskers-plots"><i class="fa fa-check"></i><b>16.3.1</b> Alternatives to box and whiskers plots</a></li>
+</ul></li>
+<li class="chapter" data-level="16.4" data-path="exploring-associations.html"><a href="exploring-associations.html#multivariate"><i class="fa fa-check"></i><b>16.4</b> Multivariate associations</a></li>
+</ul></li>
+<li class="chapter" data-level="17" data-path="doing-more-with-ggplot2.html"><a href="doing-more-with-ggplot2.html"><i class="fa fa-check"></i><b>17</b> Doing more with <strong>ggplot2</strong></a>
+<ul>
+<li class="chapter" data-level="17.1" data-path="doing-more-with-ggplot2.html"><a href="doing-more-with-ggplot2.html#summaries"><i class="fa fa-check"></i><b>17.1</b> Comparing descriptive statistics</a></li>
+<li class="chapter" data-level="17.2" data-path="doing-more-with-ggplot2.html"><a href="doing-more-with-ggplot2.html#adding-error-bars"><i class="fa fa-check"></i><b>17.2</b> Adding error bars</a></li>
+<li class="chapter" data-level="17.3" data-path="doing-more-with-ggplot2.html"><a href="doing-more-with-ggplot2.html#adding-text-to-plots"><i class="fa fa-check"></i><b>17.3</b> Adding text to plots</a></li>
+<li class="chapter" data-level="17.4" data-path="doing-more-with-ggplot2.html"><a href="doing-more-with-ggplot2.html#customising-text"><i class="fa fa-check"></i><b>17.4</b> Customising text</a></li>
+<li class="chapter" data-level="17.5" data-path="doing-more-with-ggplot2.html"><a href="doing-more-with-ggplot2.html#saving-plots"><i class="fa fa-check"></i><b>17.5</b> Saving plots</a></li>
+<li class="chapter" data-level="17.6" data-path="doing-more-with-ggplot2.html"><a href="doing-more-with-ggplot2.html#panel-plots"><i class="fa fa-check"></i><b>17.6</b> Panel plots</a></li>
+</ul></li>
+<li class="appendix"><span><b>Supplementary Material</b></span></li>
+<li class="chapter" data-level="A" data-path="getting-help.html"><a href="getting-help.html"><i class="fa fa-check"></i><b>A</b> Getting help</a>
+<ul>
+<li class="chapter" data-level="A.1" data-path="getting-help.html"><a href="getting-help.html#console-help"><i class="fa fa-check"></i><b>A.1</b> Introduction</a></li>
+<li class="chapter" data-level="A.2" data-path="getting-help.html"><a href="getting-help.html#browsing-the-help-system"><i class="fa fa-check"></i><b>A.2</b> Browsing the help system</a></li>
+<li class="chapter" data-level="A.3" data-path="getting-help.html"><a href="getting-help.html#searching-for-help-files"><i class="fa fa-check"></i><b>A.3</b> Searching for help files</a></li>
+<li class="chapter" data-level="A.4" data-path="getting-help.html"><a href="getting-help.html#nav-help"><i class="fa fa-check"></i><b>A.4</b> Navigating help files</a></li>
+<li class="chapter" data-level="A.5" data-path="getting-help.html"><a href="getting-help.html#vignettes"><i class="fa fa-check"></i><b>A.5</b> Vignettes and demos</a></li>
+</ul></li>
+<li class="chapter" data-level="B" data-path="project-scripts-data.html"><a href="project-scripts-data.html"><i class="fa fa-check"></i><b>B</b> Managing projects, scripts and data files</a></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Exploratory Data Analysis with R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="customising-plots" class="section level1" number="14">
+<h1><span class="header-section-number">Chapter 14</span> Customising plots</h1>
+<p>The default formatting conventions used by <strong>ggplot2</strong> have been carefully chosen to ensure the information in a plot is easy to discern. For example, by default, plots include a pale grey background and include gridlines. This is designed to emphasise the data while supporting comparisons. The grey highlights colour differences and ensures the gridlines have little visual impact beyond aiding in the assessment of position. Perfect for exploratory analysis!</p>
+<p>Although we can justify these sorts of choices on the grounds that they improve the readability of a plot, the fact remains they are somewhat unconventional and not much-loved by many users. For this reason, we often need to change the appearance of a plot before we include it in a document or presentation—e.g. most published figures use a white, rather than grey, background.</p>
+<p>This chapter will demonstrate how to customise <strong>ggplot2</strong> plots. We are not going to cover every possible permutation. That would need its <a href="https://ggplot2-book.org/">own book</a>. Instead, we will explore the main routes to customisation so that we can demonstrate these as we review different visualisations later. Using the penguins data once again, we’ll work on improving the following scatter plot from the <a href="chapter-ggplot2-intro.html#chapter-ggplot2-intro">Introduction to <strong>ggplot2</strong></a> chapter:</p>
+<div class="sourceCode" id="cb341"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb341-1"><a href="customising-plots.html#cb341-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins, </span>
+<span id="cb341-2"><a href="customising-plots.html#cb341-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> bill_length_mm, <span class="at">y =</span> bill_depth_mm, <span class="at">colour =</span> species)) <span class="sc">+</span> </span>
+<span id="cb341-3"><a href="customising-plots.html#cb341-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
+<p><img src="intro-bio-data-book_files/figure-html/unnamed-chunk-192-1.png" width="432" style="display: block; margin: auto;" /></p>
+<div id="working-with-geom-properties" class="section level2" number="14.1">
+<h2><span class="header-section-number">14.1</span> Working with geom properties</h2>
+<p>What do we do if we need to change the properties of a geom? For example, how might we change properties like the size or shape of points in our scatter plot? This is reasonably intuitive; we used the <code>geom_point</code> function to add points to the scatter plot, which means we have to set the arguments of <code>geom_point</code> to change their properties.</p>
+<p>Let’s rebuild the example scatter plot, this time setting the shape, size and transparency of points:</p>
+<div class="sourceCode" id="cb342"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb342-1"><a href="customising-plots.html#cb342-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins, </span>
+<span id="cb342-2"><a href="customising-plots.html#cb342-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> bill_length_mm, <span class="at">y =</span> bill_depth_mm, <span class="at">colour =</span> species)) <span class="sc">+</span> </span>
+<span id="cb342-3"><a href="customising-plots.html#cb342-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">shape =</span> <span class="dv">17</span>, <span class="at">size =</span> <span class="fl">1.5</span>, <span class="at">alpha =</span> <span class="fl">0.85</span>)</span></code></pre></div>
+<p><img src="intro-bio-data-book_files/figure-html/unnamed-chunk-193-1.png" width="432" style="display: block; margin: auto;" /></p>
+<p>The point shape is set with the <code>shape</code> argument. There are a few different ways to specify point shapes in R. We used the numeric coding system in this example (17 = triangle). Unfortunately, the numeric codes aren’t at all intuitive. Here are the more common ones:</p>
+<p><img src="intro-bio-data-book_files/figure-html/unnamed-chunk-194-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>The point size is specified by the <code>size</code> argument. This has a baseline value is 1. We assigned <code>size</code> a value of 1.5, thereby increasing the point size relative to the default. We could make the points smaller than the default by using a value less than 1.</p>
+<p>We made the points semi-transparent by setting the value of the <code>alpha</code> argument to be less than 1. In graphical systems the ‘alpha channel’ specifies transparency—a value of 0 is taken to mean ‘completely invisible’ and a value of 1 means ‘completely opaque.’ Making objects semi-transparent can be particularly useful when there is a lot of over-plotting.</p>
+<p>There are other arguments—such as <code>fill</code> and <code>colour</code>—that can also be used to adjust the way the points are rendered. We won’t look at these here. The best way to learn how these work is to simply experiment with them.</p>
+<p>The key message to take away from this little customisation example is this: if we want to set the properties of the geom associated with a particular layer, we do so by specifying the appropriate arguments in the <code>geom_NAME</code> function that defines the layer. This is the route we should use whenever we need to change the appearance of geometric objects, i.e. points, lines, bars, polygons, and so on.</p>
+<div id="the-relationship-between-aesthetic-mappings-and-geom-properties." class="section level3" number="14.1.1">
+<h3><span class="header-section-number">14.1.1</span> The relationship between aesthetic mappings and geom properties.</h3>
+<p>In the previous chapter, we saw that we could introduce information into a plot by setting aesthetic mappings in the <code>aes</code> part of its specification. In the scatter plot example, we included information about species identity by mapping the <code>species</code> variable to the colour aesthetic. What happens if we also try to set the colour within the <code>geom_point</code> part?</p>
+<div class="sourceCode" id="cb343"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb343-1"><a href="customising-plots.html#cb343-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins, </span>
+<span id="cb343-2"><a href="customising-plots.html#cb343-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> bill_length_mm, <span class="at">y =</span> bill_depth_mm, <span class="at">colour =</span> species)) <span class="sc">+</span> </span>
+<span id="cb343-3"><a href="customising-plots.html#cb343-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">colour =</span> <span class="st">&quot;skyblue&quot;</span>, <span class="at">shape =</span> <span class="dv">17</span>, <span class="at">size =</span> <span class="fl">1.5</span>, <span class="at">alpha =</span> <span class="fl">0.85</span>)</span></code></pre></div>
+<p><img src="intro-bio-data-book_files/figure-html/unnamed-chunk-195-1.png" width="432" style="display: block; margin: auto;" /></p>
+<p>All the points are now one colour (‘sky blue’) which means we have lost the species information. What does this example demonstrate? When we set the properties of a geom, this will override any aesthetic mappings that conflict with our choice of customisation. Try to remember that—failing to do so is a good way to become frustrated.</p>
+<div id="built-in-colours-in-r" class="section level4 unnumbered infobox information">
+<h4>Built-in colours in R</h4>
+<p>There is nothing special about ‘skyblue’ other than the fact that it is colour name known to R. There are over 650 built-in colour names. To see them, use a function called <code>colours</code> to print them all to the Console. Here are 25 selected at random:</p>
+<div class="sourceCode" id="cb344"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb344-1"><a href="customising-plots.html#cb344-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sample</span>(<span class="fu">colours</span>(), <span class="at">size =</span> <span class="dv">25</span>, <span class="at">replace =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<pre><code>##  [1] &quot;slateblue3&quot;    &quot;lavender&quot;      &quot;gray8&quot;         &quot;pink&quot;         
+##  [5] &quot;turquoise3&quot;    &quot;slategray3&quot;    &quot;hotpink&quot;       &quot;gray15&quot;       
+##  [9] &quot;tomato4&quot;       &quot;grey50&quot;        &quot;khaki1&quot;        &quot;grey65&quot;       
+## [13] &quot;darkslategray&quot; &quot;royalblue&quot;     &quot;gray29&quot;        &quot;grey64&quot;       
+## [17] &quot;grey6&quot;         &quot;palegreen3&quot;    &quot;lightyellow&quot;   &quot;firebrick1&quot;   
+## [21] &quot;gray81&quot;        &quot;darkorange1&quot;   &quot;darkorchid1&quot;   &quot;goldenrod1&quot;   
+## [25] &quot;violetred2&quot;</code></pre>
+</div>
+</div>
+</div>
+<div id="working-with-plot-scales" class="section level2" number="14.2">
+<h2><span class="header-section-number">14.2</span> Working with plot scales</h2>
+<p>Setting the arguments of a <code>geom_</code> function applies changes in a layer-specific manner. Other kinds of customisation affect every layer in a plot. Remember what we said about <strong>scales</strong> in the previous chapter:</p>
+<blockquote>
+<p>The scale part of a <strong>ggplot2</strong> object controls how the information in a variable is mapped to the aesthetic properties. A scale takes the data and converts it into something we can perceive, such as an x/y location or the colour and size of points in a plot.</p>
+</blockquote>
+<p>Every aesthetic mapping has a scale associated with it. We adjust ‘how the information in a variable is mapped to the aesthetic properties’ by changing its corresponding scale.</p>
+<p>As always, this kind of thing is best understood by example. Let’s adjust the scale associated with the y axis aesthetic by increasing the number of the horizontal lines and their accompanying labels (the ‘guides’).</p>
+<div class="sourceCode" id="cb346"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb346-1"><a href="customising-plots.html#cb346-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins, </span>
+<span id="cb346-2"><a href="customising-plots.html#cb346-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> bill_length_mm, <span class="at">y =</span> bill_depth_mm, <span class="at">colour =</span> species)) <span class="sc">+</span> </span>
+<span id="cb346-3"><a href="customising-plots.html#cb346-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">shape =</span> <span class="dv">17</span>, <span class="at">size =</span> <span class="fl">1.5</span>, <span class="at">alpha =</span> <span class="fl">0.85</span>) <span class="sc">+</span> </span>
+<span id="cb346-4"><a href="customising-plots.html#cb346-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">14</span>, <span class="dv">20</span>, <span class="at">by =</span> <span class="dv">2</span>))</span></code></pre></div>
+<p><img src="intro-bio-data-book_files/figure-html/unnamed-chunk-198-1.png" width="432" style="display: block; margin: auto;" /></p>
+<p>What’s going on here?</p>
+<ul>
+<li><p>The aesthetic we wanted to alter was the y axis position. The y axis in this particular plot is associated with a continuous scale because <code>bill_depth_mm</code> is a numeric variable. This means we have to apply the <code>scale_y_continuous</code> function to tweak the position of the y axis guides.</p></li>
+<li><p>The <code>breaks</code> argument of <code>scale_y_continuous</code> takes a numeric vector to specify where the guides should be drawn. We used the base R <code>seq</code> function to set up a numeric vector containing the sequence: 14, 16, 18 and 20. That tells <strong>gglot2</strong> to place the guides at 14, 16, 18 and 20 on the y axis.</p></li>
+</ul>
+<p>The functions that adjust a scale all have the general form <code>scale_AES_TYP</code>, where:</p>
+<ul>
+<li>the <code>AES</code> bit in the name refers to the relevant aesthetic, and</li>
+<li>the <code>TYP</code> part refers to the kind of scale we want to define.</li>
+</ul>
+<p>Each kind of <code>scale_AES_TYP</code> function has its own set of arguments to control how the scale works. For example, the <code>breaks</code> argument of <code>scale_y_continuous</code> uses a numeric vector to specify where the guides should be drawn. We can do much fancier things if we want to. For example, the <code>trans</code> argument can be used to apply a particular transformation to an axis, such as a logarithm.</p>
+<p>Predictably, there is also a <code>scale_x_continuous</code> function. We can use this in exactly the same way to control where the guides on the x axis appear:</p>
+<div class="sourceCode" id="cb347"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb347-1"><a href="customising-plots.html#cb347-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins, </span>
+<span id="cb347-2"><a href="customising-plots.html#cb347-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> bill_length_mm, <span class="at">y =</span> bill_depth_mm, <span class="at">colour =</span> species)) <span class="sc">+</span> </span>
+<span id="cb347-3"><a href="customising-plots.html#cb347-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">shape =</span> <span class="dv">17</span>, <span class="at">size =</span> <span class="fl">1.5</span>, <span class="at">alpha =</span> <span class="fl">0.85</span>) <span class="sc">+</span> </span>
+<span id="cb347-4"><a href="customising-plots.html#cb347-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">34</span>, <span class="dv">62</span>, <span class="at">by =</span> <span class="dv">4</span>)) <span class="sc">+</span></span>
+<span id="cb347-5"><a href="customising-plots.html#cb347-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">14</span>, <span class="dv">20</span>, <span class="at">by =</span> <span class="dv">2</span>))</span></code></pre></div>
+<p><img src="intro-bio-data-book_files/figure-html/unnamed-chunk-199-1.png" width="432" style="display: block; margin: auto;" /></p>
+<p>The key message to take away from this is that every aesthetic mapping has a scale associated with it. If we want to change how the information associated with an aesthetic mapping is displayed we have to change the corresponding scale. That suggests we can change the way point colours are associated with the <code>species</code> variable in our example by using one of the <code>scale_colour_YY</code> functions. That is correct:</p>
+<div class="sourceCode" id="cb348"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb348-1"><a href="customising-plots.html#cb348-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins, </span>
+<span id="cb348-2"><a href="customising-plots.html#cb348-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> bill_length_mm, <span class="at">y =</span> bill_depth_mm, <span class="at">colour =</span> species)) <span class="sc">+</span> </span>
+<span id="cb348-3"><a href="customising-plots.html#cb348-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">shape =</span> <span class="dv">17</span>, <span class="at">size =</span> <span class="fl">1.5</span>, <span class="at">alpha =</span> <span class="fl">0.85</span>) <span class="sc">+</span> </span>
+<span id="cb348-4"><a href="customising-plots.html#cb348-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">34</span>, <span class="dv">62</span>, <span class="at">by =</span> <span class="dv">4</span>)) <span class="sc">+</span></span>
+<span id="cb348-5"><a href="customising-plots.html#cb348-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">14</span>, <span class="dv">20</span>, <span class="at">by =</span> <span class="dv">2</span>)) <span class="sc">+</span> </span>
+<span id="cb348-6"><a href="customising-plots.html#cb348-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(</span>
+<span id="cb348-7"><a href="customising-plots.html#cb348-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">values =</span> <span class="fu">c</span>(<span class="st">&quot;cornflowerblue&quot;</span>, <span class="st">&quot;seagreen&quot;</span>, <span class="st">&quot;orangered3&quot;</span>),</span>
+<span id="cb348-8"><a href="customising-plots.html#cb348-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">labels =</span> <span class="fu">c</span>(<span class="at">Adelie =</span> <span class="st">&quot;P. adeliae&quot;</span>, <span class="at">Chinstrap =</span> <span class="st">&quot;P. antarcticus&quot;</span>, <span class="at">Gentoo =</span> <span class="st">&quot;P. papua&quot;</span>)</span>
+<span id="cb348-9"><a href="customising-plots.html#cb348-9" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<p><img src="intro-bio-data-book_files/figure-html/unnamed-chunk-200-1.png" width="451.2" style="display: block; margin: auto;" /></p>
+<p>This uses <code>scale_color_manual</code> to achieve two things—it sets up a custom colour palette (via <code>values</code>) and alters the species category names so that their scientific names are displayed (via <code>labels</code>). Notice we placed the arguments on different lines to make the code a bit easier to read.</p>
+<p>Scales are one of the hardest aspect of <strong>ggplot2</strong> to get to grips with. There are many different scales, each of which is controlled by a variety of arguments. Fortunately, the defaults used by <strong>ggplot2</strong> are often good enough to arrive at a reasonable plot without having to manipulate the scales.</p>
+</div>
+<div id="adding-titles-and-labels" class="section level2" number="14.3">
+<h2><span class="header-section-number">14.3</span> Adding titles and labels</h2>
+<p>What else might we like to tweak? Look at the x and y axis labels. These are the names of the variables used in the x/y aesthetic mappings. These labels aren’t too bad, but they could be a bit nicer to look at. We know ‘bill_depth_mm’ stands for ‘bill depth (measured in mm)’ so why not use an axis label more like that?</p>
+<p>The axes labels are a feature of the whole plot—i.e. they do not belong to a particular layer. This means we can’t alter axis labels by passing arguments to the function that built a layer (<code>geom_point</code>). We have to use a labelling function. Here is one way to set the axis labels:</p>
+<div class="sourceCode" id="cb349"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb349-1"><a href="customising-plots.html#cb349-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins, </span>
+<span id="cb349-2"><a href="customising-plots.html#cb349-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> bill_length_mm, <span class="at">y =</span> bill_depth_mm, <span class="at">colour =</span> species)) <span class="sc">+</span> </span>
+<span id="cb349-3"><a href="customising-plots.html#cb349-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">shape =</span> <span class="dv">17</span>, <span class="at">size =</span> <span class="fl">1.5</span>, <span class="at">alpha =</span> <span class="fl">0.85</span>) <span class="sc">+</span> </span>
+<span id="cb349-4"><a href="customising-plots.html#cb349-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">34</span>, <span class="dv">62</span>, <span class="at">by =</span> <span class="dv">4</span>)) <span class="sc">+</span></span>
+<span id="cb349-5"><a href="customising-plots.html#cb349-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">14</span>, <span class="dv">20</span>, <span class="at">by =</span> <span class="dv">2</span>)) <span class="sc">+</span> </span>
+<span id="cb349-6"><a href="customising-plots.html#cb349-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(</span>
+<span id="cb349-7"><a href="customising-plots.html#cb349-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">values =</span> <span class="fu">c</span>(<span class="st">&quot;cornflowerblue&quot;</span>, <span class="st">&quot;seagreen&quot;</span>, <span class="st">&quot;orangered3&quot;</span>),</span>
+<span id="cb349-8"><a href="customising-plots.html#cb349-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">labels =</span> <span class="fu">c</span>(<span class="at">Adelie =</span> <span class="st">&quot;P. adeliae&quot;</span>, <span class="at">Chinstrap =</span> <span class="st">&quot;P. antarcticus&quot;</span>, <span class="at">Gentoo =</span> <span class="st">&quot;P. papua&quot;</span>)</span>
+<span id="cb349-9"><a href="customising-plots.html#cb349-9" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span> </span>
+<span id="cb349-10"><a href="customising-plots.html#cb349-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;Bill length (mm)&quot;</span>) <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">&quot;Bill depth (mm)&quot;</span>)</span></code></pre></div>
+<p><img src="intro-bio-data-book_files/figure-html/unnamed-chunk-201-1.png" width="451.2" style="display: block; margin: auto;" /></p>
+<p>This uses the <code>xlab</code> and <code>ylab</code> functions to set the x and y labels, respectively, using <code>+</code> to add them to our graphical object. If we need to add a title to a graph we can use the <code>ggtitle</code> function in the same way. Simple!</p>
+<p>The <code>labs</code> function is a flexible alternative to <code>xlab</code> and <code>ylab</code>. It’s more flexible because <code>labs</code> can be used to change the label of every aesthetic in the plot. For example, if we want to set the labels of the x and y axes, and the label associated with <code>species</code>, we use:</p>
+<div class="sourceCode" id="cb350"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb350-1"><a href="customising-plots.html#cb350-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins, </span>
+<span id="cb350-2"><a href="customising-plots.html#cb350-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> bill_length_mm, <span class="at">y =</span> bill_depth_mm, <span class="at">colour =</span> species)) <span class="sc">+</span> </span>
+<span id="cb350-3"><a href="customising-plots.html#cb350-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">shape =</span> <span class="dv">17</span>, <span class="at">size =</span> <span class="fl">1.5</span>, <span class="at">alpha =</span> <span class="fl">0.85</span>) <span class="sc">+</span> </span>
+<span id="cb350-4"><a href="customising-plots.html#cb350-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">34</span>, <span class="dv">62</span>, <span class="at">by =</span> <span class="dv">4</span>)) <span class="sc">+</span></span>
+<span id="cb350-5"><a href="customising-plots.html#cb350-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">14</span>, <span class="dv">20</span>, <span class="at">by =</span> <span class="dv">2</span>)) <span class="sc">+</span> </span>
+<span id="cb350-6"><a href="customising-plots.html#cb350-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(</span>
+<span id="cb350-7"><a href="customising-plots.html#cb350-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">values =</span> <span class="fu">c</span>(<span class="st">&quot;cornflowerblue&quot;</span>, <span class="st">&quot;seagreen&quot;</span>, <span class="st">&quot;orangered3&quot;</span>),</span>
+<span id="cb350-8"><a href="customising-plots.html#cb350-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">labels =</span> <span class="fu">c</span>(<span class="at">Adelie =</span> <span class="st">&quot;P. adeliae&quot;</span>, <span class="at">Chinstrap =</span> <span class="st">&quot;P. antarcticus&quot;</span>, <span class="at">Gentoo =</span> <span class="st">&quot;P. papua&quot;</span>)</span>
+<span id="cb350-9"><a href="customising-plots.html#cb350-9" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span> </span>
+<span id="cb350-10"><a href="customising-plots.html#cb350-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Bill length (mm)&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Bill depth (mm)&quot;</span>, <span class="at">colour =</span> <span class="st">&quot;Penguin Species&quot;</span>)</span></code></pre></div>
+<p><img src="intro-bio-data-book_files/figure-html/unnamed-chunk-202-1.png" width="451.2" style="display: block; margin: auto;" /></p>
+</div>
+<div id="themes" class="section level2" number="14.4">
+<h2><span class="header-section-number">14.4</span> Themes</h2>
+<p>The final route to customisation concerns the ‘theme’ of a plot. We haven’t considered the <strong>ggplot2</strong> theme system at all yet. A theme in <strong>ggplot2</strong>-land deals with the visual elements of a plot that aren’t directly handled by adjusting geom properties or scales. These are the ‘non-data’ parts of a plot—features such as the colour of the plotting region and the grid lines, whether or not those grid lines are even displayed, the position of labels, the font used in labels, and so on.</p>
+<p>Here’s a short example that adjusts the legend of the example plot:</p>
+<div class="sourceCode" id="cb351"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb351-1"><a href="customising-plots.html#cb351-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins, </span>
+<span id="cb351-2"><a href="customising-plots.html#cb351-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> bill_length_mm, <span class="at">y =</span> bill_depth_mm, <span class="at">colour =</span> species)) <span class="sc">+</span> </span>
+<span id="cb351-3"><a href="customising-plots.html#cb351-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">shape =</span> <span class="dv">17</span>, <span class="at">size =</span> <span class="fl">1.5</span>, <span class="at">alpha =</span> <span class="fl">0.85</span>) <span class="sc">+</span> </span>
+<span id="cb351-4"><a href="customising-plots.html#cb351-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">34</span>, <span class="dv">62</span>, <span class="at">by =</span> <span class="dv">4</span>)) <span class="sc">+</span></span>
+<span id="cb351-5"><a href="customising-plots.html#cb351-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">14</span>, <span class="dv">20</span>, <span class="at">by =</span> <span class="dv">2</span>)) <span class="sc">+</span> </span>
+<span id="cb351-6"><a href="customising-plots.html#cb351-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(</span>
+<span id="cb351-7"><a href="customising-plots.html#cb351-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">values =</span> <span class="fu">c</span>(<span class="st">&quot;cornflowerblue&quot;</span>, <span class="st">&quot;seagreen&quot;</span>, <span class="st">&quot;orangered3&quot;</span>),</span>
+<span id="cb351-8"><a href="customising-plots.html#cb351-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">labels =</span> <span class="fu">c</span>(<span class="at">Adelie =</span> <span class="st">&quot;P. adeliae&quot;</span>, <span class="at">Chinstrap =</span> <span class="st">&quot;P. antarcticus&quot;</span>, <span class="at">Gentoo =</span> <span class="st">&quot;P. papua&quot;</span>)</span>
+<span id="cb351-9"><a href="customising-plots.html#cb351-9" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span> </span>
+<span id="cb351-10"><a href="customising-plots.html#cb351-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Bill length (mm)&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Bill depth (mm)&quot;</span>, <span class="at">colour =</span> <span class="st">&quot;&quot;</span>) <span class="sc">+</span></span>
+<span id="cb351-11"><a href="customising-plots.html#cb351-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb351-12"><a href="customising-plots.html#cb351-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.position =</span> <span class="st">&quot;top&quot;</span>,</span>
+<span id="cb351-13"><a href="customising-plots.html#cb351-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.text =</span> <span class="fu">element_text</span>(<span class="at">face=</span><span class="st">&quot;italic&quot;</span>)</span>
+<span id="cb351-14"><a href="customising-plots.html#cb351-14" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<p><img src="intro-bio-data-book_files/figure-html/unnamed-chunk-203-1.png" width="384" style="display: block; margin: auto;" /></p>
+<p>Changes to the theme are specified using… the <code>theme</code> function. We used <code>theme</code> to move the legend to the top of the plot (via <code>legend.position</code>) and show the species labels in italics (via <code>legend.text</code>).</p>
+<p>The <strong>ggplot2</strong> theme system is extremely powerful. Once we know how to use it, we can set up a custom theme and apply it with very little effort. However, that’s not an entirely trivial thing to do because there are so many components of every plot, and most people just google whatever adjustment they want to make when the time comes.</p>
+<p>Tweaking each individual part of a theme can be very time consuming, even for experts. Fortunately, there are a range of standard themes built into <strong>ggplot2</strong> that produce publication ready figures. Here’s how to apply a built-in theme:</p>
+<div class="sourceCode" id="cb352"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb352-1"><a href="customising-plots.html#cb352-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins, </span>
+<span id="cb352-2"><a href="customising-plots.html#cb352-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> bill_length_mm, <span class="at">y =</span> bill_depth_mm, <span class="at">colour =</span> species)) <span class="sc">+</span> </span>
+<span id="cb352-3"><a href="customising-plots.html#cb352-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">shape =</span> <span class="dv">17</span>, <span class="at">size =</span> <span class="fl">1.5</span>, <span class="at">alpha =</span> <span class="fl">0.85</span>) <span class="sc">+</span> </span>
+<span id="cb352-4"><a href="customising-plots.html#cb352-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">34</span>, <span class="dv">62</span>, <span class="at">by =</span> <span class="dv">4</span>)) <span class="sc">+</span></span>
+<span id="cb352-5"><a href="customising-plots.html#cb352-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">14</span>, <span class="dv">20</span>, <span class="at">by =</span> <span class="dv">2</span>)) <span class="sc">+</span> </span>
+<span id="cb352-6"><a href="customising-plots.html#cb352-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(</span>
+<span id="cb352-7"><a href="customising-plots.html#cb352-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">values =</span> <span class="fu">c</span>(<span class="st">&quot;cornflowerblue&quot;</span>, <span class="st">&quot;seagreen&quot;</span>, <span class="st">&quot;orangered3&quot;</span>),</span>
+<span id="cb352-8"><a href="customising-plots.html#cb352-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">labels =</span> <span class="fu">c</span>(<span class="at">Adelie =</span> <span class="st">&quot;P. adeliae&quot;</span>, <span class="at">Chinstrap =</span> <span class="st">&quot;P. antarcticus&quot;</span>, <span class="at">Gentoo =</span> <span class="st">&quot;P. papua&quot;</span>)</span>
+<span id="cb352-9"><a href="customising-plots.html#cb352-9" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span> </span>
+<span id="cb352-10"><a href="customising-plots.html#cb352-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Bill length (mm)&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Bill depth (mm)&quot;</span>, <span class="at">colour =</span> <span class="st">&quot;&quot;</span>) <span class="sc">+</span></span>
+<span id="cb352-11"><a href="customising-plots.html#cb352-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>(<span class="at">base_size =</span> <span class="dv">13</span>) <span class="sc">+</span></span>
+<span id="cb352-12"><a href="customising-plots.html#cb352-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb352-13"><a href="customising-plots.html#cb352-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.position =</span> <span class="st">&quot;top&quot;</span>,</span>
+<span id="cb352-14"><a href="customising-plots.html#cb352-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.text =</span> <span class="fu">element_text</span>(<span class="at">face=</span><span class="st">&quot;italic&quot;</span>)</span>
+<span id="cb352-15"><a href="customising-plots.html#cb352-15" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<p><img src="intro-bio-data-book_files/figure-html/unnamed-chunk-204-1.png" width="384" style="display: block; margin: auto;" /></p>
+<p>This uses <code>+</code> with the <code>theme_bw</code> function to add the built-in ‘black and white’ theme. This theme dispenses with the grey background that so many people dislike in <strong>ggplot2</strong>. There are a couple of things to note from this example:</p>
+<ul>
+<li><p>To apply the changes to the legend position, we had to place the <code>theme</code> part <strong>after</strong> we set the overall theme using <code>theme_bw</code>. The <code>theme_bw</code> function will override the <code>theme</code> changes if we try to do it the other way round.</p></li>
+<li><p>We set the <code>base_size</code> argument of <code>theme_bw</code>. This rescales the text in a plot, leaving the relative size of the different elements unchanged. We did not have to do this, but it is worth showing off because it is such a useful trick.</p></li>
+</ul>
+<p>There aren’t that many themes built into <strong>ggplot2</strong>. Here’s a quick look at them:</p>
+<p><img src="intro-bio-data-book_files/figure-html/unnamed-chunk-205-1.png" width="33.3%" /><img src="intro-bio-data-book_files/figure-html/unnamed-chunk-205-2.png" width="33.3%" /><img src="intro-bio-data-book_files/figure-html/unnamed-chunk-205-3.png" width="33.3%" /><img src="intro-bio-data-book_files/figure-html/unnamed-chunk-205-4.png" width="33.3%" /><img src="intro-bio-data-book_files/figure-html/unnamed-chunk-205-5.png" width="33.3%" /><img src="intro-bio-data-book_files/figure-html/unnamed-chunk-205-6.png" width="33.3%" /></p>
+<!--# remember to switch warnings on again -->
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="chapter-ggplot2-intro.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="exploring-one-variable.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["intro-bio-data-book.pdf", "intro-bio-data-book.epub"],
+"toc": {
+"collapse": "section"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

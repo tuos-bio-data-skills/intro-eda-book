@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 12 Exploratory data analysis | Exploratory Data Analysis with R</title>
+  <meta name="description" content="This is the Exploratory Data Analysis in R book provided by the School of Biosciences at the University of Sheffield." />
+  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 12 Exploratory data analysis | Exploratory Data Analysis with R" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="This is the Exploratory Data Analysis in R book provided by the School of Biosciences at the University of Sheffield." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 12 Exploratory data analysis | Exploratory Data Analysis with R" />
+  
+  <meta name="twitter:description" content="This is the Exploratory Data Analysis in R book provided by the School of Biosciences at the University of Sheffield." />
+  
+
+<meta name="author" content="Dylan Childs" />
+
+
+<meta name="date" content="2021-04-17" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="helper-functions.html"/>
+<link rel="next" href="chapter-ggplot2-intro.html"/>
+<script src="libs/header-attrs-2.7/header-attrs.js"></script>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<link href="libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet" />
+<script src="libs/pagedtable-1.1/js/pagedtable.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Exploratory Data Analysis with R</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>What you will learn</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#aims"><i class="fa fa-check"></i>Aims</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#topics"><i class="fa fa-check"></i>Topics</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#technologies"><i class="fa fa-check"></i>Technologies</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#what-is-r"><i class="fa fa-check"></i>What is R?</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#what-is-rstudio"><i class="fa fa-check"></i>What is RStudio?</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="how-to-use-this-book.html"><a href="how-to-use-this-book.html"><i class="fa fa-check"></i>How to use this book</a>
+<ul>
+<li class="chapter" data-level="" data-path="how-to-use-this-book.html"><a href="how-to-use-this-book.html#text-instructions-and-explanations"><i class="fa fa-check"></i>Text, instructions, and explanations</a></li>
+<li class="chapter" data-level="" data-path="how-to-use-this-book.html"><a href="how-to-use-this-book.html#r-code-and-output"><i class="fa fa-check"></i>R code and output</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="get-up-and-running.html"><a href="get-up-and-running.html"><i class="fa fa-check"></i>Get up and running</a>
+<ul>
+<li class="chapter" data-level="" data-path="get-up-and-running.html"><a href="get-up-and-running.html#different-ways-to-run-rstudio"><i class="fa fa-check"></i>Different ways to run RStudio</a></li>
+<li class="chapter" data-level="" data-path="get-up-and-running.html"><a href="get-up-and-running.html#installing-r-and-rstudio-locally"><i class="fa fa-check"></i>Installing R and RStudio locally</a>
+<ul>
+<li class="chapter" data-level="" data-path="get-up-and-running.html"><a href="get-up-and-running.html#installing-rstudio"><i class="fa fa-check"></i>Installing RStudio</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="get-up-and-running.html"><a href="get-up-and-running.html#a-quick-look-at-rstudio"><i class="fa fa-check"></i>A quick look at RStudio</a></li>
+<li class="chapter" data-level="" data-path="get-up-and-running.html"><a href="get-up-and-running.html#working-at-console"><i class="fa fa-check"></i>Working at the Console in RStudio</a></li>
+</ul></li>
+<li class="part"><span><b>I Introduction to R</b></span></li>
+<li class="chapter" data-level="1" data-path="quick-intro-to-r.html"><a href="quick-intro-to-r.html"><i class="fa fa-check"></i><b>1</b> A quick introduction to R</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="quick-intro-to-r.html"><a href="quick-intro-to-r.html#r-calculator"><i class="fa fa-check"></i><b>1.1</b> Using R as a big calculator</a>
+<ul>
+<li class="chapter" data-level="1.1.1" data-path="quick-intro-to-r.html"><a href="quick-intro-to-r.html#basic-arithmetic"><i class="fa fa-check"></i><b>1.1.1</b> Basic arithmetic</a></li>
+<li class="chapter" data-level="1.1.2" data-path="quick-intro-to-r.html"><a href="quick-intro-to-r.html#combining-arithmetic-operations"><i class="fa fa-check"></i><b>1.1.2</b> Combining arithmetic operations</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="quick-intro-to-r.html"><a href="quick-intro-to-r.html#problematic-calculations"><i class="fa fa-check"></i><b>1.2</b> Problematic calculations</a></li>
+<li class="chapter" data-level="1.3" data-path="quick-intro-to-r.html"><a href="quick-intro-to-r.html#assignment"><i class="fa fa-check"></i><b>1.3</b> Storing and reusing results</a></li>
+<li class="chapter" data-level="1.4" data-path="quick-intro-to-r.html"><a href="quick-intro-to-r.html#how-does-assignment-work"><i class="fa fa-check"></i><b>1.4</b> How does assignment work?</a></li>
+<li class="chapter" data-level="1.5" data-path="quick-intro-to-r.html"><a href="quick-intro-to-r.html#global-environment"><i class="fa fa-check"></i><b>1.5</b> Global environment</a></li>
+<li class="chapter" data-level="1.6" data-path="quick-intro-to-r.html"><a href="quick-intro-to-r.html#naming-rules-and-conventions"><i class="fa fa-check"></i><b>1.6</b> Naming rules and conventions</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="using-functions.html"><a href="using-functions.html"><i class="fa fa-check"></i><b>2</b> Using functions</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="using-functions.html"><a href="using-functions.html#intro-functions"><i class="fa fa-check"></i><b>2.1</b> Introduction</a></li>
+<li class="chapter" data-level="2.2" data-path="using-functions.html"><a href="using-functions.html#functions-and-arguments"><i class="fa fa-check"></i><b>2.2</b> Functions and arguments</a></li>
+<li class="chapter" data-level="2.3" data-path="using-functions.html"><a href="using-functions.html#evaluating-arguments-and-returning-results"><i class="fa fa-check"></i><b>2.3</b> Evaluating arguments and returning results</a></li>
+<li class="chapter" data-level="2.4" data-path="using-functions.html"><a href="using-functions.html#function-arguments"><i class="fa fa-check"></i><b>2.4</b> Specifying function arguments</a></li>
+<li class="chapter" data-level="2.5" data-path="using-functions.html"><a href="using-functions.html#combining-functions"><i class="fa fa-check"></i><b>2.5</b> Combining functions</a></li>
+<li class="chapter" data-level="2.6" data-path="using-functions.html"><a href="using-functions.html#functions-do-not-have-side-effects"><i class="fa fa-check"></i><b>2.6</b> Functions do not have ‘side effects’</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="vectors.html"><a href="vectors.html"><i class="fa fa-check"></i><b>3</b> Vectors</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="vectors.html"><a href="vectors.html#introduction"><i class="fa fa-check"></i><b>3.1</b> Introduction</a></li>
+<li class="chapter" data-level="3.2" data-path="vectors.html"><a href="vectors.html#atomic-vectors"><i class="fa fa-check"></i><b>3.2</b> Atomic vectors</a></li>
+<li class="chapter" data-level="3.3" data-path="vectors.html"><a href="vectors.html#intro-vectors"><i class="fa fa-check"></i><b>3.3</b> Numeric vectors</a></li>
+<li class="chapter" data-level="3.4" data-path="vectors.html"><a href="vectors.html#constructing-numeric-vectors"><i class="fa fa-check"></i><b>3.4</b> Constructing numeric vectors</a></li>
+<li class="chapter" data-level="3.5" data-path="vectors.html"><a href="vectors.html#named-vectors"><i class="fa fa-check"></i><b>3.5</b> Named vectors</a></li>
+<li class="chapter" data-level="3.6" data-path="vectors.html"><a href="vectors.html#vectorised-operations"><i class="fa fa-check"></i><b>3.6</b> Vectorised operations</a></li>
+<li class="chapter" data-level="3.7" data-path="vectors.html"><a href="vectors.html#other-vectors"><i class="fa fa-check"></i><b>3.7</b> Other kinds of atomic vectors</a>
+<ul>
+<li class="chapter" data-level="3.7.1" data-path="vectors.html"><a href="vectors.html#character-vectors"><i class="fa fa-check"></i><b>3.7.1</b> Character vectors</a></li>
+<li class="chapter" data-level="3.7.2" data-path="vectors.html"><a href="vectors.html#logical-vectors"><i class="fa fa-check"></i><b>3.7.2</b> Logical vectors</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="chapter-data-frames.html"><a href="chapter-data-frames.html"><i class="fa fa-check"></i><b>4</b> Data frames</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="chapter-data-frames.html"><a href="chapter-data-frames.html#introduction-1"><i class="fa fa-check"></i><b>4.1</b> Introduction</a></li>
+<li class="chapter" data-level="4.2" data-path="chapter-data-frames.html"><a href="chapter-data-frames.html#data-frames-intro"><i class="fa fa-check"></i><b>4.2</b> Data frames</a></li>
+<li class="chapter" data-level="4.3" data-path="chapter-data-frames.html"><a href="chapter-data-frames.html#exploring-data-frames"><i class="fa fa-check"></i><b>4.3</b> Exploring data frames</a></li>
+<li class="chapter" data-level="4.4" data-path="chapter-data-frames.html"><a href="chapter-data-frames.html#extracting-and-adding-a-single-variable"><i class="fa fa-check"></i><b>4.4</b> Extracting and adding a single variable</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="packages.html"><a href="packages.html"><i class="fa fa-check"></i><b>5</b> Packages</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="packages.html"><a href="packages.html#package-system"><i class="fa fa-check"></i><b>5.1</b> The R package system</a></li>
+<li class="chapter" data-level="5.2" data-path="packages.html"><a href="packages.html#task-views"><i class="fa fa-check"></i><b>5.2</b> Task views</a></li>
+<li class="chapter" data-level="5.3" data-path="packages.html"><a href="packages.html#use-packages"><i class="fa fa-check"></i><b>5.3</b> Using packages</a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="packages.html"><a href="packages.html#viewing-installed-packages"><i class="fa fa-check"></i><b>5.3.1</b> Viewing installed packages</a></li>
+<li class="chapter" data-level="5.3.2" data-path="packages.html"><a href="packages.html#installing-packages"><i class="fa fa-check"></i><b>5.3.2</b> Installing packages</a></li>
+<li class="chapter" data-level="5.3.3" data-path="packages.html"><a href="packages.html#loading-and-attaching-packages"><i class="fa fa-check"></i><b>5.3.3</b> Loading and attaching packages</a></li>
+<li class="chapter" data-level="5.3.4" data-path="packages.html"><a href="packages.html#dont-use-rstudio-for-loading-packages"><i class="fa fa-check"></i><b>5.3.4</b> Don’t use RStudio for loading packages!</a></li>
+<li class="chapter" data-level="5.3.5" data-path="packages.html"><a href="packages.html#an-analogy"><i class="fa fa-check"></i><b>5.3.5</b> An analogy</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="packages.html"><a href="packages.html#package-data"><i class="fa fa-check"></i><b>5.4</b> Package data</a></li>
+<li class="chapter" data-level="5.5" data-path="packages.html"><a href="packages.html#the-tidyverse-ecosystem-of-packages"><i class="fa fa-check"></i><b>5.5</b> The tidyverse ecosystem of packages</a></li>
+</ul></li>
+<li class="part"><span><b>II Data Wrangling</b></span></li>
+<li class="chapter" data-level="6" data-path="getting-ready-to-use-dplyr.html"><a href="getting-ready-to-use-dplyr.html"><i class="fa fa-check"></i><b>6</b> Getting ready to use <strong>dplyr</strong></a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="getting-ready-to-use-dplyr.html"><a href="getting-ready-to-use-dplyr.html#introduction-2"><i class="fa fa-check"></i><b>6.1</b> Introduction</a></li>
+<li class="chapter" data-level="6.2" data-path="getting-ready-to-use-dplyr.html"><a href="getting-ready-to-use-dplyr.html#tidy-data"><i class="fa fa-check"></i><b>6.2</b> Tidy data</a></li>
+<li class="chapter" data-level="6.3" data-path="getting-ready-to-use-dplyr.html"><a href="getting-ready-to-use-dplyr.html#penguins-data-overview"><i class="fa fa-check"></i><b>6.3</b> Penguins! 🐧+📊= 😃</a></li>
+<li class="chapter" data-level="6.4" data-path="getting-ready-to-use-dplyr.html"><a href="getting-ready-to-use-dplyr.html#um-tibbles"><i class="fa fa-check"></i><b>6.4</b> Um… tibbles?</a></li>
+<li class="chapter" data-level="6.5" data-path="getting-ready-to-use-dplyr.html"><a href="getting-ready-to-use-dplyr.html#missing-values"><i class="fa fa-check"></i><b>6.5</b> Missing values</a></li>
+<li class="chapter" data-level="6.6" data-path="getting-ready-to-use-dplyr.html"><a href="getting-ready-to-use-dplyr.html#why-dplyr"><i class="fa fa-check"></i><b>6.6</b> Introducing <strong>dplyr</strong></a>
+<ul>
+<li class="chapter" data-level="6.6.1" data-path="getting-ready-to-use-dplyr.html"><a href="getting-ready-to-use-dplyr.html#more-dplyr"><i class="fa fa-check"></i><b>6.6.1</b> A first look at <strong>dplyr</strong></a></li>
+<li class="chapter" data-level="6.6.2" data-path="getting-ready-to-use-dplyr.html"><a href="getting-ready-to-use-dplyr.html#dplyr-pseudocode"><i class="fa fa-check"></i><b>6.6.2</b> <strong>dplyr</strong> pseudocode</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="working-with-variables.html"><a href="working-with-variables.html"><i class="fa fa-check"></i><b>7</b> Working with variables</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="working-with-variables.html"><a href="working-with-variables.html#introduction-3"><i class="fa fa-check"></i><b>7.1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="7.1.1" data-path="working-with-variables.html"><a href="working-with-variables.html#getting-ready"><i class="fa fa-check"></i><b>7.1.1</b> Getting ready</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="working-with-variables.html"><a href="working-with-variables.html#subset-variables-with-select"><i class="fa fa-check"></i><b>7.2</b> Subset variables with <code>select</code></a>
+<ul>
+<li class="chapter" data-level="7.2.1" data-path="working-with-variables.html"><a href="working-with-variables.html#alternative-ways-to-identify-variables-with-select"><i class="fa fa-check"></i><b>7.2.1</b> Alternative ways to identify variables with <code>select</code></a></li>
+<li class="chapter" data-level="7.2.2" data-path="working-with-variables.html"><a href="working-with-variables.html#renaming-variables-with-select-and-rename"><i class="fa fa-check"></i><b>7.2.2</b> Renaming variables with <code>select</code> and <code>rename</code></a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="working-with-variables.html"><a href="working-with-variables.html#creating-variables-with-mutate"><i class="fa fa-check"></i><b>7.3</b> Creating variables with <code>mutate</code></a>
+<ul>
+<li class="chapter" data-level="7.3.1" data-path="working-with-variables.html"><a href="working-with-variables.html#transforming-and-dropping-variables"><i class="fa fa-check"></i><b>7.3.1</b> Transforming and dropping variables</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="working-with-observations.html"><a href="working-with-observations.html"><i class="fa fa-check"></i><b>8</b> Working with observations</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="working-with-observations.html"><a href="working-with-observations.html#introduction-4"><i class="fa fa-check"></i><b>8.1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="8.1.1" data-path="working-with-observations.html"><a href="working-with-observations.html#getting-ready-1"><i class="fa fa-check"></i><b>8.1.1</b> Getting ready</a></li>
+</ul></li>
+<li class="chapter" data-level="8.2" data-path="working-with-observations.html"><a href="working-with-observations.html#relational-and-logical-operators"><i class="fa fa-check"></i><b>8.2</b> Relational and logical operators</a></li>
+<li class="chapter" data-level="8.3" data-path="working-with-observations.html"><a href="working-with-observations.html#subset-observations-with-filter"><i class="fa fa-check"></i><b>8.3</b> Subset observations with <code>filter</code></a></li>
+<li class="chapter" data-level="8.4" data-path="working-with-observations.html"><a href="working-with-observations.html#reordering-observations-with-arrange"><i class="fa fa-check"></i><b>8.4</b> Reordering observations with <code>arrange</code></a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="summarising-and-grouping.html"><a href="summarising-and-grouping.html"><i class="fa fa-check"></i><b>9</b> Summarising and grouping</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="summarising-and-grouping.html"><a href="summarising-and-grouping.html#summarising-variables-with-summarise"><i class="fa fa-check"></i><b>9.1</b> Summarising variables with <code>summarise</code></a>
+<ul>
+<li class="chapter" data-level="9.1.1" data-path="summarising-and-grouping.html"><a href="summarising-and-grouping.html#more-complicated-calculations-with-summarise"><i class="fa fa-check"></i><b>9.1.1</b> More complicated calculations with <code>summarise</code></a></li>
+</ul></li>
+<li class="chapter" data-level="9.2" data-path="summarising-and-grouping.html"><a href="summarising-and-grouping.html#grouped-operations-using-group_by"><i class="fa fa-check"></i><b>9.2</b> Grouped operations using <code>group_by</code></a>
+<ul>
+<li class="chapter" data-level="9.2.1" data-path="summarising-and-grouping.html"><a href="summarising-and-grouping.html#more-than-one-grouping-variable"><i class="fa fa-check"></i><b>9.2.1</b> More than one grouping variable</a></li>
+<li class="chapter" data-level="9.2.2" data-path="summarising-and-grouping.html"><a href="summarising-and-grouping.html#using-group_by-with-other-verbs"><i class="fa fa-check"></i><b>9.2.2</b> Using <code>group_by</code> with other verbs</a></li>
+</ul></li>
+<li class="chapter" data-level="9.3" data-path="summarising-and-grouping.html"><a href="summarising-and-grouping.html#removing-grouping-information"><i class="fa fa-check"></i><b>9.3</b> Removing grouping information</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="building-pipelines.html"><a href="building-pipelines.html"><i class="fa fa-check"></i><b>10</b> Building pipelines</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="building-pipelines.html"><a href="building-pipelines.html#why-do-we-need-pipes"><i class="fa fa-check"></i><b>10.1</b> Why do we need ‘pipes?’</a></li>
+<li class="chapter" data-level="10.2" data-path="building-pipelines.html"><a href="building-pipelines.html#using-pipes"><i class="fa fa-check"></i><b>10.2</b> Using pipes (<code>%&gt;%</code>)</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="helper-functions.html"><a href="helper-functions.html"><i class="fa fa-check"></i><b>11</b> Helper functions</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="helper-functions.html"><a href="helper-functions.html#introduction-5"><i class="fa fa-check"></i><b>11.1</b> Introduction</a></li>
+<li class="chapter" data-level="11.2" data-path="helper-functions.html"><a href="helper-functions.html#working-with-select"><i class="fa fa-check"></i><b>11.2</b> Working with <code>select</code></a></li>
+<li class="chapter" data-level="11.3" data-path="helper-functions.html"><a href="helper-functions.html#working-with-mutate-and-transmute"><i class="fa fa-check"></i><b>11.3</b> Working with <code>mutate</code> and <code>transmute</code></a></li>
+<li class="chapter" data-level="11.4" data-path="helper-functions.html"><a href="helper-functions.html#working-with-filter"><i class="fa fa-check"></i><b>11.4</b> Working with <code>filter</code></a></li>
+<li class="chapter" data-level="11.5" data-path="helper-functions.html"><a href="helper-functions.html#working-with-summarise"><i class="fa fa-check"></i><b>11.5</b> Working with <code>summarise</code></a></li>
+</ul></li>
+<li class="part"><span><b>III Exporing Data</b></span></li>
+<li class="chapter" data-level="12" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html"><i class="fa fa-check"></i><b>12</b> Exploratory data analysis</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#introduction-6"><i class="fa fa-check"></i><b>12.1</b> Introduction</a></li>
+<li class="chapter" data-level="12.2" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#variables"><i class="fa fa-check"></i><b>12.2</b> Statistical variables and data</a>
+<ul>
+<li class="chapter" data-level="12.2.1" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#numeric-vs-categorical-variables"><i class="fa fa-check"></i><b>12.2.1</b> Numeric vs categorical variables</a></li>
+<li class="chapter" data-level="12.2.2" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#ratio-vs-interval-scales"><i class="fa fa-check"></i><b>12.2.2</b> Ratio vs interval scales</a></li>
+</ul></li>
+<li class="chapter" data-level="12.3" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#populations-samples"><i class="fa fa-check"></i><b>12.3</b> Populations and samples</a>
+<ul>
+<li class="chapter" data-level="12.3.1" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#sample-distributions"><i class="fa fa-check"></i><b>12.3.1</b> Sample distributions</a></li>
+<li class="chapter" data-level="12.3.2" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#associations"><i class="fa fa-check"></i><b>12.3.2</b> Associations</a></li>
+</ul></li>
+<li class="chapter" data-level="12.4" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#types-of-eda"><i class="fa fa-check"></i><b>12.4</b> Types of EDA</a></li>
+<li class="chapter" data-level="12.5" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#a-primer-of-descriptive-statistics"><i class="fa fa-check"></i><b>12.5</b> A primer of descriptive statistics</a>
+<ul>
+<li class="chapter" data-level="12.5.1" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#numeric-variables"><i class="fa fa-check"></i><b>12.5.1</b> Numeric variables</a></li>
+<li class="chapter" data-level="12.5.2" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#categorical-variables"><i class="fa fa-check"></i><b>12.5.2</b> Categorical variables</a></li>
+<li class="chapter" data-level="12.5.3" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#associations-1"><i class="fa fa-check"></i><b>12.5.3</b> Associations</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="chapter-ggplot2-intro.html"><a href="chapter-ggplot2-intro.html"><i class="fa fa-check"></i><b>13</b> Introduction to <strong>ggplot2</strong></a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="chapter-ggplot2-intro.html"><a href="chapter-ggplot2-intro.html#anatomy"><i class="fa fa-check"></i><b>13.1</b> The anatomy of ggplot2</a>
+<ul>
+<li class="chapter" data-level="13.1.1" data-path="chapter-ggplot2-intro.html"><a href="chapter-ggplot2-intro.html#layers"><i class="fa fa-check"></i><b>13.1.1</b> Layers</a></li>
+<li class="chapter" data-level="13.1.2" data-path="chapter-ggplot2-intro.html"><a href="chapter-ggplot2-intro.html#scales"><i class="fa fa-check"></i><b>13.1.2</b> Scales</a></li>
+<li class="chapter" data-level="13.1.3" data-path="chapter-ggplot2-intro.html"><a href="chapter-ggplot2-intro.html#coordinate-system"><i class="fa fa-check"></i><b>13.1.3</b> Coordinate system</a></li>
+<li class="chapter" data-level="13.1.4" data-path="chapter-ggplot2-intro.html"><a href="chapter-ggplot2-intro.html#faceting"><i class="fa fa-check"></i><b>13.1.4</b> Faceting</a></li>
+</ul></li>
+<li class="chapter" data-level="13.2" data-path="chapter-ggplot2-intro.html"><a href="chapter-ggplot2-intro.html#quick"><i class="fa fa-check"></i><b>13.2</b> A quick introduction to ggplot2</a>
+<ul>
+<li class="chapter" data-level="13.2.1" data-path="chapter-ggplot2-intro.html"><a href="chapter-ggplot2-intro.html#making-a-start"><i class="fa fa-check"></i><b>13.2.1</b> Making a start</a></li>
+</ul></li>
+<li class="chapter" data-level="13.3" data-path="chapter-ggplot2-intro.html"><a href="chapter-ggplot2-intro.html#a-standard-way-of-using-ggplot2"><i class="fa fa-check"></i><b>13.3</b> A standard way of using <strong>ggplot2</strong></a>
+<ul>
+<li class="chapter" data-level="13.3.1" data-path="chapter-ggplot2-intro.html"><a href="chapter-ggplot2-intro.html#how-should-we-format-ggplot2-code"><i class="fa fa-check"></i><b>13.3.1</b> How should we format <strong>ggplot2</strong> code?</a></li>
+</ul></li>
+<li class="chapter" data-level="13.4" data-path="chapter-ggplot2-intro.html"><a href="chapter-ggplot2-intro.html#increasing-the-information-density"><i class="fa fa-check"></i><b>13.4</b> Increasing the information density…</a>
+<ul>
+<li class="chapter" data-level="13.4.1" data-path="chapter-ggplot2-intro.html"><a href="chapter-ggplot2-intro.html#via-aesthetic-mappings"><i class="fa fa-check"></i><b>13.4.1</b> …via aesthetic mappings</a></li>
+<li class="chapter" data-level="13.4.2" data-path="chapter-ggplot2-intro.html"><a href="chapter-ggplot2-intro.html#via-facets"><i class="fa fa-check"></i><b>13.4.2</b> …via facets</a></li>
+<li class="chapter" data-level="13.4.3" data-path="chapter-ggplot2-intro.html"><a href="chapter-ggplot2-intro.html#via-multiple-layers"><i class="fa fa-check"></i><b>13.4.3</b> …via multiple layers</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="chapter-customise-ggplot2.html"><a href="chapter-customise-ggplot2.html"><i class="fa fa-check"></i><b>14</b> Customising plots</a>
+<ul>
+<li class="chapter" data-level="14.1" data-path="chapter-customise-ggplot2.html"><a href="chapter-customise-ggplot2.html#geom-properties"><i class="fa fa-check"></i><b>14.1</b> Geom properties</a>
+<ul>
+<li class="chapter" data-level="14.1.1" data-path="chapter-customise-ggplot2.html"><a href="chapter-customise-ggplot2.html#relationship-between-aesthetic-mappings-and-geom-properties"><i class="fa fa-check"></i><b>14.1.1</b> Relationship between aesthetic mappings and geom properties</a></li>
+</ul></li>
+<li class="chapter" data-level="14.2" data-path="chapter-customise-ggplot2.html"><a href="chapter-customise-ggplot2.html#plot-scales"><i class="fa fa-check"></i><b>14.2</b> Plot scales</a></li>
+<li class="chapter" data-level="14.3" data-path="chapter-customise-ggplot2.html"><a href="chapter-customise-ggplot2.html#labels"><i class="fa fa-check"></i><b>14.3</b> Labels</a></li>
+<li class="chapter" data-level="14.4" data-path="chapter-customise-ggplot2.html"><a href="chapter-customise-ggplot2.html#themes"><i class="fa fa-check"></i><b>14.4</b> Themes</a></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="exploring-one-variable.html"><a href="exploring-one-variable.html"><i class="fa fa-check"></i><b>15</b> Exploring one variable</a>
+<ul>
+<li class="chapter" data-level="15.1" data-path="exploring-one-variable.html"><a href="exploring-one-variable.html#explore-numeric"><i class="fa fa-check"></i><b>15.1</b> Exploring numerical variables</a>
+<ul>
+<li class="chapter" data-level="15.1.1" data-path="exploring-one-variable.html"><a href="exploring-one-variable.html#what-kind-of-numeric-variable"><i class="fa fa-check"></i><b>15.1.1</b> What kind of numeric variable?</a></li>
+<li class="chapter" data-level="15.1.2" data-path="exploring-one-variable.html"><a href="exploring-one-variable.html#histograms"><i class="fa fa-check"></i><b>15.1.2</b> Histograms</a></li>
+<li class="chapter" data-level="15.1.3" data-path="exploring-one-variable.html"><a href="exploring-one-variable.html#dot-plots"><i class="fa fa-check"></i><b>15.1.3</b> Dot plots</a></li>
+</ul></li>
+<li class="chapter" data-level="15.2" data-path="exploring-one-variable.html"><a href="exploring-one-variable.html#explore-categorical"><i class="fa fa-check"></i><b>15.2</b> Exploring categorical variables</a>
+<ul>
+<li class="chapter" data-level="15.2.1" data-path="exploring-one-variable.html"><a href="exploring-one-variable.html#what-kind-of-categorical-variable"><i class="fa fa-check"></i><b>15.2.1</b> What kind of categorical variable?</a></li>
+<li class="chapter" data-level="15.2.2" data-path="exploring-one-variable.html"><a href="exploring-one-variable.html#bar-plots"><i class="fa fa-check"></i><b>15.2.2</b> Bar plots</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="16" data-path="exploring-associations.html"><a href="exploring-associations.html"><i class="fa fa-check"></i><b>16</b> Exploring associations</a>
+<ul>
+<li class="chapter" data-level="16.1" data-path="exploring-associations.html"><a href="exploring-associations.html#numeric-association"><i class="fa fa-check"></i><b>16.1</b> Associations between numeric variables</a></li>
+<li class="chapter" data-level="16.2" data-path="exploring-associations.html"><a href="exploring-associations.html#categorical-association"><i class="fa fa-check"></i><b>16.2</b> Associations between categorical variables</a></li>
+<li class="chapter" data-level="16.3" data-path="exploring-associations.html"><a href="exploring-associations.html#cat-num-association"><i class="fa fa-check"></i><b>16.3</b> Categorical-numerical associations</a>
+<ul>
+<li class="chapter" data-level="16.3.1" data-path="exploring-associations.html"><a href="exploring-associations.html#alternatives-to-box-and-whiskers-plots"><i class="fa fa-check"></i><b>16.3.1</b> Alternatives to box and whiskers plots</a></li>
+</ul></li>
+<li class="chapter" data-level="16.4" data-path="exploring-associations.html"><a href="exploring-associations.html#multivariate"><i class="fa fa-check"></i><b>16.4</b> Multivariate associations</a></li>
+</ul></li>
+<li class="chapter" data-level="17" data-path="doing-more-with-ggplot2.html"><a href="doing-more-with-ggplot2.html"><i class="fa fa-check"></i><b>17</b> Doing more with <strong>ggplot2</strong></a>
+<ul>
+<li class="chapter" data-level="17.1" data-path="doing-more-with-ggplot2.html"><a href="doing-more-with-ggplot2.html#summaries"><i class="fa fa-check"></i><b>17.1</b> Comparing descriptive statistics</a>
+<ul>
+<li class="chapter" data-level="17.1.1" data-path="doing-more-with-ggplot2.html"><a href="doing-more-with-ggplot2.html#error-bars"><i class="fa fa-check"></i><b>17.1.1</b> Error bars</a></li>
+<li class="chapter" data-level="17.1.2" data-path="doing-more-with-ggplot2.html"><a href="doing-more-with-ggplot2.html#alternatives-to-bar-plots"><i class="fa fa-check"></i><b>17.1.2</b> Alternatives to bar plots</a></li>
+</ul></li>
+<li class="chapter" data-level="17.2" data-path="doing-more-with-ggplot2.html"><a href="doing-more-with-ggplot2.html#adding-text-annotations"><i class="fa fa-check"></i><b>17.2</b> Adding text annotations</a></li>
+<li class="chapter" data-level="17.3" data-path="doing-more-with-ggplot2.html"><a href="doing-more-with-ggplot2.html#saving-plots"><i class="fa fa-check"></i><b>17.3</b> Saving plots</a></li>
+<li class="chapter" data-level="17.4" data-path="doing-more-with-ggplot2.html"><a href="doing-more-with-ggplot2.html#multi-panel-plots"><i class="fa fa-check"></i><b>17.4</b> Multi-panel plots</a></li>
+</ul></li>
+<li class="appendix"><span><b>Supplementary Material</b></span></li>
+<li class="chapter" data-level="A" data-path="getting-help.html"><a href="getting-help.html"><i class="fa fa-check"></i><b>A</b> Getting help</a>
+<ul>
+<li class="chapter" data-level="A.1" data-path="getting-help.html"><a href="getting-help.html#console-help"><i class="fa fa-check"></i><b>A.1</b> Introduction</a></li>
+<li class="chapter" data-level="A.2" data-path="getting-help.html"><a href="getting-help.html#browsing-the-help-system"><i class="fa fa-check"></i><b>A.2</b> Browsing the help system</a></li>
+<li class="chapter" data-level="A.3" data-path="getting-help.html"><a href="getting-help.html#searching-for-help-files"><i class="fa fa-check"></i><b>A.3</b> Searching for help files</a></li>
+<li class="chapter" data-level="A.4" data-path="getting-help.html"><a href="getting-help.html#nav-help"><i class="fa fa-check"></i><b>A.4</b> Navigating help files</a></li>
+<li class="chapter" data-level="A.5" data-path="getting-help.html"><a href="getting-help.html#vignettes"><i class="fa fa-check"></i><b>A.5</b> Vignettes and demos</a></li>
+</ul></li>
+<li class="chapter" data-level="B" data-path="project-scripts-data.html"><a href="project-scripts-data.html"><i class="fa fa-check"></i><b>B</b> Managing projects, scripts and data files</a></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Exploratory Data Analysis with R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="exploratory-data-analysis" class="section level1" number="12">
+<h1><span class="header-section-number">Chapter 12</span> Exploratory data analysis</h1>
+<div id="introduction-6" class="section level2" number="12.1">
+<h2><span class="header-section-number">12.1</span> Introduction</h2>
+<p>Exploratory data analysis (EDA) was promoted by the statistician John Tukey in his 1977 book, “Exploratory Data Analysis.” The broad goal of EDA is to help us formulate and refine hypotheses that lead to informative analyses or further data collection. The core objectives of EDA are:</p>
+<ul>
+<li>to suggest hypotheses about the causes of observed phenomena,</li>
+<li>to guide the selection of appropriate statistical tools and techniques,</li>
+<li>to assess the assumptions on which statistical analysis will be based,</li>
+<li>to provide a foundation for further data collection.</li>
+</ul>
+<p>EDA involves a mix of numerical and visual methods of analysis. Statistical methods are sometimes used to supplement EDA. However, the main purpose of EDA is to facilitate understanding before carrying out formal statistical modelling. Even if we already know what kind of analysis we plan to pursue, it’s always a good idea to <strong>explore a data set before diving into that analysis</strong>. At the very least, this will help determine whether or not our plans are sensible. Very often, it uncovers new patterns and insights.</p>
+<p>In this chapter, we’re going to examine some basic concepts that underpin EDA. We will:</p>
+<ol style="list-style-type: decimal">
+<li>see how to classify different <strong>types of variables</strong>,</li>
+<li>distinguish between <strong>populations and samples</strong>, and</li>
+<li>review some key <strong>descriptive statistics</strong>.</li>
+</ol>
+<p>This will provide a conceptual foundation and vocabulary for learning how to explore data in later chapters.</p>
+</div>
+<div id="variables" class="section level2" number="12.2">
+<h2><span class="header-section-number">12.2</span> Statistical variables and data</h2>
+<p>In the <a href="chapter-data-frames.html#chapter-data-frames">Data frames</a> chapter, we pointed out that the word ‘variable’ can mean one of two things. In programming, a variable is a name-value association that we create when we run some code. Statisticians use the word differently. To them, a variable is any characteristic or quantity that can be measured, classified or experimentally controlled. Much of statistics is about quantifying and explaining the variation in such quantities as best we can.</p>
+<p>Species richness, relative abundance, infection status, enzyme activity, gene frequency, and blood glucose concentration are examples of statistical variables we encounter in the biological sciences. These as statistical variables because their values vary between different observations. For instance, ‘annual fitness’—measured as the number of offspring produced—is a variable that differs both among the organisms in a population and over the life cycle of a given individual.</p>
+<p>There are different ways to describe statistical variables according to how they can be analysed, measured, or presented. It’s important to be clear about what kind of variables we’re dealing with because this determines how we should visualise the data, and later, how we might analyse it statistically. There are many different ways to go about classifying variables. However, we only need to be aware of two fairly simple classification schemes in this book: numeric vs categorical variables and ratio vs interval scales.</p>
+<div id="numeric-vs-categorical-variables" class="section level3" number="12.2.1">
+<h3><span class="header-section-number">12.2.1</span> Numeric vs categorical variables</h3>
+<p><strong>Numeric variables</strong> have values that describe a measurable quantity like ‘how many’ or ‘how much’ as a number. Numeric variables are also called quantitative variables; the data collected containing numeric variables are called quantitative data. Numeric variables may be classified as either continuous or discrete:</p>
+<ul>
+<li><p><strong>Continuous numeric variable</strong>: Observations can take any value in a set of real numbers, i.e. numbers represented with decimals. Examples of continuous variables include concentration, mass, age, time, and temperature. The set of numbers a continuous variable takes is typically either ‘every possible number’ or ‘just positive numbers.’ For example, a concentration may be very large or very small, but it is strictly positive, whereas a change in concentration can be positive or negative.</p></li>
+<li><p><strong>Discrete numeric variable</strong>: Observations can take a value based on a count from a set of whole values, e.g. 1, 2, 3, 4, 5, and so on. A discrete variable cannot take the value of a fraction between one value and the next closest value. Examples of discrete variables include the number of individuals in a population, the number of offspring produced (‘reproductive fitness’), and the number of infected individuals in an experiment. All of these are measured as whole units.</p></li>
+</ul>
+<p><strong>Categorical variables</strong> take values that describe a characteristic of a data unit, like ‘what type’ or ‘which category.’ Categorical variables fall into mutually exclusive (in one category or in another) and exhaustive (include all possible options) categories. Categorical variables are qualitative variables and tend to be represented by a non-numeric value; the data collected for a categorical variable are called qualitative data. Categorical variables may be further described as ordinal or nominal:</p>
+<ul>
+<li><p><strong>Ordinal variable</strong>: Categories can be logically ordered or ranked. The categories associated with ordinal variables can be ranked higher or lower than another but do not necessarily establish a numeric difference between each category. Examples of ordinal categorical variables include academic grades (e.g. A, B, C) and size classes (e.g. small, medium, large).</p></li>
+<li><p><strong>Nominal variable</strong>: Categories cannot be organised into a logical sequence. Examples of nominal categorical variables include sex (see <em>C. elegans</em> example), human blood group (A, B, AB and O), genotype (e.g. AA, Aa, aa), experimental conditions (e.g. control vs enhanced nutrition), and mortality status (alive vs dead).</p></li>
+</ul>
+<div id="do-not-use-numbers-to-classify-categorical-variables" class="section level4 unnumbered infobox warning">
+<h4>Do not use numbers to classify categorical variables</h4>
+<p>Be careful when classifying variables. It can be dangerous to assume that just because a numerical scheme has been used to describe a variable, it must not be categorical. There is nothing to stop someone from using numbers to describe a categorical variable (e.g. <em>C. elegans</em> sex: Male = 1, Hermaphrodite = 2). That said, although we can use numbers to describe categories, it does not mean we should. Using numbers gets confusing and can lead to mistakes. It is much clearer to use a non-numeric recording scheme based on words or acronyms to record categorical variables (e.g. <em>C. elegans</em> sex: Male = “Male,” Hermaphrodite = “Herm”).</p>
+</div>
+</div>
+<div id="ratio-vs-interval-scales" class="section level3" number="12.2.2">
+<h3><span class="header-section-number">12.2.2</span> Ratio vs interval scales</h3>
+<p>A second way of classifying numeric variables (<strong>not</strong> categorical variables) relates to the scale they are measured on. The measurement scale is important because it determines how we interpret things like differences, ratios, and variability.</p>
+<ul>
+<li><p><strong>Ratio scale</strong>: This scale does possess a meaningful zero value. It gets its name from the fact that a measurement on this scale represents a ratio between a measure of the magnitude of a quantity and a unit of the same kind. What this means in simple terms is that it is meaningful to say that something is “twice as …” as something else when working with a variable measured on a ratio scales. Ratio scales most often appear when we work with physical quantities. For example, we can say that one tree is twice as big as another or that one elephant has twice the mass of another because length and mass are measured on ratio scales.</p></li>
+<li><p><strong>Interval scale</strong>: This allows for the degree of difference between measurements, but not the ratio between them. This kind of scale does not have a unique, non-arbitrary zero value. A good example of an interval scale is the date, which we measure relative to an arbitrary epoch (e.g. AD). It makes no sense to say that 2000 AD is twice as long as 1000 AD. However, we can compare ratios of differences on an interval scale. For example, it does make sense to talk about the amount of time between two dates, i.e. we can to say that twice as much time has passed since the epoch in 2000 AD versus 1000 AD.</p></li>
+</ul>
+<p>Keep in mind that the distinction between ratio and interval scales is a property of the measurement scale, not the thing being measured. For example, when we measure temperature in º C we’re working on an interval scale defined relative to the freezing and boiling temperatures of water under standard conditions. It doesn’t make any sense to say that 30º C is twice as hot as 15º C. However, if we measured the same two temperatures on the Kelvin scale, it is meaningful to say that 303.2K is 1.05 times hotter than 288.2K. This is because the Kelvin scale is relative to a true zero (absolute zero).</p>
+</div>
+</div>
+<div id="populations-samples" class="section level2" number="12.3">
+<h2><span class="header-section-number">12.3</span> Populations and samples</h2>
+<p>Whenever we collect data, we are almost always working with a sample drawn from a wider population. We might want to know something about that population, but since it is impossible to study the whole population, we study the properties of one or more samples instead. For example, a physiologist might want to know how exercise affects lung function. Since they obviously can’t study every person on the planet, they have to study a small sample of people.</p>
+<p>We mention the distinction between populations and samples because EDA is concerned with exploring the properties of samples. EDA aims to characterise a sample without trying to infer too much about the wider population from which it is derived. Learning about populations is the basis of much of statistics. That topic is best dealt with in a dedicated statistics book—not this one.</p>
+<div id="sample-distributions" class="section level3" number="12.3.1">
+<h3><span class="header-section-number">12.3.1</span> Sample distributions</h3>
+<p>When we say that ‘EDA is concerned with exploring the properties samples,’ we actually mean that EDA is concerned with the properties of <strong>variables</strong> in one or more samples. We can be even more precise—the property we are alluding to is the variable’s <strong>sample distribution</strong>. The distribution of a variable describes the relative frequency with which different values occur. This is best understood by example…</p>
+<p>Imagine we took a sample of undergraduates and measured their height. The majority of students would be around about 1.7m tall, even though there would be plenty of variation among students. Men would tend to be slightly taller than women, and very small or very tall people would be rare. We know from experience that no one in this sample would be over 3 meters tall. These are all statements about a hypothetical sample distribution of undergraduate heights.</p>
+</div>
+<div id="associations" class="section level3" number="12.3.2">
+<h3><span class="header-section-number">12.3.2</span> Associations</h3>
+<p>We’ve been talking about statistical variables as though we study them one at a time. However, most interesting samples involve more than one variable, and the goal of the ensuing data analysis is to understand associations among those variables. These associations might involve the same (e.g. numeric vs numeric) or different (e.g. numeric vs categorical) types of variable. Whatever the details, the aim of EDA is often to understand how each variable in a sample relates to the others.</p>
+</div>
+</div>
+<div id="types-of-eda" class="section level2" number="12.4">
+<h2><span class="header-section-number">12.4</span> Types of EDA</h2>
+<p>Exploratory data analysis involves questions such as:</p>
+<ul>
+<li><em>What are the most common values of the variable</em>?</li>
+<li><em>How much do observations differ from one another</em>?</li>
+<li><em>Is one variable associated with another</em>?</li>
+</ul>
+<p>Rather than describe the answers to such questions in purely verbal terms, as we did above, EDA relies on descriptive statistics and graphical summaries:</p>
+<ol style="list-style-type: decimal">
+<li><p><strong>Descriptive statistics</strong>. Descriptive statistics are used to quantify the basic features of a sample distribution. They provide numerical summaries about the sample that can be used to make comparisons and draw preliminary conclusions. For example, we often use the mean to summarise the ‘most likely’ values of a variable.</p></li>
+<li><p><strong>Graphical summaries</strong>. Descriptive statistics are not much use on their own—a few numbers can’t capture every aspect of a distribution. Graphical summaries are a powerful complement to descriptive statistics because they capture a lot of information about a sample in a way that is easy for people to understand.</p></li>
+</ol>
+<p>Descriptive statistics are important, but they are not the main focus of this book. The next few chapters will set out how to construct a range of useful graphical data summaries. Indeed, this book’s overarching goal is to demonstrate a workflow that starts with raw data and ends in one or more exploratory plots. We do need to know a bit about descriptive statistics to understand some of those plots. To that end, we’ll finish this chapter with a quick survey of descriptive statistics that will pop up later.</p>
+</div>
+<div id="a-primer-of-descriptive-statistics" class="section level2" number="12.5">
+<h2><span class="header-section-number">12.5</span> A primer of descriptive statistics</h2>
+<div id="numeric-variables" class="section level3" number="12.5.1">
+<h3><span class="header-section-number">12.5.1</span> Numeric variables</h3>
+<p>So far, we’ve only mentioned the properties of sample distributions in very general terms—using phrases like ‘most common values’ and ‘the range of the data’—without really saying what we mean. Statisticians have devised a set of terms to describe distributions and various descriptive statistics to quantify these. The two that matter most for numeric variables are the <strong>central tendency</strong> and the <strong>dispersion</strong>:</p>
+<ul>
+<li><p>A measure of <strong>central tendency</strong> describes a typical value of a distribution. Most people know at least one measure of central tendency. The “average” that they calculated at school is the arithmetic mean of a sample. There are many different measures of central tendency, each with its own pros and cons. Take a look at the <a href="http://en.wikipedia.org/wiki/Central_tendency">Wikipedia</a> page to see the most common ones. Among these, the median is the one that is used most often in exploratory analyses.</p></li>
+<li><p>A measure of <strong>dispersion</strong> describes how spread out a distribution is. Dispersion measures quantify the variability or scatter of a variable. If one distribution is more dispersed than another, it means that it encompasses a wider range of values. What this means in practice depends on the kind of measure we’re working with. We tend to focus on the variance, the standard deviation, and the interquartile range. There <a href="http://en.wikipedia.org/wiki/Statistical_dispersion">are many others</a>, though.</p></li>
+</ul>
+<div id="beyond-central-tendency-and-dispersion" class="section level4 unnumbered infobox information">
+<h4>Beyond central tendency and dispersion</h4>
+<p>Another important aspect of a distribution is its <strong>skewness</strong> (a.k.a. ‘skew’). There are many different ways to quantify skewness. Unfortunately, these are quite difficult to make sense of. For now, we only need to understand what skewness means in qualitative terms. Skewness refers to the (a)symmetry of a distribution. When we talk about distributions with high skew, we mean they are very asymmetric.</p>
+</div>
+<div id="central-tendency" class="section level4" number="12.5.1.1">
+<h4><span class="header-section-number">12.5.1.1</span> Central tendency</h4>
+<p>The central tendency of a numeric variable’s sample distribution is typically described using either the arithmetic mean or the median<strong>.</strong> The <strong>arithmetic mean</strong> of a sample is ‘the mean’ that everyone learns at school<a href="#fn8" class="footnote-ref" id="fnref8"><sup>8</sup></a>. Most people have calculated the mean by hand at some point. As R users, we can use the <code>mean</code> function to calculate the arithmetic mean if we need it. For example, this will calculate the mean body mass in the <code>penguins</code> data set:</p>
+<div class="sourceCode" id="cb297"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb297-1"><a href="exploratory-data-analysis.html#cb297-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(penguins<span class="sc">$</span>body_mass_g, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<pre><code>## [1] 4201.754</code></pre>
+<p>Remember—we used <code>na.rm = TRUE</code> here because <code>body_mass_g</code> contains a small number of missing (<code>NA</code>) values. This calculation tells us the arithmetic mean of body mass is 4202 grams, i.e. in some sense, the most common body mass is about 4202 grams.</p>
+<p>One limitation of the arithmetic mean is that it is affected by the shape of a distribution. This is why, for example, it does not make much sense to look at the mean income of workers to get a sense of what a ‘typical’ person earns. Income distribution are highly skewed, such that a few people receive very large salaries compared to the vast majority of the population. Those few who earn very good salaries tend to shift the mean well past anything that is really ‘typical.’</p>
+<p>Because the sample mean is sensitive to the shape of a distribution in this way, we often prefer to use a more robust measure of central tendency—the <strong>sample median</strong>. The median of a sample is the value that separates the upper half from the lower half. We can find the sample median with the <code>median</code> function in R:</p>
+<div class="sourceCode" id="cb299"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb299-1"><a href="exploratory-data-analysis.html#cb299-1" aria-hidden="true" tabindex="-1"></a><span class="fu">median</span>(penguins<span class="sc">$</span>body_mass_g, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<pre><code>## [1] 4050</code></pre>
+<p>This tells us that the arithmetic mean of body mass in the <code>penguins</code> data is 4050 grams. This is less than the mean, reflecting the fact that the body mass distribution is somewhat asymmetric.</p>
+</div>
+<div id="what-about-the-mode" class="section level4 unnumbered infobox information">
+<h4>What about ‘the mode?’</h4>
+<p>The <strong>mode</strong> of a variable’s distribution is simply the value that is most likely to occur. This is a simple idea. Unfortunately, it is often difficult to estimate the mode from a sample. Nonetheless, it is important to know what the mode represents, because the concept is useful even when the actual value is hard to estimate.</p>
+</div>
+<div id="dispersion" class="section level4" number="12.5.1.2">
+<h4><span class="header-section-number">12.5.1.2</span> Dispersion</h4>
+<p>There are many ways to quantify the dispersion of a sample distribution. The most important quantities from the standpoint of statistics are the sample <strong>variance</strong> and <strong>standard deviation</strong>. The sample variance (<span class="math inline">\(s^2\)</span>) is the average squared deviations of each point from the mean. Variances are non-negative. The larger the variance, the more observations are spread out around the mean. A variance of zero only occurs if all values are identical.</p>
+<p>We won’t waste time showing the formula because we’ll never actually need to use it directly. As usual, R can calculate the sample variance if we need it:</p>
+<div class="sourceCode" id="cb301"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb301-1"><a href="exploratory-data-analysis.html#cb301-1" aria-hidden="true" tabindex="-1"></a><span class="fu">var</span>(penguins<span class="sc">$</span>body_mass_g, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<pre><code>## [1] 643131.1</code></pre>
+<p>That’s a big number. What does it mean? Is it ‘big’ or is it ‘small?’ No idea. That’s the problem with variances—they are difficult to interpret because their calculation involves squared deviations. The variance is an important quantity in statistics because many common tools use changes in the variance as a basis for statistical tests. However, variances seldom feature in EDA because they are so hard to interpret.</p>
+<p>A somewhat better descriptive statistic is to describe sample dispersion is a closely related quantity called the <strong>standard deviation</strong> of the sample, usually denoted <span class="math inline">\(s\)</span>. The standard deviation is equal to the square root of the variance. We calculate it using the <code>sd</code> function:</p>
+<div class="sourceCode" id="cb303"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb303-1"><a href="exploratory-data-analysis.html#cb303-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sd</span>(penguins<span class="sc">$</span>body_mass_g, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<pre><code>## [1] 801.9545</code></pre>
+<p>Why do we prefer the standard deviation over the variance? Because it is the square root of the variance, it operates on the same scale as the variable it summarises. This means it reflects the dispersion we perceive in the data. The sample standard deviation is not without problems, though. Like the sample mean, it is sensitive to the shape of a distribution and the presence of outliers.</p>
+<p>A measure of dispersion that is robust to these kinds of problems is the <strong>interquartile range</strong>. The interquartile range (IQR) is defined as the difference between the third and first quartile (see box). The IQR contains the middle 50% of the values of a variable. The more spread out the data, the larger the IQR. People prefer IQR to measure dispersion for exploratory work because it only depends on the ‘middle’ of a distribution. This makes it robust to the presence of outliers.</p>
+<p>We can use the <code>IQR</code> function to find the interquartile range of the body mass variable:</p>
+<div class="sourceCode" id="cb305"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb305-1"><a href="exploratory-data-analysis.html#cb305-1" aria-hidden="true" tabindex="-1"></a><span class="fu">IQR</span>(penguins<span class="sc">$</span>body_mass_g, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<pre><code>## [1] 1200</code></pre>
+<p>The IQR is used as the basis for a useful data summary plot called a ‘box and whiskers’ plot. We’ll see how to construct this later.</p>
+</div>
+<div id="what-are-quartiles" class="section level4 unnumbered infobox information">
+<h4>What are quartiles?</h4>
+<p>We need to know what a quartile is to understand the interquartile range. Three quartiles are defined for any sample. These divide the data into four equal-sized groups, from the set of smallest numbers up to the set of largest numbers. The second quartile (<span class="math inline">\(Q_2\)</span>) is the median, i.e. it divides the data into an upper and lower half. The first quartile (<span class="math inline">\(Q_1\)</span>) is the number that divides the lower 50% of values into two equal-sized groups. The third quartile (<span class="math inline">\(Q_3\)</span>) is the number that divides the upper 50% of values into two equal-sized groups.</p>
+</div>
+</div>
+<div id="categorical-variables" class="section level3" number="12.5.2">
+<h3><span class="header-section-number">12.5.2</span> Categorical variables</h3>
+<p>Descriptive statistics of categorical variables aim to quantify specific features of their sample distribution, just as with numeric variables. The general question we need to address is, what are the relative frequencies of different categories? Because categorical variables take a finite number of values, the simplest thing we can do is tabulate the number of occurrences of each type. We can use the <strong>dplyr</strong> <code>count</code> function to do this:</p>
+<div class="sourceCode" id="cb307"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb307-1"><a href="exploratory-data-analysis.html#cb307-1" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">%&gt;%</span> <span class="fu">count</span>(species)</span></code></pre></div>
+<pre><code>## # A tibble: 3 x 2
+##   species       n
+##   &lt;chr&gt;     &lt;int&gt;
+## 1 Adelie      152
+## 2 Chinstrap    68
+## 3 Gentoo      124</code></pre>
+<p>This prints that the number of observations associated with each species in <code>penguins</code>. The summary reveals that the most common species in the data set is the Adelie penguin, followed by the Gentoo and Chinstrap.</p>
+<p>Can we quantify the central tendency of a categorical sample distribution? Various measures exist. We can certainly find the <strong>sample mode</strong> of a categorical variable easily enough. This is just the most common category. In the case of the above <code>species</code> variable, the mode is obviously Adelie. It is also possible to calculate a <strong>sample median</strong> of a categorical variable, but only when it is ordinal. Since the median value is the one that lies in the middle of an ordered set of values, it makes no sense to talk about the middle of a set of nominal values that have no inherent order.</p>
+<p>What about dispersion? Well, measures of dispersion for categorical variables do exist, but they are not very easy to interpret. They seldom get used in exploratory data analysis so let’s not worry about them here.</p>
+</div>
+<div id="associations-1" class="section level3" number="12.5.3">
+<h3><span class="header-section-number">12.5.3</span> Associations</h3>
+<p>Statisticians have devised different ways to quantify an association between variables. The common measures calculate some kind of <strong>correlation coefficient</strong>. The terms ‘association’ and ‘correlation’ are closely related, so they are often used interchangeably. Strictly speaking, correlation has a narrower definition: a correlation is defined by a metric (the ‘correlation coefficient’) that quantifies the degree to which an association tends to a certain pattern.</p>
+<div id="pairs-of-numeric-variables" class="section level4" number="12.5.3.1">
+<h4><span class="header-section-number">12.5.3.1</span> Pairs of numeric variables</h4>
+<p>A widely used measure of correlation for pairs of numeric variables is <strong>Pearson’s correlation coefficient</strong> (a.k.a. Pearson product-moment correlation coefficient, or Pearson’s <span class="math inline">\(r\)</span>). Remember, a correlation coefficient quantifies the degree to which an association tends to a certain pattern. Pearson’s correlation coefficient is designed to summarise the strength of a <strong>linear</strong> (i.e. straight line) association.</p>
+<p>Pearson’s correlation coefficient takes a value of 0 if two variables are not linearly associated and a value of +1 or -1 if they are perfectly related and represent a straight line. A positive value indicates that high values in one variable are associated with high values of the second; a negative value indicates that high values of one variable is associated with low values of the second. High values are those that are greater than the mean; low values are those that are less than the mean.</p>
+<p>We can use the <code>cor</code> function to calculate Pearson’s correlation coefficient. For example, the Pearson correlation coefficient between flipper length and body mass is given by:</p>
+<div class="sourceCode" id="cb309"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb309-1"><a href="exploratory-data-analysis.html#cb309-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(penguins<span class="sc">$</span>flipper_length_mm, penguins<span class="sc">$</span>body_mass_g, <span class="at">use =</span> <span class="st">&quot;complete.obs&quot;</span>)</span></code></pre></div>
+<pre><code>## [1] 0.8712018</code></pre>
+<p>This is positive, indicating flipper length tends to increase with body mass. It is also quite close to +1, indicating the association is strong. We should interpret Pearson’s correlation coefficient with care. Because it is designed to summarise the strength of a <strong>linear</strong> relationship, Pearson’s correlation coefficient will mislead when this relationship is curved. If that statement does not make immediate sense, take a look at the famous <a href="https://en.wikipedia.org/wiki/Anscombe%27s_quartet">Anscombe’s quartet</a>.</p>
+</div>
+<div id="other-measures-of-correlation" class="section level4 unnumbered infobox warning">
+<h4>Other measures of correlation</h4>
+<p>What should we do if we think the relationship between two variables is non-linear? Calculate something called a <strong>rank correlation</strong>. The idea is quite simple. Instead of working with the actual values of each variable, we rank them by value, i.e. sort each variable from lowest to highest and the assign the labels 1<sup>st</sup> , 2<sup>nd</sup>, 3<sup>rd</sup>, … to observations. Rank correlations are based on the association among the ranks of two variables.</p>
+<p>The two most popular rank correlation coefficients are Spearman’s <span class="math inline">\(\rho\)</span> (‘rho’) and Kendall’s <span class="math inline">\(\tau\)</span> (‘tau’). The differences are minimal:</p>
+<ul>
+<li>Spearman’s <span class="math inline">\(\rho\)</span> is a bit more sensitive to outliers in the data.</li>
+<li>Kendall’s <span class="math inline">\(\tau\)</span> can be slow to calculate for large data sets.</li>
+</ul>
+<p>We can either coefficient using the <code>cor</code> function, setting the <code>method</code> argument to the appropriate value: <code>method = "kendall"</code> or <code>method = "spearman"</code>. A rank correlation coefficient is interpreted in the same way as Pearson’s correlation coefficient. It takes a value of 0 if the ranks are uncorrelated and +/- 1 if they are perfectly associated (though not necessarily as a straight line). The sign tells us about the direction of the association.</p>
+</div>
+<div id="pairs-of-categorical-variables" class="section level4" number="12.5.3.2">
+<h4><span class="header-section-number">12.5.3.2</span> Pairs of categorical variables</h4>
+<p>Quantifying associations between pairs of categorical variables is not as simple as the numeric case. The general question is, “do different <strong>combinations</strong> of categories seem to be under- or over-represented?” We need to understand which combinations are common and which are rare. The simplest thing we can do is ‘cross-tabulate’ the number of occurrences (i.e. the ‘frequencies’) of each combination. The resulting table is called a <strong>contingency table</strong>.</p>
+<p>The <code>xtabs</code> function (= ‘cross-tabulation’) can do this. For example, the frequencies of each penguin species and island combination is given by:</p>
+<div class="sourceCode" id="cb311"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb311-1"><a href="exploratory-data-analysis.html#cb311-1" aria-hidden="true" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="sc">~</span> species <span class="sc">+</span> island, <span class="at">data =</span> penguins)</span></code></pre></div>
+<pre><code>##            island
+## species     Biscoe Dream Torgersen
+##   Adelie        44    56        52
+##   Chinstrap      0    68         0
+##   Gentoo       124     0         0</code></pre>
+<p>The first argument sets the variables to cross-tabulate. <code>xtabs</code> uses R’s special formula language, which means we must include that <code>~</code> symbol at the beginning. After the <code>~</code>, we provide the list of variables to cross-tabulate, separated by the <code>+</code> sign. The second argument tells the function which data set to use.</p>
+<p>The table above shows us how many observations are associated with each combination of the <code>species</code> and <code>island</code> categories. This particular case represents a fairly extreme example of (dis)association; the Chinstrap and Gentoo species simply don’t occur on certain islands (or perhaps they weren’t sampled on those islands for some reason).</p>
+<p>What about measures of association such as correlation coefficients? Spearman’s <span class="math inline">\(\rho\)</span> and Kendall’s <span class="math inline">\(\tau\)</span> are designed for numeric variables, but these can also be used to measure the correlation between ordinal variables (Kendall’s <span class="math inline">\(\tau\)</span> is best). Various measures of association have been constructed for pairs of nominal variables (e.g. <a href="https://en.wikipedia.org/wiki/Cram%C3%A9r%27s_V">Cramér’s V</a>). However, none of these are widely used in exploratory data analyses—people tend to stick with graphical tools for categorical data.</p>
+
+</div>
+</div>
+</div>
+</div>
+<div class="footnotes">
+<hr />
+<ol start="8">
+<li id="fn8"><p>People often just say ‘the mean’ when referring to the arithmetic sample mean. This is fine, but keep in mind that there are other kinds of mean , such as the harmonic mean and the geometric mean.<a href="exploratory-data-analysis.html#fnref8" class="footnote-back">↩︎</a></p></li>
+</ol>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="helper-functions.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="chapter-ggplot2-intro.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["intro-bio-data-book.pdf", "intro-bio-data-book.epub"],
+"toc": {
+"collapse": "section"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

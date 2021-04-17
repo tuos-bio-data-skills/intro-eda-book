@@ -13,11 +13,32 @@ always_allow_html: true
 
 ```{r include=FALSE}
 # automatically create a bib database for R packages
-pckg_set <- c(.packages(), 'bookdown', 'knitr', 'rmarkdown', 'packages.bib', 'readr', 'dplyr', 'ggplot2')
+pckg_set <- c(.packages(), 'bookdown', 'knitr', 'rmarkdown', 'packages.bib', 'readr', 'dplyr', 'ggplot2', "cowplot", "hexbin", "nasaweather", "palmerpenguins")
 knitr::write_bib(pckg_set)
+
 # packages we'll use
 library("dplyr")
+library("ggplot2")
 library("nasaweather")
+library("magrittr")
+library("knitr")
+library("hexbin")
+library("cowplot")
+
+# knitr options
+opts_chunk$set(fig.width=3.5, fig.height=3.5, fig.align="center")
+
+# data
+penguins <- 
+  palmerpenguins::penguins %>%
+  mutate(across(where(is.factor), as.character))
+
+# Set plotting to bw plot default, but with transparent background 
+# elements. Note transparency requires the panel.background, 
+# plot.background, and device background all be set!
+theme_update(
+  plot.background = element_rect(fill = "transparent", colour = NA)
+)
 ```
 
 # What you will learn {.unnumbered}

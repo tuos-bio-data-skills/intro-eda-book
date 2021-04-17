@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 15 Exploring one variable | Exploratory Data Analysis with R</title>
+  <meta name="description" content="This is the Exploratory Data Analysis in R book provided by the School of Biosciences at the University of Sheffield." />
+  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 15 Exploring one variable | Exploratory Data Analysis with R" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="This is the Exploratory Data Analysis in R book provided by the School of Biosciences at the University of Sheffield." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 15 Exploring one variable | Exploratory Data Analysis with R" />
+  
+  <meta name="twitter:description" content="This is the Exploratory Data Analysis in R book provided by the School of Biosciences at the University of Sheffield." />
+  
+
+<meta name="author" content="Dylan Childs" />
+
+
+<meta name="date" content="2021-04-17" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="chapter-customise-ggplot2.html"/>
+<link rel="next" href="exploring-associations.html"/>
+<script src="libs/header-attrs-2.7/header-attrs.js"></script>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<link href="libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet" />
+<script src="libs/pagedtable-1.1/js/pagedtable.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Exploratory Data Analysis with R</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>What you will learn</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#aims"><i class="fa fa-check"></i>Aims</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#topics"><i class="fa fa-check"></i>Topics</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#technologies"><i class="fa fa-check"></i>Technologies</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#what-is-r"><i class="fa fa-check"></i>What is R?</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#what-is-rstudio"><i class="fa fa-check"></i>What is RStudio?</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="how-to-use-this-book.html"><a href="how-to-use-this-book.html"><i class="fa fa-check"></i>How to use this book</a>
+<ul>
+<li class="chapter" data-level="" data-path="how-to-use-this-book.html"><a href="how-to-use-this-book.html#text-instructions-and-explanations"><i class="fa fa-check"></i>Text, instructions, and explanations</a></li>
+<li class="chapter" data-level="" data-path="how-to-use-this-book.html"><a href="how-to-use-this-book.html#r-code-and-output"><i class="fa fa-check"></i>R code and output</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="get-up-and-running.html"><a href="get-up-and-running.html"><i class="fa fa-check"></i>Get up and running</a>
+<ul>
+<li class="chapter" data-level="" data-path="get-up-and-running.html"><a href="get-up-and-running.html#different-ways-to-run-rstudio"><i class="fa fa-check"></i>Different ways to run RStudio</a></li>
+<li class="chapter" data-level="" data-path="get-up-and-running.html"><a href="get-up-and-running.html#installing-r-and-rstudio-locally"><i class="fa fa-check"></i>Installing R and RStudio locally</a>
+<ul>
+<li class="chapter" data-level="" data-path="get-up-and-running.html"><a href="get-up-and-running.html#installing-rstudio"><i class="fa fa-check"></i>Installing RStudio</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="get-up-and-running.html"><a href="get-up-and-running.html#a-quick-look-at-rstudio"><i class="fa fa-check"></i>A quick look at RStudio</a></li>
+<li class="chapter" data-level="" data-path="get-up-and-running.html"><a href="get-up-and-running.html#working-at-console"><i class="fa fa-check"></i>Working at the Console in RStudio</a></li>
+</ul></li>
+<li class="part"><span><b>I Introduction to R</b></span></li>
+<li class="chapter" data-level="1" data-path="quick-intro-to-r.html"><a href="quick-intro-to-r.html"><i class="fa fa-check"></i><b>1</b> A quick introduction to R</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="quick-intro-to-r.html"><a href="quick-intro-to-r.html#r-calculator"><i class="fa fa-check"></i><b>1.1</b> Using R as a big calculator</a>
+<ul>
+<li class="chapter" data-level="1.1.1" data-path="quick-intro-to-r.html"><a href="quick-intro-to-r.html#basic-arithmetic"><i class="fa fa-check"></i><b>1.1.1</b> Basic arithmetic</a></li>
+<li class="chapter" data-level="1.1.2" data-path="quick-intro-to-r.html"><a href="quick-intro-to-r.html#combining-arithmetic-operations"><i class="fa fa-check"></i><b>1.1.2</b> Combining arithmetic operations</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="quick-intro-to-r.html"><a href="quick-intro-to-r.html#problematic-calculations"><i class="fa fa-check"></i><b>1.2</b> Problematic calculations</a></li>
+<li class="chapter" data-level="1.3" data-path="quick-intro-to-r.html"><a href="quick-intro-to-r.html#assignment"><i class="fa fa-check"></i><b>1.3</b> Storing and reusing results</a></li>
+<li class="chapter" data-level="1.4" data-path="quick-intro-to-r.html"><a href="quick-intro-to-r.html#how-does-assignment-work"><i class="fa fa-check"></i><b>1.4</b> How does assignment work?</a></li>
+<li class="chapter" data-level="1.5" data-path="quick-intro-to-r.html"><a href="quick-intro-to-r.html#global-environment"><i class="fa fa-check"></i><b>1.5</b> Global environment</a></li>
+<li class="chapter" data-level="1.6" data-path="quick-intro-to-r.html"><a href="quick-intro-to-r.html#naming-rules-and-conventions"><i class="fa fa-check"></i><b>1.6</b> Naming rules and conventions</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="using-functions.html"><a href="using-functions.html"><i class="fa fa-check"></i><b>2</b> Using functions</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="using-functions.html"><a href="using-functions.html#intro-functions"><i class="fa fa-check"></i><b>2.1</b> Introduction</a></li>
+<li class="chapter" data-level="2.2" data-path="using-functions.html"><a href="using-functions.html#functions-and-arguments"><i class="fa fa-check"></i><b>2.2</b> Functions and arguments</a></li>
+<li class="chapter" data-level="2.3" data-path="using-functions.html"><a href="using-functions.html#evaluating-arguments-and-returning-results"><i class="fa fa-check"></i><b>2.3</b> Evaluating arguments and returning results</a></li>
+<li class="chapter" data-level="2.4" data-path="using-functions.html"><a href="using-functions.html#function-arguments"><i class="fa fa-check"></i><b>2.4</b> Specifying function arguments</a></li>
+<li class="chapter" data-level="2.5" data-path="using-functions.html"><a href="using-functions.html#combining-functions"><i class="fa fa-check"></i><b>2.5</b> Combining functions</a></li>
+<li class="chapter" data-level="2.6" data-path="using-functions.html"><a href="using-functions.html#functions-do-not-have-side-effects"><i class="fa fa-check"></i><b>2.6</b> Functions do not have ‘side effects’</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="vectors.html"><a href="vectors.html"><i class="fa fa-check"></i><b>3</b> Vectors</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="vectors.html"><a href="vectors.html#introduction"><i class="fa fa-check"></i><b>3.1</b> Introduction</a></li>
+<li class="chapter" data-level="3.2" data-path="vectors.html"><a href="vectors.html#atomic-vectors"><i class="fa fa-check"></i><b>3.2</b> Atomic vectors</a></li>
+<li class="chapter" data-level="3.3" data-path="vectors.html"><a href="vectors.html#intro-vectors"><i class="fa fa-check"></i><b>3.3</b> Numeric vectors</a></li>
+<li class="chapter" data-level="3.4" data-path="vectors.html"><a href="vectors.html#constructing-numeric-vectors"><i class="fa fa-check"></i><b>3.4</b> Constructing numeric vectors</a></li>
+<li class="chapter" data-level="3.5" data-path="vectors.html"><a href="vectors.html#named-vectors"><i class="fa fa-check"></i><b>3.5</b> Named vectors</a></li>
+<li class="chapter" data-level="3.6" data-path="vectors.html"><a href="vectors.html#vectorised-operations"><i class="fa fa-check"></i><b>3.6</b> Vectorised operations</a></li>
+<li class="chapter" data-level="3.7" data-path="vectors.html"><a href="vectors.html#other-vectors"><i class="fa fa-check"></i><b>3.7</b> Other kinds of atomic vectors</a>
+<ul>
+<li class="chapter" data-level="3.7.1" data-path="vectors.html"><a href="vectors.html#character-vectors"><i class="fa fa-check"></i><b>3.7.1</b> Character vectors</a></li>
+<li class="chapter" data-level="3.7.2" data-path="vectors.html"><a href="vectors.html#logical-vectors"><i class="fa fa-check"></i><b>3.7.2</b> Logical vectors</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="chapter-data-frames.html"><a href="chapter-data-frames.html"><i class="fa fa-check"></i><b>4</b> Data frames</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="chapter-data-frames.html"><a href="chapter-data-frames.html#introduction-1"><i class="fa fa-check"></i><b>4.1</b> Introduction</a></li>
+<li class="chapter" data-level="4.2" data-path="chapter-data-frames.html"><a href="chapter-data-frames.html#data-frames-intro"><i class="fa fa-check"></i><b>4.2</b> Data frames</a></li>
+<li class="chapter" data-level="4.3" data-path="chapter-data-frames.html"><a href="chapter-data-frames.html#exploring-data-frames"><i class="fa fa-check"></i><b>4.3</b> Exploring data frames</a></li>
+<li class="chapter" data-level="4.4" data-path="chapter-data-frames.html"><a href="chapter-data-frames.html#extracting-and-adding-a-single-variable"><i class="fa fa-check"></i><b>4.4</b> Extracting and adding a single variable</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="packages.html"><a href="packages.html"><i class="fa fa-check"></i><b>5</b> Packages</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="packages.html"><a href="packages.html#package-system"><i class="fa fa-check"></i><b>5.1</b> The R package system</a></li>
+<li class="chapter" data-level="5.2" data-path="packages.html"><a href="packages.html#task-views"><i class="fa fa-check"></i><b>5.2</b> Task views</a></li>
+<li class="chapter" data-level="5.3" data-path="packages.html"><a href="packages.html#use-packages"><i class="fa fa-check"></i><b>5.3</b> Using packages</a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="packages.html"><a href="packages.html#viewing-installed-packages"><i class="fa fa-check"></i><b>5.3.1</b> Viewing installed packages</a></li>
+<li class="chapter" data-level="5.3.2" data-path="packages.html"><a href="packages.html#installing-packages"><i class="fa fa-check"></i><b>5.3.2</b> Installing packages</a></li>
+<li class="chapter" data-level="5.3.3" data-path="packages.html"><a href="packages.html#loading-and-attaching-packages"><i class="fa fa-check"></i><b>5.3.3</b> Loading and attaching packages</a></li>
+<li class="chapter" data-level="5.3.4" data-path="packages.html"><a href="packages.html#dont-use-rstudio-for-loading-packages"><i class="fa fa-check"></i><b>5.3.4</b> Don’t use RStudio for loading packages!</a></li>
+<li class="chapter" data-level="5.3.5" data-path="packages.html"><a href="packages.html#an-analogy"><i class="fa fa-check"></i><b>5.3.5</b> An analogy</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="packages.html"><a href="packages.html#package-data"><i class="fa fa-check"></i><b>5.4</b> Package data</a></li>
+<li class="chapter" data-level="5.5" data-path="packages.html"><a href="packages.html#the-tidyverse-ecosystem-of-packages"><i class="fa fa-check"></i><b>5.5</b> The tidyverse ecosystem of packages</a></li>
+</ul></li>
+<li class="part"><span><b>II Data Wrangling</b></span></li>
+<li class="chapter" data-level="6" data-path="getting-ready-to-use-dplyr.html"><a href="getting-ready-to-use-dplyr.html"><i class="fa fa-check"></i><b>6</b> Getting ready to use <strong>dplyr</strong></a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="getting-ready-to-use-dplyr.html"><a href="getting-ready-to-use-dplyr.html#introduction-2"><i class="fa fa-check"></i><b>6.1</b> Introduction</a></li>
+<li class="chapter" data-level="6.2" data-path="getting-ready-to-use-dplyr.html"><a href="getting-ready-to-use-dplyr.html#tidy-data"><i class="fa fa-check"></i><b>6.2</b> Tidy data</a></li>
+<li class="chapter" data-level="6.3" data-path="getting-ready-to-use-dplyr.html"><a href="getting-ready-to-use-dplyr.html#penguins-data-overview"><i class="fa fa-check"></i><b>6.3</b> Penguins! 🐧+📊= 😃</a></li>
+<li class="chapter" data-level="6.4" data-path="getting-ready-to-use-dplyr.html"><a href="getting-ready-to-use-dplyr.html#um-tibbles"><i class="fa fa-check"></i><b>6.4</b> Um… tibbles?</a></li>
+<li class="chapter" data-level="6.5" data-path="getting-ready-to-use-dplyr.html"><a href="getting-ready-to-use-dplyr.html#missing-values"><i class="fa fa-check"></i><b>6.5</b> Missing values</a></li>
+<li class="chapter" data-level="6.6" data-path="getting-ready-to-use-dplyr.html"><a href="getting-ready-to-use-dplyr.html#why-dplyr"><i class="fa fa-check"></i><b>6.6</b> Introducing <strong>dplyr</strong></a>
+<ul>
+<li class="chapter" data-level="6.6.1" data-path="getting-ready-to-use-dplyr.html"><a href="getting-ready-to-use-dplyr.html#more-dplyr"><i class="fa fa-check"></i><b>6.6.1</b> A first look at <strong>dplyr</strong></a></li>
+<li class="chapter" data-level="6.6.2" data-path="getting-ready-to-use-dplyr.html"><a href="getting-ready-to-use-dplyr.html#dplyr-pseudocode"><i class="fa fa-check"></i><b>6.6.2</b> <strong>dplyr</strong> pseudocode</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="working-with-variables.html"><a href="working-with-variables.html"><i class="fa fa-check"></i><b>7</b> Working with variables</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="working-with-variables.html"><a href="working-with-variables.html#introduction-3"><i class="fa fa-check"></i><b>7.1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="7.1.1" data-path="working-with-variables.html"><a href="working-with-variables.html#getting-ready"><i class="fa fa-check"></i><b>7.1.1</b> Getting ready</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="working-with-variables.html"><a href="working-with-variables.html#subset-variables-with-select"><i class="fa fa-check"></i><b>7.2</b> Subset variables with <code>select</code></a>
+<ul>
+<li class="chapter" data-level="7.2.1" data-path="working-with-variables.html"><a href="working-with-variables.html#alternative-ways-to-identify-variables-with-select"><i class="fa fa-check"></i><b>7.2.1</b> Alternative ways to identify variables with <code>select</code></a></li>
+<li class="chapter" data-level="7.2.2" data-path="working-with-variables.html"><a href="working-with-variables.html#renaming-variables-with-select-and-rename"><i class="fa fa-check"></i><b>7.2.2</b> Renaming variables with <code>select</code> and <code>rename</code></a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="working-with-variables.html"><a href="working-with-variables.html#creating-variables-with-mutate"><i class="fa fa-check"></i><b>7.3</b> Creating variables with <code>mutate</code></a>
+<ul>
+<li class="chapter" data-level="7.3.1" data-path="working-with-variables.html"><a href="working-with-variables.html#transforming-and-dropping-variables"><i class="fa fa-check"></i><b>7.3.1</b> Transforming and dropping variables</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="working-with-observations.html"><a href="working-with-observations.html"><i class="fa fa-check"></i><b>8</b> Working with observations</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="working-with-observations.html"><a href="working-with-observations.html#introduction-4"><i class="fa fa-check"></i><b>8.1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="8.1.1" data-path="working-with-observations.html"><a href="working-with-observations.html#getting-ready-1"><i class="fa fa-check"></i><b>8.1.1</b> Getting ready</a></li>
+</ul></li>
+<li class="chapter" data-level="8.2" data-path="working-with-observations.html"><a href="working-with-observations.html#relational-and-logical-operators"><i class="fa fa-check"></i><b>8.2</b> Relational and logical operators</a></li>
+<li class="chapter" data-level="8.3" data-path="working-with-observations.html"><a href="working-with-observations.html#subset-observations-with-filter"><i class="fa fa-check"></i><b>8.3</b> Subset observations with <code>filter</code></a></li>
+<li class="chapter" data-level="8.4" data-path="working-with-observations.html"><a href="working-with-observations.html#reordering-observations-with-arrange"><i class="fa fa-check"></i><b>8.4</b> Reordering observations with <code>arrange</code></a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="summarising-and-grouping.html"><a href="summarising-and-grouping.html"><i class="fa fa-check"></i><b>9</b> Summarising and grouping</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="summarising-and-grouping.html"><a href="summarising-and-grouping.html#summarising-variables-with-summarise"><i class="fa fa-check"></i><b>9.1</b> Summarising variables with <code>summarise</code></a>
+<ul>
+<li class="chapter" data-level="9.1.1" data-path="summarising-and-grouping.html"><a href="summarising-and-grouping.html#more-complicated-calculations-with-summarise"><i class="fa fa-check"></i><b>9.1.1</b> More complicated calculations with <code>summarise</code></a></li>
+</ul></li>
+<li class="chapter" data-level="9.2" data-path="summarising-and-grouping.html"><a href="summarising-and-grouping.html#grouped-operations-using-group_by"><i class="fa fa-check"></i><b>9.2</b> Grouped operations using <code>group_by</code></a>
+<ul>
+<li class="chapter" data-level="9.2.1" data-path="summarising-and-grouping.html"><a href="summarising-and-grouping.html#more-than-one-grouping-variable"><i class="fa fa-check"></i><b>9.2.1</b> More than one grouping variable</a></li>
+<li class="chapter" data-level="9.2.2" data-path="summarising-and-grouping.html"><a href="summarising-and-grouping.html#using-group_by-with-other-verbs"><i class="fa fa-check"></i><b>9.2.2</b> Using <code>group_by</code> with other verbs</a></li>
+</ul></li>
+<li class="chapter" data-level="9.3" data-path="summarising-and-grouping.html"><a href="summarising-and-grouping.html#removing-grouping-information"><i class="fa fa-check"></i><b>9.3</b> Removing grouping information</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="building-pipelines.html"><a href="building-pipelines.html"><i class="fa fa-check"></i><b>10</b> Building pipelines</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="building-pipelines.html"><a href="building-pipelines.html#why-do-we-need-pipes"><i class="fa fa-check"></i><b>10.1</b> Why do we need ‘pipes?’</a></li>
+<li class="chapter" data-level="10.2" data-path="building-pipelines.html"><a href="building-pipelines.html#using-pipes"><i class="fa fa-check"></i><b>10.2</b> Using pipes (<code>%&gt;%</code>)</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="helper-functions.html"><a href="helper-functions.html"><i class="fa fa-check"></i><b>11</b> Helper functions</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="helper-functions.html"><a href="helper-functions.html#introduction-5"><i class="fa fa-check"></i><b>11.1</b> Introduction</a></li>
+<li class="chapter" data-level="11.2" data-path="helper-functions.html"><a href="helper-functions.html#working-with-select"><i class="fa fa-check"></i><b>11.2</b> Working with <code>select</code></a></li>
+<li class="chapter" data-level="11.3" data-path="helper-functions.html"><a href="helper-functions.html#working-with-mutate-and-transmute"><i class="fa fa-check"></i><b>11.3</b> Working with <code>mutate</code> and <code>transmute</code></a></li>
+<li class="chapter" data-level="11.4" data-path="helper-functions.html"><a href="helper-functions.html#working-with-filter"><i class="fa fa-check"></i><b>11.4</b> Working with <code>filter</code></a></li>
+<li class="chapter" data-level="11.5" data-path="helper-functions.html"><a href="helper-functions.html#working-with-summarise"><i class="fa fa-check"></i><b>11.5</b> Working with <code>summarise</code></a></li>
+</ul></li>
+<li class="part"><span><b>III Exporing Data</b></span></li>
+<li class="chapter" data-level="12" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html"><i class="fa fa-check"></i><b>12</b> Exploratory data analysis</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#introduction-6"><i class="fa fa-check"></i><b>12.1</b> Introduction</a></li>
+<li class="chapter" data-level="12.2" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#variables"><i class="fa fa-check"></i><b>12.2</b> Statistical variables and data</a>
+<ul>
+<li class="chapter" data-level="12.2.1" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#numeric-vs-categorical-variables"><i class="fa fa-check"></i><b>12.2.1</b> Numeric vs categorical variables</a></li>
+<li class="chapter" data-level="12.2.2" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#ratio-vs-interval-scales"><i class="fa fa-check"></i><b>12.2.2</b> Ratio vs interval scales</a></li>
+</ul></li>
+<li class="chapter" data-level="12.3" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#populations-samples"><i class="fa fa-check"></i><b>12.3</b> Populations and samples</a>
+<ul>
+<li class="chapter" data-level="12.3.1" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#sample-distributions"><i class="fa fa-check"></i><b>12.3.1</b> Sample distributions</a></li>
+<li class="chapter" data-level="12.3.2" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#associations"><i class="fa fa-check"></i><b>12.3.2</b> Associations</a></li>
+</ul></li>
+<li class="chapter" data-level="12.4" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#types-of-eda"><i class="fa fa-check"></i><b>12.4</b> Types of EDA</a></li>
+<li class="chapter" data-level="12.5" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#a-primer-of-descriptive-statistics"><i class="fa fa-check"></i><b>12.5</b> A primer of descriptive statistics</a>
+<ul>
+<li class="chapter" data-level="12.5.1" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#numeric-variables"><i class="fa fa-check"></i><b>12.5.1</b> Numeric variables</a></li>
+<li class="chapter" data-level="12.5.2" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#categorical-variables"><i class="fa fa-check"></i><b>12.5.2</b> Categorical variables</a></li>
+<li class="chapter" data-level="12.5.3" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#associations-1"><i class="fa fa-check"></i><b>12.5.3</b> Associations</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="chapter-ggplot2-intro.html"><a href="chapter-ggplot2-intro.html"><i class="fa fa-check"></i><b>13</b> Introduction to <strong>ggplot2</strong></a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="chapter-ggplot2-intro.html"><a href="chapter-ggplot2-intro.html#anatomy"><i class="fa fa-check"></i><b>13.1</b> The anatomy of ggplot2</a>
+<ul>
+<li class="chapter" data-level="13.1.1" data-path="chapter-ggplot2-intro.html"><a href="chapter-ggplot2-intro.html#layers"><i class="fa fa-check"></i><b>13.1.1</b> Layers</a></li>
+<li class="chapter" data-level="13.1.2" data-path="chapter-ggplot2-intro.html"><a href="chapter-ggplot2-intro.html#scales"><i class="fa fa-check"></i><b>13.1.2</b> Scales</a></li>
+<li class="chapter" data-level="13.1.3" data-path="chapter-ggplot2-intro.html"><a href="chapter-ggplot2-intro.html#coordinate-system"><i class="fa fa-check"></i><b>13.1.3</b> Coordinate system</a></li>
+<li class="chapter" data-level="13.1.4" data-path="chapter-ggplot2-intro.html"><a href="chapter-ggplot2-intro.html#faceting"><i class="fa fa-check"></i><b>13.1.4</b> Faceting</a></li>
+</ul></li>
+<li class="chapter" data-level="13.2" data-path="chapter-ggplot2-intro.html"><a href="chapter-ggplot2-intro.html#quick"><i class="fa fa-check"></i><b>13.2</b> A quick introduction to ggplot2</a>
+<ul>
+<li class="chapter" data-level="13.2.1" data-path="chapter-ggplot2-intro.html"><a href="chapter-ggplot2-intro.html#making-a-start"><i class="fa fa-check"></i><b>13.2.1</b> Making a start</a></li>
+</ul></li>
+<li class="chapter" data-level="13.3" data-path="chapter-ggplot2-intro.html"><a href="chapter-ggplot2-intro.html#a-standard-way-of-using-ggplot2"><i class="fa fa-check"></i><b>13.3</b> A standard way of using <strong>ggplot2</strong></a>
+<ul>
+<li class="chapter" data-level="13.3.1" data-path="chapter-ggplot2-intro.html"><a href="chapter-ggplot2-intro.html#how-should-we-format-ggplot2-code"><i class="fa fa-check"></i><b>13.3.1</b> How should we format <strong>ggplot2</strong> code?</a></li>
+</ul></li>
+<li class="chapter" data-level="13.4" data-path="chapter-ggplot2-intro.html"><a href="chapter-ggplot2-intro.html#increasing-the-information-density"><i class="fa fa-check"></i><b>13.4</b> Increasing the information density…</a>
+<ul>
+<li class="chapter" data-level="13.4.1" data-path="chapter-ggplot2-intro.html"><a href="chapter-ggplot2-intro.html#via-aesthetic-mappings"><i class="fa fa-check"></i><b>13.4.1</b> …via aesthetic mappings</a></li>
+<li class="chapter" data-level="13.4.2" data-path="chapter-ggplot2-intro.html"><a href="chapter-ggplot2-intro.html#via-facets"><i class="fa fa-check"></i><b>13.4.2</b> …via facets</a></li>
+<li class="chapter" data-level="13.4.3" data-path="chapter-ggplot2-intro.html"><a href="chapter-ggplot2-intro.html#via-multiple-layers"><i class="fa fa-check"></i><b>13.4.3</b> …via multiple layers</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="chapter-customise-ggplot2.html"><a href="chapter-customise-ggplot2.html"><i class="fa fa-check"></i><b>14</b> Customising plots</a>
+<ul>
+<li class="chapter" data-level="14.1" data-path="chapter-customise-ggplot2.html"><a href="chapter-customise-ggplot2.html#geom-properties"><i class="fa fa-check"></i><b>14.1</b> Geom properties</a>
+<ul>
+<li class="chapter" data-level="14.1.1" data-path="chapter-customise-ggplot2.html"><a href="chapter-customise-ggplot2.html#relationship-between-aesthetic-mappings-and-geom-properties"><i class="fa fa-check"></i><b>14.1.1</b> Relationship between aesthetic mappings and geom properties</a></li>
+</ul></li>
+<li class="chapter" data-level="14.2" data-path="chapter-customise-ggplot2.html"><a href="chapter-customise-ggplot2.html#plot-scales"><i class="fa fa-check"></i><b>14.2</b> Plot scales</a></li>
+<li class="chapter" data-level="14.3" data-path="chapter-customise-ggplot2.html"><a href="chapter-customise-ggplot2.html#labels"><i class="fa fa-check"></i><b>14.3</b> Labels</a></li>
+<li class="chapter" data-level="14.4" data-path="chapter-customise-ggplot2.html"><a href="chapter-customise-ggplot2.html#themes"><i class="fa fa-check"></i><b>14.4</b> Themes</a></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="exploring-one-variable.html"><a href="exploring-one-variable.html"><i class="fa fa-check"></i><b>15</b> Exploring one variable</a>
+<ul>
+<li class="chapter" data-level="15.1" data-path="exploring-one-variable.html"><a href="exploring-one-variable.html#explore-numeric"><i class="fa fa-check"></i><b>15.1</b> Exploring numerical variables</a>
+<ul>
+<li class="chapter" data-level="15.1.1" data-path="exploring-one-variable.html"><a href="exploring-one-variable.html#what-kind-of-numeric-variable"><i class="fa fa-check"></i><b>15.1.1</b> What kind of numeric variable?</a></li>
+<li class="chapter" data-level="15.1.2" data-path="exploring-one-variable.html"><a href="exploring-one-variable.html#histograms"><i class="fa fa-check"></i><b>15.1.2</b> Histograms</a></li>
+<li class="chapter" data-level="15.1.3" data-path="exploring-one-variable.html"><a href="exploring-one-variable.html#dot-plots"><i class="fa fa-check"></i><b>15.1.3</b> Dot plots</a></li>
+</ul></li>
+<li class="chapter" data-level="15.2" data-path="exploring-one-variable.html"><a href="exploring-one-variable.html#explore-categorical"><i class="fa fa-check"></i><b>15.2</b> Exploring categorical variables</a>
+<ul>
+<li class="chapter" data-level="15.2.1" data-path="exploring-one-variable.html"><a href="exploring-one-variable.html#what-kind-of-categorical-variable"><i class="fa fa-check"></i><b>15.2.1</b> What kind of categorical variable?</a></li>
+<li class="chapter" data-level="15.2.2" data-path="exploring-one-variable.html"><a href="exploring-one-variable.html#bar-plots"><i class="fa fa-check"></i><b>15.2.2</b> Bar plots</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="16" data-path="exploring-associations.html"><a href="exploring-associations.html"><i class="fa fa-check"></i><b>16</b> Exploring associations</a>
+<ul>
+<li class="chapter" data-level="16.1" data-path="exploring-associations.html"><a href="exploring-associations.html#numeric-association"><i class="fa fa-check"></i><b>16.1</b> Associations between numeric variables</a></li>
+<li class="chapter" data-level="16.2" data-path="exploring-associations.html"><a href="exploring-associations.html#categorical-association"><i class="fa fa-check"></i><b>16.2</b> Associations between categorical variables</a></li>
+<li class="chapter" data-level="16.3" data-path="exploring-associations.html"><a href="exploring-associations.html#cat-num-association"><i class="fa fa-check"></i><b>16.3</b> Categorical-numerical associations</a>
+<ul>
+<li class="chapter" data-level="16.3.1" data-path="exploring-associations.html"><a href="exploring-associations.html#alternatives-to-box-and-whiskers-plots"><i class="fa fa-check"></i><b>16.3.1</b> Alternatives to box and whiskers plots</a></li>
+</ul></li>
+<li class="chapter" data-level="16.4" data-path="exploring-associations.html"><a href="exploring-associations.html#multivariate"><i class="fa fa-check"></i><b>16.4</b> Multivariate associations</a></li>
+</ul></li>
+<li class="chapter" data-level="17" data-path="doing-more-with-ggplot2.html"><a href="doing-more-with-ggplot2.html"><i class="fa fa-check"></i><b>17</b> Doing more with <strong>ggplot2</strong></a>
+<ul>
+<li class="chapter" data-level="17.1" data-path="doing-more-with-ggplot2.html"><a href="doing-more-with-ggplot2.html#summaries"><i class="fa fa-check"></i><b>17.1</b> Comparing descriptive statistics</a>
+<ul>
+<li class="chapter" data-level="17.1.1" data-path="doing-more-with-ggplot2.html"><a href="doing-more-with-ggplot2.html#error-bars"><i class="fa fa-check"></i><b>17.1.1</b> Error bars</a></li>
+<li class="chapter" data-level="17.1.2" data-path="doing-more-with-ggplot2.html"><a href="doing-more-with-ggplot2.html#alternatives-to-bar-plots"><i class="fa fa-check"></i><b>17.1.2</b> Alternatives to bar plots</a></li>
+</ul></li>
+<li class="chapter" data-level="17.2" data-path="doing-more-with-ggplot2.html"><a href="doing-more-with-ggplot2.html#adding-text-annotations"><i class="fa fa-check"></i><b>17.2</b> Adding text annotations</a></li>
+<li class="chapter" data-level="17.3" data-path="doing-more-with-ggplot2.html"><a href="doing-more-with-ggplot2.html#saving-plots"><i class="fa fa-check"></i><b>17.3</b> Saving plots</a></li>
+<li class="chapter" data-level="17.4" data-path="doing-more-with-ggplot2.html"><a href="doing-more-with-ggplot2.html#multi-panel-plots"><i class="fa fa-check"></i><b>17.4</b> Multi-panel plots</a></li>
+</ul></li>
+<li class="appendix"><span><b>Supplementary Material</b></span></li>
+<li class="chapter" data-level="A" data-path="getting-help.html"><a href="getting-help.html"><i class="fa fa-check"></i><b>A</b> Getting help</a>
+<ul>
+<li class="chapter" data-level="A.1" data-path="getting-help.html"><a href="getting-help.html#console-help"><i class="fa fa-check"></i><b>A.1</b> Introduction</a></li>
+<li class="chapter" data-level="A.2" data-path="getting-help.html"><a href="getting-help.html#browsing-the-help-system"><i class="fa fa-check"></i><b>A.2</b> Browsing the help system</a></li>
+<li class="chapter" data-level="A.3" data-path="getting-help.html"><a href="getting-help.html#searching-for-help-files"><i class="fa fa-check"></i><b>A.3</b> Searching for help files</a></li>
+<li class="chapter" data-level="A.4" data-path="getting-help.html"><a href="getting-help.html#nav-help"><i class="fa fa-check"></i><b>A.4</b> Navigating help files</a></li>
+<li class="chapter" data-level="A.5" data-path="getting-help.html"><a href="getting-help.html#vignettes"><i class="fa fa-check"></i><b>A.5</b> Vignettes and demos</a></li>
+</ul></li>
+<li class="chapter" data-level="B" data-path="project-scripts-data.html"><a href="project-scripts-data.html"><i class="fa fa-check"></i><b>B</b> Managing projects, scripts and data files</a></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Exploratory Data Analysis with R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="exploring-one-variable" class="section level1" number="15">
+<h1><span class="header-section-number">Chapter 15</span> Exploring one variable</h1>
+<p>This chapter will consider how to go about exploring a single variable. Using the <code>penguins</code> data, we’ll review some basic visualisations for exploring the sample distribution of numeric and categorical variables.</p>
+<div id="explore-numeric" class="section level2" number="15.1">
+<h2><span class="header-section-number">15.1</span> Exploring numerical variables</h2>
+<p>We’ll work with flipper length (<code>flipper_length_mm</code>) and body mass (<code>body_mass_g</code>) to demonstrate how to explore numeric variables.</p>
+<div id="what-kind-of-numeric-variable" class="section level3" number="15.1.1">
+<h3><span class="header-section-number">15.1.1</span> What kind of numeric variable?</h3>
+<p>The simplest way to explore data is to view it in its raw form. Take a quick look at the first 100 values of <code>flipper_length_mm</code> and <code>body_mass_g</code>. We can get these by extracting them with the <code>$</code> operator and using the <code>head</code> function:</p>
+<p><strong>flipper length</strong> —</p>
+<div class="sourceCode" id="cb346"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb346-1"><a href="exploring-one-variable.html#cb346-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(penguins<span class="sc">$</span>flipper_length_mm, <span class="dv">50</span>)</span></code></pre></div>
+<pre><code>##  [1] 181 186 195  NA 193 190 181 195 193 190 186 180 182 191 198 185 195 197 184
+## [20] 194 174 180 189 185 180 187 183 187 172 180 178 178 188 184 195 196 190 180
+## [39] 181 184 182 195 186 196 185 190 182 179 190 191</code></pre>
+<p><strong>body mass</strong> —</p>
+<div class="sourceCode" id="cb348"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb348-1"><a href="exploring-one-variable.html#cb348-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(penguins<span class="sc">$</span>body_mass_g, <span class="dv">50</span>)</span></code></pre></div>
+<pre><code>##  [1] 3750 3800 3250   NA 3450 3650 3625 4675 3475 4250 3300 3700 3200 3800 4400
+## [16] 3700 3450 4500 3325 4200 3400 3600 3800 3950 3800 3800 3550 3200 3150 3950
+## [31] 3250 3900 3300 3900 3325 4150 3950 3550 3300 4650 3150 3900 3100 4400 3000
+## [46] 4600 3425 2975 3450 4150</code></pre>
+<p>These are clearly both numeric variables, but we can say a bit more:</p>
+<ul>
+<li>They are both measured on a ratio scale. Zero really is zero, meaning that it makes sense to say that a length of 200 millimetres is twice as long as 100 millimetres or that 6000 grams is twice the mass of 3000 grams.</li>
+<li>They are continuous variables. Think about the possible values flipper length and body mass can take. A length of 200.52 millimetres and a mass of 3000.71 grams are both perfectly reasonable, so fundamentally, these are continuous variables.</li>
+</ul>
+<p>Notice that even though body mass is a continuous variable <code>body_mass_g</code> looks discrete because body mass measurements have been taken to the nearest 25 grams. This reflects methodological limitations—presumably, weighing a live penguin to more than 25 grams precision in the field is challenging. This illustrates an important idea: we can’t just look at the values a numeric variable takes to determine whether it is discrete or continuous.</p>
+<p>Whether we treat a variable as continuous or discrete is sometimes an analysis decision. We have to decide based on knowledge of a variable’s true nature and the measurement process. For example, if we were only able to measure body mass to the nearest 500 grams, we would only “see” a few different body mass categories. It might then be reasonable to treat the <code>body_mass_g</code> variable as an ordinal, categorical variable.</p>
+</div>
+<div id="histograms" class="section level3" number="15.1.2">
+<h3><span class="header-section-number">15.1.2</span> Histograms</h3>
+<p>We only looked at the first 50 values of the <code>flipper_length_mm</code> and <code>body_mass_g</code> variables because the <code>penguins</code> data set is a bit too big to view everything at once easily. It’s hard to say much about the sample distribution of a numeric variable by looking at the raw data because there are so many unique values. Those first 50 are also not representative of the whole sample.</p>
+<p>What else might we do? One useful tool is ‘binning.’ The idea behind binning a numeric variable is very simple. It involves two steps.</p>
+<ol style="list-style-type: decimal">
+<li>Divide the number line into equal-sized, non-overlapping intervals. These are the ‘bins.’ We pick the interval size to ensure bins (typically) include at least a few cases.</li>
+<li>We then have to count up the number of times the variable falls inside each bin. The resulting set of counts summarises the sample distribution of the numeric variable.</li>
+</ol>
+<p>Binning is very tedious to do by hand. Fortunately, R can do this for us. This shows how to use the <code>cut</code> function with the <strong>dplyr</strong> <code>transmute</code> and <code>count</code> verbs to bin the <code>flipper_length_mm</code> variable into 5 mm intervals:</p>
+<div class="sourceCode" id="cb350"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb350-1"><a href="exploring-one-variable.html#cb350-1" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">%&gt;%</span> </span>
+<span id="cb350-2"><a href="exploring-one-variable.html#cb350-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">transmute</span>(<span class="at">bins =</span> <span class="fu">cut</span>(flipper_length_mm, <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">170</span>, <span class="dv">235</span>, <span class="at">by =</span> <span class="dv">5</span>))) <span class="sc">%&gt;%</span></span>
+<span id="cb350-3"><a href="exploring-one-variable.html#cb350-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(bins)</span></code></pre></div>
+<pre><code>## # A tibble: 14 x 2
+##    bins          n
+##    &lt;fct&gt;     &lt;int&gt;
+##  1 (170,175]     2
+##  2 (175,180]    11
+##  3 (180,185]    28
+##  4 (185,190]    58
+##  5 (190,195]    57
+##  6 (195,200]    38
+##  7 (200,205]    18
+##  8 (205,210]    30
+##  9 (210,215]    33
+## 10 (215,220]    32
+## 11 (220,225]    20
+## 12 (225,230]    14
+## 13 (230,235]     1
+## 14 &lt;NA&gt;          2</code></pre>
+<p>We won’t explain how this works because we only need to understand the output. This is a small tibble where the <code>bins</code> column shows the intervals, and the <code>n</code> column gives the associated counts.</p>
+<p>What does this tell us? It shows that the most common flipper length is around 190 mm. Values much below 190 mm are rare, but a range of values above this are possible, with higher values becoming less frequent. These binned data are telling us a lot about the sample distribution of <code>flipper_length_mm</code>.</p>
+<p>It is still difficult to perceive distributional information when presented as a series of numbers. What we need is a visualisation based on the above numbers. This is what a <strong>histogram</strong> provides. Histograms summarise the sample distribution of a variable by showing the counts of binned data as a series of bars. The position and width of each bar correspond to an interval and the height shows the count. Here is a histogram based on the binned data we made:</p>
+<p><img src="intro-bio-data-book_files/figure-html/unnamed-chunk-216-1.png" width="336" style="display: block; margin: auto;" /></p>
+<p>This gives a clear summary of the sample distribution of body mass. It reveals:</p>
+<ol style="list-style-type: decimal">
+<li>the most common values, which are round about 190 mm;</li>
+<li>the range of the data, which is about 60 mm; and</li>
+<li>the shape of the distribution, which appears to be <strong>bimodal</strong>—it has two peaks.</li>
+</ol>
+<p>That last observation wasn’t immediately obvious when looking at the raw counts in the binned summary.</p>
+<p>We used <strong>ggplot2</strong> to make that histogram. We could have used <strong>dplyr</strong> to make the binned data set and then used this with <strong>ggplot2</strong> to construct the plot manually. However, there is a much easier way to make a histogram. We’ll demonstrate this now. Rather than do it using one <strong>ggplot2</strong> expression, we will break the process up to demonstrate how it works.</p>
+<p>The first step uses the <code>ggplot</code> function with <code>aes</code> to set up the default data and aesthetic mapping:</p>
+<div class="sourceCode" id="cb352"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb352-1"><a href="exploring-one-variable.html#cb352-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create graphical object with data and aesthetic mapping</span></span>
+<span id="cb352-2"><a href="exploring-one-variable.html#cb352-2" aria-hidden="true" tabindex="-1"></a>plot_hist <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(penguins, <span class="fu">aes</span>(<span class="at">x =</span> flipper_length_mm))</span></code></pre></div>
+<p>This is no different than the scatter plot example we stepped through. The only difference is that a histogram requires only one aesthetic mapping. We supplied the argument <code>x = flipper_length_mm</code> to <code>aes</code> because we want to display the map intervals associated with <code>flipper_length_mm</code> to the x-axis. We don’t need to supply an aesthetic mapping for the y-axis because <strong>ggplot2</strong> is going to handle this for us.</p>
+<p>The second step adds a layer to the <code>plot_hist</code> object. We need to find the right <code>geom_XX</code> function to do this. This is called <code>geom_histogram</code>:</p>
+<div class="sourceCode" id="cb353"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb353-1"><a href="exploring-one-variable.html#cb353-1" aria-hidden="true" tabindex="-1"></a><span class="co"># use geom_histogram to add histogram layer</span></span>
+<span id="cb353-2"><a href="exploring-one-variable.html#cb353-2" aria-hidden="true" tabindex="-1"></a>plot_hist <span class="ot">&lt;-</span> plot_hist <span class="sc">+</span> <span class="fu">geom_histogram</span>()</span></code></pre></div>
+<p>It is instructive to look at the summary of the <strong>ggplot2</strong> object at this stage:</p>
+<div class="sourceCode" id="cb354"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb354-1"><a href="exploring-one-variable.html#cb354-1" aria-hidden="true" tabindex="-1"></a><span class="co"># print summary of graphical object</span></span>
+<span id="cb354-2"><a href="exploring-one-variable.html#cb354-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(plot_hist)</span></code></pre></div>
+<pre><code>## data: species, island, bill_length_mm, bill_depth_mm,
+##   flipper_length_mm, body_mass_g, sex, year [344x8]
+## mapping:  x = ~flipper_length_mm
+## faceting: &lt;ggproto object: Class FacetNull, Facet, gg&gt;
+##     compute_layout: function
+##     draw_back: function
+##     draw_front: function
+##     draw_labels: function
+##     draw_panels: function
+##     finish_data: function
+##     init_scales: function
+##     map_data: function
+##     params: list
+##     setup_data: function
+##     setup_params: function
+##     shrink: TRUE
+##     train_scales: function
+##     vars: function
+##     super:  &lt;ggproto object: Class FacetNull, Facet, gg&gt;
+## -----------------------------------
+## geom_bar: na.rm = FALSE, orientation = NA
+## stat_bin: binwidth = NULL, bins = NULL, na.rm = FALSE, orientation = NA, pad = FALSE
+## position_stack</code></pre>
+<p>Look at the text below the <code>----</code>. This shows that <code>geom_histogram</code> adds a ‘stat’ to the layer: <code>stat_bin</code>. This means <strong>ggplot2</strong> is going to take the raw <code>flipper_length_mm</code> data and bin it for us. Remember—the stat facility of <strong>ggplot2</strong> is its mechanism for creating summaries of data from the raw inputs. <code>stat_bin</code> deals with the binning process for us.</p>
+<p>Everything we need to plot a histogram is now set up. Here is the resulting plot:</p>
+<div class="sourceCode" id="cb356"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb356-1"><a href="exploring-one-variable.html#cb356-1" aria-hidden="true" tabindex="-1"></a><span class="co"># show the histogram</span></span>
+<span id="cb356-2"><a href="exploring-one-variable.html#cb356-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(plot_hist)</span></code></pre></div>
+<pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+<p><img src="intro-bio-data-book_files/figure-html/unnamed-chunk-220-1.png" width="336" style="display: block; margin: auto;" /></p>
+<p>This is not quite the same as the example we saw above because it uses different bins. We can set the properties of the <code>geom_histogram</code> to tweak this kind of thing—the <code>binwidth</code> argument adjusts the width of the bins used. Let’s construct the histogram again with 5 mm wide bins, as well as adjust the colour scheme and axis labels a bit:</p>
+<div class="sourceCode" id="cb358"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb358-1"><a href="exploring-one-variable.html#cb358-1" aria-hidden="true" tabindex="-1"></a><span class="co"># display flipper length histogram</span></span>
+<span id="cb358-2"><a href="exploring-one-variable.html#cb358-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins, <span class="fu">aes</span>(<span class="at">x =</span> flipper_length_mm)) <span class="sc">+</span> </span>
+<span id="cb358-3"><a href="exploring-one-variable.html#cb358-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># use geom_histogram to add histogram layer + customisation</span></span>
+<span id="cb358-4"><a href="exploring-one-variable.html#cb358-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="dv">5</span>, <span class="at">fill =</span> <span class="st">&quot;steelblue&quot;</span>, <span class="at">colour=</span><span class="st">&quot;darkgrey&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb358-5"><a href="exploring-one-variable.html#cb358-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># set the the x- and y-axis labels</span></span>
+<span id="cb358-6"><a href="exploring-one-variable.html#cb358-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Flipper length (mm)&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Count&quot;</span>)</span></code></pre></div>
+<p><img src="intro-bio-data-book_files/figure-html/unnamed-chunk-221-1.png" width="336" style="display: block; margin: auto;" /></p>
+<p>Notice that the effect of increasing the bin width is to ‘smooth’ the histogram, i.e. this version looks less jagged than the last. Whether or not that colour scheme is an improvement is a matter of taste. Mostly we wanted to demonstrate how the <code>fill</code> and <code>colour</code> arguments change the output— <code>fill</code> sets the fill colour of the bar and <code>colour</code> deals with the line around each bar.</p>
+<div id="choose-your-own-bin-widths" class="section level4 unnumbered infobox warning">
+<h4>Choose your own bin widths</h4>
+<p>It is good practice to experiment with <code>binwidth</code> because the value selected by <strong>ggplot2</strong> is seldom optimal. Finding a ‘good’ value is as much art as science. One way of doing this is to start with a value that is probably too large and then refine it down. For example, we could work out the approximate range of the data by eye and then use 1/10<sup>th</sup> of that range as an initial value for <code>binwidth</code>. Unless the data set is very small, this will result in a histogram that aggregates too much information. Once we have that rough starting value, we then reduce <code>binwidth</code> in small steps, re-rendering the plot each time until we end up with something that summarises the distribution well.</p>
+</div>
+<p>We can use pretty much the same R code to produce a histogram summarising the body mass sample distribution:</p>
+<div class="sourceCode" id="cb359"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb359-1"><a href="exploring-one-variable.html#cb359-1" aria-hidden="true" tabindex="-1"></a><span class="co"># display body mass histogram</span></span>
+<span id="cb359-2"><a href="exploring-one-variable.html#cb359-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins, <span class="fu">aes</span>(<span class="at">x =</span> body_mass_g)) <span class="sc">+</span> </span>
+<span id="cb359-3"><a href="exploring-one-variable.html#cb359-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># use geom_histogram to add histogram layer + customisation</span></span>
+<span id="cb359-4"><a href="exploring-one-variable.html#cb359-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="dv">250</span>, <span class="at">fill =</span> <span class="st">&quot;steelblue&quot;</span>, <span class="at">colour=</span><span class="st">&quot;darkgrey&quot;</span>) <span class="sc">+</span></span>
+<span id="cb359-5"><a href="exploring-one-variable.html#cb359-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># set the the x- and y-axis labels</span></span>
+<span id="cb359-6"><a href="exploring-one-variable.html#cb359-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Flipper length (mm)&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Count&quot;</span>)</span></code></pre></div>
+<p><img src="intro-bio-data-book_files/figure-html/unnamed-chunk-222-1.png" width="336" style="display: block; margin: auto;" /></p>
+<p>The only things that changed in this example were the aesthetic mapping and the bin width, which we set to 250 to reflect the range of observed body masses. The histogram reveals that the most common body mass (the mode) is around 3500 grams and the range of masses is also about 3500 grams. It also shows that the distribution is <strong>skewed</strong>, i.e. it is asymmetric. We can say even more—the distribution is right-skewed (a.k.a. positive-skewed) because the tail on the right gets further away from the mode than the left tail.</p>
+<p>We have to choose those bin widths carefully. Body mass is measured to the nearest 25 grams. This means we should choose a bin width that is some multiple of 25 to produce a meaningful histogram. Look what happens if we set the bin width to 25:</p>
+<div class="sourceCode" id="cb360"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb360-1"><a href="exploring-one-variable.html#cb360-1" aria-hidden="true" tabindex="-1"></a><span class="co"># display body mass histogram</span></span>
+<span id="cb360-2"><a href="exploring-one-variable.html#cb360-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins, <span class="fu">aes</span>(<span class="at">x =</span> body_mass_g)) <span class="sc">+</span> </span>
+<span id="cb360-3"><a href="exploring-one-variable.html#cb360-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># use geom_histogram to add histogram layer + customisation -- choose </span></span>
+<span id="cb360-4"><a href="exploring-one-variable.html#cb360-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># a sensible bin width</span></span>
+<span id="cb360-5"><a href="exploring-one-variable.html#cb360-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="dv">25</span>, <span class="at">fill =</span> <span class="st">&quot;steelblue&quot;</span>, <span class="at">colour=</span><span class="st">&quot;darkgrey&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb360-6"><a href="exploring-one-variable.html#cb360-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># set the the x- and y-axis labels</span></span>
+<span id="cb360-7"><a href="exploring-one-variable.html#cb360-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Flipper length (mm)&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Count&quot;</span>)</span></code></pre></div>
+<p><img src="intro-bio-data-book_files/figure-html/unnamed-chunk-223-1.png" width="336" style="display: block; margin: auto;" /></p>
+<p>We end up with gaps in the histogram because many bins do not include any data. The take-home message is that we have to pay attention to our data to produce meaningful summaries.</p>
+</div>
+<div id="dot-plots" class="section level3" number="15.1.3">
+<h3><span class="header-section-number">15.1.3</span> Dot plots</h3>
+<p>Histograms are good for visualising sample distributions when we have a reasonably large sample size, e.g. &gt;100 observations. They are less effective when a sample is small. In this ‘small data’ situation, it is better to use something called a <strong>dot plot</strong><a href="#fn9" class="footnote-ref" id="fnref9"><sup>9</sup></a>.</p>
+<p>We have created subset of <code>penguins</code> that only retains female Adelie penguin observations from 2007, called <code>penguins_small</code>. This is considerably smaller than the original:</p>
+<pre><code>## # A tibble: 22 x 8
+##    species island    bill_length_mm bill_depth_mm flipper_length_mm body_mass_g
+##    &lt;chr&gt;   &lt;chr&gt;              &lt;dbl&gt;         &lt;dbl&gt;             &lt;int&gt;       &lt;int&gt;
+##  1 Adelie  Torgersen           39.5          17.4               186        3800
+##  2 Adelie  Torgersen           40.3          18                 195        3250
+##  3 Adelie  Torgersen           36.7          19.3               193        3450
+##  4 Adelie  Torgersen           38.9          17.8               181        3625
+##  5 Adelie  Torgersen           41.1          17.6               182        3200
+##  6 Adelie  Torgersen           36.6          17.8               185        3700
+##  7 Adelie  Torgersen           38.7          19                 195        3450
+##  8 Adelie  Torgersen           34.4          18.4               184        3325
+##  9 Adelie  Biscoe              37.8          18.3               174        3400
+## 10 Adelie  Biscoe              35.9          19.2               189        3800
+## # … with 12 more rows, and 2 more variables: sex &lt;chr&gt;, year &lt;int&gt;</code></pre>
+<p>This is about the right size for using a dot plot. Constructing a dot plot with <strong>ggplot2</strong> is easy once you understand the histogram case. The code is are very similar:</p>
+<div class="sourceCode" id="cb362"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb362-1"><a href="exploring-one-variable.html#cb362-1" aria-hidden="true" tabindex="-1"></a><span class="co"># display body mass dot plot</span></span>
+<span id="cb362-2"><a href="exploring-one-variable.html#cb362-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins_small, <span class="fu">aes</span>(<span class="at">x =</span> body_mass_g)) <span class="sc">+</span> </span>
+<span id="cb362-3"><a href="exploring-one-variable.html#cb362-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># use geom_dotplot to add layer + choose a sensible bin width!</span></span>
+<span id="cb362-4"><a href="exploring-one-variable.html#cb362-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_dotplot</span>(<span class="at">binwidth =</span> <span class="dv">100</span>) <span class="sc">+</span></span>
+<span id="cb362-5"><a href="exploring-one-variable.html#cb362-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># set the the x-axis label and remove y-axis label</span></span>
+<span id="cb362-6"><a href="exploring-one-variable.html#cb362-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Body mass (g)&quot;</span>, <span class="at">y =</span> <span class="st">&quot;&quot;</span>) <span class="sc">+</span></span>
+<span id="cb362-7"><a href="exploring-one-variable.html#cb362-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># remove y-axis guides</span></span>
+<span id="cb362-8"><a href="exploring-one-variable.html#cb362-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.y =</span> <span class="fu">element_blank</span>(), <span class="at">axis.ticks.y =</span> <span class="fu">element_blank</span>())</span></code></pre></div>
+<p><img src="intro-bio-data-book_files/figure-html/unnamed-chunk-226-1.png" width="336" style="display: block; margin: auto;" /></p>
+<p>Each observation in the data adds one dot, and dots that fall into the same bin are stacked up on top of one another. Notice the bins are not evenly spaced, however. The resulting plot displays the same information as a histogram but tends to be more informative when there are few observations.</p>
+<p>The <code>theme</code> part of that example is entirely optional.It removes the grid lines and y-axis labels because these are not meaningful when the number of stacked dots represents ’ height’. It is unfortunate that <strong>ggplot2</strong> displays them. But then, no package is perfect.</p>
+</div>
+</div>
+<div id="explore-categorical" class="section level2" number="15.2">
+<h2><span class="header-section-number">15.2</span> Exploring categorical variables</h2>
+<p>We will work with the penguin species (<code>species</code>) and observation year (<code>year</code>) variables to demonstrate how to explore categorical variables.</p>
+<div id="what-kind-of-categorical-variable" class="section level3" number="15.2.1">
+<h3><span class="header-section-number">15.2.1</span> What kind of categorical variable?</h3>
+<p>Exploring categorical variables is generally simpler than the numeric case. The simplest thing we can do is examine the set of categories. For example, we can print these by extracting a variable with the <code>$</code> operator and using the <code>unique</code> function:</p>
+<p><strong>species</strong> —</p>
+<div class="sourceCode" id="cb363"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb363-1"><a href="exploring-one-variable.html#cb363-1" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(penguins<span class="sc">$</span>species)</span></code></pre></div>
+<pre><code>## [1] &quot;Adelie&quot;    &quot;Gentoo&quot;    &quot;Chinstrap&quot;</code></pre>
+<p><strong>observation year</strong> —</p>
+<div class="sourceCode" id="cb365"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb365-1"><a href="exploring-one-variable.html#cb365-1" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(penguins<span class="sc">$</span>year)</span></code></pre></div>
+<pre><code>## [1] 2007 2008 2009</code></pre>
+<p>These are obviously categorical—there are no numeric values associated with either variable. The obvious question to ask about each variable is, is it ordinal or nominal?</p>
+<p>It is probably safe to assume that <code>species</code> should be treated as a nominal variable. There is no reasonable way to order the three species—i.e. a statement such as ‘Adelie &gt; Gentoo’ is nonsense.</p>
+<p>What about <code>year</code>? That’s a bit more tricky. If we were interested in how some aspect of the data changes over time, we might consider treating year as a numeric variable, or perhaps, as an ordinal categorical variable. Alternatively, if the question is simply, ‘do the data vary from one year to the next’ without any concern for trends, it’s reasonable to treat year as a nominal categorical variable.</p>
+<p>This once again illustrates an important idea—the classification of a variable sometimes depends on the analysis goals. The decision matters because it influences how we choose to summarise a variable, how we interpret its relationship with other variables, and whether a specific statistical model is appropriate for our data or not.</p>
+<p>For now, let’s assume it’s fine to treat <code>year</code> as a nominal variable.</p>
+</div>
+<div id="bar-plots" class="section level3" number="15.2.2">
+<h3><span class="header-section-number">15.2.2</span> Bar plots</h3>
+<p>We can’t say anything about the sample distribution of a categorical variable by just looking at the possible categories. We need to explore the relative frequency of those categories. There is no need to carry out anything as complicated as binning. Instead, we simply count up the number of times each category occurs in the data. The <strong>dplyr</strong> <code>count</code> verb will does this:</p>
+<div class="sourceCode" id="cb367"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb367-1"><a href="exploring-one-variable.html#cb367-1" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">%&gt;%</span> <span class="fu">count</span>(species)</span></code></pre></div>
+<pre><code>## # A tibble: 3 x 2
+##   species       n
+##   &lt;chr&gt;     &lt;int&gt;
+## 1 Adelie      152
+## 2 Chinstrap    68
+## 3 Gentoo      124</code></pre>
+<p>We saw this result earlier in the book—the most common species is Adelie, followed by the Gentoo and Chinstrap. Gentoo is roughly as common as Adelie, whereas Chinstrap is about half as frequent.</p>
+<p>These numbers lead directly to an informative visualisation. The usual graphical tool for summarising categorical variables is the <strong>bar chart</strong>. A bar chart presents summaries of grouped data with rectangular bars. The lengths of each bar is proportional to the value it represents. When summarising categorical variables, the bar lengths show the raw counts or proportions of each category.</p>
+<p>Constructing a bar graph to display category counts is easy with <strong>ggplot2</strong>. We’ll do this for the <code>species</code> variable. As always, we start by using the <code>ggplot</code> function to construct a graphical object containing the default data and aesthetic mapping.</p>
+<div class="sourceCode" id="cb369"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb369-1"><a href="exploring-one-variable.html#cb369-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create graphical object with data and aesthetic mapping</span></span>
+<span id="cb369-2"><a href="exploring-one-variable.html#cb369-2" aria-hidden="true" tabindex="-1"></a>plot_bar <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(penguins, <span class="fu">aes</span>(<span class="at">x =</span> species)) </span></code></pre></div>
+<p>We’ve called the object <code>plot_bar</code> for the obvious reason. Notice that we only need to define one aesthetic mapping—we mapped <code>species</code> to the x-axis. This will produce a bar plot with vertical bars.</p>
+<p>The next step is to add a layer using one of the <code>geom_XX</code> functions. There are two functions we can use to create bar charts in ggplot, <code>geom_bar</code> and <code>geom_col</code>. By default, <code>geom_col</code> counts the number of observations in each category, whereas <code>geom_bar</code> plots the actual numbers we provide.</p>
+<p>We want to show the counts of each <code>species</code> category, meaning we should use <code>geom_bar</code>:</p>
+<div class="sourceCode" id="cb370"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb370-1"><a href="exploring-one-variable.html#cb370-1" aria-hidden="true" tabindex="-1"></a><span class="co"># use geom_bar to add bar plot layer</span></span>
+<span id="cb370-2"><a href="exploring-one-variable.html#cb370-2" aria-hidden="true" tabindex="-1"></a>plot_bar <span class="ot">&lt;-</span> plot_bar <span class="sc">+</span> <span class="fu">geom_bar</span>()</span></code></pre></div>
+<p>Now examine the summary of the <strong>ggplot2</strong> object:</p>
+<div class="sourceCode" id="cb371"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb371-1"><a href="exploring-one-variable.html#cb371-1" aria-hidden="true" tabindex="-1"></a><span class="co"># print summary of graphical object</span></span>
+<span id="cb371-2"><a href="exploring-one-variable.html#cb371-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(plot_bar) </span></code></pre></div>
+<pre><code>## data: species, island, bill_length_mm, bill_depth_mm,
+##   flipper_length_mm, body_mass_g, sex, year [344x8]
+## mapping:  x = ~species
+## faceting: &lt;ggproto object: Class FacetNull, Facet, gg&gt;
+##     compute_layout: function
+##     draw_back: function
+##     draw_front: function
+##     draw_labels: function
+##     draw_panels: function
+##     finish_data: function
+##     init_scales: function
+##     map_data: function
+##     params: list
+##     setup_data: function
+##     setup_params: function
+##     shrink: TRUE
+##     train_scales: function
+##     vars: function
+##     super:  &lt;ggproto object: Class FacetNull, Facet, gg&gt;
+## -----------------------------------
+## geom_bar: width = NULL, na.rm = FALSE, orientation = NA
+## stat_count: width = NULL, na.rm = FALSE, orientation = NA
+## position_stack</code></pre>
+<p>Look at the layer information below <code>----</code>. The <code>geom_bar</code> function uses <code>stat_count</code>. This means <strong>ggplot2</strong> summed the number of observations associated with each category of <code>species</code>. Counting a categorical variable is analogous to binning a numeric variable. The only difference is that there is no need to specify bin widths because <code>species</code> is categorical. Here’s the resulting figure:</p>
+<div class="sourceCode" id="cb373"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb373-1"><a href="exploring-one-variable.html#cb373-1" aria-hidden="true" tabindex="-1"></a><span class="co"># show the bar plot</span></span>
+<span id="cb373-2"><a href="exploring-one-variable.html#cb373-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(plot_bar)</span></code></pre></div>
+<p><img src="intro-bio-data-book_files/figure-html/unnamed-chunk-233-1.png" width="211.2" style="display: block; margin: auto;" /></p>
+<p>This is exactly the same information produced by the <code>count</code> function, only now it’s presented in graphical form. We can customise this bar graph with functions like <code>labs</code> and by setting various properties inside <code>geom_bar</code>. For example:</p>
+<div class="sourceCode" id="cb374"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb374-1"><a href="exploring-one-variable.html#cb374-1" aria-hidden="true" tabindex="-1"></a><span class="co"># display bar plot of species counts</span></span>
+<span id="cb374-2"><a href="exploring-one-variable.html#cb374-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins, <span class="fu">aes</span>(<span class="at">x =</span> species)) <span class="sc">+</span> </span>
+<span id="cb374-3"><a href="exploring-one-variable.html#cb374-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># use geom_bar to add bar plot layer of **counts**</span></span>
+<span id="cb374-4"><a href="exploring-one-variable.html#cb374-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">fill =</span> <span class="st">&quot;rosybrown4&quot;</span>, <span class="at">width =</span> <span class="fl">0.7</span>) <span class="sc">+</span> </span>
+<span id="cb374-5"><a href="exploring-one-variable.html#cb374-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># set the the x- and y-axis labels</span></span>
+<span id="cb374-6"><a href="exploring-one-variable.html#cb374-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Species&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Number of Observations&quot;</span>)</span></code></pre></div>
+<p><img src="intro-bio-data-book_files/figure-html/unnamed-chunk-234-1.png" width="211.2" style="display: block; margin: auto;" /></p>
+<p>The only new thing here is that we used the <code>width</code> argument of <code>geom_bar</code> to make the bars a little narrower than the default. Notice that we use <code>fill</code> (not <code>colour</code>) to change the colour of the bars.</p>
+<p>What might we like to change about this plot? The different species appear in alphabetical order. There’s nothing particularly meaningful about that order. Perhaps it would make more sense to show them in frequency order from least to most common?</p>
+<p>We need to customise the scale associated with the ‘x’ aesthetic to achieve this. We can start by making a short character vector containing the species names, listing them in the order they need to be shown:</p>
+<div class="sourceCode" id="cb375"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb375-1"><a href="exploring-one-variable.html#cb375-1" aria-hidden="true" tabindex="-1"></a><span class="co"># character vector of species names **in required order**</span></span>
+<span id="cb375-2"><a href="exploring-one-variable.html#cb375-2" aria-hidden="true" tabindex="-1"></a>ords <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Chinstrap&quot;</span>, <span class="st">&quot;Gentoo&quot;</span>, <span class="st">&quot;Adelie&quot;</span>)</span></code></pre></div>
+<p>Keep an eye on the spelling—R is not forgiving of spelling errors. We can use this with the <code>limits</code> argument of the <code>scale_x_discrete</code> function to adjust the ordering:</p>
+<div class="sourceCode" id="cb376"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb376-1"><a href="exploring-one-variable.html#cb376-1" aria-hidden="true" tabindex="-1"></a><span class="co"># display bar plot of species counts</span></span>
+<span id="cb376-2"><a href="exploring-one-variable.html#cb376-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins, <span class="fu">aes</span>(<span class="at">x =</span> species)) <span class="sc">+</span> </span>
+<span id="cb376-3"><a href="exploring-one-variable.html#cb376-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># use geom_bar to add bar plot layer of **counts**</span></span>
+<span id="cb376-4"><a href="exploring-one-variable.html#cb376-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">fill =</span> <span class="st">&quot;rosybrown4&quot;</span>, <span class="at">width =</span> <span class="fl">0.7</span>) <span class="sc">+</span> </span>
+<span id="cb376-5"><a href="exploring-one-variable.html#cb376-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># customise order of x-axis (limits)</span></span>
+<span id="cb376-6"><a href="exploring-one-variable.html#cb376-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_discrete</span>(<span class="at">limits =</span> ords) <span class="sc">+</span></span>
+<span id="cb376-7"><a href="exploring-one-variable.html#cb376-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># set the the x- and y-axis labels</span></span>
+<span id="cb376-8"><a href="exploring-one-variable.html#cb376-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Species&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Number of Observations&quot;</span>)</span></code></pre></div>
+<p><img src="intro-bio-data-book_files/figure-html/unnamed-chunk-236-1.png" width="211.2" style="display: block; margin: auto;" /></p>
+<p>We had to use one of the <code>scale_x_YY</code> functions to change the way the ‘x’ aesthetic appears. We use <code>scale_x_discrete</code> because ‘discrete’ is <strong>ggplot2</strong>-speak for ‘categorical.’</p>
+<p>Is there anything else we might want to change? Sometimes it is clearer to plot horizontal bars, particularly if the categorical axis labels are all bunched together (not really the case here). Flipping the x and y axes makes a horizontal bar chart, which we can achieve with the <code>coord_flip</code> function (this is new):</p>
+<div class="sourceCode" id="cb377"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb377-1"><a href="exploring-one-variable.html#cb377-1" aria-hidden="true" tabindex="-1"></a><span class="co"># display bar plot of species counts</span></span>
+<span id="cb377-2"><a href="exploring-one-variable.html#cb377-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins, <span class="fu">aes</span>(<span class="at">x =</span> species)) <span class="sc">+</span> </span>
+<span id="cb377-3"><a href="exploring-one-variable.html#cb377-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># use geom_bar to add bar plot layer of **counts**</span></span>
+<span id="cb377-4"><a href="exploring-one-variable.html#cb377-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">fill =</span> <span class="st">&quot;rosybrown4&quot;</span>, <span class="at">width =</span> <span class="fl">0.7</span>) <span class="sc">+</span> </span>
+<span id="cb377-5"><a href="exploring-one-variable.html#cb377-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># customise order of x-axis (limits)</span></span>
+<span id="cb377-6"><a href="exploring-one-variable.html#cb377-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_discrete</span>(<span class="at">limits =</span> ords) <span class="sc">+</span></span>
+<span id="cb377-7"><a href="exploring-one-variable.html#cb377-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># set the the x- and y-axis labels</span></span>
+<span id="cb377-8"><a href="exploring-one-variable.html#cb377-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Species&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Number of Observations&quot;</span>) <span class="sc">+</span></span>
+<span id="cb377-9"><a href="exploring-one-variable.html#cb377-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># flip x- and y-axes</span></span>
+<span id="cb377-10"><a href="exploring-one-variable.html#cb377-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>()</span></code></pre></div>
+<p><img src="intro-bio-data-book_files/figure-html/unnamed-chunk-237-1.png" width="480" style="display: block; margin: auto;" /></p>
+<p>We use very similar R code to produce a bar plot summarising the annual counts, i.e. those associated with the <code>year</code> categories:</p>
+<div class="sourceCode" id="cb378"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb378-1"><a href="exploring-one-variable.html#cb378-1" aria-hidden="true" tabindex="-1"></a><span class="co"># display bar plot of year counts</span></span>
+<span id="cb378-2"><a href="exploring-one-variable.html#cb378-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins, <span class="fu">aes</span>(<span class="at">x =</span> year)) <span class="sc">+</span> </span>
+<span id="cb378-3"><a href="exploring-one-variable.html#cb378-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># use geom_bar to add bar plot layer of **counts**</span></span>
+<span id="cb378-4"><a href="exploring-one-variable.html#cb378-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">fill =</span> <span class="st">&quot;steelblue&quot;</span>, <span class="at">width =</span> <span class="fl">0.7</span>) <span class="sc">+</span> </span>
+<span id="cb378-5"><a href="exploring-one-variable.html#cb378-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># set the the x- and y-axis labels</span></span>
+<span id="cb378-6"><a href="exploring-one-variable.html#cb378-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Year&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Number of Observations&quot;</span>) <span class="sc">+</span></span>
+<span id="cb378-7"><a href="exploring-one-variable.html#cb378-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># flip x- and y-axes</span></span>
+<span id="cb378-8"><a href="exploring-one-variable.html#cb378-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>()</span></code></pre></div>
+<p><img src="intro-bio-data-book_files/figure-html/unnamed-chunk-238-1.png" width="480" style="display: block; margin: auto;" /></p>
+<p>To make this, we changed the aesthetic mapping, colour and the labels, and dropped the <code>scale_x_discrete</code> part because the default ordering is acceptable. The resulting plot shows that there are roughly equal numbers of penguins sampled in each year.</p>
+<p>There is one small irritation. Look at the year axis labels and guides. These include non-existent ‘half years’ (e.g. 2007.5) rather than being limited to only the observed years (2007, 2008 and 2009). This has happened because <strong>ggplot2</strong> doesn’t know that <code>year</code> is meant to be treated as a categorical variable. It sees a number, and so it constructs a continuous numeric axis for <code>year</code>.</p>
+<p>We need to force <strong>ggplot2</strong> to treat <code>year</code> as a categorical ‘thing’ to avoid this behaviour. There is more than one way to do this. The simplest is to convert <code>year</code> into a character vector. The <code>as.character</code> function will do this. What’s more, <strong>ggplot2</strong> will allow us to do this when we set up the aesthetic mappings within <code>aes</code>:</p>
+<div class="sourceCode" id="cb379"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb379-1"><a href="exploring-one-variable.html#cb379-1" aria-hidden="true" tabindex="-1"></a><span class="co"># display bar plot of year counts</span></span>
+<span id="cb379-2"><a href="exploring-one-variable.html#cb379-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins,</span>
+<span id="cb379-3"><a href="exploring-one-variable.html#cb379-3" aria-hidden="true" tabindex="-1"></a>       <span class="co"># convert year to character when setting up mapping</span></span>
+<span id="cb379-4"><a href="exploring-one-variable.html#cb379-4" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">as.character</span>(year))) <span class="sc">+</span> </span>
+<span id="cb379-5"><a href="exploring-one-variable.html#cb379-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># use geom_bar to add bar plot layer of **counts**</span></span>
+<span id="cb379-6"><a href="exploring-one-variable.html#cb379-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">fill =</span> <span class="st">&quot;steelblue&quot;</span>, <span class="at">width =</span> <span class="fl">0.7</span>) <span class="sc">+</span> </span>
+<span id="cb379-7"><a href="exploring-one-variable.html#cb379-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># set the the x- and y-axis labels</span></span>
+<span id="cb379-8"><a href="exploring-one-variable.html#cb379-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Year&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Number of Observations&quot;</span>) <span class="sc">+</span></span>
+<span id="cb379-9"><a href="exploring-one-variable.html#cb379-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># flip x- and y-axes</span></span>
+<span id="cb379-10"><a href="exploring-one-variable.html#cb379-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>()</span></code></pre></div>
+<p><img src="intro-bio-data-book_files/figure-html/unnamed-chunk-239-1.png" width="480" style="display: block; margin: auto;" /></p>
+<p>That’s better! This may seem like a bit of an edge case but it comes up often enough to be worth highlighting. More generally, this example demonstrates that our conception of a variable needs to matches the way it is interpreted by <strong>ggplot2</strong> to arrive at a sensible plot.</p>
+
+</div>
+</div>
+</div>
+<div class="footnotes">
+<hr />
+<ol start="9">
+<li id="fn9"><p>Not to be confused with the ‘Cleveland dot plot.’ A standard dot plot summarises a sample distribution. The Cleveland dot plot is something quite different, which summarises the frequencies of a categorical variable. It’s meant to serve as a simple alternative to bar charts and pie charts.<a href="exploring-one-variable.html#fnref9" class="footnote-back">↩︎</a></p></li>
+</ol>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="chapter-customise-ggplot2.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="exploring-associations.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["intro-bio-data-book.pdf", "intro-bio-data-book.epub"],
+"toc": {
+"collapse": "section"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
