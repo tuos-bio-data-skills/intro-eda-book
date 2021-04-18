@@ -276,6 +276,10 @@ plt + theme_light  (base_size = 14) + ggtitle("theme_light")   + my_theme
 plt + theme_dark   (base_size = 14) + ggtitle("theme_dark")    + my_theme
 ```
 
+## Advice for making plots
+
+We'll end this section with a bit of advice about making your own plots with **ggplot2**. Look at the code we ended up with for the final scatter plot above. It's complicated! However, we didn't make that in one go. We built up to it slowly, tweaking one thing at a time. That's the trick---**start with a basic skeleton and gradually increase the level of customisation.** Begin by getting the aesthetic mappings and the faceting correct so that all the relevant variables are represented. Then introduce one bit of customisation and review the plot to ensure it worked and everything looks right. Keep doing this, one bit of customisation at a time, until the plot looks right.
+
 <!--# remember to switch warnings on again -->
 
 ```{r, echo=FALSE}
