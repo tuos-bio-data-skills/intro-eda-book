@@ -117,6 +117,7 @@ relationship-between-aesthetic-mappings-and-geom-properties
 plot-scales
 labels
 themes
+advice-for-making-plots
 exploring-one-variable
 explore-numeric
 what-kind-of-numeric-variable
