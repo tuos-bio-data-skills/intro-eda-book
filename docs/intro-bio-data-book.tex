@@ -145,7 +145,7 @@
 
 \title{Exploratory Data Analysis with R}
 \author{Dylan Childs}
-\date{2021-04-17}
+\date{2021-04-18}
 
 \begin{document}
 \maketitle
@@ -5235,6 +5235,11 @@ There aren't that many themes built into \textbf{ggplot2}. Here's a quick look a
 
 \includegraphics[width=0.333\linewidth]{intro-bio-data-book_files/figure-latex/unnamed-chunk-210-1} \includegraphics[width=0.333\linewidth]{intro-bio-data-book_files/figure-latex/unnamed-chunk-210-2} \includegraphics[width=0.333\linewidth]{intro-bio-data-book_files/figure-latex/unnamed-chunk-210-3} \includegraphics[width=0.333\linewidth]{intro-bio-data-book_files/figure-latex/unnamed-chunk-210-4} \includegraphics[width=0.333\linewidth]{intro-bio-data-book_files/figure-latex/unnamed-chunk-210-5} \includegraphics[width=0.333\linewidth]{intro-bio-data-book_files/figure-latex/unnamed-chunk-210-6}
 
+\hypertarget{advice-for-making-plots}{%
+\section{Advice for making plots}\label{advice-for-making-plots}}
+
+We'll end this section with a bit of advice about making your own plots with \textbf{ggplot2}. Look at the code we ended up with for the final scatter plot above. It's complicated! However, we didn't make that in one go. We built up to it slowly, tweaking one thing at a time. That's the trick---\textbf{start with a basic skeleton and gradually increase the level of customisation.} Begin by getting the aesthetic mappings and the faceting correct so that all the relevant variables are represented. Then introduce one bit of customisation and review the plot to ensure it worked and everything looks right. Keep doing this, one bit of customisation at a time, until the plot looks right.
+
 \hypertarget{exploring-one-variable}{%
 \chapter{Exploring one variable}\label{exploring-one-variable}}
 
@@ -6700,7 +6705,7 @@ Navigating help files is a little daunting at first. These files can be quite lo
 \end{enumerate}
 
 \hypertarget{vignettes}{%
-\section{Vignettes and demos}\label{vignettes}}
+\section{Vignettes}\label{vignettes}}
 
 The purpose of a package vignette is to provide a relatively brief, practical account of one or more of its features. Not all packages come with vignettes, though the best packages often do. We use the \texttt{vignette} function to view all the available vignettes in Rstudio. This will open up a tab that lists each vignette under their associated package name along with a brief description. A package will often have more than one vignette.
 
