@@ -4,13 +4,14 @@
 %
 \documentclass[
 ]{book}
-\usepackage{amsmath,amssymb}
 \usepackage{lmodern}
+\usepackage{amsmath}
 \usepackage{ifxetex,ifluatex}
 \ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
   \usepackage[T1]{fontenc}
   \usepackage[utf8]{inputenc}
   \usepackage{textcomp} % provide euro and other symbols
+  \usepackage{amssymb}
 \else % if luatex or xetex
   \usepackage{unicode-math}
   \defaultfontfeatures{Scale=MatchLowercase}
@@ -81,7 +82,7 @@
 \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
 \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
 \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
-\usepackage{longtable,booktabs,array}
+\usepackage{longtable,booktabs}
 \usepackage{calc} % for calculating minipage widths
 % Correct order of tables after \paragraph or \subparagraph
 \usepackage{etoolbox}
@@ -145,7 +146,7 @@
 
 \title{Exploratory Data Analysis with R}
 \author{Dylan Childs}
-\date{2021-04-18}
+\date{2021-04-19}
 
 \begin{document}
 \maketitle
@@ -6254,15 +6255,11 @@ Another way to arrive at the above bar plot is by using the built-in \textbf{ggp
        \CommentTok{\# aesthetic mappings: mass (y) vs species (x) by sex (fill)}
        \FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ species, }\AttributeTok{fill =}\NormalTok{ sex, }\AttributeTok{y =}\NormalTok{ body\_mass\_g)) }\SpecialCharTok{+}
   \CommentTok{\# use geom\_bar to add bar plot layer using a stats summary}
-  \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{stat =} \StringTok{"summary"}\NormalTok{, }\AttributeTok{fun.y =}\NormalTok{ mean, }\AttributeTok{position =} \StringTok{"dodge"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{stat =} \StringTok{"summary"}\NormalTok{, }\AttributeTok{fun=}\NormalTok{mean, }\AttributeTok{position =} \StringTok{"dodge"}\NormalTok{) }\SpecialCharTok{+}
   \CommentTok{\# specify labels for all mappings}
   \FunctionTok{labs}\NormalTok{(}\AttributeTok{x =} \StringTok{"Species"}\NormalTok{, }\AttributeTok{y =} \StringTok{"Mean body mass (g)"}\NormalTok{, }\AttributeTok{fill =} \StringTok{"Sex"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
-
-\begin{verbatim}
-## No summary function supplied, defaulting to `mean_se()`
-\end{verbatim}
 
 \begin{center}\includegraphics{intro-bio-data-book_files/figure-latex/unnamed-chunk-262-1} \end{center}
 
@@ -6273,7 +6270,7 @@ This involves a couple of new tricks. When we add a layer using \texttt{geom\_ba
 \item
   \texttt{stat\ =\ "summary"} tells \textbf{ggplot2} not to plot the raw values of the y aesthetic mapping, but instead, to calculate and then plot a summary of the `y' variable.
 \item
-  \texttt{fun.y\ =\ mean} tells \textbf{ggplot2} how to summarise the `y' variable. The function on the right-hand side can be any function that takes a vector of values and returns a single number. We want the \texttt{mean} function.
+  \texttt{fun\ =\ mean} tells \textbf{ggplot2} how to summarise the `y' variable. The name of the function on the right-hand side can be any function that takes a vector of values as input and returns a summary. We want the \texttt{mean} function.
 \end{itemize}
 
 Notice that this works on the raw data (\texttt{penguins})---there is no need to manually calculate the means because that happens inside \textbf{ggplot2}.
