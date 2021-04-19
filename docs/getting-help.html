@@ -24,7 +24,7 @@
 <meta name="author" content="Dylan Childs" />
 
 
-<meta name="date" content="2021-04-18" />
+<meta name="date" content="2021-04-19" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -59,7 +59,6 @@
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
 pre.sourceCode { margin: 0; }
 @media screen {
@@ -420,7 +419,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="browsing-the-help-system" class="section level2" number="18.2">
 <h2><span class="header-section-number">A.2</span> Browsing the help system</h2>
 <p>Help files are a little like mini web pages, which means we can navigate among them using hyperlinks. One way to begin browsing the help system uses the <code>help.start</code> function:</p>
-<div class="sourceCode" id="cb414"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb414-1"><a href="getting-help.html#cb414-1" aria-hidden="true" tabindex="-1"></a><span class="fu">help.start</span>() </span></code></pre></div>
+<div class="sourceCode" id="cb413"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb413-1"><a href="getting-help.html#cb413-1" aria-hidden="true" tabindex="-1"></a><span class="fu">help.start</span>() </span></code></pre></div>
 <p>When we run this function the <strong>Package Index</strong> page should open up in the <strong>Help</strong> tab of the bottom right pane in RStudio. This lists all the packages currently installed on a computer. We can view the help files associated with a package by clicking on the appropriate link. For example, all the functions that come with the base installation of R have a help file associated with them—we can click on the link to the R base package (<code>base</code>) to see these.</p>
 <p>The packages that we install separately each have their own set of associated help files. We will see how to navigate these in a moment.</p>
 <p>The help browser has Forward, Back, and Home buttons, just like a normal web browser. If we get lost in the mire of help pages we can always navigate backward until we get back to a familiar page. Clicking on the home button takes us to a page with three sections:</p>
@@ -433,18 +432,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="searching-for-help-files" class="section level2" number="18.3">
 <h2><span class="header-section-number">A.3</span> Searching for help files</h2>
 <p>After browsing help files via <code>help.start</code> for a bit it quickly becomes apparent that this way of searching for help is very inefficient. We often know the name of the function we need to use and all we want to do is open that particular help file. We can do this using the <code>help</code> function:</p>
-<div class="sourceCode" id="cb415"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb415-1"><a href="getting-help.html#cb415-1" aria-hidden="true" tabindex="-1"></a><span class="fu">help</span>(<span class="at">topic =</span> Trig)</span></code></pre></div>
+<div class="sourceCode" id="cb414"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb414-1"><a href="getting-help.html#cb414-1" aria-hidden="true" tabindex="-1"></a><span class="fu">help</span>(<span class="at">topic =</span> Trig)</span></code></pre></div>
 <p>After we run this line RStudio opens up the help file for the trigonometry topic in the <strong>Help</strong> tab. This file provides information about the various trigonometric functions such as <code>sin</code> or <code>cos</code> (we’ll see how to make sense of such help pages in a bit).</p>
 <p>The <code>help</code> function needs a minimum of one argument: the name of the topic or function of interest. When we use it like this the help function searches across packages, looking for a help file whose name gives <strong>an exact match</strong> to the name we supplied. In this case, we opened the help file associated with the <code>Trig</code> topic.</p>
 <p>Most of the time we use the <code>help</code> function to find the help page for a specific function, rather than a general topic. This is fine if we can remember the name of the topic associated with different functions. Most of us cannot. Luckily, the help function will also match help pages by the name of the function(s) they cover:</p>
-<div class="sourceCode" id="cb416"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb416-1"><a href="getting-help.html#cb416-1" aria-hidden="true" tabindex="-1"></a><span class="fu">help</span>(<span class="at">topic =</span> sin)</span></code></pre></div>
+<div class="sourceCode" id="cb415"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb415-1"><a href="getting-help.html#cb415-1" aria-hidden="true" tabindex="-1"></a><span class="fu">help</span>(<span class="at">topic =</span> sin)</span></code></pre></div>
 <p>Here we searched for help on the <code>sin</code> function. This is part of the <code>Trig</code> topic so <code>help(topic = sin)</code> brings up the same page as the <code>help(topic = Trig)</code>.</p>
 <p>By default, the <code>help</code> function only searches for files associated with the base functions or with packages that we have loaded in the current session with the <code>library</code> function. If we want to search for help on the <code>mutate</code> function—part of the <strong>dplyr</strong> package—but we haven’t run <code>library(dplyr)</code> in the current session this will fail:</p>
-<div class="sourceCode" id="cb417"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb417-1"><a href="getting-help.html#cb417-1" aria-hidden="true" tabindex="-1"></a><span class="fu">help</span>(mutate)</span></code></pre></div>
+<div class="sourceCode" id="cb416"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb416-1"><a href="getting-help.html#cb416-1" aria-hidden="true" tabindex="-1"></a><span class="fu">help</span>(mutate)</span></code></pre></div>
 <p>Instead, we need tell <code>help</code> where to look by setting the <code>package</code> argument:</p>
-<div class="sourceCode" id="cb418"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb418-1"><a href="getting-help.html#cb418-1" aria-hidden="true" tabindex="-1"></a><span class="fu">help</span>(mutate, <span class="at">package =</span> <span class="st">&quot;dplyr&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb417"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb417-1"><a href="getting-help.html#cb417-1" aria-hidden="true" tabindex="-1"></a><span class="fu">help</span>(mutate, <span class="at">package =</span> <span class="st">&quot;dplyr&quot;</span>)</span></code></pre></div>
 <p>Even very experienced R users regularly forget how to use the odd function and have to dive into the help. It’s for this reason that R has a built in shortcut for <code>help</code> accessed via <code>?</code>. For example, instead of typing <code>help(topic = sin)</code> into the Console we can bring up the help page for the <code>sin</code> function by using <code>?</code> like this:</p>
-<div class="sourceCode" id="cb419"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb419-1"><a href="getting-help.html#cb419-1" aria-hidden="true" tabindex="-1"></a>?sin</span></code></pre></div>
+<div class="sourceCode" id="cb418"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb418-1"><a href="getting-help.html#cb418-1" aria-hidden="true" tabindex="-1"></a>?sin</span></code></pre></div>
 <p>This is just a convenient shortcut that does the same thing as <code>help</code>. The only difference is that <code>?</code> does not allow us to set arguments such as <code>package</code>.</p>
 </div>
 <div id="nav-help" class="section level2" number="18.4">
@@ -465,11 +464,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2><span class="header-section-number">A.5</span> Vignettes</h2>
 <p>The purpose of a package vignette is to provide a relatively brief, practical account of one or more of its features. Not all packages come with vignettes, though the best packages often do. We use the <code>vignette</code> function to view all the available vignettes in Rstudio. This will open up a tab that lists each vignette under their associated package name along with a brief description. A package will often have more than one vignette.</p>
 <p>If we just want to see the vignettes associated with a particular package, we have to set the <code>package</code> argument. For example, to see the vignettes associated with <strong>dplyr</strong> we use:</p>
-<div class="sourceCode" id="cb420"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb420-1"><a href="getting-help.html#cb420-1" aria-hidden="true" tabindex="-1"></a><span class="fu">vignette</span>(<span class="at">package =</span> <span class="st">&quot;dplyr&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb419"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb419-1"><a href="getting-help.html#cb419-1" aria-hidden="true" tabindex="-1"></a><span class="fu">vignette</span>(<span class="at">package =</span> <span class="st">&quot;dplyr&quot;</span>)</span></code></pre></div>
 <p>Each vignette has a name (the “topic”) and is available either as a PDF or HTML file (or both). We can view a particular vignette by passing the <code>vignette</code> function the <code>package</code> and <code>topic</code> arguments. For example, to view the “grouping” vignette in the <strong>dplyr</strong> package we would use:</p>
-<div class="sourceCode" id="cb421"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb421-1"><a href="getting-help.html#cb421-1" aria-hidden="true" tabindex="-1"></a><span class="fu">vignette</span>(<span class="at">topic =</span> <span class="st">&quot;grouping&quot;</span>, <span class="at">package =</span> <span class="st">&quot;dplyr&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb420"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb420-1"><a href="getting-help.html#cb420-1" aria-hidden="true" tabindex="-1"></a><span class="fu">vignette</span>(<span class="at">topic =</span> <span class="st">&quot;grouping&quot;</span>, <span class="at">package =</span> <span class="st">&quot;dplyr&quot;</span>)</span></code></pre></div>
 <p>The <code>vignette</code> function is fine, but it is more convenient to browse the list of vignettes inside a web browser. This allows us to open a particular vignette directly by clicking on its link, rather than working at the Console. We can use the <code>browseVignettes</code> function to do this:</p>
-<div class="sourceCode" id="cb422"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb422-1"><a href="getting-help.html#cb422-1" aria-hidden="true" tabindex="-1"></a><span class="fu">browseVignettes</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb421"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb421-1"><a href="getting-help.html#cb421-1" aria-hidden="true" tabindex="-1"></a><span class="fu">browseVignettes</span>()</span></code></pre></div>
 <p>This will open a page in our browser showing the vignettes we can view. As usual, we can narrow our options to a specific package by setting the <code>package</code> argument.</p>
 
 </div>
