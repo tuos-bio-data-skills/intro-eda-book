@@ -62,7 +62,7 @@ ggplot(na.omit(penguins), # <- remove missing values
        # aesthetic mappings: mass (y) vs species (x) by sex (fill)
        aes(x = species, fill = sex, y = body_mass_g)) +
   # use geom_bar to add bar plot layer using a stats summary
-  geom_bar(stat = "summary", fun.y = mean, position = "dodge") +
+  geom_bar(stat = "summary", fun=mean, position = "dodge") +
   # specify labels for all mappings
   labs(x = "Species", y = "Mean body mass (g)", fill = "Sex")
 ```
@@ -70,7 +70,7 @@ ggplot(na.omit(penguins), # <- remove missing values
 This involves a couple of new tricks. When we add a layer using `geom_bar` we set two additional arguments:
 
 -   `stat = "summary"` tells **ggplot2** not to plot the raw values of the y aesthetic mapping, but instead, to calculate and then plot a summary of the 'y' variable.
--   `fun.y = mean` tells **ggplot2** how to summarise the 'y' variable. The function on the right-hand side can be any function that takes a vector of values and returns a single number. We want the `mean` function.
+-   `fun = mean` tells **ggplot2** how to summarise the 'y' variable. The name of the function on the right-hand side can be any function that takes a vector of values as input and returns a summary. We want the `mean` function.
 
 Notice that this works on the raw data (`penguins`)---there is no need to manually calculate the means because that happens inside **ggplot2**.
 :::
