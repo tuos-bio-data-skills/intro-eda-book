@@ -62,7 +62,7 @@ ggplot(na.omit(penguins), # <- remove missing values
        # aesthetic mappings: mass (y) vs species (x) by sex (fill)
        aes(x = species, fill = sex, y = body_mass_g)) +
   # use geom_bar to add bar plot layer using a stats summary
-  geom_bar(stat = "summary", fun=mean, position = "dodge") +
+  geom_bar(stat = "summary", fun = mean, position = "dodge") +
   # specify labels for all mappings
   labs(x = "Species", y = "Mean body mass (g)", fill = "Sex")
 ```
@@ -119,30 +119,29 @@ We use **dplyr** to calculate the means and standard errors of each species' bod
 penguins_summary
 ```
 
-Next we use `penguins_summary` to make the plot. We can use `geom_col` to show the means as a bar plot, but what about the error bars? Use the unsurprisingly named `geom_errorbar` to add those! Here is the code:
+Next we use `penguins_summary` to make the plot. We can use `geom_col` to show the means as a bar plot, but what about the error bars? Use the unsurprisingly named `geom_errorbar` to add those. Here is the code:
 
 ```{r, fig.width=4}
 # display bar plot of body mass means + SE's
 ggplot(penguins_summary, 
-       # aesthetic mappings: mass (y) vs species (x) by sex (fill)
-       aes(x = species, fill = sex, y = mean_mass)) + 
+       # aesthetic mappings: mass (y) vs species (x) by sex (fill) 
+       aes(x = species, fill = sex, y = mean_mass, 
+           # ...and ymax/ymin (+/- 1 se) for error bars
+           ymin = mean_mass - ster_mass, ymax = mean_mass + ster_mass)) + 
   # use geom_col to add an adjacent bar plot layer
   geom_col(position = "dodge") + 
   # use geom_errorbar to add an error bar layer
-  geom_errorbar(aes(ymin = mean_mass - ster_mass, ymax = mean_mass + ster_mass),
-                # customise size of hat + ensure error bars are centred
-                width = 0.2, position = position_dodge(0.9)) + 
+  geom_errorbar(width = 0.2, position = position_dodge(0.9)) + 
   # use a more professional theme 
   theme_classic(base_size = 12) + 
   # specify labels for all mappings
   labs(x = "Species", y = "Mean body mass (g)", fill = "Sex")
 ```
 
-The only new things appear in the `geom_errorbar` part:
+The `geom_errorbar` function requires the `ymin` and `ymax` aesthetic mappings to be set---these give the lower and upper limits of the error bars. We have plotted the mean +/- 1 standard error, i.e. each error bar is two standard errors long. The only other new things are:
 
--   The `ymin` and `ymax` arguments of the `geom_errorbar` function give the lower and upper limits of error bars. Here, we have plotted the mean +/- 1 standard error, i.e. each error bar is two standard errors long.
--   Use the `width` argument to set the width of the 'hat' on each error bar. A value of zero gets rid of it altogether.
--   The position has to be set in two places: `geom_col` and `geom_errorbar`. For a bar plot, we use the not-at-all-intuitive `position = position_dodge(0.9)` to locate the error bars at the centre of each bar.
+-   We used the `width` argument of `geom_errorbar` to set the width of the 'hat' on each error bar (entirely optional). A value of zero gets rid of these altogether.
+-   The position now has to be set in two places: `geom_col` and `geom_errorbar`. For a bar plot, we use the not-very-intuitive `position = position_dodge(0.9)` to locate the error bars at the centre of each bar.
 
 ::: {.infobox .warning data-latex="{warning}"}
 #### Warning! {.unnumbered}
@@ -170,30 +169,28 @@ ggplot(penguins, aes(colour = species, shape = sex))  +
 
 ### Alternatives to bar plots
 
-Do we have to use a bar plot to display means? Certainly not. In some ways bar plots are a bit old fashioned. People often prefer to show a set of means as points with error bars. This kind of visualisation is very easy to make now that we already have working bar plot code:
+Do we have to use a bar plot to display means? Certainly not. In some ways bar plots are a bit old fashioned and many people often prefer to show a set of means as points these days. This kind of visualisation is also easier to make than a bar plot because we can use a single geom (`geom_pointrange`) to add both the points and error bars as a single layer:
 
 ```{r, fig.width=4}
 # display points plot of body mass means + SE's
 ggplot(penguins_summary, 
        # aesthetic mappings: mass (y) vs species (x) by sex (colour)
-       aes(x = species, colour = sex, y = mean_mass)) + 
-  # use geom_col to add an adjacent bar plot layer
-  geom_point(position = position_dodge(0.5)) +
-  # use geom_errorbar to add an error bar layer
-  geom_errorbar(aes(ymin = mean_mass - ster_mass, ymax = mean_mass + ster_mass),
-                # customise size of hat + ensure error bars are centred
-                width = 0.2, position = position_dodge(0.5)) + 
+       aes(x = species, colour = sex, y = mean_mass, 
+           # ...and ymax/ymin (+/- 1 se) for error bars
+           ymin = mean_mass - ster_mass, ymax = mean_mass + ster_mass)) + 
+  # use geom_errorbar to add an error bar layer + dodge position
+  geom_pointrange(position = position_dodge(0.5), size = 0.2) + 
   # use a more professional theme 
   theme_classic(base_size = 12) + 
   # specify labels for all mappings
   labs(x = "Species", y = "Mean body mass (g)", colour = "Sex")
 ```
 
-We made three small changes to the bar plot code to produce this. We...
+This code is actually very similar to the previous example. All we did was replace `geom_col` and `geom_col` with a single `geom_pointrange` and then:
 
 -   mapped `sex` to the `colour` aesthetic instead of `fill`,
--   switched from using `geom_col` to `geom_point`, and
--   altered the position adjustments to 'dodge' by a smaller amount.
+-   made the points and lines a smaller than the default by setting `size`, and
+-   altered the position adjustments to keep pairs of points closer together.
 
 That's it!
 
