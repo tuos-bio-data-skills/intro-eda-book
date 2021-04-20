@@ -146,7 +146,7 @@
 
 \title{Exploratory Data Analysis with R}
 \author{Dylan Childs}
-\date{2021-04-19}
+\date{2021-04-20}
 
 \begin{document}
 \maketitle
@@ -6255,7 +6255,7 @@ Another way to arrive at the above bar plot is by using the built-in \textbf{ggp
        \CommentTok{\# aesthetic mappings: mass (y) vs species (x) by sex (fill)}
        \FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ species, }\AttributeTok{fill =}\NormalTok{ sex, }\AttributeTok{y =}\NormalTok{ body\_mass\_g)) }\SpecialCharTok{+}
   \CommentTok{\# use geom\_bar to add bar plot layer using a stats summary}
-  \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{stat =} \StringTok{"summary"}\NormalTok{, }\AttributeTok{fun=}\NormalTok{mean, }\AttributeTok{position =} \StringTok{"dodge"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{stat =} \StringTok{"summary"}\NormalTok{, }\AttributeTok{fun =}\NormalTok{ mean, }\AttributeTok{position =} \StringTok{"dodge"}\NormalTok{) }\SpecialCharTok{+}
   \CommentTok{\# specify labels for all mappings}
   \FunctionTok{labs}\NormalTok{(}\AttributeTok{x =} \StringTok{"Species"}\NormalTok{, }\AttributeTok{y =} \StringTok{"Mean body mass (g)"}\NormalTok{, }\AttributeTok{fill =} \StringTok{"Sex"}\NormalTok{)}
 \end{Highlighting}
@@ -6349,20 +6349,20 @@ We use \textbf{dplyr} to calculate the means and standard errors of each species
 ## 6 Gentoo    male       5485.      40.1
 \end{verbatim}
 
-Next we use \texttt{penguins\_summary} to make the plot. We can use \texttt{geom\_col} to show the means as a bar plot, but what about the error bars? Use the unsurprisingly named \texttt{geom\_errorbar} to add those! Here is the code:
+Next we use \texttt{penguins\_summary} to make the plot. We can use \texttt{geom\_col} to show the means as a bar plot, but what about the error bars? Use the unsurprisingly named \texttt{geom\_errorbar} to add those. Here is the code:
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \CommentTok{\# display bar plot of body mass means + SE\textquotesingle{}s}
 \FunctionTok{ggplot}\NormalTok{(penguins\_summary, }
-       \CommentTok{\# aesthetic mappings: mass (y) vs species (x) by sex (fill)}
-       \FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ species, }\AttributeTok{fill =}\NormalTok{ sex, }\AttributeTok{y =}\NormalTok{ mean\_mass)) }\SpecialCharTok{+} 
+       \CommentTok{\# aesthetic mappings: mass (y) vs species (x) by sex (fill) }
+       \FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ species, }\AttributeTok{fill =}\NormalTok{ sex, }\AttributeTok{y =}\NormalTok{ mean\_mass, }
+           \CommentTok{\# ...and ymax/ymin (+/{-} 1 se) for error bars}
+           \AttributeTok{ymin =}\NormalTok{ mean\_mass }\SpecialCharTok{{-}}\NormalTok{ ster\_mass, }\AttributeTok{ymax =}\NormalTok{ mean\_mass }\SpecialCharTok{+}\NormalTok{ ster\_mass)) }\SpecialCharTok{+} 
   \CommentTok{\# use geom\_col to add an adjacent bar plot layer}
   \FunctionTok{geom\_col}\NormalTok{(}\AttributeTok{position =} \StringTok{"dodge"}\NormalTok{) }\SpecialCharTok{+} 
   \CommentTok{\# use geom\_errorbar to add an error bar layer}
-  \FunctionTok{geom\_errorbar}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{ymin =}\NormalTok{ mean\_mass }\SpecialCharTok{{-}}\NormalTok{ ster\_mass, }\AttributeTok{ymax =}\NormalTok{ mean\_mass }\SpecialCharTok{+}\NormalTok{ ster\_mass),}
-                \CommentTok{\# customise size of hat + ensure error bars are centred}
-                \AttributeTok{width =} \FloatTok{0.2}\NormalTok{, }\AttributeTok{position =} \FunctionTok{position\_dodge}\NormalTok{(}\FloatTok{0.9}\NormalTok{)) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_errorbar}\NormalTok{(}\AttributeTok{width =} \FloatTok{0.2}\NormalTok{, }\AttributeTok{position =} \FunctionTok{position\_dodge}\NormalTok{(}\FloatTok{0.9}\NormalTok{)) }\SpecialCharTok{+} 
   \CommentTok{\# use a more professional theme }
   \FunctionTok{theme\_classic}\NormalTok{(}\AttributeTok{base\_size =} \DecValTok{12}\NormalTok{) }\SpecialCharTok{+} 
   \CommentTok{\# specify labels for all mappings}
@@ -6372,16 +6372,14 @@ Next we use \texttt{penguins\_summary} to make the plot. We can use \texttt{geom
 
 \begin{center}\includegraphics{intro-bio-data-book_files/figure-latex/unnamed-chunk-266-1} \end{center}
 
-The only new things appear in the \texttt{geom\_errorbar} part:
+The \texttt{geom\_errorbar} function requires the \texttt{ymin} and \texttt{ymax} aesthetic mappings to be set---these give the lower and upper limits of the error bars. We have plotted the mean +/- 1 standard error, i.e.~each error bar is two standard errors long. The only other new things are:
 
 \begin{itemize}
 \tightlist
 \item
-  The \texttt{ymin} and \texttt{ymax} arguments of the \texttt{geom\_errorbar} function give the lower and upper limits of error bars. Here, we have plotted the mean +/- 1 standard error, i.e.~each error bar is two standard errors long.
+  We used the \texttt{width} argument of \texttt{geom\_errorbar} to set the width of the `hat' on each error bar (entirely optional). A value of zero gets rid of these altogether.
 \item
-  Use the \texttt{width} argument to set the width of the `hat' on each error bar. A value of zero gets rid of it altogether.
-\item
-  The position has to be set in two places: \texttt{geom\_col} and \texttt{geom\_errorbar}. For a bar plot, we use the not-at-all-intuitive \texttt{position\ =\ position\_dodge(0.9)} to locate the error bars at the centre of each bar.
+  The position now has to be set in two places: \texttt{geom\_col} and \texttt{geom\_errorbar}. For a bar plot, we use the not-very-intuitive \texttt{position\ =\ position\_dodge(0.9)} to locate the error bars at the centre of each bar.
 \end{itemize}
 
 \begin{infobox}{warning}
@@ -6397,20 +6395,18 @@ Data visualisations can include many different kinds of `error bar'--- standard 
 \hypertarget{alternatives-to-bar-plots}{%
 \subsection{Alternatives to bar plots}\label{alternatives-to-bar-plots}}
 
-Do we have to use a bar plot to display means? Certainly not. In some ways bar plots are a bit old fashioned. People often prefer to show a set of means as points with error bars. This kind of visualisation is very easy to make now that we already have working bar plot code:
+Do we have to use a bar plot to display means? Certainly not. In some ways bar plots are a bit old fashioned and many people often prefer to show a set of means as points these days. This kind of visualisation is also easier to make than a bar plot because we can use a single geom (\texttt{geom\_pointrange}) to add both the points and error bars as a single layer:
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \CommentTok{\# display points plot of body mass means + SE\textquotesingle{}s}
 \FunctionTok{ggplot}\NormalTok{(penguins\_summary, }
        \CommentTok{\# aesthetic mappings: mass (y) vs species (x) by sex (colour)}
-       \FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ species, }\AttributeTok{colour =}\NormalTok{ sex, }\AttributeTok{y =}\NormalTok{ mean\_mass)) }\SpecialCharTok{+} 
-  \CommentTok{\# use geom\_col to add an adjacent bar plot layer}
-  \FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{position =} \FunctionTok{position\_dodge}\NormalTok{(}\FloatTok{0.5}\NormalTok{)) }\SpecialCharTok{+}
-  \CommentTok{\# use geom\_errorbar to add an error bar layer}
-  \FunctionTok{geom\_errorbar}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{ymin =}\NormalTok{ mean\_mass }\SpecialCharTok{{-}}\NormalTok{ ster\_mass, }\AttributeTok{ymax =}\NormalTok{ mean\_mass }\SpecialCharTok{+}\NormalTok{ ster\_mass),}
-                \CommentTok{\# customise size of hat + ensure error bars are centred}
-                \AttributeTok{width =} \FloatTok{0.2}\NormalTok{, }\AttributeTok{position =} \FunctionTok{position\_dodge}\NormalTok{(}\FloatTok{0.5}\NormalTok{)) }\SpecialCharTok{+} 
+       \FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ species, }\AttributeTok{colour =}\NormalTok{ sex, }\AttributeTok{y =}\NormalTok{ mean\_mass, }
+           \CommentTok{\# ...and ymax/ymin (+/{-} 1 se) for error bars}
+           \AttributeTok{ymin =}\NormalTok{ mean\_mass }\SpecialCharTok{{-}}\NormalTok{ ster\_mass, }\AttributeTok{ymax =}\NormalTok{ mean\_mass }\SpecialCharTok{+}\NormalTok{ ster\_mass)) }\SpecialCharTok{+} 
+  \CommentTok{\# use geom\_errorbar to add an error bar layer + dodge position}
+  \FunctionTok{geom\_pointrange}\NormalTok{(}\AttributeTok{position =} \FunctionTok{position\_dodge}\NormalTok{(}\FloatTok{0.5}\NormalTok{), }\AttributeTok{size =} \FloatTok{0.2}\NormalTok{) }\SpecialCharTok{+} 
   \CommentTok{\# use a more professional theme }
   \FunctionTok{theme\_classic}\NormalTok{(}\AttributeTok{base\_size =} \DecValTok{12}\NormalTok{) }\SpecialCharTok{+} 
   \CommentTok{\# specify labels for all mappings}
@@ -6420,16 +6416,16 @@ Do we have to use a bar plot to display means? Certainly not. In some ways bar p
 
 \begin{center}\includegraphics{intro-bio-data-book_files/figure-latex/unnamed-chunk-268-1} \end{center}
 
-We made three small changes to the bar plot code to produce this. We\ldots{}
+This code is actually very similar to the previous example. All we did was replace \texttt{geom\_col} and \texttt{geom\_col} with a single \texttt{geom\_pointrange} and then:
 
 \begin{itemize}
 \tightlist
 \item
   mapped \texttt{sex} to the \texttt{colour} aesthetic instead of \texttt{fill},
 \item
-  switched from using \texttt{geom\_col} to \texttt{geom\_point}, and
+  made the points and lines a smaller than the default by setting \texttt{size}, and
 \item
-  altered the position adjustments to `dodge' by a smaller amount.
+  altered the position adjustments to keep pairs of points closer together.
 \end{itemize}
 
 That's it!

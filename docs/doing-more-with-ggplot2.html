@@ -24,7 +24,7 @@
 <meta name="author" content="Dylan Childs" />
 
 
-<meta name="date" content="2021-04-19" />
+<meta name="date" content="2021-04-20" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -461,7 +461,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb399-3"><a href="doing-more-with-ggplot2.html#cb399-3" aria-hidden="true" tabindex="-1"></a>       <span class="co"># aesthetic mappings: mass (y) vs species (x) by sex (fill)</span></span>
 <span id="cb399-4"><a href="doing-more-with-ggplot2.html#cb399-4" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> species, <span class="at">fill =</span> sex, <span class="at">y =</span> body_mass_g)) <span class="sc">+</span></span>
 <span id="cb399-5"><a href="doing-more-with-ggplot2.html#cb399-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># use geom_bar to add bar plot layer using a stats summary</span></span>
-<span id="cb399-6"><a href="doing-more-with-ggplot2.html#cb399-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">&quot;summary&quot;</span>, <span class="at">fun=</span>mean, <span class="at">position =</span> <span class="st">&quot;dodge&quot;</span>) <span class="sc">+</span></span>
+<span id="cb399-6"><a href="doing-more-with-ggplot2.html#cb399-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">&quot;summary&quot;</span>, <span class="at">fun =</span> mean, <span class="at">position =</span> <span class="st">&quot;dodge&quot;</span>) <span class="sc">+</span></span>
 <span id="cb399-7"><a href="doing-more-with-ggplot2.html#cb399-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># specify labels for all mappings</span></span>
 <span id="cb399-8"><a href="doing-more-with-ggplot2.html#cb399-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Species&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Mean body mass (g)&quot;</span>, <span class="at">fill =</span> <span class="st">&quot;Sex&quot;</span>)</span></code></pre></div>
 <p><img src="intro-bio-data-book_files/figure-html/unnamed-chunk-262-1.png" width="384" style="display: block; margin: auto;" /></p>
@@ -511,27 +511,26 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 4 Chinstrap male       3939.      62.1
 ## 5 Gentoo    female     4680.      37.0
 ## 6 Gentoo    male       5485.      40.1</code></pre>
-<p>Next we use <code>penguins_summary</code> to make the plot. We can use <code>geom_col</code> to show the means as a bar plot, but what about the error bars? Use the unsurprisingly named <code>geom_errorbar</code> to add those! Here is the code:</p>
+<p>Next we use <code>penguins_summary</code> to make the plot. We can use <code>geom_col</code> to show the means as a bar plot, but what about the error bars? Use the unsurprisingly named <code>geom_errorbar</code> to add those. Here is the code:</p>
 <div class="sourceCode" id="cb405"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb405-1"><a href="doing-more-with-ggplot2.html#cb405-1" aria-hidden="true" tabindex="-1"></a><span class="co"># display bar plot of body mass means + SE&#39;s</span></span>
 <span id="cb405-2"><a href="doing-more-with-ggplot2.html#cb405-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins_summary, </span>
-<span id="cb405-3"><a href="doing-more-with-ggplot2.html#cb405-3" aria-hidden="true" tabindex="-1"></a>       <span class="co"># aesthetic mappings: mass (y) vs species (x) by sex (fill)</span></span>
-<span id="cb405-4"><a href="doing-more-with-ggplot2.html#cb405-4" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> species, <span class="at">fill =</span> sex, <span class="at">y =</span> mean_mass)) <span class="sc">+</span> </span>
-<span id="cb405-5"><a href="doing-more-with-ggplot2.html#cb405-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># use geom_col to add an adjacent bar plot layer</span></span>
-<span id="cb405-6"><a href="doing-more-with-ggplot2.html#cb405-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">position =</span> <span class="st">&quot;dodge&quot;</span>) <span class="sc">+</span> </span>
-<span id="cb405-7"><a href="doing-more-with-ggplot2.html#cb405-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># use geom_errorbar to add an error bar layer</span></span>
-<span id="cb405-8"><a href="doing-more-with-ggplot2.html#cb405-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(<span class="fu">aes</span>(<span class="at">ymin =</span> mean_mass <span class="sc">-</span> ster_mass, <span class="at">ymax =</span> mean_mass <span class="sc">+</span> ster_mass),</span>
-<span id="cb405-9"><a href="doing-more-with-ggplot2.html#cb405-9" aria-hidden="true" tabindex="-1"></a>                <span class="co"># customise size of hat + ensure error bars are centred</span></span>
-<span id="cb405-10"><a href="doing-more-with-ggplot2.html#cb405-10" aria-hidden="true" tabindex="-1"></a>                <span class="at">width =</span> <span class="fl">0.2</span>, <span class="at">position =</span> <span class="fu">position_dodge</span>(<span class="fl">0.9</span>)) <span class="sc">+</span> </span>
+<span id="cb405-3"><a href="doing-more-with-ggplot2.html#cb405-3" aria-hidden="true" tabindex="-1"></a>       <span class="co"># aesthetic mappings: mass (y) vs species (x) by sex (fill) </span></span>
+<span id="cb405-4"><a href="doing-more-with-ggplot2.html#cb405-4" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> species, <span class="at">fill =</span> sex, <span class="at">y =</span> mean_mass, </span>
+<span id="cb405-5"><a href="doing-more-with-ggplot2.html#cb405-5" aria-hidden="true" tabindex="-1"></a>           <span class="co"># ...and ymax/ymin (+/- 1 se) for error bars</span></span>
+<span id="cb405-6"><a href="doing-more-with-ggplot2.html#cb405-6" aria-hidden="true" tabindex="-1"></a>           <span class="at">ymin =</span> mean_mass <span class="sc">-</span> ster_mass, <span class="at">ymax =</span> mean_mass <span class="sc">+</span> ster_mass)) <span class="sc">+</span> </span>
+<span id="cb405-7"><a href="doing-more-with-ggplot2.html#cb405-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># use geom_col to add an adjacent bar plot layer</span></span>
+<span id="cb405-8"><a href="doing-more-with-ggplot2.html#cb405-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">position =</span> <span class="st">&quot;dodge&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb405-9"><a href="doing-more-with-ggplot2.html#cb405-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># use geom_errorbar to add an error bar layer</span></span>
+<span id="cb405-10"><a href="doing-more-with-ggplot2.html#cb405-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(<span class="at">width =</span> <span class="fl">0.2</span>, <span class="at">position =</span> <span class="fu">position_dodge</span>(<span class="fl">0.9</span>)) <span class="sc">+</span> </span>
 <span id="cb405-11"><a href="doing-more-with-ggplot2.html#cb405-11" aria-hidden="true" tabindex="-1"></a>  <span class="co"># use a more professional theme </span></span>
 <span id="cb405-12"><a href="doing-more-with-ggplot2.html#cb405-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>(<span class="at">base_size =</span> <span class="dv">12</span>) <span class="sc">+</span> </span>
 <span id="cb405-13"><a href="doing-more-with-ggplot2.html#cb405-13" aria-hidden="true" tabindex="-1"></a>  <span class="co"># specify labels for all mappings</span></span>
 <span id="cb405-14"><a href="doing-more-with-ggplot2.html#cb405-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Species&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Mean body mass (g)&quot;</span>, <span class="at">fill =</span> <span class="st">&quot;Sex&quot;</span>)</span></code></pre></div>
 <p><img src="intro-bio-data-book_files/figure-html/unnamed-chunk-266-1.png" width="384" style="display: block; margin: auto;" /></p>
-<p>The only new things appear in the <code>geom_errorbar</code> part:</p>
+<p>The <code>geom_errorbar</code> function requires the <code>ymin</code> and <code>ymax</code> aesthetic mappings to be set—these give the lower and upper limits of the error bars. We have plotted the mean +/- 1 standard error, i.e. each error bar is two standard errors long. The only other new things are:</p>
 <ul>
-<li>The <code>ymin</code> and <code>ymax</code> arguments of the <code>geom_errorbar</code> function give the lower and upper limits of error bars. Here, we have plotted the mean +/- 1 standard error, i.e. each error bar is two standard errors long.</li>
-<li>Use the <code>width</code> argument to set the width of the ‘hat’ on each error bar. A value of zero gets rid of it altogether.</li>
-<li>The position has to be set in two places: <code>geom_col</code> and <code>geom_errorbar</code>. For a bar plot, we use the not-at-all-intuitive <code>position = position_dodge(0.9)</code> to locate the error bars at the centre of each bar.</li>
+<li>We used the <code>width</code> argument of <code>geom_errorbar</code> to set the width of the ‘hat’ on each error bar (entirely optional). A value of zero gets rid of these altogether.</li>
+<li>The position now has to be set in two places: <code>geom_col</code> and <code>geom_errorbar</code>. For a bar plot, we use the not-very-intuitive <code>position = position_dodge(0.9)</code> to locate the error bars at the centre of each bar.</li>
 </ul>
 <div id="warning-1" class="section level4 unnumbered infobox warning">
 <h4>Warning!</h4>
@@ -541,27 +540,25 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="alternatives-to-bar-plots" class="section level3" number="17.1.2">
 <h3><span class="header-section-number">17.1.2</span> Alternatives to bar plots</h3>
-<p>Do we have to use a bar plot to display means? Certainly not. In some ways bar plots are a bit old fashioned. People often prefer to show a set of means as points with error bars. This kind of visualisation is very easy to make now that we already have working bar plot code:</p>
+<p>Do we have to use a bar plot to display means? Certainly not. In some ways bar plots are a bit old fashioned and many people often prefer to show a set of means as points these days. This kind of visualisation is also easier to make than a bar plot because we can use a single geom (<code>geom_pointrange</code>) to add both the points and error bars as a single layer:</p>
 <div class="sourceCode" id="cb406"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb406-1"><a href="doing-more-with-ggplot2.html#cb406-1" aria-hidden="true" tabindex="-1"></a><span class="co"># display points plot of body mass means + SE&#39;s</span></span>
 <span id="cb406-2"><a href="doing-more-with-ggplot2.html#cb406-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins_summary, </span>
 <span id="cb406-3"><a href="doing-more-with-ggplot2.html#cb406-3" aria-hidden="true" tabindex="-1"></a>       <span class="co"># aesthetic mappings: mass (y) vs species (x) by sex (colour)</span></span>
-<span id="cb406-4"><a href="doing-more-with-ggplot2.html#cb406-4" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> species, <span class="at">colour =</span> sex, <span class="at">y =</span> mean_mass)) <span class="sc">+</span> </span>
-<span id="cb406-5"><a href="doing-more-with-ggplot2.html#cb406-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># use geom_col to add an adjacent bar plot layer</span></span>
-<span id="cb406-6"><a href="doing-more-with-ggplot2.html#cb406-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">position =</span> <span class="fu">position_dodge</span>(<span class="fl">0.5</span>)) <span class="sc">+</span></span>
-<span id="cb406-7"><a href="doing-more-with-ggplot2.html#cb406-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># use geom_errorbar to add an error bar layer</span></span>
-<span id="cb406-8"><a href="doing-more-with-ggplot2.html#cb406-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(<span class="fu">aes</span>(<span class="at">ymin =</span> mean_mass <span class="sc">-</span> ster_mass, <span class="at">ymax =</span> mean_mass <span class="sc">+</span> ster_mass),</span>
-<span id="cb406-9"><a href="doing-more-with-ggplot2.html#cb406-9" aria-hidden="true" tabindex="-1"></a>                <span class="co"># customise size of hat + ensure error bars are centred</span></span>
-<span id="cb406-10"><a href="doing-more-with-ggplot2.html#cb406-10" aria-hidden="true" tabindex="-1"></a>                <span class="at">width =</span> <span class="fl">0.2</span>, <span class="at">position =</span> <span class="fu">position_dodge</span>(<span class="fl">0.5</span>)) <span class="sc">+</span> </span>
-<span id="cb406-11"><a href="doing-more-with-ggplot2.html#cb406-11" aria-hidden="true" tabindex="-1"></a>  <span class="co"># use a more professional theme </span></span>
-<span id="cb406-12"><a href="doing-more-with-ggplot2.html#cb406-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>(<span class="at">base_size =</span> <span class="dv">12</span>) <span class="sc">+</span> </span>
-<span id="cb406-13"><a href="doing-more-with-ggplot2.html#cb406-13" aria-hidden="true" tabindex="-1"></a>  <span class="co"># specify labels for all mappings</span></span>
-<span id="cb406-14"><a href="doing-more-with-ggplot2.html#cb406-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Species&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Mean body mass (g)&quot;</span>, <span class="at">colour =</span> <span class="st">&quot;Sex&quot;</span>)</span></code></pre></div>
+<span id="cb406-4"><a href="doing-more-with-ggplot2.html#cb406-4" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> species, <span class="at">colour =</span> sex, <span class="at">y =</span> mean_mass, </span>
+<span id="cb406-5"><a href="doing-more-with-ggplot2.html#cb406-5" aria-hidden="true" tabindex="-1"></a>           <span class="co"># ...and ymax/ymin (+/- 1 se) for error bars</span></span>
+<span id="cb406-6"><a href="doing-more-with-ggplot2.html#cb406-6" aria-hidden="true" tabindex="-1"></a>           <span class="at">ymin =</span> mean_mass <span class="sc">-</span> ster_mass, <span class="at">ymax =</span> mean_mass <span class="sc">+</span> ster_mass)) <span class="sc">+</span> </span>
+<span id="cb406-7"><a href="doing-more-with-ggplot2.html#cb406-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># use geom_errorbar to add an error bar layer + dodge position</span></span>
+<span id="cb406-8"><a href="doing-more-with-ggplot2.html#cb406-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_pointrange</span>(<span class="at">position =</span> <span class="fu">position_dodge</span>(<span class="fl">0.5</span>), <span class="at">size =</span> <span class="fl">0.2</span>) <span class="sc">+</span> </span>
+<span id="cb406-9"><a href="doing-more-with-ggplot2.html#cb406-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># use a more professional theme </span></span>
+<span id="cb406-10"><a href="doing-more-with-ggplot2.html#cb406-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>(<span class="at">base_size =</span> <span class="dv">12</span>) <span class="sc">+</span> </span>
+<span id="cb406-11"><a href="doing-more-with-ggplot2.html#cb406-11" aria-hidden="true" tabindex="-1"></a>  <span class="co"># specify labels for all mappings</span></span>
+<span id="cb406-12"><a href="doing-more-with-ggplot2.html#cb406-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Species&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Mean body mass (g)&quot;</span>, <span class="at">colour =</span> <span class="st">&quot;Sex&quot;</span>)</span></code></pre></div>
 <p><img src="intro-bio-data-book_files/figure-html/unnamed-chunk-268-1.png" width="384" style="display: block; margin: auto;" /></p>
-<p>We made three small changes to the bar plot code to produce this. We…</p>
+<p>This code is actually very similar to the previous example. All we did was replace <code>geom_col</code> and <code>geom_col</code> with a single <code>geom_pointrange</code> and then:</p>
 <ul>
 <li>mapped <code>sex</code> to the <code>colour</code> aesthetic instead of <code>fill</code>,</li>
-<li>switched from using <code>geom_col</code> to <code>geom_point</code>, and</li>
-<li>altered the position adjustments to ‘dodge’ by a smaller amount.</li>
+<li>made the points and lines a smaller than the default by setting <code>size</code>, and</li>
+<li>altered the position adjustments to keep pairs of points closer together.</li>
 </ul>
 <p>That’s it!</p>
 </div>
