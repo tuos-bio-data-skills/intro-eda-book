@@ -86,13 +86,15 @@ We'll demonstrate how to do this by extending the previous example to show the m
 
 The standard error is a measure of how precise an estimate like the sample mean is. A small standard error indicates that we can have more confidence the estimate reflects the 'true' value. The standard error of the mean can be calculated from a well-known formula: $$
 \text{Standard Error} = \frac{\text{Standard Deviation}}{\sqrt{(\text{Sample Size})}} = \frac{\sigma}{\sqrt{n}}
-$$ It is hard to give an explanation of that formula without knowing a bit of statistical theory---it is just one of those things we have to learn. In terms of code that works with **dplyr**, that calculation looks like this:
+$$
+
+It's difficult to give an explanation of where this formula comes from without knowing a bit of statistical theory---it's just one of those things we have to learn. In terms of R code, the calculation looks like this:
 
 ```{r, eval=FALSE}
 standard_error = sd(x) / sqrt(n())
 ```
 
-This assumes the numeric variable we are working with is called `x`, and we want the result to be called `standard_error`. Notice this uses a special **dplyr** function called `n` to find the sample size.
+This assumes the numeric variable we are working with is called `x`, and we want the result to be called `standard_error`. Notice this uses a **dplyr** function called `n` to find the sample size.
 :::
 
 Once again, constructing the plot is a two-step process. Start by calculating the means and standard error of body mass for each species and sex combination:

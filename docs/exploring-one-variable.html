@@ -24,7 +24,7 @@
 <meta name="author" content="Dylan Childs" />
 
 
-<meta name="date" content="2021-04-20" />
+<meta name="date" content="2021-04-25" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -59,6 +59,7 @@
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
 pre.sourceCode { margin: 0; }
 @media screen {
@@ -472,7 +473,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>This gives a clear summary of the sample distribution of body mass. It reveals:</p>
 <ol style="list-style-type: decimal">
 <li>the most common values, which are round about 190 mm;</li>
-<li>the range of the data, which is about 60 mm; and</li>
+<li>the range of the data, which is about 65 mm; and</li>
 <li>the shape of the distribution, which appears to be <strong>bimodal</strong>—it has two peaks.</li>
 </ol>
 <p>That last observation wasn’t immediately obvious when looking at the raw counts in the binned summary.</p>
@@ -593,8 +594,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><strong>observation year</strong> —</p>
 <div class="sourceCode" id="cb365"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb365-1"><a href="exploring-one-variable.html#cb365-1" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(penguins<span class="sc">$</span>year)</span></code></pre></div>
 <pre><code>## [1] 2007 2008 2009</code></pre>
-<p>These are obviously categorical—there are no numeric values associated with either variable. The obvious question to ask about each variable is, is it ordinal or nominal?</p>
-<p>It is probably safe to assume that <code>species</code> should be treated as a nominal variable. There is no reasonable way to order the three species—i.e. a statement such as ‘Adelie &gt; Gentoo’ is nonsense.</p>
+<p>What kind of variable is <code>species?</code> This is obviously categorical—there are no numeric values associated with that variable. But is it ordinal or nominal? It is safe to assume that <code>species</code> should be treated as a nominal variable. There is no reasonable way to order the three species—i.e. a statement such as ‘Adelie &gt; Gentoo’ is nonsense.</p>
 <p>What about <code>year</code>? That’s a bit more tricky. If we were interested in how some aspect of the data changes over time, we might consider treating year as a numeric variable, or perhaps, as an ordinal categorical variable. Alternatively, if the question is simply, ‘do the data vary from one year to the next’ without any concern for trends, it’s reasonable to treat year as a nominal categorical variable.</p>
 <p>This once again illustrates an important idea—the classification of a variable sometimes depends on the analysis goals. The decision matters because it influences how we choose to summarise a variable, how we interpret its relationship with other variables, and whether a specific statistical model is appropriate for our data or not.</p>
 <p>For now, let’s assume it’s fine to treat <code>year</code> as a nominal variable.</p>
@@ -615,7 +615,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb369"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb369-1"><a href="exploring-one-variable.html#cb369-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create graphical object with data and aesthetic mapping</span></span>
 <span id="cb369-2"><a href="exploring-one-variable.html#cb369-2" aria-hidden="true" tabindex="-1"></a>plot_bar <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(penguins, <span class="fu">aes</span>(<span class="at">x =</span> species)) </span></code></pre></div>
 <p>We’ve called the object <code>plot_bar</code> for the obvious reason. Notice that we only need to define one aesthetic mapping—we mapped <code>species</code> to the x-axis. This will produce a bar plot with vertical bars.</p>
-<p>The next step is to add a layer using one of the <code>geom_XX</code> functions. There are two functions we can use to create bar charts in ggplot, <code>geom_bar</code> and <code>geom_col</code>. By default, <code>geom_col</code> counts the number of observations in each category, whereas <code>geom_bar</code> plots the actual numbers we provide.</p>
+<p>The next step is to add a layer using one of the <code>geom_XX</code> functions. There are two functions we can use to create bar charts in <strong>ggplot2</strong>: <code>geom_bar</code> and <code>geom_col</code>. By default, <code>geom_bar</code> uses the stat facility to count the number of observations in each category, whereas <code>geom_col</code> plots the actual numbers we provide.</p>
 <p>We want to show the counts of each <code>species</code> category, meaning we should use <code>geom_bar</code>:</p>
 <div class="sourceCode" id="cb370"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb370-1"><a href="exploring-one-variable.html#cb370-1" aria-hidden="true" tabindex="-1"></a><span class="co"># use geom_bar to add bar plot layer</span></span>
 <span id="cb370-2"><a href="exploring-one-variable.html#cb370-2" aria-hidden="true" tabindex="-1"></a>plot_bar <span class="ot">&lt;-</span> plot_bar <span class="sc">+</span> <span class="fu">geom_bar</span>()</span></code></pre></div>

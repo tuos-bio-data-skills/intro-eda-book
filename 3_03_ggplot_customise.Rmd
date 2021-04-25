@@ -104,12 +104,12 @@ What's going on here?
 
 -   The `breaks` argument of `scale_y_continuous` takes a numeric vector to specify where the guides should be drawn. We used the base R `seq` function to set up a numeric vector containing the sequence: 14, 16, 18 and 20. That tells **gglot2** to place the guides at 14, 16, 18 and 20 on the y-axis.
 
-The functions that adjust a scale all have the general form `scale_AES_TYP`, where:
+All the `scale_` functions have the same general form: `scale_AES_TYP`, where...
 
--   the `AES` bit in the name refers to the relevant aesthetic, and
+-   the `AES` part refers to the relevant aesthetic, and
 -   the `TYP` part refers to the type of scale we want to apply.
 
-Each kind of `scale_AES_TYP` function has its own set of arguments to control how the scale works. For example, the `breaks` argument of `scale_y_continuous` uses a numeric vector to specify where the guides should be drawn. We can do much fancier things if we want to. For example, the `trans` argument can be used to apply a particular transformation to an axis, such as a logarithm.
+Every `scale_AES_TYP` function has a set of arguments to control how the scale works. For example, the `breaks` argument of `scale_y_continuous` uses a numeric vector to specify where the guides should be drawn. We can do much fancier things if we want to. For example, the `trans` argument can be used to apply a particular transformation to an axis, such as a logarithm.
 
 Predictably, there is also a `scale_x_continuous` function. We can use this in exactly the same way to control where the guides on the x-axis appear:
 
@@ -151,7 +151,7 @@ This uses `scale_color_manual` to achieve three things:
 -   it sets up a custom colour palette via `values`, and
 -   it alters the category labels via `labels` (so that their scientific names are used).
 
-Scales are one of the hardest aspects of **ggplot2** to master. There are many different scales, each controlled by its own unique set of arguments. Fortunately, the defaults used by **ggplot2** are often good enough to arrive at a reasonable plot without having to manipulate the scales.
+Scales are one of the hardest aspects of **ggplot2** to master. There are many different scale functions, each controlled by its own unique set of arguments. Fortunately, the default scales used by **ggplot2** are often good enough to arrive at a reasonable plot without having to manipulate the scales.
 
 ## Labels
 
@@ -179,9 +179,9 @@ ggplot(penguins,
   labs(x = "Bill length (mm)", y = "Bill depth (mm)", colour = "Penguin Species")
 ```
 
-Using `labs` is easy---if a mapping was set up in `aes` we can change its label via a 'name = value' construct in `labs`. That's it.
+Using `labs` is easy---if a mapping was set up in `aes` we can change its label via '`<name> = <value>`' construct in `labs`, where `<name>` is the name of the aesthetic and `<value>` is the (character string) label we want to use.
 
-Finally, another way to set the axis labels is via the `xlab` and `ylab`. We tend not to use these because `labs` deals with all our labelling needs on its own. Why waste effort remembering three things if you only need to remember one?
+Another way to set the axis labels is via the more specialised `xlab` and `ylab`. However, we tend not to use these because `labs` deals with all our labelling needs. Why waste effort remembering three things if you only need to remember one?
 
 ## Themes
 

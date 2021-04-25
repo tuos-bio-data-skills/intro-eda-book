@@ -4,14 +4,13 @@
 %
 \documentclass[
 ]{book}
+\usepackage{amsmath,amssymb}
 \usepackage{lmodern}
-\usepackage{amsmath}
 \usepackage{ifxetex,ifluatex}
 \ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
   \usepackage[T1]{fontenc}
   \usepackage[utf8]{inputenc}
   \usepackage{textcomp} % provide euro and other symbols
-  \usepackage{amssymb}
 \else % if luatex or xetex
   \usepackage{unicode-math}
   \defaultfontfeatures{Scale=MatchLowercase}
@@ -82,7 +81,7 @@
 \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
 \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
 \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
-\usepackage{longtable,booktabs}
+\usepackage{longtable,booktabs,array}
 \usepackage{calc} % for calculating minipage widths
 % Correct order of tables after \paragraph or \subparagraph
 \usepackage{etoolbox}
@@ -146,7 +145,7 @@
 
 \title{Exploratory Data Analysis with R}
 \author{Dylan Childs}
-\date{2021-04-20}
+\date{2021-04-25}
 
 \begin{document}
 \maketitle
@@ -5050,17 +5049,17 @@ What's going on here?
   The \texttt{breaks} argument of \texttt{scale\_y\_continuous} takes a numeric vector to specify where the guides should be drawn. We used the base R \texttt{seq} function to set up a numeric vector containing the sequence: 14, 16, 18 and 20. That tells \textbf{gglot2} to place the guides at 14, 16, 18 and 20 on the y-axis.
 \end{itemize}
 
-The functions that adjust a scale all have the general form \texttt{scale\_AES\_TYP}, where:
+All the \texttt{scale\_} functions have the same general form: \texttt{scale\_AES\_TYP}, where\ldots{}
 
 \begin{itemize}
 \tightlist
 \item
-  the \texttt{AES} bit in the name refers to the relevant aesthetic, and
+  the \texttt{AES} part refers to the relevant aesthetic, and
 \item
   the \texttt{TYP} part refers to the type of scale we want to apply.
 \end{itemize}
 
-Each kind of \texttt{scale\_AES\_TYP} function has its own set of arguments to control how the scale works. For example, the \texttt{breaks} argument of \texttt{scale\_y\_continuous} uses a numeric vector to specify where the guides should be drawn. We can do much fancier things if we want to. For example, the \texttt{trans} argument can be used to apply a particular transformation to an axis, such as a logarithm.
+Every \texttt{scale\_AES\_TYP} function has a set of arguments to control how the scale works. For example, the \texttt{breaks} argument of \texttt{scale\_y\_continuous} uses a numeric vector to specify where the guides should be drawn. We can do much fancier things if we want to. For example, the \texttt{trans} argument can be used to apply a particular transformation to an axis, such as a logarithm.
 
 Predictably, there is also a \texttt{scale\_x\_continuous} function. We can use this in exactly the same way to control where the guides on the x-axis appear:
 
@@ -5116,7 +5115,7 @@ This uses \texttt{scale\_color\_manual} to achieve three things:
   it alters the category labels via \texttt{labels} (so that their scientific names are used).
 \end{itemize}
 
-Scales are one of the hardest aspects of \textbf{ggplot2} to master. There are many different scales, each controlled by its own unique set of arguments. Fortunately, the defaults used by \textbf{ggplot2} are often good enough to arrive at a reasonable plot without having to manipulate the scales.
+Scales are one of the hardest aspects of \textbf{ggplot2} to master. There are many different scale functions, each controlled by its own unique set of arguments. Fortunately, the default scales used by \textbf{ggplot2} are often good enough to arrive at a reasonable plot without having to manipulate the scales.
 
 \hypertarget{labels}{%
 \section{Labels}\label{labels}}
@@ -5149,9 +5148,9 @@ The axes labels are a feature of the whole plot---i.e.~they do not belong to a p
 
 \begin{center}\includegraphics{intro-bio-data-book_files/figure-latex/unnamed-chunk-207-1} \end{center}
 
-Using \texttt{labs} is easy---if a mapping was set up in \texttt{aes} we can change its label via a `name = value' construct in \texttt{labs}. That's it.
+Using \texttt{labs} is easy---if a mapping was set up in \texttt{aes} we can change its label via `\texttt{\textless{}name\textgreater{}\ =\ \textless{}value\textgreater{}}' construct in \texttt{labs}, where \texttt{\textless{}name\textgreater{}} is the name of the aesthetic and \texttt{\textless{}value\textgreater{}} is the (character string) label we want to use.
 
-Finally, another way to set the axis labels is via the \texttt{xlab} and \texttt{ylab}. We tend not to use these because \texttt{labs} deals with all our labelling needs on its own. Why waste effort remembering three things if you only need to remember one?
+Another way to set the axis labels is via the more specialised \texttt{xlab} and \texttt{ylab}. However, we tend not to use these because \texttt{labs} deals with all our labelling needs. Why waste effort remembering three things if you only need to remember one?
 
 \hypertarget{themes}{%
 \section{Themes}\label{themes}}
@@ -5361,7 +5360,7 @@ This gives a clear summary of the sample distribution of body mass. It reveals:
 \item
   the most common values, which are round about 190 mm;
 \item
-  the range of the data, which is about 60 mm; and
+  the range of the data, which is about 65 mm; and
 \item
   the shape of the distribution, which appears to be \textbf{bimodal}---it has two peaks.
 \end{enumerate}
@@ -5583,9 +5582,7 @@ Exploring categorical variables is generally simpler than the numeric case. The 
 ## [1] 2007 2008 2009
 \end{verbatim}
 
-These are obviously categorical---there are no numeric values associated with either variable. The obvious question to ask about each variable is, is it ordinal or nominal?
-
-It is probably safe to assume that \texttt{species} should be treated as a nominal variable. There is no reasonable way to order the three species---i.e.~a statement such as `Adelie \textgreater{} Gentoo' is nonsense.
+What kind of variable is \texttt{species?} This is obviously categorical---there are no numeric values associated with that variable. But is it ordinal or nominal? It is safe to assume that \texttt{species} should be treated as a nominal variable. There is no reasonable way to order the three species---i.e.~a statement such as `Adelie \textgreater{} Gentoo' is nonsense.
 
 What about \texttt{year}? That's a bit more tricky. If we were interested in how some aspect of the data changes over time, we might consider treating year as a numeric variable, or perhaps, as an ordinal categorical variable. Alternatively, if the question is simply, `do the data vary from one year to the next' without any concern for trends, it's reasonable to treat year as a nominal categorical variable.
 
@@ -5628,7 +5625,7 @@ Constructing a bar graph to display category counts is easy with \textbf{ggplot2
 
 We've called the object \texttt{plot\_bar} for the obvious reason. Notice that we only need to define one aesthetic mapping---we mapped \texttt{species} to the x-axis. This will produce a bar plot with vertical bars.
 
-The next step is to add a layer using one of the \texttt{geom\_XX} functions. There are two functions we can use to create bar charts in ggplot, \texttt{geom\_bar} and \texttt{geom\_col}. By default, \texttt{geom\_col} counts the number of observations in each category, whereas \texttt{geom\_bar} plots the actual numbers we provide.
+The next step is to add a layer using one of the \texttt{geom\_XX} functions. There are two functions we can use to create bar charts in \textbf{ggplot2}: \texttt{geom\_bar} and \texttt{geom\_col}. By default, \texttt{geom\_bar} uses the stat facility to count the number of observations in each category, whereas \texttt{geom\_col} plots the actual numbers we provide.
 
 We want to show the counts of each \texttt{species} category, meaning we should use \texttt{geom\_bar}:
 
@@ -6292,7 +6289,9 @@ We'll demonstrate how to do this by extending the previous example to show the m
 
 The standard error is a measure of how precise an estimate like the sample mean is. A small standard error indicates that we can have more confidence the estimate reflects the `true' value. The standard error of the mean can be calculated from a well-known formula: \[
 \text{Standard Error} = \frac{\text{Standard Deviation}}{\sqrt{(\text{Sample Size})}} = \frac{\sigma}{\sqrt{n}}
-\] It is hard to give an explanation of that formula without knowing a bit of statistical theory---it is just one of those things we have to learn. In terms of code that works with \textbf{dplyr}, that calculation looks like this:
+\]
+
+It's difficult to give an explanation of where this formula comes from without knowing a bit of statistical theory---it's just one of those things we have to learn. In terms of R code, the calculation looks like this:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -6300,7 +6299,7 @@ The standard error is a measure of how precise an estimate like the sample mean 
 \end{Highlighting}
 \end{Shaded}
 
-This assumes the numeric variable we are working with is called \texttt{x}, and we want the result to be called \texttt{standard\_error}. Notice this uses a special \textbf{dplyr} function called \texttt{n} to find the sample size.
+This assumes the numeric variable we are working with is called \texttt{x}, and we want the result to be called \texttt{standard\_error}. Notice this uses a \textbf{dplyr} function called \texttt{n} to find the sample size.
 
 \end{infobox}
 

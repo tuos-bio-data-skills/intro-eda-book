@@ -24,7 +24,7 @@
 <meta name="author" content="Dylan Childs" />
 
 
-<meta name="date" content="2021-04-20" />
+<meta name="date" content="2021-04-25" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -59,6 +59,7 @@
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
 pre.sourceCode { margin: 0; }
 @media screen {
@@ -484,12 +485,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><p>The aesthetic we wanted to alter was the y-axis position. The y-axis in this particular plot is associated with a continuous scale because <code>bill_depth_mm</code> is a numeric variable. This means we have to apply the <code>scale_y_continuous</code> function to tweak the position of the y-axis guides.</p></li>
 <li><p>The <code>breaks</code> argument of <code>scale_y_continuous</code> takes a numeric vector to specify where the guides should be drawn. We used the base R <code>seq</code> function to set up a numeric vector containing the sequence: 14, 16, 18 and 20. That tells <strong>gglot2</strong> to place the guides at 14, 16, 18 and 20 on the y-axis.</p></li>
 </ul>
-<p>The functions that adjust a scale all have the general form <code>scale_AES_TYP</code>, where:</p>
+<p>All the <code>scale_</code> functions have the same general form: <code>scale_AES_TYP</code>, where…</p>
 <ul>
-<li>the <code>AES</code> bit in the name refers to the relevant aesthetic, and</li>
+<li>the <code>AES</code> part refers to the relevant aesthetic, and</li>
 <li>the <code>TYP</code> part refers to the type of scale we want to apply.</li>
 </ul>
-<p>Each kind of <code>scale_AES_TYP</code> function has its own set of arguments to control how the scale works. For example, the <code>breaks</code> argument of <code>scale_y_continuous</code> uses a numeric vector to specify where the guides should be drawn. We can do much fancier things if we want to. For example, the <code>trans</code> argument can be used to apply a particular transformation to an axis, such as a logarithm.</p>
+<p>Every <code>scale_AES_TYP</code> function has a set of arguments to control how the scale works. For example, the <code>breaks</code> argument of <code>scale_y_continuous</code> uses a numeric vector to specify where the guides should be drawn. We can do much fancier things if we want to. For example, the <code>trans</code> argument can be used to apply a particular transformation to an axis, such as a logarithm.</p>
 <p>Predictably, there is also a <code>scale_x_continuous</code> function. We can use this in exactly the same way to control where the guides on the x-axis appear:</p>
 <div class="sourceCode" id="cb341"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb341-1"><a href="chapter-customise-ggplot2.html#cb341-1" aria-hidden="true" tabindex="-1"></a><span class="co"># display bill morphology scatter plot</span></span>
 <span id="cb341-2"><a href="chapter-customise-ggplot2.html#cb341-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins, </span>
@@ -524,7 +525,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>it sets up a custom colour palette via <code>values</code>, and</li>
 <li>it alters the category labels via <code>labels</code> (so that their scientific names are used).</li>
 </ul>
-<p>Scales are one of the hardest aspects of <strong>ggplot2</strong> to master. There are many different scales, each controlled by its own unique set of arguments. Fortunately, the defaults used by <strong>ggplot2</strong> are often good enough to arrive at a reasonable plot without having to manipulate the scales.</p>
+<p>Scales are one of the hardest aspects of <strong>ggplot2</strong> to master. There are many different scale functions, each controlled by its own unique set of arguments. Fortunately, the default scales used by <strong>ggplot2</strong> are often good enough to arrive at a reasonable plot without having to manipulate the scales.</p>
 </div>
 <div id="labels" class="section level2" number="14.3">
 <h2><span class="header-section-number">14.3</span> Labels</h2>
@@ -548,8 +549,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb343-16"><a href="chapter-customise-ggplot2.html#cb343-16" aria-hidden="true" tabindex="-1"></a>  <span class="co"># set the the x/y-axis labels and legend label using `labs`</span></span>
 <span id="cb343-17"><a href="chapter-customise-ggplot2.html#cb343-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Bill length (mm)&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Bill depth (mm)&quot;</span>, <span class="at">colour =</span> <span class="st">&quot;Penguin Species&quot;</span>)</span></code></pre></div>
 <p><img src="intro-bio-data-book_files/figure-html/unnamed-chunk-207-1.png" width="451.2" style="display: block; margin: auto;" /></p>
-<p>Using <code>labs</code> is easy—if a mapping was set up in <code>aes</code> we can change its label via a ‘name = value’ construct in <code>labs</code>. That’s it.</p>
-<p>Finally, another way to set the axis labels is via the <code>xlab</code> and <code>ylab</code>. We tend not to use these because <code>labs</code> deals with all our labelling needs on its own. Why waste effort remembering three things if you only need to remember one?</p>
+<p>Using <code>labs</code> is easy—if a mapping was set up in <code>aes</code> we can change its label via ‘<code>&lt;name&gt; = &lt;value&gt;</code>’ construct in <code>labs</code>, where <code>&lt;name&gt;</code> is the name of the aesthetic and <code>&lt;value&gt;</code> is the (character string) label we want to use.</p>
+<p>Another way to set the axis labels is via the more specialised <code>xlab</code> and <code>ylab</code>. However, we tend not to use these because <code>labs</code> deals with all our labelling needs. Why waste effort remembering three things if you only need to remember one?</p>
 </div>
 <div id="themes" class="section level2" number="14.4">
 <h2><span class="header-section-number">14.4</span> Themes</h2>
