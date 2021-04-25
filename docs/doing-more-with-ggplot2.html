@@ -24,7 +24,7 @@
 <meta name="author" content="Dylan Childs" />
 
 
-<meta name="date" content="2021-04-20" />
+<meta name="date" content="2021-04-25" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -59,6 +59,7 @@
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
 pre.sourceCode { margin: 0; }
 @media screen {
@@ -480,9 +481,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h4>Er…. standard error?</h4>
 <p>The standard error is a measure of how precise an estimate like the sample mean is. A small standard error indicates that we can have more confidence the estimate reflects the ‘true’ value. The standard error of the mean can be calculated from a well-known formula: <span class="math display">\[
 \text{Standard Error} = \frac{\text{Standard Deviation}}{\sqrt{(\text{Sample Size})}} = \frac{\sigma}{\sqrt{n}}
-\]</span> It is hard to give an explanation of that formula without knowing a bit of statistical theory—it is just one of those things we have to learn. In terms of code that works with <strong>dplyr</strong>, that calculation looks like this:</p>
+\]</span></p>
+<p>It’s difficult to give an explanation of where this formula comes from without knowing a bit of statistical theory—it’s just one of those things we have to learn. In terms of R code, the calculation looks like this:</p>
 <div class="sourceCode" id="cb400"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb400-1"><a href="doing-more-with-ggplot2.html#cb400-1" aria-hidden="true" tabindex="-1"></a>standard_error <span class="ot">=</span> <span class="fu">sd</span>(x) <span class="sc">/</span> <span class="fu">sqrt</span>(<span class="fu">n</span>())</span></code></pre></div>
-<p>This assumes the numeric variable we are working with is called <code>x</code>, and we want the result to be called <code>standard_error</code>. Notice this uses a special <strong>dplyr</strong> function called <code>n</code> to find the sample size.</p>
+<p>This assumes the numeric variable we are working with is called <code>x</code>, and we want the result to be called <code>standard_error</code>. Notice this uses a <strong>dplyr</strong> function called <code>n</code> to find the sample size.</p>
 </div>
 <p>Once again, constructing the plot is a two-step process. Start by calculating the means and standard error of body mass for each species and sex combination:</p>
 <div class="sourceCode" id="cb401"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb401-1"><a href="doing-more-with-ggplot2.html#cb401-1" aria-hidden="true" tabindex="-1"></a>penguins_summary <span class="ot">&lt;-</span> penguins <span class="sc">%&gt;%</span> </span>
