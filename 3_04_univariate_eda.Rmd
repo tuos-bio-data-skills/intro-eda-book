@@ -65,7 +65,7 @@ ggplot(penguins, aes(x = flipper_length_mm)) + geom_histogram(breaks = seq(170, 
 This gives a clear summary of the sample distribution of body mass. It reveals:
 
 1.  the most common values, which are round about 190 mm;
-2.  the range of the data, which is about 60 mm; and
+2.  the range of the data, which is about 65 mm; and
 3.  the shape of the distribution, which appears to be **bimodal**---it has two peaks.
 
 That last observation wasn't immediately obvious when looking at the raw counts in the binned summary.
@@ -206,9 +206,7 @@ unique(penguins$species)
 unique(penguins$year)
 ```
 
-These are obviously categorical---there are no numeric values associated with either variable. The obvious question to ask about each variable is, is it ordinal or nominal?
-
-It is probably safe to assume that `species` should be treated as a nominal variable. There is no reasonable way to order the three species---i.e. a statement such as 'Adelie \> Gentoo' is nonsense.
+What kind of variable is `species?` This is obviously categorical---there are no numeric values associated with that variable. But is it ordinal or nominal? It is safe to assume that `species` should be treated as a nominal variable. There is no reasonable way to order the three species---i.e. a statement such as 'Adelie \> Gentoo' is nonsense.
 
 What about `year`? That's a bit more tricky. If we were interested in how some aspect of the data changes over time, we might consider treating year as a numeric variable, or perhaps, as an ordinal categorical variable. Alternatively, if the question is simply, 'do the data vary from one year to the next' without any concern for trends, it's reasonable to treat year as a nominal categorical variable.
 
@@ -237,7 +235,7 @@ plot_bar <- ggplot(penguins, aes(x = species))
 
 We've called the object `plot_bar` for the obvious reason. Notice that we only need to define one aesthetic mapping---we mapped `species` to the x-axis. This will produce a bar plot with vertical bars.
 
-The next step is to add a layer using one of the `geom_XX` functions. There are two functions we can use to create bar charts in ggplot, `geom_bar` and `geom_col`. By default, `geom_col` counts the number of observations in each category, whereas `geom_bar` plots the actual numbers we provide.
+The next step is to add a layer using one of the `geom_XX` functions. There are two functions we can use to create bar charts in **ggplot2**: `geom_bar` and `geom_col`. By default, `geom_bar` uses the stat facility to count the number of observations in each category, whereas `geom_col` plots the actual numbers we provide.
 
 We want to show the counts of each `species` category, meaning we should use `geom_bar`:
 
