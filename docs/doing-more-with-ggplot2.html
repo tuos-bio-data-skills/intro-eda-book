@@ -24,7 +24,7 @@
 <meta name="author" content="Dylan Childs" />
 
 
-<meta name="date" content="2021-04-25" />
+<meta name="date" content="2021-05-03" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -414,9 +414,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>We have now seen a range of different ways to visualise and explore data using <strong>ggplot2</strong>. This last chapter will cover a few bits of miscellanea that don’t particularly fit anywhere else. That doesn’t mean the ideas aren’t important!</p>
 <div id="summaries" class="section level2" number="17.1">
 <h2><span class="header-section-number">17.1</span> Comparing descriptive statistics</h2>
-<p>So far, we have focussed on displaying the raw data (e.g. scatter plots) or a distributional summary (e.g. box plots). What other types of quantities might we need to visualise? Descriptive statistics such as the sample mean are one possibility. These often feature in data analysis when ‘comparing groups.’</p>
-<p>We need to know how to construct plots that display such summaries. Let’s start with a simple question: how does the (arithmetic) mean body mass varies by sex and across penguin species? One option is to produce a bar plot for which the lengths of bars represent the mean body mass in each category.</p>
-<p>There are two different routes to produce this with <strong>ggplot2</strong>. One way to build such a plot is to break the problem into two steps. In the first step, we calculate whatever it is we want to display, i.e. the species- and sex-specific mean body mass. <strong>dplyr</strong> is usually the best tool to use for this first step:</p>
+<p>So far, we have focussed on displaying the raw data (e.g. scatter plots) or a distributional summary (e.g. box plots). What other types of quantities might we need to visualise? Descriptive statistics, such as the sample mean, are one possibility. These often feature in data analysis when ‘comparing groups.’</p>
+<p>We need to know how to construct plots that display such summaries. Let’s start with a simple question: how does the (arithmetic) mean body mass vary by sex and across penguin species? One option is to produce a bar plot for which the lengths of bars represent the mean body mass in each category.</p>
+<p>There are two different routes to produce this kind of plot with <strong>ggplot2</strong>. One way is to break the problem into two steps.</p>
+<p>In the first step, we calculate whatever it is we want to display. In our example, that is the set of species- and sex-specific mean body masses. <strong>dplyr</strong> is a good tool for this step:</p>
 <div class="sourceCode" id="cb394"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb394-1"><a href="doing-more-with-ggplot2.html#cb394-1" aria-hidden="true" tabindex="-1"></a>penguins_summary <span class="ot">&lt;-</span> penguins <span class="sc">%&gt;%</span> </span>
 <span id="cb394-2"><a href="doing-more-with-ggplot2.html#cb394-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># group data by species and penguins</span></span>
 <span id="cb394-3"><a href="doing-more-with-ggplot2.html#cb394-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(species, sex) <span class="sc">%&gt;%</span> </span>
@@ -542,7 +543,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="alternatives-to-bar-plots" class="section level3" number="17.1.2">
 <h3><span class="header-section-number">17.1.2</span> Alternatives to bar plots</h3>
-<p>Do we have to use a bar plot to display means? Certainly not. In some ways bar plots are a bit old fashioned and many people often prefer to show a set of means as points these days. This kind of visualisation is also easier to make than a bar plot because we can use a single geom (<code>geom_pointrange</code>) to add both the points and error bars as a single layer:</p>
+<p>Do we have to use a bar plot to display means? Certainly not. In some ways bar plots are a bit old-fashioned, and many people often prefer to show a set of means as points and error bars these days. This kind of visualisation is also easier to make than a bar plot because we can use a single geom (<code>geom_pointrange</code>) to add both the points and error bars as a single layer:</p>
 <div class="sourceCode" id="cb406"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb406-1"><a href="doing-more-with-ggplot2.html#cb406-1" aria-hidden="true" tabindex="-1"></a><span class="co"># display points plot of body mass means + SE&#39;s</span></span>
 <span id="cb406-2"><a href="doing-more-with-ggplot2.html#cb406-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins_summary, </span>
 <span id="cb406-3"><a href="doing-more-with-ggplot2.html#cb406-3" aria-hidden="true" tabindex="-1"></a>       <span class="co"># aesthetic mappings: mass (y) vs species (x) by sex (colour)</span></span>
@@ -550,13 +551,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb406-5"><a href="doing-more-with-ggplot2.html#cb406-5" aria-hidden="true" tabindex="-1"></a>           <span class="co"># ...and ymax/ymin (+/- 1 se) for error bars</span></span>
 <span id="cb406-6"><a href="doing-more-with-ggplot2.html#cb406-6" aria-hidden="true" tabindex="-1"></a>           <span class="at">ymin =</span> mean_mass <span class="sc">-</span> ster_mass, <span class="at">ymax =</span> mean_mass <span class="sc">+</span> ster_mass)) <span class="sc">+</span> </span>
 <span id="cb406-7"><a href="doing-more-with-ggplot2.html#cb406-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># use geom_errorbar to add an error bar layer + dodge position</span></span>
-<span id="cb406-8"><a href="doing-more-with-ggplot2.html#cb406-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_pointrange</span>(<span class="at">position =</span> <span class="fu">position_dodge</span>(<span class="fl">0.5</span>), <span class="at">size =</span> <span class="fl">0.2</span>) <span class="sc">+</span> </span>
+<span id="cb406-8"><a href="doing-more-with-ggplot2.html#cb406-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_pointrange</span>(<span class="at">position =</span> <span class="fu">position_dodge</span>(<span class="fl">0.5</span>), <span class="at">size =</span> <span class="fl">0.4</span>) <span class="sc">+</span> </span>
 <span id="cb406-9"><a href="doing-more-with-ggplot2.html#cb406-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># use a more professional theme </span></span>
 <span id="cb406-10"><a href="doing-more-with-ggplot2.html#cb406-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>(<span class="at">base_size =</span> <span class="dv">12</span>) <span class="sc">+</span> </span>
 <span id="cb406-11"><a href="doing-more-with-ggplot2.html#cb406-11" aria-hidden="true" tabindex="-1"></a>  <span class="co"># specify labels for all mappings</span></span>
 <span id="cb406-12"><a href="doing-more-with-ggplot2.html#cb406-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Species&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Mean body mass (g)&quot;</span>, <span class="at">colour =</span> <span class="st">&quot;Sex&quot;</span>)</span></code></pre></div>
 <p><img src="intro-bio-data-book_files/figure-html/unnamed-chunk-268-1.png" width="384" style="display: block; margin: auto;" /></p>
-<p>This code is actually very similar to the previous example. All we did was replace <code>geom_col</code> and <code>geom_col</code> with a single <code>geom_pointrange</code> and then:</p>
+<p>This code is actually very similar to the previous example. All we did was replace <code>geom_col</code> and <code>geom_errorbar</code> with <code>geom_pointrange</code> and then:</p>
 <ul>
 <li>mapped <code>sex</code> to the <code>colour</code> aesthetic instead of <code>fill</code>,</li>
 <li>made the points and lines a smaller than the default by setting <code>size</code>, and</li>

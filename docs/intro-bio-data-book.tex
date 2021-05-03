@@ -145,7 +145,7 @@
 
 \title{Exploratory Data Analysis with R}
 \author{Dylan Childs}
-\date{2021-04-25}
+\date{2021-05-03}
 
 \begin{document}
 \maketitle
@@ -5612,7 +5612,7 @@ We can't say anything about the sample distribution of a categorical variable by
 
 We saw this result earlier in the book---the most common species is Adelie, followed by the Gentoo and Chinstrap. Gentoo is roughly as common as Adelie, whereas Chinstrap is about half as frequent.
 
-These numbers lead directly to an informative visualisation. The usual graphical tool for summarising categorical variables is the \textbf{bar chart}. A bar chart presents summaries of grouped data with rectangular bars. The lengths of each bar is proportional to the value it represents. When summarising categorical variables, the bar lengths show the raw counts or proportions of each category.
+These numbers lead directly to an informative visualisation. The usual graphical tool for summarising categorical variables is the \textbf{bar chart} (a.k.a. bar plot or bar graph). A bar chart presents summaries of grouped data with rectangular bars. The lengths of each bar is proportional to the value it represents. When summarising categorical variables, the bar lengths show the raw counts or proportions of each category.
 
 Constructing a bar graph to display category counts is easy with \textbf{ggplot2}. We'll do this for the \texttt{species} variable. As always, we start by using the \texttt{ggplot} function to construct a graphical object containing the default data and aesthetic mapping.
 
@@ -5920,7 +5920,7 @@ We have all the right information in this graph, but it could be improved in a c
 \item
   Look at the guides on the x axis. There are some pointless extra lines. We saw this issue in a different guise in the previous chapter. It occurs because \texttt{year} is stored as a numeric vector---\textbf{ggplot2} has no way of knowing we want to treat it as a non-numeric, categorical variable.
 \item
-  The ordering of the species in the stacks does not reflect the relative frequency of each species. Again, we saw this problem in the previous chapter---\textbf{ggplot2} treats does not `know' how we want to order the \texttt{species} categories, and so it uses alphabetical order.
+  The ordering of the species in the stacks does not reflect the relative frequency of each species. Again, we saw this problem in the previous chapter---\textbf{ggplot2} does not `know' how we want to order the \texttt{species} categories, and so it uses alphabetical order.
 \end{itemize}
 
 We need to ensure \texttt{year} is interpreted as a categorical variable and provide information about the required category order of \texttt{species}. R has a special kind of vector, called a \textbf{factor}, that is designed to tackle these kinds of issues. Factors are used by R to represent categorical variables.
@@ -6101,9 +6101,9 @@ The two histogram plots tell much the same story as the box and whiskers plot. T
 \hypertarget{multivariate}{%
 \section{Multivariate associations}\label{multivariate}}
 
-We have now examined several ways for summarising associations between two variables. How do we explore associations between more than two variables in a single graph? That is, how do we explore \textbf{multivariate associations}? It is difficult to give a concrete answer because it depends on the scientific question we're addressing, the kinds of variables we're working with, and to a large extent, our creativity and aptitude with a graphing framework like \textbf{ggplot2}.
+We have now examined several ways for summarising associations between two variables. How do we explore associations between more than two variables in a single graph? That is, how do we explore \textbf{multivariate associations}? It is difficult to give a concrete answer because it depends on the question we're addressing, the kinds of variables we're working with, and to a large extent, our creativity and aptitude with a graphing framework like \textbf{ggplot2}.
 
-We have already seen enough of \textbf{ggplot2} works to build some fairly sophisticated visualisations.The key point is that we don't really need to learn anything new to visualise multivariate associations. There are two ways to add additional information to a visualisation, both of which we have already reviewed:
+We have already seen enough of how \textbf{ggplot2} works to build some fairly sophisticated visualisations. The key point is that we don't really need to learn anything new to visualise multivariate associations. There are basically two ways to add additional information to a visualisation, both of which we have already reviewed:
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -6163,11 +6163,13 @@ We have now seen a range of different ways to visualise and explore data using \
 \hypertarget{summaries}{%
 \section{Comparing descriptive statistics}\label{summaries}}
 
-So far, we have focussed on displaying the raw data (e.g.~scatter plots) or a distributional summary (e.g.~box plots). What other types of quantities might we need to visualise? Descriptive statistics such as the sample mean are one possibility. These often feature in data analysis when `comparing groups'.
+So far, we have focussed on displaying the raw data (e.g.~scatter plots) or a distributional summary (e.g.~box plots). What other types of quantities might we need to visualise? Descriptive statistics, such as the sample mean, are one possibility. These often feature in data analysis when `comparing groups'.
 
-We need to know how to construct plots that display such summaries. Let's start with a simple question: how does the (arithmetic) mean body mass varies by sex and across penguin species? One option is to produce a bar plot for which the lengths of bars represent the mean body mass in each category.
+We need to know how to construct plots that display such summaries. Let's start with a simple question: how does the (arithmetic) mean body mass vary by sex and across penguin species? One option is to produce a bar plot for which the lengths of bars represent the mean body mass in each category.
 
-There are two different routes to produce this with \textbf{ggplot2}. One way to build such a plot is to break the problem into two steps. In the first step, we calculate whatever it is we want to display, i.e.~the species- and sex-specific mean body mass. \textbf{dplyr} is usually the best tool to use for this first step:
+There are two different routes to produce this kind of plot with \textbf{ggplot2}. One way is to break the problem into two steps.
+
+In the first step, we calculate whatever it is we want to display. In our example, that is the set of species- and sex-specific mean body masses. \textbf{dplyr} is a good tool for this step:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -6394,7 +6396,7 @@ Data visualisations can include many different kinds of `error bar'--- standard 
 \hypertarget{alternatives-to-bar-plots}{%
 \subsection{Alternatives to bar plots}\label{alternatives-to-bar-plots}}
 
-Do we have to use a bar plot to display means? Certainly not. In some ways bar plots are a bit old fashioned and many people often prefer to show a set of means as points these days. This kind of visualisation is also easier to make than a bar plot because we can use a single geom (\texttt{geom\_pointrange}) to add both the points and error bars as a single layer:
+Do we have to use a bar plot to display means? Certainly not. In some ways bar plots are a bit old-fashioned, and many people often prefer to show a set of means as points and error bars these days. This kind of visualisation is also easier to make than a bar plot because we can use a single geom (\texttt{geom\_pointrange}) to add both the points and error bars as a single layer:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -6405,7 +6407,7 @@ Do we have to use a bar plot to display means? Certainly not. In some ways bar p
            \CommentTok{\# ...and ymax/ymin (+/{-} 1 se) for error bars}
            \AttributeTok{ymin =}\NormalTok{ mean\_mass }\SpecialCharTok{{-}}\NormalTok{ ster\_mass, }\AttributeTok{ymax =}\NormalTok{ mean\_mass }\SpecialCharTok{+}\NormalTok{ ster\_mass)) }\SpecialCharTok{+} 
   \CommentTok{\# use geom\_errorbar to add an error bar layer + dodge position}
-  \FunctionTok{geom\_pointrange}\NormalTok{(}\AttributeTok{position =} \FunctionTok{position\_dodge}\NormalTok{(}\FloatTok{0.5}\NormalTok{), }\AttributeTok{size =} \FloatTok{0.2}\NormalTok{) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_pointrange}\NormalTok{(}\AttributeTok{position =} \FunctionTok{position\_dodge}\NormalTok{(}\FloatTok{0.5}\NormalTok{), }\AttributeTok{size =} \FloatTok{0.4}\NormalTok{) }\SpecialCharTok{+} 
   \CommentTok{\# use a more professional theme }
   \FunctionTok{theme\_classic}\NormalTok{(}\AttributeTok{base\_size =} \DecValTok{12}\NormalTok{) }\SpecialCharTok{+} 
   \CommentTok{\# specify labels for all mappings}
@@ -6415,7 +6417,7 @@ Do we have to use a bar plot to display means? Certainly not. In some ways bar p
 
 \begin{center}\includegraphics{intro-bio-data-book_files/figure-latex/unnamed-chunk-268-1} \end{center}
 
-This code is actually very similar to the previous example. All we did was replace \texttt{geom\_col} and \texttt{geom\_col} with a single \texttt{geom\_pointrange} and then:
+This code is actually very similar to the previous example. All we did was replace \texttt{geom\_col} and \texttt{geom\_errorbar} with \texttt{geom\_pointrange} and then:
 
 \begin{itemize}
 \tightlist

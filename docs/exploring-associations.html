@@ -24,7 +24,7 @@
 <meta name="author" content="Dylan Childs" />
 
 
-<meta name="date" content="2021-04-25" />
+<meta name="date" content="2021-05-03" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -483,7 +483,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>We have all the right information in this graph, but it could be improved in a couple of ways:</p>
 <ul>
 <li>Look at the guides on the x axis. There are some pointless extra lines. We saw this issue in a different guise in the previous chapter. It occurs because <code>year</code> is stored as a numeric vector—<strong>ggplot2</strong> has no way of knowing we want to treat it as a non-numeric, categorical variable.</li>
-<li>The ordering of the species in the stacks does not reflect the relative frequency of each species. Again, we saw this problem in the previous chapter—<strong>ggplot2</strong> treats does not ‘know’ how we want to order the <code>species</code> categories, and so it uses alphabetical order.</li>
+<li>The ordering of the species in the stacks does not reflect the relative frequency of each species. Again, we saw this problem in the previous chapter—<strong>ggplot2</strong> does not ‘know’ how we want to order the <code>species</code> categories, and so it uses alphabetical order.</li>
 </ul>
 <p>We need to ensure <code>year</code> is interpreted as a categorical variable and provide information about the required category order of <code>species</code>. R has a special kind of vector, called a <strong>factor</strong>, that is designed to tackle these kinds of issues. Factors are used by R to represent categorical variables.</p>
 <p>We need to convert <code>year</code> and <code>species</code> to factors. How do we convert a numeric or character vector into a factor? Use the <code>factor</code> function (this is the first time we’ve mentioned this function). This has an argument called <code>levels</code> that sets the allowed categories and their order.</p>
@@ -586,8 +586,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="multivariate" class="section level2" number="16.4">
 <h2><span class="header-section-number">16.4</span> Multivariate associations</h2>
-<p>We have now examined several ways for summarising associations between two variables. How do we explore associations between more than two variables in a single graph? That is, how do we explore <strong>multivariate associations</strong>? It is difficult to give a concrete answer because it depends on the scientific question we’re addressing, the kinds of variables we’re working with, and to a large extent, our creativity and aptitude with a graphing framework like <strong>ggplot2</strong>.</p>
-<p>We have already seen enough of <strong>ggplot2</strong> works to build some fairly sophisticated visualisations.The key point is that we don’t really need to learn anything new to visualise multivariate associations. There are two ways to add additional information to a visualisation, both of which we have already reviewed:</p>
+<p>We have now examined several ways for summarising associations between two variables. How do we explore associations between more than two variables in a single graph? That is, how do we explore <strong>multivariate associations</strong>? It is difficult to give a concrete answer because it depends on the question we’re addressing, the kinds of variables we’re working with, and to a large extent, our creativity and aptitude with a graphing framework like <strong>ggplot2</strong>.</p>
+<p>We have already seen enough of how <strong>ggplot2</strong> works to build some fairly sophisticated visualisations. The key point is that we don’t really need to learn anything new to visualise multivariate associations. There are basically two ways to add additional information to a visualisation, both of which we have already reviewed:</p>
 <ol style="list-style-type: decimal">
 <li>Define aesthetic mappings to allow a layer’s properties to depend on the values of one or more variables.</li>
 <li>Use faceting to construct a multi-panel plot according to the values of categorical variables.</li>
