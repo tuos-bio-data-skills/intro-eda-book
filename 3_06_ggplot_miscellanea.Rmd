@@ -8,11 +8,13 @@ We have now seen a range of different ways to visualise and explore data using *
 
 ## Comparing descriptive statistics {#summaries}
 
-So far, we have focussed on displaying the raw data (e.g. scatter plots) or a distributional summary (e.g. box plots). What other types of quantities might we need to visualise? Descriptive statistics such as the sample mean are one possibility. These often feature in data analysis when 'comparing groups'.
+So far, we have focussed on displaying the raw data (e.g. scatter plots) or a distributional summary (e.g. box plots). What other types of quantities might we need to visualise? Descriptive statistics, such as the sample mean, are one possibility. These often feature in data analysis when 'comparing groups'.
 
-We need to know how to construct plots that display such summaries. Let's start with a simple question: how does the (arithmetic) mean body mass varies by sex and across penguin species? One option is to produce a bar plot for which the lengths of bars represent the mean body mass in each category.
+We need to know how to construct plots that display such summaries. Let's start with a simple question: how does the (arithmetic) mean body mass vary by sex and across penguin species? One option is to produce a bar plot for which the lengths of bars represent the mean body mass in each category.
 
-There are two different routes to produce this with **ggplot2**. One way to build such a plot is to break the problem into two steps. In the first step, we calculate whatever it is we want to display, i.e. the species- and sex-specific mean body mass. **dplyr** is usually the best tool to use for this first step:
+There are two different routes to produce this kind of plot with **ggplot2**. One way is to break the problem into two steps.
+
+In the first step, we calculate whatever it is we want to display. In our example, that is the set of species- and sex-specific mean body masses. **dplyr** is a good tool for this step:
 
 ```{r}
 penguins_summary <- penguins %>% 
@@ -171,9 +173,9 @@ ggplot(penguins, aes(colour = species, shape = sex))  +
 
 ### Alternatives to bar plots
 
-Do we have to use a bar plot to display means? Certainly not. In some ways bar plots are a bit old fashioned and many people often prefer to show a set of means as points these days. This kind of visualisation is also easier to make than a bar plot because we can use a single geom (`geom_pointrange`) to add both the points and error bars as a single layer:
+Do we have to use a bar plot to display means? Certainly not. In some ways bar plots are a bit old-fashioned, and many people often prefer to show a set of means as points and error bars these days. This kind of visualisation is also easier to make than a bar plot because we can use a single geom (`geom_pointrange`) to add both the points and error bars as a single layer:
 
-```{r, fig.width=4}
+```{r, fig.width=4, fig.height=6}
 # display points plot of body mass means + SE's
 ggplot(penguins_summary, 
        # aesthetic mappings: mass (y) vs species (x) by sex (colour)
@@ -181,14 +183,14 @@ ggplot(penguins_summary,
            # ...and ymax/ymin (+/- 1 se) for error bars
            ymin = mean_mass - ster_mass, ymax = mean_mass + ster_mass)) + 
   # use geom_errorbar to add an error bar layer + dodge position
-  geom_pointrange(position = position_dodge(0.5), size = 0.2) + 
+  geom_pointrange(position = position_dodge(0.5), size = 0.4) + 
   # use a more professional theme 
   theme_classic(base_size = 12) + 
   # specify labels for all mappings
   labs(x = "Species", y = "Mean body mass (g)", colour = "Sex")
 ```
 
-This code is actually very similar to the previous example. All we did was replace `geom_col` and `geom_col` with a single `geom_pointrange` and then:
+This code is actually very similar to the previous example. All we did was replace `geom_col` and `geom_errorbar` with `geom_pointrange` and then:
 
 -   mapped `sex` to the `colour` aesthetic instead of `fill`,
 -   made the points and lines a smaller than the default by setting `size`, and
