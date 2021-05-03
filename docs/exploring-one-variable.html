@@ -24,7 +24,7 @@
 <meta name="author" content="Dylan Childs" />
 
 
-<meta name="date" content="2021-04-25" />
+<meta name="date" content="2021-05-03" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -610,7 +610,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 2 Chinstrap    68
 ## 3 Gentoo      124</code></pre>
 <p>We saw this result earlier in the book—the most common species is Adelie, followed by the Gentoo and Chinstrap. Gentoo is roughly as common as Adelie, whereas Chinstrap is about half as frequent.</p>
-<p>These numbers lead directly to an informative visualisation. The usual graphical tool for summarising categorical variables is the <strong>bar chart</strong>. A bar chart presents summaries of grouped data with rectangular bars. The lengths of each bar is proportional to the value it represents. When summarising categorical variables, the bar lengths show the raw counts or proportions of each category.</p>
+<p>These numbers lead directly to an informative visualisation. The usual graphical tool for summarising categorical variables is the <strong>bar chart</strong> (a.k.a. bar plot or bar graph). A bar chart presents summaries of grouped data with rectangular bars. The lengths of each bar is proportional to the value it represents. When summarising categorical variables, the bar lengths show the raw counts or proportions of each category.</p>
 <p>Constructing a bar graph to display category counts is easy with <strong>ggplot2</strong>. We’ll do this for the <code>species</code> variable. As always, we start by using the <code>ggplot</code> function to construct a graphical object containing the default data and aesthetic mapping.</p>
 <div class="sourceCode" id="cb369"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb369-1"><a href="exploring-one-variable.html#cb369-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create graphical object with data and aesthetic mapping</span></span>
 <span id="cb369-2"><a href="exploring-one-variable.html#cb369-2" aria-hidden="true" tabindex="-1"></a>plot_bar <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(penguins, <span class="fu">aes</span>(<span class="at">x =</span> species)) </span></code></pre></div>
