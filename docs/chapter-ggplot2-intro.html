@@ -6,11 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 13 Introduction to ggplot2 | Exploratory Data Analysis with R</title>
   <meta name="description" content="This is the Exploratory Data Analysis in R book provided by the School of Biosciences at the University of Sheffield." />
-  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.33 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 13 Introduction to ggplot2 | Exploratory Data Analysis with R" />
   <meta property="og:type" content="book" />
-  
   
   <meta property="og:description" content="This is the Exploratory Data Analysis in R book provided by the School of Biosciences at the University of Sheffield." />
   
@@ -24,7 +23,7 @@
 <meta name="author" content="Dylan Childs" />
 
 
-<meta name="date" content="2021-05-03" />
+<meta name="date" content="2023-03-27" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,8 +32,8 @@
   
 <link rel="prev" href="exploratory-data-analysis.html"/>
 <link rel="next" href="chapter-customise-ggplot2.html"/>
-<script src="libs/header-attrs-2.7/header-attrs.js"></script>
-<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -50,7 +49,9 @@
 
 
 
-
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 <link href="libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet" />
 <script src="libs/pagedtable-1.1/js/pagedtable.js"></script>
 
@@ -93,7 +94,7 @@ code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
 code span.at { color: #7d9029; } /* Attribute */
 code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
+code span.bu { color: #008000; } /* BuiltIn */
 code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
 code span.ch { color: #4070a0; } /* Char */
 code span.cn { color: #880000; } /* Constant */
@@ -106,7 +107,7 @@ code span.er { color: #ff0000; font-weight: bold; } /* Error */
 code span.ex { } /* Extension */
 code span.fl { color: #40a070; } /* Float */
 code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
+code span.im { color: #008000; font-weight: bold; } /* Import */
 code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 code span.kw { color: #007020; font-weight: bold; } /* Keyword */
 code span.op { color: #666666; } /* Operator */
@@ -119,6 +120,7 @@ code span.va { color: #19177c; } /* Variable */
 code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
+
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
@@ -275,7 +277,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="10" data-path="building-pipelines.html"><a href="building-pipelines.html"><i class="fa fa-check"></i><b>10</b> Building pipelines</a>
 <ul>
-<li class="chapter" data-level="10.1" data-path="building-pipelines.html"><a href="building-pipelines.html#why-do-we-need-pipes"><i class="fa fa-check"></i><b>10.1</b> Why do we need ‘pipes?’</a></li>
+<li class="chapter" data-level="10.1" data-path="building-pipelines.html"><a href="building-pipelines.html#why-do-we-need-pipes"><i class="fa fa-check"></i><b>10.1</b> Why do we need ‘pipes’?</a></li>
 <li class="chapter" data-level="10.2" data-path="building-pipelines.html"><a href="building-pipelines.html#using-pipes"><i class="fa fa-check"></i><b>10.2</b> Using pipes (<code>%&gt;%</code>)</a></li>
 </ul></li>
 <li class="chapter" data-level="11" data-path="helper-functions.html"><a href="helper-functions.html"><i class="fa fa-check"></i><b>11</b> Helper functions</a>
@@ -409,8 +411,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="chapter-ggplot2-intro" class="section level1" number="13">
-<h1><span class="header-section-number">Chapter 13</span> Introduction to <strong>ggplot2</strong></h1>
+<div id="chapter-ggplot2-intro" class="section level1 hasAnchor" number="13">
+<h1><span class="header-section-number">Chapter 13</span> Introduction to <strong>ggplot2</strong><a href="chapter-ggplot2-intro.html#chapter-ggplot2-intro" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p>One of the main reasons data analysts turn to R is for its strong data visualisation capabilities. The R ecosystem includes many different packages that support data visualisation. The three most widely used are: 1) the base graphics system, which uses the <strong>graphics</strong> package; 2) the <strong>lattice</strong> package; and 3) the <strong>ggplot2</strong> package. Each system has its own strengths and weaknesses:</p>
 <ul>
 <li><p>Base graphics is part of base R, which means it’s always available. It’s very flexible and allows us to construct more or less any plot we like. This flexibility comes at a cost, though. While it is certainly easy to get up and running with base graphics—there are specialised functions making common plots—building complex figures quickly becomes time-consuming. We have to write a lot of code to prepare even moderately complex plots, there are many graphical parameters to learn, and many of the standard plotting functions are inconsistent in how they work.</p></li>
@@ -418,8 +420,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><p>Hadley Wickham developed the <strong>ggplot2</strong> package to implement the ideas in a book called The Grammar of Graphics by Wilkinson (2005). It produces Trellis-like graphics but is quite different from <strong>lattice</strong> in the way it goes about this. It uses its own mini-language to define graphical objects, adopting the language of Wilkinson’s book to define these. It takes a little while to learn the basics, but once these have been mastered, it’s very easy to produce sophisticated plots with very little R code. The downside of working with <strong>ggplot2</strong> is that it isn’t as flexible as base graphics.</p></li>
 </ul>
 <p>We are not going to survey all these plotting systems. It’s entirely possible to meet most data visualisation needs by becoming proficient with just one of them. This book focuses on the <strong>ggplot2</strong> package. In many ways, <strong>ggplot2</strong> hits the ‘sweet spot’ between base graphics and <strong>lattice</strong>. It enables complex visualisations without the need to write many lines of R code, but remains flexible enough to allow the kind of customisation required to produce publication-quality figures.</p>
-<div id="anatomy" class="section level2" number="13.1">
-<h2><span class="header-section-number">13.1</span> The anatomy of ggplot2</h2>
+<div id="anatomy" class="section level2 hasAnchor" number="13.1">
+<h2><span class="header-section-number">13.1</span> The anatomy of ggplot2<a href="chapter-ggplot2-intro.html#anatomy" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>The easiest way to learn <strong>ggplot2</strong> is by using it. However, before we dive into <strong>ggplot2</strong> code, we need to review the essential features of its ‘grammar’—the rules of how to specify a graph. This grammar is fairly abstract and won’t make much sense on first reading. That is fine. Ideas like ‘aesthetic mappings’ and ‘geoms’ will start to make sense as we work through various examples.</p>
 <p>The design of <strong>ggplot2</strong> reflects Wilkinson’s grammar of graphics. A complete <strong>ggplot2</strong> object is defined by a combination of:</p>
 <ol style="list-style-type: decimal">
@@ -429,8 +431,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>a <strong>facet</strong> specification (if using a multi-panel plot).</li>
 </ol>
 <p>The underlying idea is that we construct a visualisation by defining one or more layers. Each layer is associated with some data and a set of rules for how to display the data. Let’s review these components before moving onto the business of actually using <strong>ggplot2</strong>.</p>
-<div id="layers" class="section level3" number="13.1.1">
-<h3><span class="header-section-number">13.1.1</span> Layers</h3>
+<div id="layers" class="section level3 hasAnchor" number="13.1.1">
+<h3><span class="header-section-number">13.1.1</span> Layers<a href="chapter-ggplot2-intro.html#layers" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Each layer in a <strong>ggplot2</strong> plot has five different components, though we don’t necessarily have to specify all of these because most have some kind of default setting:</p>
 <ul>
 <li><p>The <strong>data</strong>. At a minimum, every plot needs some data. Unlike base R graphics, <strong>ggplot2</strong> always accepts data in one format, an R data frame (or tibble). Each layer can be associated with its own data set. We don’t have to add data to each layer explicitly. If we choose not to specify the data set for a layer, <strong>ggplot2</strong> will use the default data (if defined).</p></li>
@@ -440,8 +442,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><p>A <strong>position adjustment</strong>. These apply small tweaks to the position of layer elements. These are typically used when we need to define how the information for different categories are separated. For example, when making a bar plot, we may need to specify whether bars should be stacked on top of one another (the default) or plotted side-by-side.</p></li>
 </ul>
 </div>
-<div id="scales" class="section level3" number="13.1.2">
-<h3><span class="header-section-number">13.1.2</span> Scales</h3>
+<div id="scales" class="section level3 hasAnchor" number="13.1.2">
+<h3><span class="header-section-number">13.1.2</span> Scales<a href="chapter-ggplot2-intro.html#scales" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>The scale part of a <strong>ggplot2</strong> object controls how the information in a variable is mapped to the aesthetic properties. A scale takes the data and converts it into variation we can perceive, such as an x/y location or the colour and size of points in a plot. The two most important things to understand about scales are:</p>
 <ol style="list-style-type: decimal">
 <li>A scale must be defined for every aesthetic in a plot. It doesn’t make sense to define an aesthetic mapping without a scale because there is no way for <strong>ggplot2</strong> to know how to go from the data to the aesthetics without one.</li>
@@ -449,17 +451,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ol>
 <p>If we choose not to explicitly define a scale for an aesthetic <strong>ggplot2</strong> will use a default. This will often be a ‘sensible’ choice, which means we can get quite a long way with <strong>ggplot2</strong> without ever really understanding scales. We will take a brief look at a few of the more common options, though.</p>
 </div>
-<div id="coordinate-system" class="section level3" number="13.1.3">
-<h3><span class="header-section-number">13.1.3</span> Coordinate system</h3>
+<div id="coordinate-system" class="section level3 hasAnchor" number="13.1.3">
+<h3><span class="header-section-number">13.1.3</span> Coordinate system<a href="chapter-ggplot2-intro.html#coordinate-system" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>A <strong>ggplot2</strong> coordinate system takes the position of objects (e.g. points and lines) and maps them onto the 2d plane a plot lives on. Most people are already very familiar with the most common coordinate system (even if they didn’t realise it). That’s the Cartesian coordinate system. This is the one we’ve all been using since we first constructed a graph with paper and pencil at school. All the most common statistical plots use this coordinate system, so we won’t consider any others in this book.</p>
 </div>
-<div id="faceting" class="section level3" number="13.1.4">
-<h3><span class="header-section-number">13.1.4</span> Faceting</h3>
-<p>The idea behind faceting is very simple. Faceting allows us to break a data set up into subsets according to the unique values of one or more variables and then produce a separate plot for each subset. The result is a multi-panel plot where each panel shares the same layers, scales, etc. The data is the only thing that varies from panel to panel. The result is a kind of ‘Trellis plot,’ similar to those produced by the <strong>lattice</strong> package. Faceting is a very powerful tool that allows us to slice up our data in different ways and understand the relationship between different variables.</p>
+<div id="faceting" class="section level3 hasAnchor" number="13.1.4">
+<h3><span class="header-section-number">13.1.4</span> Faceting<a href="chapter-ggplot2-intro.html#faceting" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The idea behind faceting is very simple. Faceting allows us to break a data set up into subsets according to the unique values of one or more variables and then produce a separate plot for each subset. The result is a multi-panel plot where each panel shares the same layers, scales, etc. The data is the only thing that varies from panel to panel. The result is a kind of ‘Trellis plot’, similar to those produced by the <strong>lattice</strong> package. Faceting is a very powerful tool that allows us to slice up our data in different ways and understand the relationship between different variables.</p>
 </div>
 </div>
-<div id="quick" class="section level2" number="13.2">
-<h2><span class="header-section-number">13.2</span> A quick introduction to ggplot2</h2>
+<div id="quick" class="section level2 hasAnchor" number="13.2">
+<h2><span class="header-section-number">13.2</span> A quick introduction to ggplot2<a href="chapter-ggplot2-intro.html#quick" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Now that we’ve briefly reviewed the <strong>ggplot2</strong> grammar, we can start learning how to use it. The package uses this grammar as the basis of a sort of mini-language within R. It uses functions to specify components like aesthetic mappings and geoms, which are combined with data to define a <strong>ggplot2</strong> graphics object. Once we’ve constructed a suitable object, we can use it to display our graphic on the computer screen or save it using a common graphics format (e.g. PDF, PNG or JPEG).</p>
 <p>Rather than orientating this introduction around each of the key functions, we’re going to develop a simple example to help us see how <strong>ggplot2</strong> works. Many of the key ideas about how <strong>ggplot2</strong> works can be taken away from this one example. Hence, it’s worth investing the time to understand it—i.e. use the example to understand how the different <strong>ggplot2</strong> functions are related to the grammar outlined above.</p>
 <p>Our goal is to produce a simple scatter plot. The scatter plot is one of the most commonly used visualisation tools in the EDA toolbox. A scatter plot uses horizontal and vertical positions (the ‘x’ and ‘y’ axes) to visualise pairs of related observations as a series of points in two dimensions. It’s designed to show how one numeric variable is associated with another. We’ll use the <code>penguins</code> data to construct the scatter plot. The questions we want to explore are:</p>
@@ -467,8 +469,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>what is the relationship between bill depth and bill length, and</li>
 <li>how does this vary in relation to other variables?</li>
 </ul>
-<div id="making-a-start" class="section level3" number="13.2.1">
-<h3><span class="header-section-number">13.2.1</span> Making a start</h3>
+<div id="making-a-start" class="section level3 hasAnchor" number="13.2.1">
+<h3><span class="header-section-number">13.2.1</span> Making a start<a href="chapter-ggplot2-intro.html#making-a-start" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>We will begin our work with <strong>ggplot2</strong> by setting up a minimal <strong>graphical object</strong>. That’s a job for the <code>ggplot</code> function. Using <code>ggplot</code> without any arguments builds an empty graphical object:</p>
 <div class="sourceCode" id="cb313"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb313-1"><a href="chapter-ggplot2-intro.html#cb313-1" aria-hidden="true" tabindex="-1"></a><span class="co"># construct empty ggplot2 graphical object</span></span>
 <span id="cb313-2"><a href="chapter-ggplot2-intro.html#cb313-2" aria-hidden="true" tabindex="-1"></a>plot_obj <span class="ot">&lt;-</span> <span class="fu">ggplot</span>()</span></code></pre></div>
@@ -494,8 +496,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##     super:  &lt;ggproto object: Class FacetNull, Facet, gg&gt;</code></pre>
 <p>The output of <code>summary</code> is quite verbose, but the important parts are near the top, just before the <code>faceting:</code> section. In this case, the ‘important part’ is basically empty. All we did was set up an empty graphical object—there are no data, aesthetic mapping, layers, etc associated with <code>plot_obj</code>.</p>
 <p>It is not necessary to inspect the insides of every <strong>ggplot2</strong> object with <code>summary</code>. However, it can be instructive to do this when first learning about the package.</p>
-<div id="ggplot2-vs.-ggplot" class="section level4 unnumbered infobox information">
-<h4><strong>ggplot2</strong> vs. <code>ggplot</code></h4>
+<div id="ggplot2-vs.-ggplot" class="section level4 unnumbered hasAnchor infobox information">
+<h4><strong>ggplot2</strong> vs. <code>ggplot</code><a href="chapter-ggplot2-intro.html#ggplot2-vs.-ggplot" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>Notice that the package is called <strong>ggplot2</strong>, but the actual function that does the work of setting up the graphical object is called <code>ggplot</code>. Try not to mix the names up—this is a common source of errors.</p>
 </div>
 <p>How can we improve on this? We could add a default data set. This is easy. We do it by passing the name of a data frame or tibble to <code>ggplot</code>. Let’s try doing this with <code>penguins</code>:</p>
@@ -532,7 +534,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><strong>Any layers that we now add will use these data and mappings unless we choose to override them by specifying different options.</strong></p>
 <p>We now need to specify a layer to tell <strong>ggplot2</strong> how to visualise the data. Remember, each layer has five components: data, aesthetic mappings, a geom, a stat and a position adjustment. Since we have already set up the default data and aesthetic mappings, there’s no need to define these again—<strong>ggplot2</strong> will use the defaults if we leave them out of the layer definition. This leaves the geom, stat and position adjustment.</p>
 <p>What kind of geom do we need? A scatter plot allows us to explore a relationship as a series of points. That means we need to add a layer that uses the ‘point’ geom. Simple.</p>
-<p>What about the stat and position? Not so simple. These are difficult to explain without drilling down into how <strong>ggplot2</strong> works. A key insight is that both the stat and the position adjustment change the data somehow before plotting it. When we want to stop <strong>ggplot2</strong> from doing anything to our data, the keyword is ‘identity.’ We use this value whenever we want <strong>ggplot2</strong> to plot the data without modification.</p>
+<p>What about the stat and position? Not so simple. These are difficult to explain without drilling down into how <strong>ggplot2</strong> works. A key insight is that both the stat and the position adjustment change the data somehow before plotting it. When we want to stop <strong>ggplot2</strong> from doing anything to our data, the keyword is ‘identity’. We use this value whenever we want <strong>ggplot2</strong> to plot the data without modification.</p>
 <p>We will examine the easy way to add a layer in a moment. However, we’ll use the long-winded approach first because this reveals what happens whenever we build a <strong>ggplot2</strong> object. The general function for adding a layer is simply called <code>layer</code>. Here’s how it works in its most basic usage:</p>
 <div class="sourceCode" id="cb322"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb322-1"><a href="chapter-ggplot2-intro.html#cb322-1" aria-hidden="true" tabindex="-1"></a><span class="co"># add layer to graphical object -- using points geom</span></span>
 <span id="cb322-2"><a href="chapter-ggplot2-intro.html#cb322-2" aria-hidden="true" tabindex="-1"></a>plot_obj <span class="ot">&lt;-</span> plot_obj <span class="sc">+</span> <span class="fu">layer</span>(<span class="at">geom =</span> <span class="st">&quot;point&quot;</span>, <span class="at">stat =</span> <span class="st">&quot;identity&quot;</span>, <span class="at">position =</span> <span class="st">&quot;identity&quot;</span>)</span></code></pre></div>
@@ -558,7 +560,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Now <code>plot_obj</code> has everything it needs to render a figure. How do we do this? Simply ‘print’ the graphical object:</p>
 <div class="sourceCode" id="cb325"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb325-1"><a href="chapter-ggplot2-intro.html#cb325-1" aria-hidden="true" tabindex="-1"></a><span class="co"># &#39;print&#39; graphical object to show it</span></span>
 <span id="cb325-2"><a href="chapter-ggplot2-intro.html#cb325-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(plot_obj)</span></code></pre></div>
-<pre><code>## Warning: Removed 2 rows containing missing values (geom_point).</code></pre>
+<pre><code>## Warning: Removed 2 rows containing missing values (`geom_point()`).</code></pre>
 <p><img src="intro-bio-data-book_files/figure-html/unnamed-chunk-184-1.png" width="336" style="display: block; margin: auto;" /></p>
 <p>That’s it! We have produced a scatter plot showing how bill depth is associated with bill length. It seems a little odd to show a plot by ‘printing’ it but that’s just how <strong>ggplot2</strong> works. It soon starts to feel natural with practise.</p>
 <p>Notice that <strong>ggplot2</strong> printed a warning. That is nothing to worry about. It is just letting us know a couple of rows in the data were ignored because they contained missing values. We will suppress that message from now on because it gets a bit irritating.</p>
@@ -571,14 +573,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb327-6"><a href="chapter-ggplot2-intro.html#cb327-6" aria-hidden="true" tabindex="-1"></a>plot_obj <span class="ot">&lt;-</span> plot_obj <span class="sc">+</span> <span class="fu">layer</span>(<span class="at">geom =</span> <span class="st">&quot;point&quot;</span>, <span class="at">stat =</span> <span class="st">&quot;identity&quot;</span>, <span class="at">position =</span> <span class="st">&quot;identity&quot;</span>)</span>
 <span id="cb327-7"><a href="chapter-ggplot2-intro.html#cb327-7" aria-hidden="true" tabindex="-1"></a><span class="co"># step 4. show the plot</span></span>
 <span id="cb327-8"><a href="chapter-ggplot2-intro.html#cb327-8" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(plot_obj)</span></code></pre></div>
-<div id="dont-use-this-workflow" class="section level4 unnumbered infobox warning">
-<h4>Don’t use this workflow!</h4>
+<div id="dont-use-this-workflow" class="section level4 unnumbered hasAnchor infobox warning">
+<h4>Don’t use this workflow!<a href="chapter-ggplot2-intro.html#dont-use-this-workflow" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>It’s possible to construct any <strong>ggplot2</strong> visualisation using the workflow outlined in this subsection, but <strong>this is not the recommended approach</strong>. The workflow we adopted here was used to reveal how the grammar works, rather than its efficiency. A more concise, standard approach to using <strong>ggplot2</strong> is outlined next. Use that for real-world analysis.</p>
 </div>
 </div>
 </div>
-<div id="a-standard-way-of-using-ggplot2" class="section level2" number="13.3">
-<h2><span class="header-section-number">13.3</span> A standard way of using <strong>ggplot2</strong></h2>
+<div id="a-standard-way-of-using-ggplot2" class="section level2 hasAnchor" number="13.3">
+<h2><span class="header-section-number">13.3</span> A standard way of using <strong>ggplot2</strong><a href="chapter-ggplot2-intro.html#a-standard-way-of-using-ggplot2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>The <strong>ggplot2</strong> package is quite flexible, which means we can specify a visualisation in more than one way. To keep life simple, we’re going to adopt a consistent workflow from now on. This won’t reveal the full array of <strong>ggplot2</strong> tricks, but it is sufficient to construct a wide range of standard visualisations. Let’s make the same bill depth vs. bill length scatter plot again to see the workflow in action.</p>
 <p>We began building our <strong>ggplot2</strong> object by setting up a skeleton object with a default data set and then added the default aesthetic mappings. There is a more concise way to achieve the same result:</p>
 <div class="sourceCode" id="cb328"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb328-1"><a href="chapter-ggplot2-intro.html#cb328-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create graphical object with data and aesthetic mappings</span></span>
@@ -595,14 +597,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb330-4"><a href="chapter-ggplot2-intro.html#cb330-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
 <p>That code builds the <strong>ggplot2</strong> graphical object and renders it in one go. We didn’t even have to use <code>print</code> to generate the output. There is a lot is going on in the background, but this small snippet of R code contains everything <strong>ggplot2</strong> needs to construct and display a simple scatter plot.</p>
 <p>What does this scatter plot actually tell us about penguin bill morphology? It seems to suggest there isn’t much of a relationship between bill depth and bill length. Does that seem sensible? Maybe we need a more informative plot.</p>
-<div id="plotting-incomplete-ggplot2-objects" class="section level4 unnumbered infobox information">
-<h4>Plotting incomplete <strong>ggplot2</strong> objects</h4>
+<div id="plotting-incomplete-ggplot2-objects" class="section level4 unnumbered hasAnchor infobox information">
+<h4>Plotting incomplete <strong>ggplot2</strong> objects<a href="chapter-ggplot2-intro.html#plotting-incomplete-ggplot2-objects" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>It is instructive to see what happens when we render an incomplete graphical object. The four panels below show the output produced by a) an empty <strong>ggplot2</strong> object, b) a partially complete <strong>ggplot2</strong> object with only data, c) a partially complete <strong>ggplot2</strong> object with data and aesthetics, and d) a complete <strong>ggplot2</strong> object with data, aesthetics and a geom. The actual code to make each one is shown in the title area.</p>
 <p><img src="intro-bio-data-book_files/figure-html/unnamed-chunk-190-1.png" width="652.8" style="display: block; margin: auto;" /></p>
 <p>We can see that <strong>ggplot2</strong> will try to plot something with the information it has, but we only end up with an informative plot when we specify data, aesthetic mappings, and a geom. That is the minimum we need to specify to arrive at a useful plot.</p>
 </div>
-<div id="how-should-we-format-ggplot2-code" class="section level3" number="13.3.1">
-<h3><span class="header-section-number">13.3.1</span> How should we format <strong>ggplot2</strong> code?</h3>
+<div id="how-should-we-format-ggplot2-code" class="section level3 hasAnchor" number="13.3.1">
+<h3><span class="header-section-number">13.3.1</span> How should we format <strong>ggplot2</strong> code?<a href="chapter-ggplot2-intro.html#how-should-we-format-ggplot2-code" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Take another look at that last example. We split the <strong>ggplot2</strong> definition over two lines, placing each function on its own line. R doesn’t care about those extra newlines. As long as we put a <code>+</code> at the end of a line R will assume the next line is part of the same plot definition. Splitting the different parts of a graphical object definition across lines like this makes everything more readable and helps us spot errors.</p>
 <p>Once we split the definition across lines we can place comments between the lines of <strong>ggplot2</strong> code. For example, we could add comments to state what the <code>aes</code> and <code>geom_point</code> parts are doing:</p>
 <div class="sourceCode" id="cb331"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb331-1"><a href="chapter-ggplot2-intro.html#cb331-1" aria-hidden="true" tabindex="-1"></a><span class="co"># display bill morphology scatter plot</span></span>
@@ -614,11 +616,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>It’s a very good idea to format and document <strong>ggplot2</strong> code in this way. That way, when we come back to it after a while, we can remember what we were trying to achieve! We will always use these conventions from now on.</p>
 </div>
 </div>
-<div id="increasing-the-information-density" class="section level2" number="13.4">
-<h2><span class="header-section-number">13.4</span> Increasing the information density…</h2>
+<div id="increasing-the-information-density" class="section level2 hasAnchor" number="13.4">
+<h2><span class="header-section-number">13.4</span> Increasing the information density…<a href="chapter-ggplot2-intro.html#increasing-the-information-density" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>One of the great strengths of <strong>ggplot2</strong> is the ease with which it allows us to incorporate information from several variables into a single plot. So far, we have made a simple two-variable scatter plot to examine bill morphology—the bill depth-length relationship. There are clearly other variables in the <code>penguins</code> data set that might influence this relationship. In this section, we will highlight three approaches for including additional variables in a visualisation. That is, we will see how to increase the <strong>information density</strong> of a plot.</p>
-<div id="via-aesthetic-mappings" class="section level3" number="13.4.1">
-<h3><span class="header-section-number">13.4.1</span> …via aesthetic mappings</h3>
+<div id="via-aesthetic-mappings" class="section level3 hasAnchor" number="13.4.1">
+<h3><span class="header-section-number">13.4.1</span> …via aesthetic mappings<a href="chapter-ggplot2-intro.html#via-aesthetic-mappings" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>The most straightforward way to increase the information in a plot is by mapping a new variable to an unused aesthetic. For example, how might we learn whether the bill depth-length relationship varies by penguin species? We need to include information in the <code>species</code> variable in our scatter plot somehow. One option is to map the <code>species</code> to the colour aesthetic, so that the colour of the points correspond to different species. We do this by altering the <code>aes</code> part of the plot specification:</p>
 <div class="sourceCode" id="cb332"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb332-1"><a href="chapter-ggplot2-intro.html#cb332-1" aria-hidden="true" tabindex="-1"></a><span class="co"># display bill morphology scatter plot</span></span>
 <span id="cb332-2"><a href="chapter-ggplot2-intro.html#cb332-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins, </span>
@@ -638,8 +640,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb333-6"><a href="chapter-ggplot2-intro.html#cb333-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
 <p><img src="intro-bio-data-book_files/figure-html/unnamed-chunk-193-1.png" width="432" style="display: block; margin: auto;" /></p>
 </div>
-<div id="via-facets" class="section level3" number="13.4.2">
-<h3><span class="header-section-number">13.4.2</span> …via facets</h3>
+<div id="via-facets" class="section level3 hasAnchor" number="13.4.2">
+<h3><span class="header-section-number">13.4.2</span> …via facets<a href="chapter-ggplot2-intro.html#via-facets" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>A second way to increase the amount of information on display is by making separate plots for meaningful subsets of the data. We can use the <strong>faceting</strong> facility of <strong>ggplot2</strong> to do this. Faceting allows us to define subsets of data according to the values of one or more variables and produce a separate plot for each subset, all without having to write much R code.</p>
 <p>Faceting operates on the whole figure, which means we can’t apply it by changing the properties of a layer. Instead, we have to use a new function to add the faceting information. There are two different ways to facet in <strong>ggplot2</strong>:</p>
 <ul>
@@ -658,13 +660,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><img src="intro-bio-data-book_files/figure-html/unnamed-chunk-194-1.png" width="652.8" style="display: block; margin: auto;" /></p>
 <p>That first <code>vars(island)</code> argument of <code>facet_wrap</code> says to split up the data set according to the values of island. Simple. Notice that the panels share the same scales for the ‘x’ and ‘y’ axes. Using a common scale makes it easy to compare bill morphology across islands, but this can also be changed if necessary. For example, setting <code>scales = "free"</code> would ensure each panel uses its own x/y scale.</p>
 <p>The plot indicates that bill morphology is roughly invariant across the three islands. It also inadvertently reveals something else about these penguins—the Gentoo and Chinstrap species are only found on a single island, which is different for each one, whereas Adelie penguins are found on all three islands. That’s one reason exploratory analysis is so important—it throws up unexpected findings.</p>
-<div id="dont-forget-the-vars-part" class="section level4 unnumbered infobox warning">
-<h4>Don’t forget the <code>vars</code> part!</h4>
+<div id="dont-forget-the-vars-part" class="section level4 unnumbered hasAnchor infobox warning">
+<h4>Don’t forget the <code>vars</code> part!<a href="chapter-ggplot2-intro.html#dont-forget-the-vars-part" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>We have to wrap the name of the faceting variable with the <code>vars</code> function in the <code>facet_wrap</code> specification. Trust us, <code>facet_wrap</code> won’t work without it.</p>
 </div>
 </div>
-<div id="via-multiple-layers" class="section level3" number="13.4.3">
-<h3><span class="header-section-number">13.4.3</span> …via multiple layers</h3>
+<div id="via-multiple-layers" class="section level3 hasAnchor" number="13.4.3">
+<h3><span class="header-section-number">13.4.3</span> …via multiple layers<a href="chapter-ggplot2-intro.html#via-multiple-layers" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>A third way to add additional information to a plot is by including multiple layers. So far, we have only seen examples with a single layer—only one <code>geom_</code> function is involved in creating the plot. There is no reason we can’t add multiple layers to a plot by ‘adding’ two or more <code>geom_</code> functions. We’re not yet in a position to demonstrate how to make such multi-layer plots because they require additional skills covered in later chapters. However, as a taster, here is an example of the kind of thing we can do with this idea (we have deliberately hidden the code):</p>
 <p><img src="intro-bio-data-book_files/figure-html/unnamed-chunk-195-1.png" width="432" style="display: block; margin: auto;" /></p>
 <p>This shows how bill morphology varies by penguin species and sex, but now these relationships are summarised in two points layers. The first layer displays the raw data (small transparent points). The second layer adds the species/sex-specific means (large solid points). This places the average differences in the context of the overall variation in the raw data. Nice!</p>
@@ -682,7 +684,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
@@ -701,6 +702,7 @@ gitbook.start({
 "weibo": false,
 "instapaper": false,
 "vk": false,
+"whatsapp": false,
 "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
@@ -721,6 +723,10 @@ gitbook.start({
 "text": null
 },
 "download": ["intro-bio-data-book.pdf", "intro-bio-data-book.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
 "toc": {
 "collapse": "section"
 }
@@ -734,7 +740,7 @@ gitbook.start({
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:")
       if (/^https?:/.test(src))
         src = src.replace(/^https?:/, '');

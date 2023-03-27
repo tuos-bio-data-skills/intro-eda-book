@@ -6,11 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 12 Exploratory data analysis | Exploratory Data Analysis with R</title>
   <meta name="description" content="This is the Exploratory Data Analysis in R book provided by the School of Biosciences at the University of Sheffield." />
-  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.33 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 12 Exploratory data analysis | Exploratory Data Analysis with R" />
   <meta property="og:type" content="book" />
-  
   
   <meta property="og:description" content="This is the Exploratory Data Analysis in R book provided by the School of Biosciences at the University of Sheffield." />
   
@@ -24,7 +23,7 @@
 <meta name="author" content="Dylan Childs" />
 
 
-<meta name="date" content="2021-05-03" />
+<meta name="date" content="2023-03-27" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,8 +32,8 @@
   
 <link rel="prev" href="helper-functions.html"/>
 <link rel="next" href="chapter-ggplot2-intro.html"/>
-<script src="libs/header-attrs-2.7/header-attrs.js"></script>
-<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -50,7 +49,9 @@
 
 
 
-
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 <link href="libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet" />
 <script src="libs/pagedtable-1.1/js/pagedtable.js"></script>
 
@@ -93,7 +94,7 @@ code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
 code span.at { color: #7d9029; } /* Attribute */
 code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
+code span.bu { color: #008000; } /* BuiltIn */
 code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
 code span.ch { color: #4070a0; } /* Char */
 code span.cn { color: #880000; } /* Constant */
@@ -106,7 +107,7 @@ code span.er { color: #ff0000; font-weight: bold; } /* Error */
 code span.ex { } /* Extension */
 code span.fl { color: #40a070; } /* Float */
 code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
+code span.im { color: #008000; font-weight: bold; } /* Import */
 code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 code span.kw { color: #007020; font-weight: bold; } /* Keyword */
 code span.op { color: #666666; } /* Operator */
@@ -119,6 +120,7 @@ code span.va { color: #19177c; } /* Variable */
 code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
+
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
@@ -275,7 +277,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="10" data-path="building-pipelines.html"><a href="building-pipelines.html"><i class="fa fa-check"></i><b>10</b> Building pipelines</a>
 <ul>
-<li class="chapter" data-level="10.1" data-path="building-pipelines.html"><a href="building-pipelines.html#why-do-we-need-pipes"><i class="fa fa-check"></i><b>10.1</b> Why do we need ‘pipes?’</a></li>
+<li class="chapter" data-level="10.1" data-path="building-pipelines.html"><a href="building-pipelines.html#why-do-we-need-pipes"><i class="fa fa-check"></i><b>10.1</b> Why do we need ‘pipes’?</a></li>
 <li class="chapter" data-level="10.2" data-path="building-pipelines.html"><a href="building-pipelines.html#using-pipes"><i class="fa fa-check"></i><b>10.2</b> Using pipes (<code>%&gt;%</code>)</a></li>
 </ul></li>
 <li class="chapter" data-level="11" data-path="helper-functions.html"><a href="helper-functions.html"><i class="fa fa-check"></i><b>11</b> Helper functions</a>
@@ -409,11 +411,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="exploratory-data-analysis" class="section level1" number="12">
-<h1><span class="header-section-number">Chapter 12</span> Exploratory data analysis</h1>
-<div id="introduction-6" class="section level2" number="12.1">
-<h2><span class="header-section-number">12.1</span> Introduction</h2>
-<p>Exploratory data analysis (EDA) was promoted by the statistician John Tukey in his 1977 book, “Exploratory Data Analysis.” The broad goal of EDA is to help us formulate and refine hypotheses that lead to informative analyses or further data collection. The core objectives of EDA are:</p>
+<div id="exploratory-data-analysis" class="section level1 hasAnchor" number="12">
+<h1><span class="header-section-number">Chapter 12</span> Exploratory data analysis<a href="exploratory-data-analysis.html#exploratory-data-analysis" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="introduction-6" class="section level2 hasAnchor" number="12.1">
+<h2><span class="header-section-number">12.1</span> Introduction<a href="exploratory-data-analysis.html#introduction-6" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Exploratory data analysis (EDA) was promoted by the statistician John Tukey in his 1977 book, “Exploratory Data Analysis”. The broad goal of EDA is to help us formulate and refine hypotheses that lead to informative analyses or further data collection. The core objectives of EDA are:</p>
 <ul>
 <li>to suggest hypotheses about the causes of observed phenomena,</li>
 <li>to guide the selection of appropriate statistical tools and techniques,</li>
@@ -429,30 +431,30 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ol>
 <p>This will provide a conceptual foundation and vocabulary for learning how to explore data in later chapters.</p>
 </div>
-<div id="variables" class="section level2" number="12.2">
-<h2><span class="header-section-number">12.2</span> Statistical variables and data</h2>
+<div id="variables" class="section level2 hasAnchor" number="12.2">
+<h2><span class="header-section-number">12.2</span> Statistical variables and data<a href="exploratory-data-analysis.html#variables" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>In the <a href="chapter-data-frames.html#chapter-data-frames">Data frames</a> chapter, we pointed out that the word ‘variable’ can mean one of two things. In programming, a variable is a name-value association that we create when we run some code. Statisticians use the word differently. To them, a variable is any characteristic or quantity that can be measured, classified or experimentally controlled. Much of statistics is about quantifying and explaining the variation in such quantities as best we can.</p>
 <p>Species richness, relative abundance, infection status, enzyme activity, gene frequency, and blood glucose concentration are examples of statistical variables we encounter in the biological sciences. These as statistical variables because their values vary between different observations. For instance, ‘annual fitness’—measured as the number of offspring produced—is a variable that differs both among the organisms in a population and over the life cycle of a given individual.</p>
 <p>There are different ways to describe statistical variables according to how they can be analysed, measured, or presented. It’s important to be clear about what kind of variables we’re dealing with because this determines how we should visualise the data, and later, how we might analyse it statistically. There are many different ways to go about classifying variables. However, we only need to be aware of two fairly simple classification schemes in this book: numeric vs categorical variables and ratio vs interval scales.</p>
-<div id="numeric-vs-categorical-variables" class="section level3" number="12.2.1">
-<h3><span class="header-section-number">12.2.1</span> Numeric vs categorical variables</h3>
+<div id="numeric-vs-categorical-variables" class="section level3 hasAnchor" number="12.2.1">
+<h3><span class="header-section-number">12.2.1</span> Numeric vs categorical variables<a href="exploratory-data-analysis.html#numeric-vs-categorical-variables" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p><strong>Numeric variables</strong> have values that describe a measurable quantity like ‘how many’ or ‘how much’ as a number. Numeric variables are also called quantitative variables; the data collected containing numeric variables are called quantitative data. Numeric variables may be classified as either continuous or discrete:</p>
 <ul>
-<li><p><strong>Continuous numeric variable</strong>: Observations can take any value in a set of real numbers, i.e. numbers represented with decimals. Examples of continuous variables include concentration, mass, age, time, and temperature. The set of numbers a continuous variable takes is typically either ‘every possible number’ or ‘just positive numbers.’ For example, a concentration may be very large or very small, but it is strictly positive, whereas a change in concentration can be positive or negative.</p></li>
+<li><p><strong>Continuous numeric variable</strong>: Observations can take any value in a set of real numbers, i.e. numbers represented with decimals. Examples of continuous variables include concentration, mass, age, time, and temperature. The set of numbers a continuous variable takes is typically either ‘every possible number’ or ‘just positive numbers’. For example, a concentration may be very large or very small, but it is strictly positive, whereas a change in concentration can be positive or negative.</p></li>
 <li><p><strong>Discrete numeric variable</strong>: Observations can take a value based on a count from a set of whole values, e.g. 1, 2, 3, 4, 5, and so on. A discrete variable cannot take the value of a fraction between one value and the next closest value. Examples of discrete variables include the number of individuals in a population, the number of offspring produced (‘reproductive fitness’), and the number of infected individuals in an experiment. All of these are measured as whole units.</p></li>
 </ul>
-<p><strong>Categorical variables</strong> take values that describe a characteristic of a data unit, like ‘what type’ or ‘which category.’ Categorical variables fall into mutually exclusive (in one category or in another) and exhaustive (include all possible options) categories. Categorical variables are qualitative variables and tend to be represented by a non-numeric value; the data collected for a categorical variable are called qualitative data. Categorical variables may be further described as ordinal or nominal:</p>
+<p><strong>Categorical variables</strong> take values that describe a characteristic of a data unit, like ‘what type’ or ‘which category’. Categorical variables fall into mutually exclusive (in one category or in another) and exhaustive (include all possible options) categories. Categorical variables are qualitative variables and tend to be represented by a non-numeric value; the data collected for a categorical variable are called qualitative data. Categorical variables may be further described as ordinal or nominal:</p>
 <ul>
 <li><p><strong>Ordinal variable</strong>: Categories can be logically ordered or ranked. The categories associated with ordinal variables can be ranked higher or lower than another but do not necessarily establish a numeric difference between each category. Examples of ordinal categorical variables include academic grades (e.g. A, B, C) and size classes (e.g. small, medium, large).</p></li>
 <li><p><strong>Nominal variable</strong>: Categories cannot be organised into a logical sequence. Examples of nominal categorical variables include sex (see <em>C. elegans</em> example), human blood group (A, B, AB and O), genotype (e.g. AA, Aa, aa), experimental conditions (e.g. control vs enhanced nutrition), and mortality status (alive vs dead).</p></li>
 </ul>
-<div id="do-not-use-numbers-to-classify-categorical-variables" class="section level4 unnumbered infobox warning">
-<h4>Do not use numbers to classify categorical variables</h4>
-<p>Be careful when classifying variables. It can be dangerous to assume that just because a numerical scheme has been used to describe a variable, it must not be categorical. There is nothing to stop someone from using numbers to describe a categorical variable (e.g. <em>C. elegans</em> sex: Male = 1, Hermaphrodite = 2). That said, although we can use numbers to describe categories, it does not mean we should. Using numbers gets confusing and can lead to mistakes. It is much clearer to use a non-numeric recording scheme based on words or acronyms to record categorical variables (e.g. <em>C. elegans</em> sex: Male = “Male,” Hermaphrodite = “Herm”).</p>
+<div id="do-not-use-numbers-to-classify-categorical-variables" class="section level4 unnumbered hasAnchor infobox warning">
+<h4>Do not use numbers to classify categorical variables<a href="exploratory-data-analysis.html#do-not-use-numbers-to-classify-categorical-variables" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>Be careful when classifying variables. It can be dangerous to assume that just because a numerical scheme has been used to describe a variable, it must not be categorical. There is nothing to stop someone from using numbers to describe a categorical variable (e.g. <em>C. elegans</em> sex: Male = 1, Hermaphrodite = 2). That said, although we can use numbers to describe categories, it does not mean we should. Using numbers gets confusing and can lead to mistakes. It is much clearer to use a non-numeric recording scheme based on words or acronyms to record categorical variables (e.g. <em>C. elegans</em> sex: Male = “Male”, Hermaphrodite = “Herm”).</p>
 </div>
 </div>
-<div id="ratio-vs-interval-scales" class="section level3" number="12.2.2">
-<h3><span class="header-section-number">12.2.2</span> Ratio vs interval scales</h3>
+<div id="ratio-vs-interval-scales" class="section level3 hasAnchor" number="12.2.2">
+<h3><span class="header-section-number">12.2.2</span> Ratio vs interval scales<a href="exploratory-data-analysis.html#ratio-vs-interval-scales" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>A second way of classifying numeric variables (<strong>not</strong> categorical variables) relates to the scale they are measured on. The measurement scale is important because it determines how we interpret things like differences, ratios, and variability.</p>
 <ul>
 <li><p><strong>Ratio scale</strong>: This scale does possess a meaningful zero value. It gets its name from the fact that a measurement on this scale represents a ratio between a measure of the magnitude of a quantity and a unit of the same kind. What this means in simple terms is that it is meaningful to say that something is “twice as …” as something else when working with a variable measured on a ratio scales. Ratio scales most often appear when we work with physical quantities. For example, we can say that one tree is twice as big as another or that one elephant has twice the mass of another because length and mass are measured on ratio scales.</p></li>
@@ -461,22 +463,22 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Keep in mind that the distinction between ratio and interval scales is a property of the measurement scale, not the thing being measured. For example, when we measure temperature in º C we’re working on an interval scale defined relative to the freezing and boiling temperatures of water under standard conditions. It doesn’t make any sense to say that 30º C is twice as hot as 15º C. However, if we measured the same two temperatures on the Kelvin scale, it is meaningful to say that 303.2K is 1.05 times hotter than 288.2K. This is because the Kelvin scale is relative to a true zero (absolute zero).</p>
 </div>
 </div>
-<div id="populations-samples" class="section level2" number="12.3">
-<h2><span class="header-section-number">12.3</span> Populations and samples</h2>
+<div id="populations-samples" class="section level2 hasAnchor" number="12.3">
+<h2><span class="header-section-number">12.3</span> Populations and samples<a href="exploratory-data-analysis.html#populations-samples" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Whenever we collect data, we are almost always working with a sample drawn from a wider population. We might want to know something about that population, but since it is impossible to study the whole population, we study the properties of one or more samples instead. For example, a physiologist might want to know how exercise affects lung function. Since they obviously can’t study every person on the planet, they have to study a small sample of people.</p>
 <p>We mention the distinction between populations and samples because EDA is concerned with exploring the properties of samples. EDA aims to characterise a sample without trying to infer too much about the wider population from which it is derived. Learning about populations is the basis of much of statistics. That topic is best dealt with in a dedicated statistics book—not this one.</p>
-<div id="sample-distributions" class="section level3" number="12.3.1">
-<h3><span class="header-section-number">12.3.1</span> Sample distributions</h3>
+<div id="sample-distributions" class="section level3 hasAnchor" number="12.3.1">
+<h3><span class="header-section-number">12.3.1</span> Sample distributions<a href="exploratory-data-analysis.html#sample-distributions" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>When we say that ‘EDA is concerned with exploring the properties samples,’ we actually mean that EDA is concerned with the properties of <strong>variables</strong> in one or more samples. We can be even more precise—the property we are alluding to is the variable’s <strong>sample distribution</strong>. The distribution of a variable describes the relative frequency with which different values occur. This is best understood by example…</p>
 <p>Imagine we took a sample of undergraduates and measured their height. The majority of students would be around about 1.7m tall, even though there would be plenty of variation among students. Men would tend to be slightly taller than women, and very small or very tall people would be rare. We know from experience that no one in this sample would be over 3 meters tall. These are all statements about a hypothetical sample distribution of undergraduate heights.</p>
 </div>
-<div id="associations" class="section level3" number="12.3.2">
-<h3><span class="header-section-number">12.3.2</span> Associations</h3>
+<div id="associations" class="section level3 hasAnchor" number="12.3.2">
+<h3><span class="header-section-number">12.3.2</span> Associations<a href="exploratory-data-analysis.html#associations" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>We’ve been talking about statistical variables as though we study them one at a time. However, most interesting samples involve more than one variable, and the goal of the ensuing data analysis is to understand associations among those variables. These associations might involve the same (e.g. numeric vs numeric) or different (e.g. numeric vs categorical) types of variable. Whatever the details, the aim of EDA is often to understand how each variable in a sample relates to the others.</p>
 </div>
 </div>
-<div id="types-of-eda" class="section level2" number="12.4">
-<h2><span class="header-section-number">12.4</span> Types of EDA</h2>
+<div id="types-of-eda" class="section level2 hasAnchor" number="12.4">
+<h2><span class="header-section-number">12.4</span> Types of EDA<a href="exploratory-data-analysis.html#types-of-eda" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Exploratory data analysis involves questions such as:</p>
 <ul>
 <li><em>What are the most common values of the variable</em>?</li>
@@ -490,42 +492,42 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ol>
 <p>Descriptive statistics are important, but they are not the main focus of this book. The next few chapters will set out how to construct a range of useful graphical data summaries. Indeed, this book’s overarching goal is to demonstrate a workflow that starts with raw data and ends in one or more exploratory plots. We do need to know a bit about descriptive statistics to understand some of those plots. To that end, we’ll finish this chapter with a quick survey of descriptive statistics that will pop up later.</p>
 </div>
-<div id="a-primer-of-descriptive-statistics" class="section level2" number="12.5">
-<h2><span class="header-section-number">12.5</span> A primer of descriptive statistics</h2>
-<div id="numeric-variables" class="section level3" number="12.5.1">
-<h3><span class="header-section-number">12.5.1</span> Numeric variables</h3>
+<div id="a-primer-of-descriptive-statistics" class="section level2 hasAnchor" number="12.5">
+<h2><span class="header-section-number">12.5</span> A primer of descriptive statistics<a href="exploratory-data-analysis.html#a-primer-of-descriptive-statistics" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="numeric-variables" class="section level3 hasAnchor" number="12.5.1">
+<h3><span class="header-section-number">12.5.1</span> Numeric variables<a href="exploratory-data-analysis.html#numeric-variables" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>So far, we’ve only mentioned the properties of sample distributions in very general terms—using phrases like ‘most common values’ and ‘the range of the data’—without really saying what we mean. Statisticians have devised a set of terms to describe distributions and various descriptive statistics to quantify these. The two that matter most for numeric variables are the <strong>central tendency</strong> and the <strong>dispersion</strong>:</p>
 <ul>
 <li><p>A measure of <strong>central tendency</strong> describes a typical value of a distribution. Most people know at least one measure of central tendency. The “average” that they calculated at school is the arithmetic mean of a sample. There are many different measures of central tendency, each with its own pros and cons. Take a look at the <a href="http://en.wikipedia.org/wiki/Central_tendency">Wikipedia</a> page to see the most common ones. Among these, the median is the one that is used most often in exploratory analyses.</p></li>
 <li><p>A measure of <strong>dispersion</strong> describes how spread out a distribution is. Dispersion measures quantify the variability or scatter of a variable. If one distribution is more dispersed than another, it means that it encompasses a wider range of values. What this means in practice depends on the kind of measure we’re working with. We tend to focus on the variance, the standard deviation, and the interquartile range. There <a href="http://en.wikipedia.org/wiki/Statistical_dispersion">are many others</a>, though.</p></li>
 </ul>
-<div id="beyond-central-tendency-and-dispersion" class="section level4 unnumbered infobox information">
-<h4>Beyond central tendency and dispersion</h4>
+<div id="beyond-central-tendency-and-dispersion" class="section level4 unnumbered hasAnchor infobox information">
+<h4>Beyond central tendency and dispersion<a href="exploratory-data-analysis.html#beyond-central-tendency-and-dispersion" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>Another important aspect of a distribution is its <strong>skewness</strong> (a.k.a. ‘skew’). There are many different ways to quantify skewness. Unfortunately, these are quite difficult to make sense of. For now, we only need to understand what skewness means in qualitative terms. Skewness refers to the (a)symmetry of a distribution. When we talk about distributions with high skew, we mean they are very asymmetric.</p>
 </div>
-<div id="central-tendency" class="section level4" number="12.5.1.1">
-<h4><span class="header-section-number">12.5.1.1</span> Central tendency</h4>
+<div id="central-tendency" class="section level4 hasAnchor" number="12.5.1.1">
+<h4><span class="header-section-number">12.5.1.1</span> Central tendency<a href="exploratory-data-analysis.html#central-tendency" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>The central tendency of a numeric variable’s sample distribution is typically described using either the arithmetic mean or the median<strong>.</strong> The <strong>arithmetic mean</strong> of a sample is ‘the mean’ that everyone learns at school<a href="#fn8" class="footnote-ref" id="fnref8"><sup>8</sup></a>. Most people have calculated the mean by hand at some point. As R users, we can use the <code>mean</code> function to calculate the arithmetic mean if we need it. For example, this will calculate the mean body mass in the <code>penguins</code> data set:</p>
 <div class="sourceCode" id="cb297"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb297-1"><a href="exploratory-data-analysis.html#cb297-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(penguins<span class="sc">$</span>body_mass_g, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 <pre><code>## [1] 4201.754</code></pre>
 <p>Remember—we used <code>na.rm = TRUE</code> here because <code>body_mass_g</code> contains a small number of missing (<code>NA</code>) values. This calculation tells us the arithmetic mean of body mass is 4202 grams, i.e. in some sense, the most common body mass is about 4202 grams.</p>
-<p>One limitation of the arithmetic mean is that it is affected by the shape of a distribution. This is why, for example, it does not make much sense to look at the mean income of workers to get a sense of what a ‘typical’ person earns. Income distribution are highly skewed, such that a few people receive very large salaries compared to the vast majority of the population. Those few who earn very good salaries tend to shift the mean well past anything that is really ‘typical.’</p>
+<p>One limitation of the arithmetic mean is that it is affected by the shape of a distribution. This is why, for example, it does not make much sense to look at the mean income of workers to get a sense of what a ‘typical’ person earns. Income distribution are highly skewed, such that a few people receive very large salaries compared to the vast majority of the population. Those few who earn very good salaries tend to shift the mean well past anything that is really ‘typical’.</p>
 <p>Because the sample mean is sensitive to the shape of a distribution in this way, we often prefer to use a more robust measure of central tendency—the <strong>sample median</strong>. The median of a sample is the value that separates the upper half from the lower half. We can find the sample median with the <code>median</code> function in R:</p>
 <div class="sourceCode" id="cb299"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb299-1"><a href="exploratory-data-analysis.html#cb299-1" aria-hidden="true" tabindex="-1"></a><span class="fu">median</span>(penguins<span class="sc">$</span>body_mass_g, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 <pre><code>## [1] 4050</code></pre>
 <p>This tells us that the arithmetic mean of body mass in the <code>penguins</code> data is 4050 grams. This is less than the mean, reflecting the fact that the body mass distribution is somewhat asymmetric.</p>
 </div>
-<div id="what-about-the-mode" class="section level4 unnumbered infobox information">
-<h4>What about ‘the mode?’</h4>
+<div id="what-about-the-mode" class="section level4 unnumbered hasAnchor infobox information">
+<h4>What about ‘the mode’?<a href="exploratory-data-analysis.html#what-about-the-mode" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>The <strong>mode</strong> of a variable’s distribution is simply the value that is most likely to occur. This is a simple idea. Unfortunately, it is often difficult to estimate the mode from a sample. Nonetheless, it is important to know what the mode represents, because the concept is useful even when the actual value is hard to estimate.</p>
 </div>
-<div id="dispersion" class="section level4" number="12.5.1.2">
-<h4><span class="header-section-number">12.5.1.2</span> Dispersion</h4>
+<div id="dispersion" class="section level4 hasAnchor" number="12.5.1.2">
+<h4><span class="header-section-number">12.5.1.2</span> Dispersion<a href="exploratory-data-analysis.html#dispersion" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>There are many ways to quantify the dispersion of a sample distribution. The most important quantities from the standpoint of statistics are the sample <strong>variance</strong> and <strong>standard deviation</strong>. The sample variance (<span class="math inline">\(s^2\)</span>) is the average squared deviations of each point from the mean. Variances are non-negative. The larger the variance, the more observations are spread out around the mean. A variance of zero only occurs if all values are identical.</p>
 <p>We won’t waste time showing the formula because we’ll never actually need to use it directly. As usual, R can calculate the sample variance if we need it:</p>
 <div class="sourceCode" id="cb301"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb301-1"><a href="exploratory-data-analysis.html#cb301-1" aria-hidden="true" tabindex="-1"></a><span class="fu">var</span>(penguins<span class="sc">$</span>body_mass_g, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 <pre><code>## [1] 643131.1</code></pre>
-<p>That’s a big number. What does it mean? Is it ‘big’ or is it ‘small?’ No idea. That’s the problem with variances—they are difficult to interpret because their calculation involves squared deviations. The variance is an important quantity in statistics because many common tools use changes in the variance as a basis for statistical tests. However, variances seldom feature in EDA because they are so hard to interpret.</p>
+<p>That’s a big number. What does it mean? Is it ‘big’ or is it ‘small’? No idea. That’s the problem with variances—they are difficult to interpret because their calculation involves squared deviations. The variance is an important quantity in statistics because many common tools use changes in the variance as a basis for statistical tests. However, variances seldom feature in EDA because they are so hard to interpret.</p>
 <p>A somewhat better descriptive statistic is to describe sample dispersion is a closely related quantity called the <strong>standard deviation</strong> of the sample, usually denoted <span class="math inline">\(s\)</span>. The standard deviation is equal to the square root of the variance. We calculate it using the <code>sd</code> function:</p>
 <div class="sourceCode" id="cb303"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb303-1"><a href="exploratory-data-analysis.html#cb303-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sd</span>(penguins<span class="sc">$</span>body_mass_g, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 <pre><code>## [1] 801.9545</code></pre>
@@ -536,16 +538,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <pre><code>## [1] 1200</code></pre>
 <p>The IQR is used as the basis for a useful data summary plot called a ‘box and whiskers’ plot. We’ll see how to construct this later.</p>
 </div>
-<div id="what-are-quartiles" class="section level4 unnumbered infobox information">
-<h4>What are quartiles?</h4>
+<div id="what-are-quartiles" class="section level4 unnumbered hasAnchor infobox information">
+<h4>What are quartiles?<a href="exploratory-data-analysis.html#what-are-quartiles" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>We need to know what a quartile is to understand the interquartile range. Three quartiles are defined for any sample. These divide the data into four equal-sized groups, from the set of smallest numbers up to the set of largest numbers. The second quartile (<span class="math inline">\(Q_2\)</span>) is the median, i.e. it divides the data into an upper and lower half. The first quartile (<span class="math inline">\(Q_1\)</span>) is the number that divides the lower 50% of values into two equal-sized groups. The third quartile (<span class="math inline">\(Q_3\)</span>) is the number that divides the upper 50% of values into two equal-sized groups.</p>
 </div>
 </div>
-<div id="categorical-variables" class="section level3" number="12.5.2">
-<h3><span class="header-section-number">12.5.2</span> Categorical variables</h3>
+<div id="categorical-variables" class="section level3 hasAnchor" number="12.5.2">
+<h3><span class="header-section-number">12.5.2</span> Categorical variables<a href="exploratory-data-analysis.html#categorical-variables" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Descriptive statistics of categorical variables aim to quantify specific features of their sample distribution, just as with numeric variables. The general question we need to address is, what are the relative frequencies of different categories? Because categorical variables take a finite number of values, the simplest thing we can do is tabulate the number of occurrences of each type. We can use the <strong>dplyr</strong> <code>count</code> function to do this:</p>
 <div class="sourceCode" id="cb307"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb307-1"><a href="exploratory-data-analysis.html#cb307-1" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">%&gt;%</span> <span class="fu">count</span>(species)</span></code></pre></div>
-<pre><code>## # A tibble: 3 x 2
+<pre><code>## # A tibble: 3 × 2
 ##   species       n
 ##   &lt;chr&gt;     &lt;int&gt;
 ## 1 Adelie      152
@@ -555,11 +557,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Can we quantify the central tendency of a categorical sample distribution? Various measures exist. We can certainly find the <strong>sample mode</strong> of a categorical variable easily enough. This is just the most common category. In the case of the above <code>species</code> variable, the mode is obviously Adelie. It is also possible to calculate a <strong>sample median</strong> of a categorical variable, but only when it is ordinal. Since the median value is the one that lies in the middle of an ordered set of values, it makes no sense to talk about the middle of a set of nominal values that have no inherent order.</p>
 <p>What about dispersion? Well, measures of dispersion for categorical variables do exist, but they are not very easy to interpret. They seldom get used in exploratory data analysis so let’s not worry about them here.</p>
 </div>
-<div id="associations-1" class="section level3" number="12.5.3">
-<h3><span class="header-section-number">12.5.3</span> Associations</h3>
+<div id="associations-1" class="section level3 hasAnchor" number="12.5.3">
+<h3><span class="header-section-number">12.5.3</span> Associations<a href="exploratory-data-analysis.html#associations-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Statisticians have devised different ways to quantify an association between variables. The common measures calculate some kind of <strong>correlation coefficient</strong>. The terms ‘association’ and ‘correlation’ are closely related, so they are often used interchangeably. Strictly speaking, correlation has a narrower definition: a correlation is defined by a metric (the ‘correlation coefficient’) that quantifies the degree to which an association tends to a certain pattern.</p>
-<div id="pairs-of-numeric-variables" class="section level4" number="12.5.3.1">
-<h4><span class="header-section-number">12.5.3.1</span> Pairs of numeric variables</h4>
+<div id="pairs-of-numeric-variables" class="section level4 hasAnchor" number="12.5.3.1">
+<h4><span class="header-section-number">12.5.3.1</span> Pairs of numeric variables<a href="exploratory-data-analysis.html#pairs-of-numeric-variables" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>A widely used measure of correlation for pairs of numeric variables is <strong>Pearson’s correlation coefficient</strong> (a.k.a. Pearson product-moment correlation coefficient, or Pearson’s <span class="math inline">\(r\)</span>). Remember, a correlation coefficient quantifies the degree to which an association tends to a certain pattern. Pearson’s correlation coefficient is designed to summarise the strength of a <strong>linear</strong> (i.e. straight line) association.</p>
 <p>Pearson’s correlation coefficient takes a value of 0 if two variables are not linearly associated and a value of +1 or -1 if they are perfectly related and represent a straight line. A positive value indicates that high values in one variable are associated with high values of the second; a negative value indicates that high values of one variable is associated with low values of the second. High values are those that are greater than the mean; low values are those that are less than the mean.</p>
 <p>We can use the <code>cor</code> function to calculate Pearson’s correlation coefficient. For example, the Pearson correlation coefficient between flipper length and body mass is given by:</p>
@@ -567,8 +569,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <pre><code>## [1] 0.8712018</code></pre>
 <p>This is positive, indicating flipper length tends to increase with body mass. It is also quite close to +1, indicating the association is strong. We should interpret Pearson’s correlation coefficient with care. Because it is designed to summarise the strength of a <strong>linear</strong> relationship, Pearson’s correlation coefficient will mislead when this relationship is curved. If that statement does not make immediate sense, take a look at the famous <a href="https://en.wikipedia.org/wiki/Anscombe%27s_quartet">Anscombe’s quartet</a>.</p>
 </div>
-<div id="other-measures-of-correlation" class="section level4 unnumbered infobox warning">
-<h4>Other measures of correlation</h4>
+<div id="other-measures-of-correlation" class="section level4 unnumbered hasAnchor infobox warning">
+<h4>Other measures of correlation<a href="exploratory-data-analysis.html#other-measures-of-correlation" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>What should we do if we think the relationship between two variables is non-linear? Calculate something called a <strong>rank correlation</strong>. The idea is quite simple. Instead of working with the actual values of each variable, we rank them by value, i.e. sort each variable from lowest to highest and the assign the labels 1<sup>st</sup> , 2<sup>nd</sup>, 3<sup>rd</sup>, … to observations. Rank correlations are based on the association among the ranks of two variables.</p>
 <p>The two most popular rank correlation coefficients are Spearman’s <span class="math inline">\(\rho\)</span> (‘rho’) and Kendall’s <span class="math inline">\(\tau\)</span> (‘tau’). The differences are minimal:</p>
 <ul>
@@ -577,8 +579,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul>
 <p>We can either coefficient using the <code>cor</code> function, setting the <code>method</code> argument to the appropriate value: <code>method = "kendall"</code> or <code>method = "spearman"</code>. A rank correlation coefficient is interpreted in the same way as Pearson’s correlation coefficient. It takes a value of 0 if the ranks are uncorrelated and +/- 1 if they are perfectly associated (though not necessarily as a straight line). The sign tells us about the direction of the association.</p>
 </div>
-<div id="pairs-of-categorical-variables" class="section level4" number="12.5.3.2">
-<h4><span class="header-section-number">12.5.3.2</span> Pairs of categorical variables</h4>
+<div id="pairs-of-categorical-variables" class="section level4 hasAnchor" number="12.5.3.2">
+<h4><span class="header-section-number">12.5.3.2</span> Pairs of categorical variables<a href="exploratory-data-analysis.html#pairs-of-categorical-variables" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>Quantifying associations between pairs of categorical variables is not as simple as the numeric case. The general question is, “do different <strong>combinations</strong> of categories seem to be under- or over-represented?” We need to understand which combinations are common and which are rare. The simplest thing we can do is ‘cross-tabulate’ the number of occurrences (i.e. the ‘frequencies’) of each combination. The resulting table is called a <strong>contingency table</strong>.</p>
 <p>The <code>xtabs</code> function (= ‘cross-tabulation’) can do this. For example, the frequencies of each penguin species and island combination is given by:</p>
 <div class="sourceCode" id="cb311"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb311-1"><a href="exploratory-data-analysis.html#cb311-1" aria-hidden="true" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="sc">~</span> species <span class="sc">+</span> island, <span class="at">data =</span> penguins)</span></code></pre></div>
@@ -611,7 +613,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
@@ -630,6 +631,7 @@ gitbook.start({
 "weibo": false,
 "instapaper": false,
 "vk": false,
+"whatsapp": false,
 "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
@@ -650,6 +652,10 @@ gitbook.start({
 "text": null
 },
 "download": ["intro-bio-data-book.pdf", "intro-bio-data-book.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
 "toc": {
 "collapse": "section"
 }
@@ -663,7 +669,7 @@ gitbook.start({
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:")
       if (/^https?:/.test(src))
         src = src.replace(/^https?:/, '');

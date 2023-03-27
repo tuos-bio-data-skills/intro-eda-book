@@ -6,11 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 16 Exploring associations | Exploratory Data Analysis with R</title>
   <meta name="description" content="This is the Exploratory Data Analysis in R book provided by the School of Biosciences at the University of Sheffield." />
-  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.33 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 16 Exploring associations | Exploratory Data Analysis with R" />
   <meta property="og:type" content="book" />
-  
   
   <meta property="og:description" content="This is the Exploratory Data Analysis in R book provided by the School of Biosciences at the University of Sheffield." />
   
@@ -24,7 +23,7 @@
 <meta name="author" content="Dylan Childs" />
 
 
-<meta name="date" content="2021-05-03" />
+<meta name="date" content="2023-03-27" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,8 +32,8 @@
   
 <link rel="prev" href="exploring-one-variable.html"/>
 <link rel="next" href="doing-more-with-ggplot2.html"/>
-<script src="libs/header-attrs-2.7/header-attrs.js"></script>
-<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -50,7 +49,9 @@
 
 
 
-
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 <link href="libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet" />
 <script src="libs/pagedtable-1.1/js/pagedtable.js"></script>
 
@@ -93,7 +94,7 @@ code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
 code span.at { color: #7d9029; } /* Attribute */
 code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
+code span.bu { color: #008000; } /* BuiltIn */
 code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
 code span.ch { color: #4070a0; } /* Char */
 code span.cn { color: #880000; } /* Constant */
@@ -106,7 +107,7 @@ code span.er { color: #ff0000; font-weight: bold; } /* Error */
 code span.ex { } /* Extension */
 code span.fl { color: #40a070; } /* Float */
 code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
+code span.im { color: #008000; font-weight: bold; } /* Import */
 code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 code span.kw { color: #007020; font-weight: bold; } /* Keyword */
 code span.op { color: #666666; } /* Operator */
@@ -119,6 +120,7 @@ code span.va { color: #19177c; } /* Variable */
 code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
+
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
@@ -275,7 +277,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="10" data-path="building-pipelines.html"><a href="building-pipelines.html"><i class="fa fa-check"></i><b>10</b> Building pipelines</a>
 <ul>
-<li class="chapter" data-level="10.1" data-path="building-pipelines.html"><a href="building-pipelines.html#why-do-we-need-pipes"><i class="fa fa-check"></i><b>10.1</b> Why do we need ‘pipes?’</a></li>
+<li class="chapter" data-level="10.1" data-path="building-pipelines.html"><a href="building-pipelines.html#why-do-we-need-pipes"><i class="fa fa-check"></i><b>10.1</b> Why do we need ‘pipes’?</a></li>
 <li class="chapter" data-level="10.2" data-path="building-pipelines.html"><a href="building-pipelines.html#using-pipes"><i class="fa fa-check"></i><b>10.2</b> Using pipes (<code>%&gt;%</code>)</a></li>
 </ul></li>
 <li class="chapter" data-level="11" data-path="helper-functions.html"><a href="helper-functions.html"><i class="fa fa-check"></i><b>11</b> Helper functions</a>
@@ -409,11 +411,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="exploring-associations" class="section level1" number="16">
-<h1><span class="header-section-number">Chapter 16</span> Exploring associations</h1>
+<div id="exploring-associations" class="section level1 hasAnchor" number="16">
+<h1><span class="header-section-number">Chapter 16</span> Exploring associations<a href="exploring-associations.html#exploring-associations" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p>A pair of variables are said to be associated when knowing the value of one variable gives us information about the possible values of another. This chapter’s main goal is to show how to use visualisations to explore associations among different kinds of variables.</p>
-<div id="numeric-association" class="section level2" number="16.1">
-<h2><span class="header-section-number">16.1</span> Associations between numeric variables</h2>
+<div id="numeric-association" class="section level2 hasAnchor" number="16.1">
+<h2><span class="header-section-number">16.1</span> Associations between numeric variables<a href="exploring-associations.html#numeric-association" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>The standard graph for displaying an association among a pair of numeric variables is the scatter plot. This uses horizontal and vertical axes to show two variables as a series of points. We saw how to construct a scatter plot in the <a href="chapter-ggplot2-intro.html#chapter-ggplot2-intro">Introduction to ggplot2</a> chapter. Here is the initial plot we made to show the association between bill depth and bill length (ignoring species information):</p>
 <div class="sourceCode" id="cb380"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb380-1"><a href="exploring-associations.html#cb380-1" aria-hidden="true" tabindex="-1"></a><span class="co"># display bill morphology scatter plot</span></span>
 <span id="cb380-2"><a href="exploring-associations.html#cb380-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins,</span>
@@ -440,7 +442,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>The bins argument controls how many hexagonal bins to use when spanning each dimension. The <code>penguins</code> data set is a bit small for this kind of plot (a scatter plot is actually better), so we had to use relatively coarse binning by setting the number of bins to 12.</p>
 <p>Notice how similar this looks to the <strong>ggplot2</strong> code for a scatter plot. We simply used <code>geom_hex</code> in place of <code>geom_point</code>. This reveals a powerful feature of <strong>ggplot2</strong>—once we have a working plot, we can often switch to a reasonable alternative by simply changing the type of geom. This makes it very quick to explore a data set in different ways.</p>
 <p>What should we do if there are there are many identical pairs of values? For example, imagine that bill length had only been measured to the nearest 2 mm and bill depth had only been measured to the nearest 1 mm, like this:</p>
-<pre><code>## # A tibble: 344 x 2
+<pre><code>## # A tibble: 344 × 2
 ##    bill_length_mm bill_depth_mm
 ##             &lt;dbl&gt;         &lt;dbl&gt;
 ##  1             40            19
@@ -453,7 +455,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##  8             40            20
 ##  9             34            18
 ## 10             42            20
-## # … with 334 more rows</code></pre>
+## # ℹ 334 more rows</code></pre>
 <p>A scatter plot <code>bill_depth_mm</code> against <code>bill_length_mm</code> produced with those coarsened data would look like this:</p>
 <p><img src="intro-bio-data-book_files/figure-html/unnamed-chunk-245-1.png" width="336" style="display: block; margin: auto;" /></p>
 <p>This is not very informative because groups of points appear in exactly the same x/y location.</p>
@@ -467,8 +469,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><img src="intro-bio-data-book_files/figure-html/unnamed-chunk-246-1.png" width="432" style="display: block; margin: auto;" /></p>
 <p>Again, notice how similar this looks to the <strong>ggplot2</strong> code for a standard scatter plot. We simply used <code>geom_count</code> in place of <code>geom_point</code>.</p>
 </div>
-<div id="categorical-association" class="section level2" number="16.2">
-<h2><span class="header-section-number">16.2</span> Associations between categorical variables</h2>
+<div id="categorical-association" class="section level2 hasAnchor" number="16.2">
+<h2><span class="header-section-number">16.2</span> Associations between categorical variables<a href="exploring-associations.html#categorical-association" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Bar charts are often used to summarise associations between categorical variables. The basic idea is to produce a separate bar for <em>each combination</em> of categories in the two variables. The lengths of each bar is proportional to the value it represents, which is either a raw count or the proportion in each category combination.</p>
 <p>Using <strong>ggplot2</strong> to display this information is not very different from producing a bar graph to summarise a single categorical variable. Let’s do this for the <code>species</code> and <code>year</code> variables in <code>penguins</code>:</p>
 <div class="sourceCode" id="cb384"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb384-1"><a href="exploring-associations.html#cb384-1" aria-hidden="true" tabindex="-1"></a><span class="co"># display bar plot of year-species counts</span></span>
@@ -499,8 +501,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb386-6"><a href="exploring-associations.html#cb386-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>()</span></code></pre></div>
 <p><img src="intro-bio-data-book_files/figure-html/unnamed-chunk-249-1.png" width="480" style="display: block; margin: auto;" /></p>
 <p>This uses <code>species_names</code> to set the levels of <code>species</code> when we convert it to a factor. The stacking order of the bars then reflects their order in <code>species_names</code>. There was no need to set the levels of <code>year</code> because R will use the numeric order by default. Yes… the labels in that plot are ugly, but we could easily change these using <code>labs</code> function if we wanted to.</p>
-<div id="factors" class="section level4 unnumbered infobox warning">
-<h4>Factors</h4>
+<div id="factors" class="section level4 unnumbered hasAnchor infobox warning">
+<h4>Factors<a href="exploring-associations.html#factors" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>Factors are very useful and crop up all the time in R. A complete treatment of factors would require a whole new chapter. We’ve just shown one way to work with them via the <code>factor</code> function. This is enough to solve the reordering trick required to get <strong>ggplot2</strong> to work the way we want it to, but there’s a lot more to learn about factors. There is even a package (<strong>forcats</strong>) that exists solely to make working with factors a bit easier.</p>
 <p>One thing to be aware of is that it is sometimes simpler to convert variables to factors in a data set, rather than doing it every time we use them with <strong>ggplot2</strong>. For example, we could use <code>mutate</code> to create factor versions of <code>year</code> and <code>species</code>:</p>
 <div class="sourceCode" id="cb387"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb387-1"><a href="exploring-associations.html#cb387-1" aria-hidden="true" tabindex="-1"></a><span class="co"># convert year and species to factors to ensure correct ordering </span></span>
@@ -533,8 +535,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb389-12"><a href="exploring-associations.html#cb389-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div>
 <p><img src="intro-bio-data-book_files/figure-html/unnamed-chunk-252-1.png" width="528" style="display: block; margin: auto;" /></p>
 </div>
-<div id="cat-num-association" class="section level2" number="16.3">
-<h2><span class="header-section-number">16.3</span> Categorical-numerical associations</h2>
+<div id="cat-num-association" class="section level2 hasAnchor" number="16.3">
+<h2><span class="header-section-number">16.3</span> Categorical-numerical associations<a href="exploring-associations.html#cat-num-association" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>The next obvious question is, “How do we display the association between a categorical and numeric variable?” As usual, there are a range of different options.</p>
 <p>The most common is the ‘box and whiskers plot’ (or just ‘box plot’). This is best understood by example. To construct a box and whiskers plot we need to set ‘x’ and ‘y’ axis aesthetics for the categorical and numeric variable; then use the <code>geom_boxplot</code> function to add the appropriate layer. To examine the association between penguin species (<code>species</code>) and body mass measurements (<code>body_mass_g</code>), use:</p>
 <div class="sourceCode" id="cb390"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb390-1"><a href="exploring-associations.html#cb390-1" aria-hidden="true" tabindex="-1"></a><span class="co"># display box and whiskers plot of body mass for each species</span></span>
@@ -550,13 +552,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li><p>The horizontal line inside the box is the sample median of the numeric variable—a measure of its central tendency. This allows us to compare the most likely value of the numeric variable across the different categories.</p></li>
 <li><p>The boxes display the interquartile range (IQR) of the numeric variable in each category, i.e. the middle 50% of each group. This allows us to compare the spread (=dispersion) of the numeric values across categories.</p></li>
-<li><p>The vertical lines above and below each box are the “whiskers.” The interpretation of these depends on which kind of box plot we are making. <strong>ggplot2</strong> produces a traditional Tukey box plot by default. Each whisker is drawn from each end of the box (the upper and lower quartiles) to a well-defined extreme point. To find where the upper whisker ends, we have to find the largest observation that is no more than 1.5 times the IQR above the upper quartile. The lower whisker ends at the most extreme point that is no more than 1.5 times the IQR below the lower quartile.</p></li>
+<li><p>The vertical lines above and below each box are the “whiskers”. The interpretation of these depends on which kind of box plot we are making. <strong>ggplot2</strong> produces a traditional Tukey box plot by default. Each whisker is drawn from each end of the box (the upper and lower quartiles) to a well-defined extreme point. To find where the upper whisker ends, we have to find the largest observation that is no more than 1.5 times the IQR above the upper quartile. The lower whisker ends at the most extreme point that is no more than 1.5 times the IQR below the lower quartile.</p></li>
 <li><p>Any cases that do not fall inside the whiskers are plotted as an individual point. These may be outliers, although they could also be perfectly consistent with the wider distribution.</p></li>
 </ul>
 <p>The resulting plot compactly summarises the distribution of the numeric variable within categories. It provides information about the central tendency, dispersion and skewness of each distribution. We also get a sense of whether there are potential outliers by noting the presence of individual points outside the whiskers.</p>
 <p>What does the above plot tell us about body mass and species? It shows the body mass distributions of Chinstrap and Adelie penguins are very similar, in terms of both central tendency and dispersion. In contrast, Gentoo penguins are generally larger and exhibit great absolute variation. The Gentoo body mass distribution is also the only one that seems to display much skew.</p>
-<div id="alternatives-to-box-and-whiskers-plots" class="section level3" number="16.3.1">
-<h3><span class="header-section-number">16.3.1</span> Alternatives to box and whiskers plots</h3>
+<div id="alternatives-to-box-and-whiskers-plots" class="section level3 hasAnchor" number="16.3.1">
+<h3><span class="header-section-number">16.3.1</span> Alternatives to box and whiskers plots<a href="exploring-associations.html#alternatives-to-box-and-whiskers-plots" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Box and whiskers plots are a good choice for exploring categorical-numerical associations. They provide a lot of information about how the distribution of the numeric variable changes across categories. Sometimes we may want to squeeze even more information about these distributions into a plot. One way to do this is to make multiple histograms.</p>
 <p>We know how to make a histogram, and we have seen how aesthetic properties such as <code>colour</code> and <code>fill</code> are used to distinguish different categories of a variable. This suggests we could overlay more than one histogram on a single plot. Let’s use this idea to see how the sample distribution of body mass differs among the species again:</p>
 <div class="sourceCode" id="cb391"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb391-1"><a href="exploring-associations.html#cb391-1" aria-hidden="true" tabindex="-1"></a><span class="co"># display histogram of body mass for each species in one plot</span></span>
@@ -584,8 +586,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>The two histogram plots tell much the same story as the box and whiskers plot. The body mass distributions of Chinstrap and Adelie penguins are very similar, Gentoo penguins are generally a bit larger, but all three distributions overlap to some extent.</p>
 </div>
 </div>
-<div id="multivariate" class="section level2" number="16.4">
-<h2><span class="header-section-number">16.4</span> Multivariate associations</h2>
+<div id="multivariate" class="section level2 hasAnchor" number="16.4">
+<h2><span class="header-section-number">16.4</span> Multivariate associations<a href="exploring-associations.html#multivariate" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>We have now examined several ways for summarising associations between two variables. How do we explore associations between more than two variables in a single graph? That is, how do we explore <strong>multivariate associations</strong>? It is difficult to give a concrete answer because it depends on the question we’re addressing, the kinds of variables we’re working with, and to a large extent, our creativity and aptitude with a graphing framework like <strong>ggplot2</strong>.</p>
 <p>We have already seen enough of how <strong>ggplot2</strong> works to build some fairly sophisticated visualisations. The key point is that we don’t really need to learn anything new to visualise multivariate associations. There are basically two ways to add additional information to a visualisation, both of which we have already reviewed:</p>
 <ol style="list-style-type: decimal">
@@ -631,7 +633,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
@@ -650,6 +651,7 @@ gitbook.start({
 "weibo": false,
 "instapaper": false,
 "vk": false,
+"whatsapp": false,
 "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
@@ -670,6 +672,10 @@ gitbook.start({
 "text": null
 },
 "download": ["intro-bio-data-book.pdf", "intro-bio-data-book.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
 "toc": {
 "collapse": "section"
 }
@@ -683,7 +689,7 @@ gitbook.start({
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:")
       if (/^https?:/.test(src))
         src = src.replace(/^https?:/, '');

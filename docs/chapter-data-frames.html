@@ -6,11 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 4 Data frames | Exploratory Data Analysis with R</title>
   <meta name="description" content="This is the Exploratory Data Analysis in R book provided by the School of Biosciences at the University of Sheffield." />
-  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.33 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 4 Data frames | Exploratory Data Analysis with R" />
   <meta property="og:type" content="book" />
-  
   
   <meta property="og:description" content="This is the Exploratory Data Analysis in R book provided by the School of Biosciences at the University of Sheffield." />
   
@@ -24,7 +23,7 @@
 <meta name="author" content="Dylan Childs" />
 
 
-<meta name="date" content="2021-05-03" />
+<meta name="date" content="2023-03-27" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,8 +32,8 @@
   
 <link rel="prev" href="vectors.html"/>
 <link rel="next" href="packages.html"/>
-<script src="libs/header-attrs-2.7/header-attrs.js"></script>
-<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -50,7 +49,9 @@
 
 
 
-
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 <link href="libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet" />
 <script src="libs/pagedtable-1.1/js/pagedtable.js"></script>
 
@@ -93,7 +94,7 @@ code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
 code span.at { color: #7d9029; } /* Attribute */
 code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
+code span.bu { color: #008000; } /* BuiltIn */
 code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
 code span.ch { color: #4070a0; } /* Char */
 code span.cn { color: #880000; } /* Constant */
@@ -106,7 +107,7 @@ code span.er { color: #ff0000; font-weight: bold; } /* Error */
 code span.ex { } /* Extension */
 code span.fl { color: #40a070; } /* Float */
 code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
+code span.im { color: #008000; font-weight: bold; } /* Import */
 code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 code span.kw { color: #007020; font-weight: bold; } /* Keyword */
 code span.op { color: #666666; } /* Operator */
@@ -119,6 +120,7 @@ code span.va { color: #19177c; } /* Variable */
 code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
+
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
@@ -275,7 +277,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="10" data-path="building-pipelines.html"><a href="building-pipelines.html"><i class="fa fa-check"></i><b>10</b> Building pipelines</a>
 <ul>
-<li class="chapter" data-level="10.1" data-path="building-pipelines.html"><a href="building-pipelines.html#why-do-we-need-pipes"><i class="fa fa-check"></i><b>10.1</b> Why do we need ‘pipes?’</a></li>
+<li class="chapter" data-level="10.1" data-path="building-pipelines.html"><a href="building-pipelines.html#why-do-we-need-pipes"><i class="fa fa-check"></i><b>10.1</b> Why do we need ‘pipes’?</a></li>
 <li class="chapter" data-level="10.2" data-path="building-pipelines.html"><a href="building-pipelines.html#using-pipes"><i class="fa fa-check"></i><b>10.2</b> Using pipes (<code>%&gt;%</code>)</a></li>
 </ul></li>
 <li class="chapter" data-level="11" data-path="helper-functions.html"><a href="helper-functions.html"><i class="fa fa-check"></i><b>11</b> Helper functions</a>
@@ -409,21 +411,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="chapter-data-frames" class="section level1" number="4">
-<h1><span class="header-section-number">Chapter 4</span> Data frames</h1>
-<div id="introduction-1" class="section level2" number="4.1">
-<h2><span class="header-section-number">4.1</span> Introduction</h2>
+<div id="chapter-data-frames" class="section level1 hasAnchor" number="4">
+<h1><span class="header-section-number">Chapter 4</span> Data frames<a href="chapter-data-frames.html#chapter-data-frames" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="introduction-1" class="section level2 hasAnchor" number="4.1">
+<h2><span class="header-section-number">4.1</span> Introduction<a href="chapter-data-frames.html#introduction-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>The <a href="quick-intro-to-r.html#quick-intro-to-r">quick introduction to R</a> chapter introduced the word ‘variable’ as a short-hand for a named object. For example, we can make a variable called <code>num_vec</code> that refers to a simple numeric vector using:</p>
 <div class="sourceCode" id="cb145"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb145-1"><a href="chapter-data-frames.html#cb145-1" aria-hidden="true" tabindex="-1"></a>num_vec <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">1.1</span>, <span class="fl">2.3</span>, <span class="fl">4.0</span>, <span class="fl">5.7</span>)</span>
 <span id="cb145-2"><a href="chapter-data-frames.html#cb145-2" aria-hidden="true" tabindex="-1"></a>num_vec</span></code></pre></div>
 <pre><code>## [1] 1.1 2.3 4.0 5.7</code></pre>
 <p>When a computer scientist talks about variables they’re referring to these sorts of name-value associations.</p>
-<p>However, the word ‘variable’ has a second, more abstract meaning in the world of statistics: it refers to anything we can control or measure. For example, data from an experiment will involve variables whose values describe the experimental conditions (e.g. low temperature vs. high temperature) and the quantities we chose to measure (e.g. enzyme activity). We refer to these kinds of variables as ‘statistical variables.’</p>
+<p>However, the word ‘variable’ has a second, more abstract meaning in the world of statistics: it refers to anything we can control or measure. For example, data from an experiment will involve variables whose values describe the experimental conditions (e.g. low temperature vs. high temperature) and the quantities we chose to measure (e.g. enzyme activity). We refer to these kinds of variables as ‘statistical variables’.</p>
 <p>We’ll discuss these statistical variables later on. We’re pointing out the dual meaning of the word ‘variable’ now because we need to work with both interpretations. The duality can be confusing at times, but both meanings are in widespread use, so we just have to get used to them. We try to minimise confusion by using the phrase “statistical variable” when referring to data, rather than R objects.</p>
 <p>We’re introducing these ideas now because we’re going to consider a new type of data object in this chapter—the <strong>data frame</strong>. Real-world data analysis involves collections of related statistical variables. How should we keep a large collection of variables organised? We could work with them individually, but this tends to be error prone. Instead, we need a way to keep related variables together. This is the problem that <strong>data frames</strong> are designed to manage.</p>
 </div>
-<div id="data-frames-intro" class="section level2" number="4.2">
-<h2><span class="header-section-number">4.2</span> Data frames</h2>
+<div id="data-frames-intro" class="section level2 hasAnchor" number="4.2">
+<h2><span class="header-section-number">4.2</span> Data frames<a href="chapter-data-frames.html#data-frames-intro" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Data frames are one of R’s features that mark it out as particularly good for data analysis. We can think of a data frame as a table-like object with rows and columns. A data frame collects together different statistical variables, storing each of them as a separate column. Related observations are all found in the same row.</p>
 <p>We’ll think about the columns first.</p>
 <p>Each column of a data frame is a vector of some kind. These are usually simple atomic vectors containing numbers or character strings, though it is possible to include more complicated vectors. The critical constraint that a data frame applies is that each vector must have the same length. This is what gives a data frame it table-like structure.</p>
@@ -444,7 +446,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <pre><code>## [1] 284 328 291 956 954 685</code></pre>
 <div class="sourceCode" id="cb152"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb152-1"><a href="chapter-data-frames.html#cb152-1" aria-hidden="true" tabindex="-1"></a>div</span></code></pre></div>
 <pre><code>## [1]  8 12 11  8  4  5</code></pre>
-<p>Notice that the information about different observations are linked by their positions in these vectors. For example, the third control plot had a biomass of ‘291’ and a species diversity ‘11.’</p>
+<p>Notice that the information about different observations are linked by their positions in these vectors. For example, the third control plot had a biomass of ‘291’ and a species diversity ‘11’.</p>
 <p>We use the <code>data.frame</code> function to construct a data frame from one or more vectors, i.e. to build a data frame from the three vectors we just created:</p>
 <div class="sourceCode" id="cb154"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb154-1"><a href="chapter-data-frames.html#cb154-1" aria-hidden="true" tabindex="-1"></a>experim.data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(trt, bms, div)</span>
 <span id="cb154-2"><a href="chapter-data-frames.html#cb154-2" aria-hidden="true" tabindex="-1"></a>experim.data</span></code></pre></div>
@@ -468,13 +470,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 5 Fertilser     954         4
 ## 6 Fertilser     685         5</code></pre>
 <p>The new data frame contains the same data as the previous one but now the column names correspond to the human-readable words we chose.</p>
-<div id="dont-bother-with-row-names" class="section level4 unnumbered infobox warning">
-<h4>Don’t bother with row names</h4>
+<div id="dont-bother-with-row-names" class="section level4 unnumbered hasAnchor infobox warning">
+<h4>Don’t bother with row names<a href="chapter-data-frames.html#dont-bother-with-row-names" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>We can also name the rows of a data frame using the <code>row.names</code> argument of the <code>data.frame</code> function. We won’t bother to show an example of this, though. Why? We can’t easily work with the information in row names which means there’s not much point adding it. If we need to include row-specific information in a data frame it’s best to include an additional variable, i.e. an extra column.</p>
 </div>
 </div>
-<div id="exploring-data-frames" class="section level2" number="4.3">
-<h2><span class="header-section-number">4.3</span> Exploring data frames</h2>
+<div id="exploring-data-frames" class="section level2 hasAnchor" number="4.3">
+<h2><span class="header-section-number">4.3</span> Exploring data frames<a href="chapter-data-frames.html#exploring-data-frames" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>The first things to do when presented with a new data set is to explore its structure to understand what we’re dealing with. There are plenty of options for doing this when the data are stored in a data frame. For example, the <code>head</code> and <code>tail</code> functions extract the first and last few rows of a data set:</p>
 <div class="sourceCode" id="cb158"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb158-1"><a href="chapter-data-frames.html#cb158-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(experim.data, <span class="at">n =</span> <span class="dv">3</span>)</span></code></pre></div>
 <pre><code>##   Treatment Biomass Diversity
@@ -489,8 +491,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Notice that the <code>n</code> argument controls the number of rows printed. The <code>View</code> function can be used to open up the whole data set in a table- or spreadsheet-like like view:</p>
 <div class="sourceCode" id="cb162"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb162-1"><a href="chapter-data-frames.html#cb162-1" aria-hidden="true" tabindex="-1"></a><span class="fu">View</span>(experim.data)</span></code></pre></div>
 <p>Exactly what happens when we use <code>View</code> depends on how we’re interacting with R. When we run it in RStudio a new tab opens up with the data shown inside it.</p>
-<div id="view-only-displays-the-data" class="section level4 unnumbered infobox warning">
-<h4><code>View</code> only displays the data</h4>
+<div id="view-only-displays-the-data" class="section level4 unnumbered hasAnchor infobox warning">
+<h4><code>View</code> only displays the data<a href="chapter-data-frames.html#view-only-displays-the-data" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>The <code>View</code> function is only designed to display a data frame as a table of rows and columns. We can’t change the data in any way with the <code>View</code> function. We can reorder the way the data are presented, but keep in mind that this won’t alter the underlying data.</p>
 </div>
 <p>There are quite a few different R functions that will extract information about a data frame. The <code>nrow</code> and <code>ncol</code> functions return the number of rows and columns, respectively:</p>
@@ -503,8 +505,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <pre><code>## [1] &quot;Treatment&quot; &quot;Biomass&quot;   &quot;Diversity&quot;</code></pre>
 <p>The <code>experim.data</code> data frame has three columns, so <code>names</code> returns a character vector of length three, where each element corresponds to a column name.</p>
 </div>
-<div id="extracting-and-adding-a-single-variable" class="section level2" number="4.4">
-<h2><span class="header-section-number">4.4</span> Extracting and adding a single variable</h2>
+<div id="extracting-and-adding-a-single-variable" class="section level2 hasAnchor" number="4.4">
+<h2><span class="header-section-number">4.4</span> Extracting and adding a single variable<a href="chapter-data-frames.html#extracting-and-adding-a-single-variable" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Remember, each column of a data frame can be thought of as a variable. Data frames would not be much use if we could not extract and modify the variables they contain. In this section, we will briefly review how to extract a variable. We’ll examine ways to manipulate the data within a data frame in later chapters.</p>
 <p>One way of extracting a variable from a data frame uses a double square brackets construct, <code>[[</code>. For example, we extract the <code>Biomass</code> variable from our example data frame with the double square brackets like this:</p>
 <div class="sourceCode" id="cb169"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb169-1"><a href="chapter-data-frames.html#cb169-1" aria-hidden="true" tabindex="-1"></a>experim.data[[<span class="st">&quot;Biomass&quot;</span>]]</span></code></pre></div>
@@ -525,8 +527,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb177"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb177-1"><a href="chapter-data-frames.html#cb177-1" aria-hidden="true" tabindex="-1"></a>experim.data<span class="sc">$</span>Biomass</span></code></pre></div>
 <pre><code>## [1] 284 328 291 956 954 685</code></pre>
 <p>We use the <code>$</code> operator by placing the name of the data frame we want to work with on the left-hand side and the name of the column (i.e. the variable) we want to extract on the right-hand side. Notice that we didn’t have to put quotes around the variable name when using the <code>$</code> operator. We can do this if we want to—i.e. <code>experim.data$"Biomass"</code> also works—but <code>$</code> doesn’t require it.</p>
-<div id="why-is-there-more-than-one-way-to-extract-variables" class="section level4 unnumbered infobox warning">
-<h4>Why is there more than one way to extract variables?</h4>
+<div id="why-is-there-more-than-one-way-to-extract-variables" class="section level4 unnumbered hasAnchor infobox warning">
+<h4>Why is there more than one way to extract variables?<a href="chapter-data-frames.html#why-is-there-more-than-one-way-to-extract-variables" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>There’s no simple way to answer this question without getting into the details of how R represents data frames. The simple answer is that <code>$</code> and <code>[[</code> are not strictly equivalent, even though they appear to do much the same thing. The <code>$</code> method is a bit easier to read, and people tend to prefer it for interactive data analysis tasks, whereas the <code>[[</code> construct tends to be used when we need a bit more flexibility for programming.</p>
 </div>
 
@@ -542,7 +544,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
@@ -561,6 +562,7 @@ gitbook.start({
 "weibo": false,
 "instapaper": false,
 "vk": false,
+"whatsapp": false,
 "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
@@ -581,6 +583,10 @@ gitbook.start({
 "text": null
 },
 "download": ["intro-bio-data-book.pdf", "intro-bio-data-book.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
 "toc": {
 "collapse": "section"
 }
@@ -594,7 +600,7 @@ gitbook.start({
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:")
       if (/^https?:/.test(src))
         src = src.replace(/^https?:/, '');

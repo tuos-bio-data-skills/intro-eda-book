@@ -6,11 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>A Getting help | Exploratory Data Analysis with R</title>
   <meta name="description" content="This is the Exploratory Data Analysis in R book provided by the School of Biosciences at the University of Sheffield." />
-  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.33 and GitBook 2.6.7" />
 
   <meta property="og:title" content="A Getting help | Exploratory Data Analysis with R" />
   <meta property="og:type" content="book" />
-  
   
   <meta property="og:description" content="This is the Exploratory Data Analysis in R book provided by the School of Biosciences at the University of Sheffield." />
   
@@ -24,7 +23,7 @@
 <meta name="author" content="Dylan Childs" />
 
 
-<meta name="date" content="2021-05-03" />
+<meta name="date" content="2023-03-27" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,8 +32,8 @@
   
 <link rel="prev" href="doing-more-with-ggplot2.html"/>
 <link rel="next" href="project-scripts-data.html"/>
-<script src="libs/header-attrs-2.7/header-attrs.js"></script>
-<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -50,7 +49,9 @@
 
 
 
-
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 <link href="libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet" />
 <script src="libs/pagedtable-1.1/js/pagedtable.js"></script>
 
@@ -93,7 +94,7 @@ code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
 code span.at { color: #7d9029; } /* Attribute */
 code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
+code span.bu { color: #008000; } /* BuiltIn */
 code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
 code span.ch { color: #4070a0; } /* Char */
 code span.cn { color: #880000; } /* Constant */
@@ -106,7 +107,7 @@ code span.er { color: #ff0000; font-weight: bold; } /* Error */
 code span.ex { } /* Extension */
 code span.fl { color: #40a070; } /* Float */
 code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
+code span.im { color: #008000; font-weight: bold; } /* Import */
 code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 code span.kw { color: #007020; font-weight: bold; } /* Keyword */
 code span.op { color: #666666; } /* Operator */
@@ -119,6 +120,7 @@ code span.va { color: #19177c; } /* Variable */
 code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
+
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
@@ -275,7 +277,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="10" data-path="building-pipelines.html"><a href="building-pipelines.html"><i class="fa fa-check"></i><b>10</b> Building pipelines</a>
 <ul>
-<li class="chapter" data-level="10.1" data-path="building-pipelines.html"><a href="building-pipelines.html#why-do-we-need-pipes"><i class="fa fa-check"></i><b>10.1</b> Why do we need ‘pipes?’</a></li>
+<li class="chapter" data-level="10.1" data-path="building-pipelines.html"><a href="building-pipelines.html#why-do-we-need-pipes"><i class="fa fa-check"></i><b>10.1</b> Why do we need ‘pipes’?</a></li>
 <li class="chapter" data-level="10.2" data-path="building-pipelines.html"><a href="building-pipelines.html#using-pipes"><i class="fa fa-check"></i><b>10.2</b> Using pipes (<code>%&gt;%</code>)</a></li>
 </ul></li>
 <li class="chapter" data-level="11" data-path="helper-functions.html"><a href="helper-functions.html"><i class="fa fa-check"></i><b>11</b> Helper functions</a>
@@ -409,16 +411,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="getting-help" class="section level1" number="18">
-<h1><span class="header-section-number">A</span> Getting help</h1>
-<div id="console-help" class="section level2" number="18.1">
-<h2><span class="header-section-number">A.1</span> Introduction</h2>
+<div id="getting-help" class="section level1 hasAnchor" number="18">
+<h1><span class="header-section-number">A</span> Getting help<a href="getting-help.html#getting-help" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="console-help" class="section level2 hasAnchor" number="18.1">
+<h2><span class="header-section-number">A.1</span> Introduction<a href="getting-help.html#console-help" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>R has a comprehensive built-in help system orientated around the base R functions, and every good external package also comes with its own set of <strong>help files</strong>. These provide information about individual package functions and summarise the included data sets. They also sometimes give descriptions of how different parts of the package should be used, and if we’re lucky, one or more ‘vignettes’ that offer a practical demonstration of how to use the package.</p>
 <p>We may as well get something out of the way early on. The word ‘help’ in the phrase ‘help file’ is a bit of a misnomer. It’s more accurate to say R has an extensive <strong>documentation</strong> system. Help files are designed first and foremost to carefully document the different elements of a package, rather than explain how a particular function or the package as whole should be used to achieve a given end. They are aimed more at experienced users than novices. That said, help files often contain useful examples, and many package authors do try to make our life easier by providing functional demonstrations of their package.</p>
 <p>It is important to get to grips with the built in help system. It contains a great deal of useful information which we need to really start using R effectively. The road to enlightenment is bumpy though.</p>
 </div>
-<div id="browsing-the-help-system" class="section level2" number="18.2">
-<h2><span class="header-section-number">A.2</span> Browsing the help system</h2>
+<div id="browsing-the-help-system" class="section level2 hasAnchor" number="18.2">
+<h2><span class="header-section-number">A.2</span> Browsing the help system<a href="getting-help.html#browsing-the-help-system" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Help files are a little like mini web pages, which means we can navigate among them using hyperlinks. One way to begin browsing the help system uses the <code>help.start</code> function:</p>
 <div class="sourceCode" id="cb413"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb413-1"><a href="getting-help.html#cb413-1" aria-hidden="true" tabindex="-1"></a><span class="fu">help.start</span>() </span></code></pre></div>
 <p>When we run this function the <strong>Package Index</strong> page should open up in the <strong>Help</strong> tab of the bottom right pane in RStudio. This lists all the packages currently installed on a computer. We can view the help files associated with a package by clicking on the appropriate link. For example, all the functions that come with the base installation of R have a help file associated with them—we can click on the link to the R base package (<code>base</code>) to see these.</p>
@@ -430,8 +432,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><p>The <strong>Miscellaneous Material</strong> section has a couple of potentially useful links. The “User Manuals” link lists any user manuals supplied by package authors. The “Frequently Asked Questions” link is definitely worth reviewing at some point, tough again, most of the FAQs are a little difficult for novice users to fully understand.</p></li>
 </ol>
 </div>
-<div id="searching-for-help-files" class="section level2" number="18.3">
-<h2><span class="header-section-number">A.3</span> Searching for help files</h2>
+<div id="searching-for-help-files" class="section level2 hasAnchor" number="18.3">
+<h2><span class="header-section-number">A.3</span> Searching for help files<a href="getting-help.html#searching-for-help-files" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>After browsing help files via <code>help.start</code> for a bit it quickly becomes apparent that this way of searching for help is very inefficient. We often know the name of the function we need to use and all we want to do is open that particular help file. We can do this using the <code>help</code> function:</p>
 <div class="sourceCode" id="cb414"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb414-1"><a href="getting-help.html#cb414-1" aria-hidden="true" tabindex="-1"></a><span class="fu">help</span>(<span class="at">topic =</span> Trig)</span></code></pre></div>
 <p>After we run this line RStudio opens up the help file for the trigonometry topic in the <strong>Help</strong> tab. This file provides information about the various trigonometric functions such as <code>sin</code> or <code>cos</code> (we’ll see how to make sense of such help pages in a bit).</p>
@@ -447,8 +449,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb418"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb418-1"><a href="getting-help.html#cb418-1" aria-hidden="true" tabindex="-1"></a>?sin</span></code></pre></div>
 <p>This is just a convenient shortcut that does the same thing as <code>help</code>. The only difference is that <code>?</code> does not allow us to set arguments such as <code>package</code>.</p>
 </div>
-<div id="nav-help" class="section level2" number="18.4">
-<h2><span class="header-section-number">A.4</span> Navigating help files</h2>
+<div id="nav-help" class="section level2 hasAnchor" number="18.4">
+<h2><span class="header-section-number">A.4</span> Navigating help files<a href="getting-help.html#nav-help" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Navigating help files is a little daunting at first. These files can be quite long and contain a lot of technical jargon. The help files associated with functions—the most common type—do at least have a consistent structure with a number of distinct sections. Wrestling with a help file is much easier if we at least understand what each section is for. After the title, there are eight sections we need to know about:</p>
 <ol style="list-style-type: decimal">
 <li><p><strong>Description</strong> gives us a short overview of what the function is meant to be used for. If the help page covers a family of related functions it gives a collective overview of all the functions. Always read this before diving into the rest of the help file.</p></li>
@@ -461,8 +463,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><p><strong>Examples</strong> provides one or more examples of how to use the function. These are stand-alone examples, so there’s nothing to stop us running them. This is often the most useful section of all. Seeing a function in action is a very good way to cut through the jargon and understand how it works.</p></li>
 </ol>
 </div>
-<div id="vignettes" class="section level2" number="18.5">
-<h2><span class="header-section-number">A.5</span> Vignettes</h2>
+<div id="vignettes" class="section level2 hasAnchor" number="18.5">
+<h2><span class="header-section-number">A.5</span> Vignettes<a href="getting-help.html#vignettes" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>The purpose of a package vignette is to provide a relatively brief, practical account of one or more of its features. Not all packages come with vignettes, though the best packages often do. We use the <code>vignette</code> function to view all the available vignettes in Rstudio. This will open up a tab that lists each vignette under their associated package name along with a brief description. A package will often have more than one vignette.</p>
 <p>If we just want to see the vignettes associated with a particular package, we have to set the <code>package</code> argument. For example, to see the vignettes associated with <strong>dplyr</strong> we use:</p>
 <div class="sourceCode" id="cb419"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb419-1"><a href="getting-help.html#cb419-1" aria-hidden="true" tabindex="-1"></a><span class="fu">vignette</span>(<span class="at">package =</span> <span class="st">&quot;dplyr&quot;</span>)</span></code></pre></div>
@@ -484,7 +486,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
@@ -503,6 +504,7 @@ gitbook.start({
 "weibo": false,
 "instapaper": false,
 "vk": false,
+"whatsapp": false,
 "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
@@ -523,6 +525,10 @@ gitbook.start({
 "text": null
 },
 "download": ["intro-bio-data-book.pdf", "intro-bio-data-book.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
 "toc": {
 "collapse": "section"
 }
@@ -536,7 +542,7 @@ gitbook.start({
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:")
       if (/^https?:/.test(src))
         src = src.replace(/^https?:/, '');

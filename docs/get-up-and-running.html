@@ -6,11 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Get up and running | Exploratory Data Analysis with R</title>
   <meta name="description" content="This is the Exploratory Data Analysis in R book provided by the School of Biosciences at the University of Sheffield." />
-  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.33 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Get up and running | Exploratory Data Analysis with R" />
   <meta property="og:type" content="book" />
-  
   
   <meta property="og:description" content="This is the Exploratory Data Analysis in R book provided by the School of Biosciences at the University of Sheffield." />
   
@@ -24,7 +23,7 @@
 <meta name="author" content="Dylan Childs" />
 
 
-<meta name="date" content="2021-05-03" />
+<meta name="date" content="2023-03-27" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,8 +32,8 @@
   
 <link rel="prev" href="how-to-use-this-book.html"/>
 <link rel="next" href="quick-intro-to-r.html"/>
-<script src="libs/header-attrs-2.7/header-attrs.js"></script>
-<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -50,7 +49,9 @@
 
 
 
-
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 <link href="libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet" />
 <script src="libs/pagedtable-1.1/js/pagedtable.js"></script>
 
@@ -93,7 +94,7 @@ code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
 code span.at { color: #7d9029; } /* Attribute */
 code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
+code span.bu { color: #008000; } /* BuiltIn */
 code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
 code span.ch { color: #4070a0; } /* Char */
 code span.cn { color: #880000; } /* Constant */
@@ -106,7 +107,7 @@ code span.er { color: #ff0000; font-weight: bold; } /* Error */
 code span.ex { } /* Extension */
 code span.fl { color: #40a070; } /* Float */
 code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
+code span.im { color: #008000; font-weight: bold; } /* Import */
 code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 code span.kw { color: #007020; font-weight: bold; } /* Keyword */
 code span.op { color: #666666; } /* Operator */
@@ -119,6 +120,7 @@ code span.va { color: #19177c; } /* Variable */
 code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
+
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
@@ -275,7 +277,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="10" data-path="building-pipelines.html"><a href="building-pipelines.html"><i class="fa fa-check"></i><b>10</b> Building pipelines</a>
 <ul>
-<li class="chapter" data-level="10.1" data-path="building-pipelines.html"><a href="building-pipelines.html#why-do-we-need-pipes"><i class="fa fa-check"></i><b>10.1</b> Why do we need ‘pipes?’</a></li>
+<li class="chapter" data-level="10.1" data-path="building-pipelines.html"><a href="building-pipelines.html#why-do-we-need-pipes"><i class="fa fa-check"></i><b>10.1</b> Why do we need ‘pipes’?</a></li>
 <li class="chapter" data-level="10.2" data-path="building-pipelines.html"><a href="building-pipelines.html#using-pipes"><i class="fa fa-check"></i><b>10.2</b> Using pipes (<code>%&gt;%</code>)</a></li>
 </ul></li>
 <li class="chapter" data-level="11" data-path="helper-functions.html"><a href="helper-functions.html"><i class="fa fa-check"></i><b>11</b> Helper functions</a>
@@ -409,60 +411,60 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="get-up-and-running" class="section level1 unnumbered">
-<h1>Get up and running</h1>
-<div id="different-ways-to-run-rstudio" class="section level2 unnumbered">
-<h2>Different ways to run RStudio</h2>
+<div id="get-up-and-running" class="section level1 unnumbered hasAnchor">
+<h1>Get up and running<a href="get-up-and-running.html#get-up-and-running" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="different-ways-to-run-rstudio" class="section level2 unnumbered hasAnchor">
+<h2>Different ways to run RStudio<a href="get-up-and-running.html#different-ways-to-run-rstudio" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>We can run RStudio in a variety of different ways—</p>
 <ol style="list-style-type: decimal">
 <li>Most people use the version of RStudio called <strong>RStudio Desktop</strong>, either in its free-to-use guise (Open Source Edition) or the commercial version (RStudio Desktop Pro). The desktop version of RStudio are stand-alone applications that run locally on a computer and have to be installed like any other piece of software. This is generally easy, but you can run into problems if you have an old computer or a Chromebook.</li>
 <li>The second way to use RStudio is by accessing a version called <strong>RStudio Server</strong> through a web browser. RStudio Server is usually administered by professional IT people. Life is easy if you belong to an organisation that has set up RStudio Server, because all you need to get going is a user account, a semi-modern web browser and an internet connection.</li>
-<li>Finally, the company that makes RStudio also runs a commercial cloud-based solution called <a href="https://rstudio.com/products/cloud/">RStudio Cloud</a>. This allows anyone web browser and an internet connection to use R and RStudio. Although there is a free version, this is fairly limited meaning you end up paying a monthly fee to do ‘real work.’ However, RStudio Cloud can be a good backup option when all else fails.</li>
+<li>Finally, the company that makes RStudio also runs a commercial cloud-based solution called <a href="https://rstudio.com/products/cloud/">RStudio Cloud</a>. This allows anyone web browser and an internet connection to use R and RStudio. Although there is a free version, this is fairly limited meaning you end up paying a monthly fee to do ‘real work’. However, RStudio Cloud can be a good backup option when all else fails.</li>
 </ol>
-<div id="do-you-need-to-install-r-and-rstudio" class="section level4 unnumbered infobox information">
-<h4>Do you need to install R and RStudio?</h4>
+<div id="do-you-need-to-install-r-and-rstudio" class="section level4 unnumbered hasAnchor infobox information">
+<h4>Do you need to install R and RStudio?<a href="get-up-and-running.html#do-you-need-to-install-r-and-rstudio" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>If you’re lucky enough to have access to RStudio Server or an RStudio Cloud account you don’t need to install R and RStudio on your own computer. Just access those cloud service through a decent web browser. That said, it can be useful to have a local copy on your own computer, e.g. because you don’t have a reliable internet connection. Obviously, if you can’t access those cloud services you’ll have to install R and RStudio to use them!</p>
 </div>
 </div>
-<div id="installing-r-and-rstudio-locally" class="section level2 unnumbered">
-<h2>Installing R and RStudio locally</h2>
+<div id="installing-r-and-rstudio-locally" class="section level2 unnumbered hasAnchor">
+<h2>Installing R and RStudio locally<a href="get-up-and-running.html#installing-r-and-rstudio-locally" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>It does not need to cost a penny to use R and RStudio. The source code for R is open source, meaning anyone with the time, energy and expertise is free to download it and alter it as they please. Open source does not necessarily mean free, as in it costs £0 to use, but luckily R <strong>is</strong> free in this sense. On the other hand, RStudio is developed and maintained by a for-profit company (called… RStudio). Luckily, because they make their money selling professional software and services, the open source desktop version of RStudio is also free to use. This section will show you how to download and install R and RStudio.</p>
-<div id="installing-r" class="section level4 unnumbered">
-<h4>Installing R</h4>
+<div id="installing-r" class="section level4 unnumbered hasAnchor">
+<h4>Installing R<a href="get-up-and-running.html#installing-r" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>In order to install R you need to download the appropriate installer from the Comprehensive R Archive Network (<a href="http://cran.r-project.org">CRAN</a>). We are going to use the “base distribution” as this contains everything you need to use R under normal circumstances. There is a single <a href="http://cran.r-project.org/bin/windows/base/">installer</a> for Windows. On a Mac, it’s important to match the <a href="http://cran.r-project.org/bin/macosx/">installer</a> to the version of OS X. In either case, R uses a the standard install mechanism that should be familiar to anyone who has installed an application on their machine. There is no need to change the default settings—doing so will probably lead to problems later on.</p>
 <p>After installing R it should be visible in the Programs menu on a Windows computer or in the Applications folder on a Mac. In fact, that thing labelled ‘R’ is very simple a <a href="http://en.wikipedia.org/wiki/Graphical_user_interface">Graphical User Interface</a> (GUI) for R. When we launch the R GUI we’re presented with something called the Console, which is where we can interact directly with R by typing things at the so-called prompt, <code>&gt;</code>, and a few buttons and menus for managing common tasks. We will not study the GUIs in any detail because we recommend using RStudio, but it’s important to be aware they exist so that you don’t accidentally use them instead of RStudio.</p>
 </div>
-<div id="installing-rstudio" class="section level3 unnumbered">
-<h3>Installing RStudio</h3>
+<div id="installing-rstudio" class="section level3 unnumbered hasAnchor">
+<h3>Installing RStudio<a href="get-up-and-running.html#installing-rstudio" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>RStudio can be downloaded from the RStudio <a href="http://www.rstudio.com/products/RStudio/#Desk">download page</a>. The one to go for is the Open Source Edition of RStudio Desktop, <strong>not</strong> the commercial version of RStudio Desktop called RStudio Desktop Pro. RStudio installs like any other piece of software—just run the installer and follow the instructions. There’s no need to configure after after installation.</p>
 </div>
 </div>
-<div id="a-quick-look-at-rstudio" class="section level2 unnumbered">
-<h2>A quick look at RStudio</h2>
+<div id="a-quick-look-at-rstudio" class="section level2 unnumbered hasAnchor">
+<h2>A quick look at RStudio<a href="get-up-and-running.html#a-quick-look-at-rstudio" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Once installed RStudio runs like any other stand-alone application via the Programs menu or the Applications folder on a Windows PC or Mac, respectively (though it will only work properly if R is also installed). Here is how RStudio appears the first time it runs on a Mac:</p>
-<p><img src="images/RStudio-3-pane.png" width="1456" style="display: block; margin: auto;" /></p>
+<p><img src="images/RStudio-3-pane.png" style="display: block; margin: auto;" /></p>
 <p>There are three panes inside a single window, which we have labelled with red numbers. Each of these has a well-defined purpose. Let’s take a quick look at these:</p>
 <ol style="list-style-type: decimal">
 <li><p>The large window on the left is the Console. This is basically where R lives inside RStudio. The Console lets you know what R is doing and provides a mechanism to interact with R by typing instructions. All this happens at the prompt, <code>&gt;</code>. You will be working in the Console in the next chapter so we won’t say any more about this here.</p></li>
 <li><p>The window at the top right contains two or more tabs. One of these, labelled <strong>Environment</strong>, allows us to see all the R ‘objects’ we can currently access. Another, labelled <strong>History</strong>, allows us to see a list of instructions we’ve previously sent to R. The buttons in this tab allow us to reuse or save these instructions.</p></li>
 <li><p>The window at the bottom right contains five tabs. The first, labelled <strong>Files</strong>, gives us a way to interact with the files and folders. The next tab, labelled <strong>Plots</strong>, is where any figures we produce are displayed. This tab also allows you to save your figures to file. The <strong>Packages</strong> tab is where we view, install and update packages used to extend the functionality of R. The <strong>Help</strong> tab is where you can access and display various different help pages. Finally, <strong>Viewer</strong> is an embedded web browser.</p></li>
 </ol>
-<div id="my-rstudio-looks-different" class="section level4 unnumbered infobox information">
-<h4>My RStudio looks different!</h4>
+<div id="my-rstudio-looks-different" class="section level4 unnumbered hasAnchor infobox information">
+<h4>My RStudio looks different!<a href="get-up-and-running.html#my-rstudio-looks-different" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>Don’t be alarmed if RStudio looks different on your computer. RStudio saves its state between different sessions, so if you’ve have already messed about with it you will see these changes when you restart it. For example, there is a fourth pane that is often be visible in RStudio—the source code Editor we mentioned above.</p>
 </div>
 </div>
-<div id="working-at-console" class="section level2 unnumbered">
-<h2>Working at the Console in RStudio</h2>
+<div id="working-at-console" class="section level2 unnumbered hasAnchor">
+<h2>Working at the Console in RStudio<a href="get-up-and-running.html#working-at-console" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>R was designed to be used interactively—it is what is known as an <strong>interpreted language</strong>, which we can interact with via something called a Command Line Interface (CLI). This is just a fancy way of saying that we can type instructions to “do something” into the Console and those instructions will then be interpreted when we hit the Enter key. If our R instructions do not contain any errors, R will then do something like read in some data, perform a calculation, make a figure, and so on. What actually happens obviously depends on what we ask it to do.</p>
 <p>Let’s briefly see what all this means by doing something very simple with R. Type <code>1 + 3</code> at the Console and hit the Enter key:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="get-up-and-running.html#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span><span class="sc">+</span><span class="dv">3</span></span></code></pre></div>
 <pre><code>## [1] 4</code></pre>
 <p>The first line above just reminds us what we typed into the Console. The line after that beginning with <code>##</code> shows us what R printed to the Console after reading and evaluating our instructions.</p>
-<p>What just happened? We can ignore the <code>[1]</code> bit for now (the meaning of this will become clear later in the course). What are we left with – the number 4. The instruction we gave R was in effect “evaluate the expression <code>1 + 3</code>.” R read this in, decided it was a valid R expression, evaluated the expression, and then printed the result to the Console for us. Unsurprisingly, the expression <code>1 + 3</code> is a request to add the numbers 1 and 3, and so R prints the number 4 to the Console.</p>
+<p>What just happened? We can ignore the <code>[1]</code> bit for now (the meaning of this will become clear later in the course). What are we left with – the number 4. The instruction we gave R was in effect “evaluate the expression <code>1 + 3</code>”. R read this in, decided it was a valid R expression, evaluated the expression, and then printed the result to the Console for us. Unsurprisingly, the expression <code>1 + 3</code> is a request to add the numbers 1 and 3, and so R prints the number 4 to the Console.</p>
 <p>OK… that was not very exciting. In the next chapter we will start learning to use R to carry out more useful calculations. The important take-away from this is that this sequence of events—reading instructions, evaluating those instructions and printing their output (if there is any output)—happens every time we type or paste something into the Console and hit Enter.</p>
-<div id="what-does-that-word-expression-mean" class="section level4 unnumbered infobox information">
-<h4>What does that word ‘expression’ mean?</h4>
+<div id="what-does-that-word-expression-mean" class="section level4 unnumbered hasAnchor infobox information">
+<h4>What does that word ‘expression’ mean?<a href="get-up-and-running.html#what-does-that-word-expression-mean" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>Why do we keep using that word <em>expression</em>? Here is what the <a href="http://en.wikipedia.org/wiki/Expression_(computer_science)">Wikipedia page</a> says:</p>
 <blockquote>
 <p>An expression in a programming language is a combination of explicit values, constants, variables, operators, and functions that are interpreted according to the particular rules of precedence and of association for a particular programming language, which computes and then produces another value.</p>
@@ -486,7 +488,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
@@ -505,6 +506,7 @@ gitbook.start({
 "weibo": false,
 "instapaper": false,
 "vk": false,
+"whatsapp": false,
 "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
@@ -525,6 +527,10 @@ gitbook.start({
 "text": null
 },
 "download": ["intro-bio-data-book.pdf", "intro-bio-data-book.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
 "toc": {
 "collapse": "section"
 }
@@ -538,7 +544,7 @@ gitbook.start({
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:")
       if (/^https?:/.test(src))
         src = src.replace(/^https?:/, '');

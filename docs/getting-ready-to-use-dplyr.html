@@ -6,11 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 6 Getting ready to use dplyr | Exploratory Data Analysis with R</title>
   <meta name="description" content="This is the Exploratory Data Analysis in R book provided by the School of Biosciences at the University of Sheffield." />
-  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.33 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 6 Getting ready to use dplyr | Exploratory Data Analysis with R" />
   <meta property="og:type" content="book" />
-  
   
   <meta property="og:description" content="This is the Exploratory Data Analysis in R book provided by the School of Biosciences at the University of Sheffield." />
   
@@ -24,7 +23,7 @@
 <meta name="author" content="Dylan Childs" />
 
 
-<meta name="date" content="2021-05-03" />
+<meta name="date" content="2023-03-27" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,8 +32,8 @@
   
 <link rel="prev" href="packages.html"/>
 <link rel="next" href="working-with-variables.html"/>
-<script src="libs/header-attrs-2.7/header-attrs.js"></script>
-<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -50,7 +49,9 @@
 
 
 
-
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 <link href="libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet" />
 <script src="libs/pagedtable-1.1/js/pagedtable.js"></script>
 
@@ -93,7 +94,7 @@ code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
 code span.at { color: #7d9029; } /* Attribute */
 code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
+code span.bu { color: #008000; } /* BuiltIn */
 code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
 code span.ch { color: #4070a0; } /* Char */
 code span.cn { color: #880000; } /* Constant */
@@ -106,7 +107,7 @@ code span.er { color: #ff0000; font-weight: bold; } /* Error */
 code span.ex { } /* Extension */
 code span.fl { color: #40a070; } /* Float */
 code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
+code span.im { color: #008000; font-weight: bold; } /* Import */
 code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 code span.kw { color: #007020; font-weight: bold; } /* Keyword */
 code span.op { color: #666666; } /* Operator */
@@ -119,6 +120,7 @@ code span.va { color: #19177c; } /* Variable */
 code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
+
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
@@ -275,7 +277,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="10" data-path="building-pipelines.html"><a href="building-pipelines.html"><i class="fa fa-check"></i><b>10</b> Building pipelines</a>
 <ul>
-<li class="chapter" data-level="10.1" data-path="building-pipelines.html"><a href="building-pipelines.html#why-do-we-need-pipes"><i class="fa fa-check"></i><b>10.1</b> Why do we need ‘pipes?’</a></li>
+<li class="chapter" data-level="10.1" data-path="building-pipelines.html"><a href="building-pipelines.html#why-do-we-need-pipes"><i class="fa fa-check"></i><b>10.1</b> Why do we need ‘pipes’?</a></li>
 <li class="chapter" data-level="10.2" data-path="building-pipelines.html"><a href="building-pipelines.html#using-pipes"><i class="fa fa-check"></i><b>10.2</b> Using pipes (<code>%&gt;%</code>)</a></li>
 </ul></li>
 <li class="chapter" data-level="11" data-path="helper-functions.html"><a href="helper-functions.html"><i class="fa fa-check"></i><b>11</b> Helper functions</a>
@@ -409,16 +411,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="getting-ready-to-use-dplyr" class="section level1" number="6">
-<h1><span class="header-section-number">Chapter 6</span> Getting ready to use <strong>dplyr</strong></h1>
-<div id="introduction-2" class="section level2" number="6.1">
-<h2><span class="header-section-number">6.1</span> Introduction</h2>
+<div id="getting-ready-to-use-dplyr" class="section level1 hasAnchor" number="6">
+<h1><span class="header-section-number">Chapter 6</span> Getting ready to use <strong>dplyr</strong><a href="getting-ready-to-use-dplyr.html#getting-ready-to-use-dplyr" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="introduction-2" class="section level2 hasAnchor" number="6.1">
+<h2><span class="header-section-number">6.1</span> Introduction<a href="getting-ready-to-use-dplyr.html#introduction-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Data wrangling is the process of cleaning and manipulating data to get it ready for analysis, for example, by creating derived variables and subsets of the data. Although not the most exciting part of a study—we want to answer questions, not format data—data wrangling is critical. This step in a data analysis workflow can become very time-consuming if not tackled with the right tools.</p>
 <p>The next few chapters will introduce the <strong>dplyr</strong> package. <strong>dplyr</strong> is an important member of the tidyverse ecosystem. Its job is to provide a set of tools to address common data manipulation tasks, such as selecting subsets of data, making new variables, and summarising data in various ways.</p>
 <p>However, before we can start to use these tools, we need a bit of a foundation. That is the aim of this chapter. We will provide some background to the so-called tidy data principles, introduce the data set we’ll be using in our examples, discuss the tidyverse version of data frames known as the tibble, and finally, introduce the <strong>dplyr</strong> package.</p>
 </div>
-<div id="tidy-data" class="section level2" number="6.2">
-<h2><span class="header-section-number">6.2</span> Tidy data</h2>
+<div id="tidy-data" class="section level2 hasAnchor" number="6.2">
+<h2><span class="header-section-number">6.2</span> Tidy data<a href="getting-ready-to-use-dplyr.html#tidy-data" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p><strong>dplyr</strong> will work with any data frame. However, it is most powerful when data are organised according to <a href="http://vita.had.co.nz/papers/tidy-data.pdf">tidy data</a> conventions for rectangular data sets. Tidy data has a specific structure that makes it easy to manipulate, model and visualise. A tidy data set is one where each variable is only found in one column and each row contains one unique observation (an imaged cell, a treated organism, an experimental plot, and so on).</p>
 <p>The basic principles of tidy data are not too difficult to understand. We’ll use an example to illustrate what the “one variable = one column” and “one observation = one row” idea means. Let’s return to the made-up experiment investigating the response of communities to fertilizer addition. This time, imagine we had only measured biomass, but that we had measured it at two time points throughout the experiment.</p>
 <p>We’ll look at two ways to organise some artificial data from this experimental setup. The first uses a separate column for each biomass measurement:</p>
@@ -445,13 +447,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 11 Fertilser   T2    1012
 ## 12 Fertilser   T2     859</code></pre>
 <p>The change we made was to create an indicator variable called <code>Time</code> for the sampling occasion. In version one of the data, the time information was implicit—the time associated with a biomass measurement was encoded by column membership (<code>BiomassT1</code> vs <code>BiomassT2</code>). In the second version of the data set an indicator variable, <code>Time</code>, was created to label the sampling occasion explicitly. That simple change means each row corresponds to one distinct observation and each variable lives in one column. These data are now tidy and ideally set up for use with <strong>dplyr</strong>.</p>
-<div id="always-try-to-start-with-tidy-data" class="section level4 unnumbered infobox warning">
-<h4>Always try to start with tidy data</h4>
+<div id="always-try-to-start-with-tidy-data" class="section level4 unnumbered hasAnchor infobox warning">
+<h4>Always try to start with tidy data<a href="getting-ready-to-use-dplyr.html#always-try-to-start-with-tidy-data" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>The best way to make sure your data set is tidy is to store in that format <strong>when it’s first collected and recorded</strong>. Some packages can help convert non-tidy data into the tidy data format (e.g. the <strong>tidyr</strong> package), but life is much simpler if we ensure our data are tidy from the very beginning.</p>
 </div>
 </div>
-<div id="penguins-data-overview" class="section level2" number="6.3">
-<h2><span class="header-section-number">6.3</span> Penguins! 🐧+📊= 😃</h2>
+<div id="penguins-data-overview" class="section level2 hasAnchor" number="6.3">
+<h2><span class="header-section-number">6.3</span> Penguins! 🐧+📊= 😃<a href="getting-ready-to-use-dplyr.html#penguins-data-overview" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>To make progress with <strong>dplyr</strong>, we are going to need some data to play around with. The data we’ll use contains measurements taken from penguins on the Palmer Archipelago, off the north-western coast of the Antarctic Peninsula. Each row contains information about an individual penguin, including:</p>
 <ul>
 <li>the species it belongs to,</li>
@@ -460,7 +462,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>its body mass and sex,</li>
 <li>and finally, the year of capture.</li>
 </ul>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-101"></span>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:unnamed-chunk-101"></span>
 <img src="images/lter_penguins.png" alt="Meet the Palmer penguins (artwork by Allison Horst)" width="75%" />
 <p class="caption">
 Figure 6.1: Meet the Palmer penguins (artwork by Allison Horst)
@@ -481,8 +483,8 @@ Figure 6.1: Meet the Palmer penguins (artwork by Allison Horst)
 </ul>
 <p>So… data frames are table-like objects with rows and columns. They can also be seen in even simpler terms—data frames are simply collections of vectors, where each one represents a different aspect of a multi-faceted data set.</p>
 <p>We’re going to be seeing a lot of this data set in the remaining chapters so we won’t say anything more about it now.</p>
-<div id="where-can-we-get-the-penguins-data" class="section level4 unnumbered infobox information">
-<h4>Where can we get the penguins data?</h4>
+<div id="where-can-we-get-the-penguins-data" class="section level4 unnumbered hasAnchor infobox information">
+<h4>Where can we get the penguins data?<a href="getting-ready-to-use-dplyr.html#where-can-we-get-the-penguins-data" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>The Palmer penguins data were collected and made available by <a href="https://www.uaf.edu/cfos/people/faculty/detail/kristen-gorman.php">Dr. Kristen Gorman</a> and the <a href="https://pal.lternet.edu/">Palmer Station</a>. The data set exists mostly to support people learning and teaching R. It isn’t part of base R, though. We have to import it into R somehow. There are two options:</p>
 <ol style="list-style-type: decimal">
 <li><p>The data are available in an R package called… <a href="https://allisonhorst.github.io/palmerpenguins/index.html">palmerpenguins</a>. Like other packages, <strong>palmerpenguins</strong> can be installed from <a href="https://cran.r-project.org/web/packages/palmerpenguins/index.html">CRAN</a> using either <code>install.packages</code> or the usual RStudio point-and-click mechanism. Once installed, we can make it available by running <code>library(palmerpenguins)</code> in any R session. After that, just type the name of the data set and R will find it and use it. The version in <strong>palmerpenguins</strong> is called <code>penguins</code>, by the way.</p></li>
@@ -490,13 +492,13 @@ Figure 6.1: Meet the Palmer penguins (artwork by Allison Horst)
 </ol>
 </div>
 </div>
-<div id="um-tibbles" class="section level2" number="6.4">
-<h2><span class="header-section-number">6.4</span> Um… tibbles?</h2>
-<p>To increase the scope of what the tidyverse can do, its makers created a special kind of data object known as a ‘tibble.’ This is meant to sound like the word ‘table’ pronounced by a New Zealander. We’re not lying—the person who started the tidyverse is from New Zealand. Its name is a clue that a tibble is a table-like object, i.e. a rectangular data structure similar to a data frame.</p>
+<div id="um-tibbles" class="section level2 hasAnchor" number="6.4">
+<h2><span class="header-section-number">6.4</span> Um… tibbles?<a href="getting-ready-to-use-dplyr.html#um-tibbles" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>To increase the scope of what the tidyverse can do, its makers created a special kind of data object known as a ‘tibble’. This is meant to sound like the word ‘table’ pronounced by a New Zealander. We’re not lying—the person who started the tidyverse is from New Zealand. Its name is a clue that a tibble is a table-like object, i.e. a rectangular data structure similar to a data frame.</p>
 <p>In fact, the easiest way to conceptualise a tibble is as a special data frame with a few extra whistles and bells. More often than not, it’s not necessary to pay attention to whether we’re working with an ordinary data frame or a tidyverse tibble—we can often treat them as though they are interchangeable.</p>
 <p>That said, there are exceptions to this rule of thumb, and we do occasionally need to work out which one we’re using. A simple way to do this is by printing the data object. Imagine that we’ve imported the Palmer penguins into R and stored it in a tibble called <code>penguins</code>. This is what that would look like if we printed it at the Console:</p>
 <div class="sourceCode" id="cb188"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb188-1"><a href="getting-ready-to-use-dplyr.html#cb188-1" aria-hidden="true" tabindex="-1"></a>penguins</span></code></pre></div>
-<pre><code>## # A tibble: 344 x 8
+<pre><code>## # A tibble: 344 × 8
 ##    species island    bill_length_mm bill_depth_mm flipper_length_mm body_mass_g
 ##    &lt;chr&gt;   &lt;chr&gt;              &lt;dbl&gt;         &lt;dbl&gt;             &lt;int&gt;       &lt;int&gt;
 ##  1 Adelie  Torgersen           39.1          18.7               181        3750
@@ -509,11 +511,12 @@ Figure 6.1: Meet the Palmer penguins (artwork by Allison Horst)
 ##  8 Adelie  Torgersen           39.2          19.6               195        4675
 ##  9 Adelie  Torgersen           34.1          18.1               193        3475
 ## 10 Adelie  Torgersen           42            20.2               190        4250
-## # … with 334 more rows, and 2 more variables: sex &lt;chr&gt;, year &lt;int&gt;</code></pre>
+## # ℹ 334 more rows
+## # ℹ 2 more variables: sex &lt;chr&gt;, year &lt;int&gt;</code></pre>
 <p>The formatting applied to the output is telling us <code>penguins</code> is a tibble rather than an ordinary data frame (we only called it a data frame earlier because we had not introduced the concept of a tibble yet). There are a couple of clues about this in that printout. The very obvious one is the first line: <code># A tibble: 344 x 8</code>. The printed output states <code>penguins</code> is a tibble! The output is also truncated—only the first ten lines were printed, and any columns that won’t fit on one row are summarised at the bottom (i.e. <code>sex</code> and <code>year</code>).</p>
 </div>
-<div id="missing-values" class="section level2" number="6.5">
-<h2><span class="header-section-number">6.5</span> Missing values</h2>
+<div id="missing-values" class="section level2 hasAnchor" number="6.5">
+<h2><span class="header-section-number">6.5</span> Missing values<a href="getting-ready-to-use-dplyr.html#missing-values" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Take a close look at the values of the body mass data (<code>body_mass_g</code>) in <code>penguins</code> (we’re using <code>$</code> to extract the whole column):</p>
 <div class="sourceCode" id="cb190"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb190-1"><a href="getting-ready-to-use-dplyr.html#cb190-1" aria-hidden="true" tabindex="-1"></a>penguins<span class="sc">$</span>body_mass_g</span></code></pre></div>
 <pre><code>##   [1] 3750 3800 3250   NA 3450 3650 3625 4675 3475 4250 3300 3700 3200 3800 4400
@@ -543,9 +546,9 @@ Figure 6.1: Meet the Palmer penguins (artwork by Allison Horst)
 <p>Missing data crop up all the time. They are just one of those facts of life—maybe the recording machine broke one afternoon, perhaps one of our organisms was infected by a pathogen, or maybe a cow ate one of our experimental plots. One of the nice things about R is that it knows how to represent missing data. It does this using the <code>NA</code> symbol.</p>
 <p>You need to be aware of missing values when they are present. Why? Because the behaviour of many functions is affected by the presence of <code>NA</code>s. Things get confusing if we don’t understand that behaviour. We will see some examples of this in the next few chapters.</p>
 </div>
-<div id="why-dplyr" class="section level2" number="6.6">
-<h2><span class="header-section-number">6.6</span> Introducing <strong>dplyr</strong></h2>
-<p>The <strong>dplyr</strong> package has been carefully designed to make it easy to manipulate ‘rectangular data,’ such as data frames. <strong>dplyr</strong> is very consistent in the way its functions work. For example, the first argument of the main <strong>dplyr</strong> functions is always an object containing our data. This consistency makes it very easy to get to grips with each of the main <strong>dplyr</strong> functions—it’s often possible to understand how one works by seeing one or two examples of its use.</p>
+<div id="why-dplyr" class="section level2 hasAnchor" number="6.6">
+<h2><span class="header-section-number">6.6</span> Introducing <strong>dplyr</strong><a href="getting-ready-to-use-dplyr.html#why-dplyr" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The <strong>dplyr</strong> package has been carefully designed to make it easy to manipulate ‘rectangular data’, such as data frames. <strong>dplyr</strong> is very consistent in the way its functions work. For example, the first argument of the main <strong>dplyr</strong> functions is always an object containing our data. This consistency makes it very easy to get to grips with each of the main <strong>dplyr</strong> functions—it’s often possible to understand how one works by seeing one or two examples of its use.</p>
 <p>Another reason for using <strong>dplyr</strong> is that it is orientated around a few core functions, each designed to do one thing well. These <strong>dplyr</strong> functions are sometimes referred to as its ‘verbs’ to reflect the fact that they ‘do something’ to data. For example:</p>
 <ul>
 <li><code>select</code> is obtains a subset of variables,</li>
@@ -556,14 +559,14 @@ Figure 6.1: Meet the Palmer penguins (artwork by Allison Horst)
 </ul>
 <p>Notice that the names are chosen to reflect what each verb/function does to the input data. We’ll cover each of these verbs in detail in later chapters, as well as a few additional ones, such as <code>rename</code> and <code>group_by</code>.</p>
 <p>Apart from being easy to use, <strong>dplyr</strong> is also fast. This doesn’t matter for small data sets but can be important when working with data sets with hundreds of thousands of rows. The <strong>dplyr</strong> package also allows us to work with data stored in different ways, for example, by interacting directly with several database systems. We’re going to focus on using it with data frames and tibbles. But remember—once you know how to use <strong>dplyr</strong> with data frames its easy to use it for work with other kinds of data sources.</p>
-<div id="a-dplyr-cheat-sheet" class="section level4 unnumbered infobox information">
-<h4>A <strong>dplyr</strong> cheat sheet</h4>
-<p>The developers of RStudio have produced a very usable <a href="http://www.rstudio.com/resources/cheatsheets/">cheat sheat</a> that summarises the main data wrangling tools provided by <strong>dplyr</strong>.</p>
-<p><img src="images/data-transformation.jpg" style="display: block; margin: auto;" /></p>
+<div id="a-dplyr-cheat-sheet" class="section level4 unnumbered hasAnchor infobox information">
+<h4>A <strong>dplyr</strong> cheat sheet<a href="getting-ready-to-use-dplyr.html#a-dplyr-cheat-sheet" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>The developers of RStudio have produced a very usable <a href="https://posit.co/resources/cheatsheets/">cheat sheat</a> that summarises the main data wrangling tools provided by <strong>dplyr</strong> (find the one called ‘Data transformation with dplyr’).</p>
+<p><img src="images/data-transformation.jpg" width="1146" style="display: block; margin: auto;" /></p>
 <p>Our advice is to download this, print out a copy, and refer to it often as you start working with <strong>dplyr</strong>.</p>
 </div>
-<div id="more-dplyr" class="section level3" number="6.6.1">
-<h3><span class="header-section-number">6.6.1</span> A first look at <strong>dplyr</strong></h3>
+<div id="more-dplyr" class="section level3 hasAnchor" number="6.6.1">
+<h3><span class="header-section-number">6.6.1</span> A first look at <strong>dplyr</strong><a href="getting-ready-to-use-dplyr.html#more-dplyr" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Let’s take a preliminary look at the <strong>dplyr</strong> package. The package is not part of the base R installation, so we have to have installed it first. Remember, once installed, there is no need to install the package every time we need to use it. We do have to use <code>library</code> to load and attach the package every time we want to use it:</p>
 <div class="sourceCode" id="cb192"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb192-1"><a href="getting-ready-to-use-dplyr.html#cb192-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;dplyr&quot;</span>)</span></code></pre></div>
 <p>Let’s look at one handy <strong>dplyr</strong> function now. Sometimes we just need a quick, compact summary of a data frame or tibble. This is the job of the <code>glimpse</code> function from <strong>dplyr</strong>:</p>
@@ -580,9 +583,9 @@ Figure 6.1: Meet the Palmer penguins (artwork by Allison Horst)
 ## $ year              &lt;int&gt; 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007…</code></pre>
 <p>The function takes one argument: the name of a data frame or tibble. It then tells us how many rows it has, how many columns there are, what these columns are called, and what type of data is associated with them. This function is useful when we need a quick overview of what’s inside our data set. Some advice—use this function on any new data set before trying to do anything with it.</p>
 </div>
-<div id="dplyr-pseudocode" class="section level3" number="6.6.2">
-<h3><span class="header-section-number">6.6.2</span> <strong>dplyr</strong> pseudocode</h3>
-<p>We’ll wrap-up this chapter with a quick mention of ‘pseudocode.’ Pseudocode uses structural conventions of normal R code but is intended for us (humans) to read rather than the computer. We use it summarise how <strong>dplyr</strong> functions work. Here’s an example you will encounter in the next chapter:</p>
+<div id="dplyr-pseudocode" class="section level3 hasAnchor" number="6.6.2">
+<h3><span class="header-section-number">6.6.2</span> <strong>dplyr</strong> pseudocode<a href="getting-ready-to-use-dplyr.html#dplyr-pseudocode" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>We’ll wrap-up this chapter with a quick mention of ‘pseudocode’. Pseudocode uses structural conventions of normal R code but is intended for us (humans) to read rather than the computer. We use it summarise how <strong>dplyr</strong> functions work. Here’s an example you will encounter in the next chapter:</p>
 <div class="sourceCode" id="cb195"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb195-1"><a href="getting-ready-to-use-dplyr.html#cb195-1" aria-hidden="true" tabindex="-1"></a><span class="fu">select</span>(<span class="sc">&lt;</span>data<span class="sc">&gt;</span>, <span class="sc">&lt;</span>variable<span class="dv">-1</span><span class="sc">&gt;</span>, <span class="sc">&lt;</span>variable<span class="dv">-2</span><span class="sc">&gt;</span>, ...)</span></code></pre></div>
 <p><strong>This is not an example we can run.</strong> It is pseudocode that serves as a template for using the <strong>dplyr</strong> <code>select</code> function. The words surrounded by ‘angle brackets’ (<code>&lt; &gt;</code>) are placeholders. If we want to turn this pseudocode into real R code we have to <strong>replace those placeholders</strong>. For example, <code>&lt;data&gt;</code> is a placeholder for the name of a data set. We would replace that with the word <code>penguins</code> if we want to use select on our example data set (we’d also have to do something with the other placeholders (e.g. <code>&lt;variable-1&gt;</code>)—we’ll get to that later).</p>
 <p>That’s enough about pseudocode and <strong>dplyr</strong> templates. We’ll see plenty of these in the next few chapters.</p>
@@ -600,7 +603,6 @@ Figure 6.1: Meet the Palmer penguins (artwork by Allison Horst)
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
@@ -619,6 +621,7 @@ gitbook.start({
 "weibo": false,
 "instapaper": false,
 "vk": false,
+"whatsapp": false,
 "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
@@ -639,6 +642,10 @@ gitbook.start({
 "text": null
 },
 "download": ["intro-bio-data-book.pdf", "intro-bio-data-book.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
 "toc": {
 "collapse": "section"
 }
@@ -652,7 +659,7 @@ gitbook.start({
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:")
       if (/^https?:/.test(src))
         src = src.replace(/^https?:/, '');

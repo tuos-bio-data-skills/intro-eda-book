@@ -6,11 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 2 Using functions | Exploratory Data Analysis with R</title>
   <meta name="description" content="This is the Exploratory Data Analysis in R book provided by the School of Biosciences at the University of Sheffield." />
-  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.33 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 2 Using functions | Exploratory Data Analysis with R" />
   <meta property="og:type" content="book" />
-  
   
   <meta property="og:description" content="This is the Exploratory Data Analysis in R book provided by the School of Biosciences at the University of Sheffield." />
   
@@ -24,7 +23,7 @@
 <meta name="author" content="Dylan Childs" />
 
 
-<meta name="date" content="2021-05-03" />
+<meta name="date" content="2023-03-27" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,8 +32,8 @@
   
 <link rel="prev" href="quick-intro-to-r.html"/>
 <link rel="next" href="vectors.html"/>
-<script src="libs/header-attrs-2.7/header-attrs.js"></script>
-<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -50,7 +49,9 @@
 
 
 
-
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 <link href="libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet" />
 <script src="libs/pagedtable-1.1/js/pagedtable.js"></script>
 
@@ -93,7 +94,7 @@ code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
 code span.at { color: #7d9029; } /* Attribute */
 code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
+code span.bu { color: #008000; } /* BuiltIn */
 code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
 code span.ch { color: #4070a0; } /* Char */
 code span.cn { color: #880000; } /* Constant */
@@ -106,7 +107,7 @@ code span.er { color: #ff0000; font-weight: bold; } /* Error */
 code span.ex { } /* Extension */
 code span.fl { color: #40a070; } /* Float */
 code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
+code span.im { color: #008000; font-weight: bold; } /* Import */
 code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 code span.kw { color: #007020; font-weight: bold; } /* Keyword */
 code span.op { color: #666666; } /* Operator */
@@ -119,6 +120,7 @@ code span.va { color: #19177c; } /* Variable */
 code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
+
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
@@ -275,7 +277,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="10" data-path="building-pipelines.html"><a href="building-pipelines.html"><i class="fa fa-check"></i><b>10</b> Building pipelines</a>
 <ul>
-<li class="chapter" data-level="10.1" data-path="building-pipelines.html"><a href="building-pipelines.html#why-do-we-need-pipes"><i class="fa fa-check"></i><b>10.1</b> Why do we need ‘pipes?’</a></li>
+<li class="chapter" data-level="10.1" data-path="building-pipelines.html"><a href="building-pipelines.html#why-do-we-need-pipes"><i class="fa fa-check"></i><b>10.1</b> Why do we need ‘pipes’?</a></li>
 <li class="chapter" data-level="10.2" data-path="building-pipelines.html"><a href="building-pipelines.html#using-pipes"><i class="fa fa-check"></i><b>10.2</b> Using pipes (<code>%&gt;%</code>)</a></li>
 </ul></li>
 <li class="chapter" data-level="11" data-path="helper-functions.html"><a href="helper-functions.html"><i class="fa fa-check"></i><b>11</b> Helper functions</a>
@@ -409,22 +411,22 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="using-functions" class="section level1" number="2">
-<h1><span class="header-section-number">Chapter 2</span> Using functions</h1>
-<div id="intro-functions" class="section level2" number="2.1">
-<h2><span class="header-section-number">2.1</span> Introduction</h2>
-<p>Functions are an essential building block of any programming language. The job of a function is to carry out a calculation or computation that would typically require many lines code to do ‘from scratch.’ Functions allow us to reuse common computations while offering some control over the precise details of what happens. To use R effectively—even if our needs are very simple—we need to understand how to use functions. This chapter aims to explain what functions are for, how to use them, and how to avoid mistakes when doing so, without getting lost in the detail of how they work.</p>
+<div id="using-functions" class="section level1 hasAnchor" number="2">
+<h1><span class="header-section-number">Chapter 2</span> Using functions<a href="using-functions.html#using-functions" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="intro-functions" class="section level2 hasAnchor" number="2.1">
+<h2><span class="header-section-number">2.1</span> Introduction<a href="using-functions.html#intro-functions" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Functions are an essential building block of any programming language. The job of a function is to carry out a calculation or computation that would typically require many lines code to do ‘from scratch’. Functions allow us to reuse common computations while offering some control over the precise details of what happens. To use R effectively—even if our needs are very simple—we need to understand how to use functions. This chapter aims to explain what functions are for, how to use them, and how to avoid mistakes when doing so, without getting lost in the detail of how they work.</p>
 </div>
-<div id="functions-and-arguments" class="section level2" number="2.2">
-<h2><span class="header-section-number">2.2</span> Functions and arguments</h2>
+<div id="functions-and-arguments" class="section level2 hasAnchor" number="2.2">
+<h2><span class="header-section-number">2.2</span> Functions and arguments<a href="using-functions.html#functions-and-arguments" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Functions allow us to reuse a calculation. The best way to see what we mean by this is to see one in action. The <code>round</code> function rounds numbers to a significant number of digits (no surprises there). To use it, we could type this into the Console and hit Enter:</p>
 <div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb62-1"><a href="using-functions.html#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="at">x =</span> <span class="fl">3.141593</span>, <span class="at">digits =</span> <span class="dv">2</span>)</span></code></pre></div>
 <p>We have suppressed the output so that we can unpack things a bit first. We rely on the same basic construct every time we use a function. This starts with the name of the function as the prefix. In the example above, the function name is <code>round</code>. After the function name, we need a pair of opening and closing parentheses. This combination of name and parentheses alerts R to fact that we are using a function.</p>
 <p>What about the bits inside the parentheses? These are called the <strong>arguments</strong> of the function. That’s a horrible name, but it is the one that everyone uses, so we have to get used to it. Depending on how it was defined, a function can take zero, one, or more arguments. We will discuss this idea in more detail later in this section. In simple terms, the arguments control the behaviour of a function.</p>
 <p>We used the <code>round</code> function with two arguments. We supplied each one as a name-value pair separated by a comma. When working with arguments, name-value pairs occur either side of the equals sign (<code>=</code>), with the argument <strong>name</strong> on the left-hand side and its <strong>value</strong> on the right-hand side. The name serves to identify which argument we are working with, and the value is the thing that controls what that argument does.</p>
 <p>We call the process of associating argument names and values ‘setting the arguments’ of the function (or ‘supplying the arguments’). Notice the similarity between supplying function arguments and the assignment operation discussed in the last topic. The difference is that name-value pairs are associated with the <code>=</code> symbol when involved in arguments.</p>
-<div id="use-to-assign-arguments" class="section level4 unnumbered infobox warning">
-<h4>Use <code>=</code> to assign arguments</h4>
+<div id="use-to-assign-arguments" class="section level4 unnumbered hasAnchor infobox warning">
+<h4>Use <code>=</code> to assign arguments<a href="using-functions.html#use-to-assign-arguments" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p><strong>Do not</strong> use the assignment operator <code>&lt;-</code> inside the parentheses when working with functions. This is a “trust us” situation—you will end up in all kinds of difficulty if you do this!</p>
 </div>
 <p>The arguments control the behaviour of a function. Our job as users is to set the values of these to get the behaviour we want. However, The function determines arguments we are allowed to use, i.e. we are not free to choose whatever name we like<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a>.</p>
@@ -436,11 +438,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <pre><code>## [1] 3.142</code></pre>
 <p>This illustrates what we mean when we say arguments control the behaviour of the function—<code>digits</code> sets the number of significant digits calculated by <code>round</code>.</p>
 </div>
-<div id="evaluating-arguments-and-returning-results" class="section level2" number="2.3">
-<h2><span class="header-section-number">2.3</span> Evaluating arguments and returning results</h2>
-<p>Whenever R evaluates a function, we refer to this action as ‘calling the function.’ In our simple example, we called the <code>round</code> function with arguments <code>x</code> and <code>digits</code>. That said, we often just say ‘use the function’ because that is more natural to most users.</p>
+<div id="evaluating-arguments-and-returning-results" class="section level2 hasAnchor" number="2.3">
+<h2><span class="header-section-number">2.3</span> Evaluating arguments and returning results<a href="using-functions.html#evaluating-arguments-and-returning-results" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Whenever R evaluates a function, we refer to this action as ‘calling the function’. In our simple example, we called the <code>round</code> function with arguments <code>x</code> and <code>digits</code>. That said, we often just say ‘use the function’ because that is more natural to most users.</p>
 <p>Several things happen when we call functions: first they <strong>evaluate</strong> their arguments, then they perform some action, and finally (optionally) <strong>return</strong> a value to us. Let’s work through what all that means…</p>
-<p>What do we mean by the word ‘evaluate?’ When we call a function, what typically happens is:</p>
+<p>What do we mean by the word ‘evaluate’? When we call a function, what typically happens is:</p>
 <ol style="list-style-type: decimal">
 <li>the R expression on the right-hand side of an <code>=</code> is evaluated,</li>
 <li>the result is associated with the corresponding argument name, and</li>
@@ -461,8 +463,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Here the R interpreter evaluates the function call and then multiplies the value it returns by 2. If we want to reuse this value, we have to assign the result of function call, for example:</p>
 <div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb73-1"><a href="using-functions.html#cb73-1" aria-hidden="true" tabindex="-1"></a>roundnum <span class="ot">&lt;-</span> <span class="dv">2</span> <span class="sc">*</span> <span class="fu">round</span>(<span class="at">x =</span> <span class="fl">2.64</span>, <span class="at">digits =</span> <span class="dv">0</span>)</span></code></pre></div>
 <p>Using a function with <code>&lt;-</code> is no different from the examples using multiple arithmetic operations in the last topic. The R interpreter starts on the right-hand side of the <code>&lt;-</code>, evaluates the function call there, and only then assigns the value to <code>roundnum</code>.</p>
-<div id="argument-names-vs-variable-names" class="section level4 unnumbered infobox information">
-<h4>Argument names vs variable names</h4>
+<div id="argument-names-vs-variable-names" class="section level4 unnumbered hasAnchor infobox information">
+<h4>Argument names vs variable names<a href="using-functions.html#argument-names-vs-variable-names" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>Keeping in mind what we’ve just learned, take a careful look at this example:</p>
 <div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb74-1"><a href="using-functions.html#cb74-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">0</span></span>
 <span id="cb74-2"><a href="using-functions.html#cb74-2" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="at">x =</span> <span class="fl">3.7</span>, <span class="at">digits =</span> x)</span></code></pre></div>
@@ -471,8 +473,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>The message here is that what matters is where things appear relative to the <code>=</code>, not the symbols used to represent them.</p>
 </div>
 </div>
-<div id="function-arguments" class="section level2" number="2.4">
-<h2><span class="header-section-number">2.4</span> Specifying function arguments</h2>
+<div id="function-arguments" class="section level2 hasAnchor" number="2.4">
+<h2><span class="header-section-number">2.4</span> Specifying function arguments<a href="using-functions.html#function-arguments" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>So far, we have been concentrating on functions that carry out mathematical calculations with numbers. Functions can do all kinds of things. For example, some functions are designed to extract information about other functions. Take a look at the <code>args</code> function:</p>
 <div class="sourceCode" id="cb76"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb76-1"><a href="using-functions.html#cb76-1" aria-hidden="true" tabindex="-1"></a><span class="fu">args</span>(<span class="at">name =</span> round)</span></code></pre></div>
 <pre><code>## function (x, digits = 0) 
@@ -491,14 +493,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb82"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb82-1"><a href="using-functions.html#cb82-1" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fl">3.72</span>, <span class="at">dig =</span> <span class="dv">1</span>)</span></code></pre></div>
 <pre><code>## [1] 3.7</code></pre>
 <p>This also works because R can unambiguously match the argument we named <code>dig</code> to <code>digits</code>.</p>
-<div id="be-careful-with-your-arguments" class="section level4 unnumbered infobox warning">
-<h4>Be careful with your arguments</h4>
+<div id="be-careful-with-your-arguments" class="section level4 unnumbered hasAnchor infobox warning">
+<h4>Be careful with your arguments<a href="using-functions.html#be-careful-with-your-arguments" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>Here is some advice. Do not rely on partial matching of function names. It just leads to confusion and the odd error. If you use it a lot, you end up forgetting the true name of arguments, and if you abbreviate too much, you create name matching conflicts. For example, if a function has arguments <code>arg1</code> and <code>arg2</code> and you use the partial name <code>a</code> for an argument, there is no way to know which argument you meant. We are pointing out partial matching so that you are aware of the behaviour. It is not worth the hassle of getting it wrong to save on a little typing, so do not use it.</p>
 <p>What about position matching? This can also cause problems if we’re not paying attention. For example, if you forget the order of the arguments to a function and then place your arguments in the wrong place, you will either generate an error or produce a nonsensical result. It is nice not to have to type out the <code>name = value</code> construct all the time though, so our advice is to rely on positional matching only for the first argument. This is a common convention in R that makes sense because it is often obvious what kind of information the first argument should carry.</p>
 </div>
 </div>
-<div id="combining-functions" class="section level2" number="2.5">
-<h2><span class="header-section-number">2.5</span> Combining functions</h2>
+<div id="combining-functions" class="section level2 hasAnchor" number="2.5">
+<h2><span class="header-section-number">2.5</span> Combining functions<a href="using-functions.html#combining-functions" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Using R to do ‘real work’ usually involves linked steps, each facilitated by a different function. There is more than one way to achieve this. Here’s a simple example that uses an approach we already know about—storing intermediate results:</p>
 <div class="sourceCode" id="cb84"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb84-1"><a href="using-functions.html#cb84-1" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(<span class="dv">10</span>)</span>
 <span id="cb84-2"><a href="using-functions.html#cb84-2" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(y, <span class="at">digits =</span> <span class="dv">1</span>)</span></code></pre></div>
@@ -521,8 +523,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Nested function calls can be useful because they make R code less verbose (we write less), but this comes at a high cost of reduced readability. No reasonable person would say that <code>round(sqrt(abs(-10)), digits = 1)</code> is easy to read! For this reason, we aim to keep function nesting to a minimum. We will occasionally have to use the nesting construct, so it is important to understand how it works even if we don’t like it.</p>
 <p>The good news is that we’ll see a much-easier-to-read method for applying a series of functions in the Data Wrangling block.</p>
 </div>
-<div id="functions-do-not-have-side-effects" class="section level2" number="2.6">
-<h2><span class="header-section-number">2.6</span> Functions do not have ‘side effects’</h2>
+<div id="functions-do-not-have-side-effects" class="section level2 hasAnchor" number="2.6">
+<h2><span class="header-section-number">2.6</span> Functions do not have ‘side effects’<a href="using-functions.html#functions-do-not-have-side-effects" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>We’ll finish this chapter with an idea every R user needs to understand to avoid confusion. It relates to how functions modify their arguments, or more accurately, how they <strong>do not</strong> modify their arguments. Take a look at this example:</p>
 <div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb90-1"><a href="using-functions.html#cb90-1" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fl">3.7</span></span>
 <span id="cb90-2"><a href="using-functions.html#cb90-2" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(y, <span class="at">digits =</span> <span class="dv">0</span>)</span></code></pre></div>
@@ -530,7 +532,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb92"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb92-1"><a href="using-functions.html#cb92-1" aria-hidden="true" tabindex="-1"></a>y</span></code></pre></div>
 <pre><code>## [1] 3.7</code></pre>
 <p>We created a variable <code>y</code> with the value 3.7, rounded this to a whole number with <code>round</code>, printed out the result, and then printed the value of <code>y</code>. Notice that <strong>the value of <code>y</code> has not changed</strong> after using it as an argument to <code>round</code>.</p>
-<p>This is important. R functions do not typically alter the values of their arguments (we say ‘typically’ because there are ways to alter this behaviour if we really want to). This behaviour is captured by the phrase ‘functions do not have side effects.’</p>
+<p>This is important. R functions do not typically alter the values of their arguments (we say ‘typically’ because there are ways to alter this behaviour if we really want to). This behaviour is captured by the phrase ‘functions do not have side effects’.</p>
 <p>If we had intended to round the value of <code>y</code> so that we can use this new value later on, we have to assign the result of function evaluation, like this:</p>
 <div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb94-1"><a href="using-functions.html#cb94-1" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fl">3.7</span></span>
 <span id="cb94-2"><a href="using-functions.html#cb94-2" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">round</span>(y, <span class="at">digits =</span> <span class="dv">0</span>)</span></code></pre></div>
@@ -541,7 +543,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="footnotes">
 <hr />
 <ol start="3">
-<li id="fn3"><p>We say “typically,” because R is a very flexible language and so there are certain exceptions to this simple rule of thumb. For now it is simpler to think of the names as constrained by the particular function we’re using. Let’s return to th example to see how all this works:<a href="using-functions.html#fnref3" class="footnote-back">↩︎</a></p></li>
+<li id="fn3"><p>We say “typically”, because R is a very flexible language and so there are certain exceptions to this simple rule of thumb. For now it is simpler to think of the names as constrained by the particular function we’re using. Let’s return to th example to see how all this works:<a href="using-functions.html#fnref3" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>
@@ -554,7 +556,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
@@ -573,6 +574,7 @@ gitbook.start({
 "weibo": false,
 "instapaper": false,
 "vk": false,
+"whatsapp": false,
 "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
@@ -593,6 +595,10 @@ gitbook.start({
 "text": null
 },
 "download": ["intro-bio-data-book.pdf", "intro-bio-data-book.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
 "toc": {
 "collapse": "section"
 }
@@ -606,7 +612,7 @@ gitbook.start({
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:")
       if (/^https?:/.test(src))
         src = src.replace(/^https?:/, '');

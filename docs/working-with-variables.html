@@ -6,11 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 7 Working with variables | Exploratory Data Analysis with R</title>
   <meta name="description" content="This is the Exploratory Data Analysis in R book provided by the School of Biosciences at the University of Sheffield." />
-  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.33 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 7 Working with variables | Exploratory Data Analysis with R" />
   <meta property="og:type" content="book" />
-  
   
   <meta property="og:description" content="This is the Exploratory Data Analysis in R book provided by the School of Biosciences at the University of Sheffield." />
   
@@ -24,7 +23,7 @@
 <meta name="author" content="Dylan Childs" />
 
 
-<meta name="date" content="2021-05-03" />
+<meta name="date" content="2023-03-27" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,8 +32,8 @@
   
 <link rel="prev" href="getting-ready-to-use-dplyr.html"/>
 <link rel="next" href="working-with-observations.html"/>
-<script src="libs/header-attrs-2.7/header-attrs.js"></script>
-<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -50,7 +49,9 @@
 
 
 
-
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 <link href="libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet" />
 <script src="libs/pagedtable-1.1/js/pagedtable.js"></script>
 
@@ -93,7 +94,7 @@ code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
 code span.at { color: #7d9029; } /* Attribute */
 code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
+code span.bu { color: #008000; } /* BuiltIn */
 code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
 code span.ch { color: #4070a0; } /* Char */
 code span.cn { color: #880000; } /* Constant */
@@ -106,7 +107,7 @@ code span.er { color: #ff0000; font-weight: bold; } /* Error */
 code span.ex { } /* Extension */
 code span.fl { color: #40a070; } /* Float */
 code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
+code span.im { color: #008000; font-weight: bold; } /* Import */
 code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 code span.kw { color: #007020; font-weight: bold; } /* Keyword */
 code span.op { color: #666666; } /* Operator */
@@ -119,6 +120,7 @@ code span.va { color: #19177c; } /* Variable */
 code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
+
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
@@ -275,7 +277,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="10" data-path="building-pipelines.html"><a href="building-pipelines.html"><i class="fa fa-check"></i><b>10</b> Building pipelines</a>
 <ul>
-<li class="chapter" data-level="10.1" data-path="building-pipelines.html"><a href="building-pipelines.html#why-do-we-need-pipes"><i class="fa fa-check"></i><b>10.1</b> Why do we need ‘pipes?’</a></li>
+<li class="chapter" data-level="10.1" data-path="building-pipelines.html"><a href="building-pipelines.html#why-do-we-need-pipes"><i class="fa fa-check"></i><b>10.1</b> Why do we need ‘pipes’?</a></li>
 <li class="chapter" data-level="10.2" data-path="building-pipelines.html"><a href="building-pipelines.html#using-pipes"><i class="fa fa-check"></i><b>10.2</b> Using pipes (<code>%&gt;%</code>)</a></li>
 </ul></li>
 <li class="chapter" data-level="11" data-path="helper-functions.html"><a href="helper-functions.html"><i class="fa fa-check"></i><b>11</b> Helper functions</a>
@@ -409,10 +411,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="working-with-variables" class="section level1" number="7">
-<h1><span class="header-section-number">Chapter 7</span> Working with variables</h1>
-<div id="introduction-3" class="section level2" number="7.1">
-<h2><span class="header-section-number">7.1</span> Introduction</h2>
+<div id="working-with-variables" class="section level1 hasAnchor" number="7">
+<h1><span class="header-section-number">Chapter 7</span> Working with variables<a href="working-with-variables.html#working-with-variables" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="introduction-3" class="section level2 hasAnchor" number="7.1">
+<h2><span class="header-section-number">7.1</span> Introduction<a href="working-with-variables.html#introduction-3" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>This chapter will explore the <strong>dplyr</strong> <code>select</code> and <code>mutate</code> verbs, and the closely related <code>rename</code> and <code>transmute</code> verbs. We consider these functions together because they operate on the variables (i.e. the columns) of a data frame or tibble:</p>
 <ul>
 <li>The <code>select</code> function selects a subset of variables to retain and (optionally) renames them in the process.</li>
@@ -420,15 +422,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>The <code>rename</code> function renames one or more variables while keeping the remaining variable names unchanged.</li>
 <li>The <code>transmute</code> function creates new variables from pre-existing ones and drops the original variables.</li>
 </ul>
-<div id="getting-ready" class="section level3" number="7.1.1">
-<h3><span class="header-section-number">7.1.1</span> Getting ready</h3>
+<div id="getting-ready" class="section level3 hasAnchor" number="7.1.1">
+<h3><span class="header-section-number">7.1.1</span> Getting ready<a href="working-with-variables.html#getting-ready" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Obviously, we need to have first installed <strong>dplyr</strong> package to use it. Assuming that’s been done, we need to load and attach the package in the current session:</p>
 <div class="sourceCode" id="cb196"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb196-1"><a href="working-with-variables.html#cb196-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;dplyr&quot;</span>)</span></code></pre></div>
 <p>We will use the Palmer penguins data to illustrate the ideas in this chapter. Remember—the <a href="getting-ready-to-use-dplyr.html#penguins-data-overview">previous chapter</a> described this data set and explained where to find it. The examples below assume it was read into R as a tibble with the name <code>penguins</code>.</p>
 </div>
 </div>
-<div id="subset-variables-with-select" class="section level2" number="7.2">
-<h2><span class="header-section-number">7.2</span> Subset variables with <code>select</code></h2>
+<div id="subset-variables-with-select" class="section level2 hasAnchor" number="7.2">
+<h2><span class="header-section-number">7.2</span> Subset variables with <code>select</code><a href="working-with-variables.html#subset-variables-with-select" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>We use <code>select</code> to <strong>select variables</strong> from a data frame or tibble. This is used when we have a data set with many variables but only need to work with a subset of these. Basic usage of <code>select</code> looks like this:</p>
 <div class="sourceCode" id="cb197"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb197-1"><a href="working-with-variables.html#cb197-1" aria-hidden="true" tabindex="-1"></a><span class="fu">select</span>(<span class="sc">&lt;</span>data<span class="sc">&gt;</span>, <span class="sc">&lt;</span>variable<span class="dv">-1</span><span class="sc">&gt;</span>, <span class="sc">&lt;</span>variable<span class="dv">-2</span><span class="sc">&gt;</span>, ...)</span></code></pre></div>
 <p>Remember—this is not an example we can run. This is a pseudocode designed to provide a generic description of how we use <code>select</code>. Let’s look at the arguments of select:</p>
@@ -438,7 +440,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul>
 <p>It’s easiest to understand how a function like <code>select</code> works by seeing it in action. We select the <code>species</code>, <code>bill_length_mm</code> and <code>bill_depth_mm</code> variables from <code>penguins</code> like this:</p>
 <div class="sourceCode" id="cb198"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb198-1"><a href="working-with-variables.html#cb198-1" aria-hidden="true" tabindex="-1"></a><span class="fu">select</span>(penguins, species, bill_length_mm, bill_depth_mm)</span></code></pre></div>
-<pre><code>## # A tibble: 344 x 3
+<pre><code>## # A tibble: 344 × 3
 ##    species bill_length_mm bill_depth_mm
 ##    &lt;chr&gt;            &lt;dbl&gt;         &lt;dbl&gt;
 ##  1 Adelie            39.1          18.7
@@ -451,11 +453,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##  8 Adelie            39.2          19.6
 ##  9 Adelie            34.1          18.1
 ## 10 Adelie            42            20.2
-## # … with 334 more rows</code></pre>
+## # ℹ 334 more rows</code></pre>
 <p>Hopefully, nothing about this example is too surprising. However, there are a few subtleties buried in that example:</p>
 <ul>
 <li>The <code>select</code> function is designed to work in a non-standard way which means variable names should <strong>not</strong> be surrounded by quotes. The one exception is when a name has a space in it. Under those circumstances, it has to be quoted with backticks, e.g. <code>`variable 1`</code>.</li>
-<li>The <code>select</code> function does not have ‘side effects.’ This means is that it does not change the original <code>penguins</code> object. We printed the result produced by <code>select</code> to the Console, so we can’t access the modified data set. If we need to use the result, we have to assign it a name using <code>&lt;-</code>.</li>
+<li>The <code>select</code> function does not have ‘side effects’. This means is that it does not change the original <code>penguins</code> object. We printed the result produced by <code>select</code> to the Console, so we can’t access the modified data set. If we need to use the result, we have to assign it a name using <code>&lt;-</code>.</li>
 <li>The order of variables (i.e. the column order) in the resulting object is the same as the order in which they were supplied to the argument list. This means we can reorder variables at the same time as selecting them if we need to.</li>
 <li>The <code>select</code> function will return the same kind of data object we give it to work on. It returns a data frame if our data was in a data frame and a tibble if it was a tibble. In this example, R prints a tibble because <code>penguins</code> was a tibble.</li>
 </ul>
@@ -463,7 +465,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb200"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb200-1"><a href="working-with-variables.html#cb200-1" aria-hidden="true" tabindex="-1"></a>penguins_bill <span class="ot">&lt;-</span> <span class="fu">select</span>(penguins, species, bill_length_mm, bill_depth_mm)</span></code></pre></div>
 <p>Now that we’ve named the new data set created by <code>select</code> we can refer to it by that name whenever we need it:</p>
 <div class="sourceCode" id="cb201"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb201-1"><a href="working-with-variables.html#cb201-1" aria-hidden="true" tabindex="-1"></a>penguins_bill</span></code></pre></div>
-<pre><code>## # A tibble: 344 x 3
+<pre><code>## # A tibble: 344 × 3
 ##    species bill_length_mm bill_depth_mm
 ##    &lt;chr&gt;            &lt;dbl&gt;         &lt;dbl&gt;
 ##  1 Adelie            39.1          18.7
@@ -476,10 +478,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##  8 Adelie            39.2          19.6
 ##  9 Adelie            34.1          18.1
 ## 10 Adelie            42            20.2
-## # … with 334 more rows</code></pre>
+## # ℹ 334 more rows</code></pre>
 <p>Remember—the original <code>penguins</code> data is completely unchanged:</p>
 <div class="sourceCode" id="cb203"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb203-1"><a href="working-with-variables.html#cb203-1" aria-hidden="true" tabindex="-1"></a>penguins</span></code></pre></div>
-<pre><code>## # A tibble: 344 x 8
+<pre><code>## # A tibble: 344 × 8
 ##    species island    bill_length_mm bill_depth_mm flipper_length_mm body_mass_g
 ##    &lt;chr&gt;   &lt;chr&gt;              &lt;dbl&gt;         &lt;dbl&gt;             &lt;int&gt;       &lt;int&gt;
 ##  1 Adelie  Torgersen           39.1          18.7               181        3750
@@ -492,12 +494,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##  8 Adelie  Torgersen           39.2          19.6               195        4675
 ##  9 Adelie  Torgersen           34.1          18.1               193        3475
 ## 10 Adelie  Torgersen           42            20.2               190        4250
-## # … with 334 more rows, and 2 more variables: sex &lt;chr&gt;, year &lt;int&gt;</code></pre>
-<div id="alternative-ways-to-identify-variables-with-select" class="section level3" number="7.2.1">
-<h3><span class="header-section-number">7.2.1</span> Alternative ways to identify variables with <code>select</code></h3>
+## # ℹ 334 more rows
+## # ℹ 2 more variables: sex &lt;chr&gt;, year &lt;int&gt;</code></pre>
+<div id="alternative-ways-to-identify-variables-with-select" class="section level3 hasAnchor" number="7.2.1">
+<h3><span class="header-section-number">7.2.1</span> Alternative ways to identify variables with <code>select</code><a href="working-with-variables.html#alternative-ways-to-identify-variables-with-select" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>It’s sometimes more convenient to use <code>select</code> to subset variables by specifying those we do <strong>not</strong> need, rather than specifying of the ones to keep. We can use the <code>!</code> operator to indicate that certain variables should be dropped. For example, to get rid of the <code>bill_depth_mm</code> and <code>bill_length_mm</code> columns, we could use:</p>
 <div class="sourceCode" id="cb205"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb205-1"><a href="working-with-variables.html#cb205-1" aria-hidden="true" tabindex="-1"></a><span class="fu">select</span>(penguins, <span class="sc">!</span>bill_depth_mm, <span class="sc">!</span>bill_length_mm)</span></code></pre></div>
-<pre><code>## # A tibble: 344 x 8
+<pre><code>## # A tibble: 344 × 8
 ##    species island    bill_length_mm flipper_length_mm body_mass_g sex     year
 ##    &lt;chr&gt;   &lt;chr&gt;              &lt;dbl&gt;             &lt;int&gt;       &lt;int&gt; &lt;chr&gt;  &lt;int&gt;
 ##  1 Adelie  Torgersen           39.1               181        3750 male    2007
@@ -510,12 +513,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##  8 Adelie  Torgersen           39.2               195        4675 male    2007
 ##  9 Adelie  Torgersen           34.1               193        3475 &lt;NA&gt;    2007
 ## 10 Adelie  Torgersen           42                 190        4250 &lt;NA&gt;    2007
-## # … with 334 more rows, and 1 more variable: bill_depth_mm &lt;dbl&gt;</code></pre>
+## # ℹ 334 more rows
+## # ℹ 1 more variable: bill_depth_mm &lt;dbl&gt;</code></pre>
 <p>This returns a tibble with all the other variables: <code>species</code>, <code>island</code>, <code>flipper_length_mm</code>, <code>body_mass_g</code>, <code>sex</code> and <code>year</code>.</p>
 <p>The <code>select</code> function can also be used to grab (or drop) a set of variables that occur in a sequence next to one another. We specify a series of adjacent variables using the <code>:</code> operator. We use this with two variable names, one on the left-hand side and one on the right. When we use <code>:</code> like this, <code>select</code> will subset both those two variables along with any others that fall in between them.</p>
 <p>For example, if we want only the morphometric variables (<code>bill_length_mm</code>, <code>bill_depth_mm</code>, <code>flipper_length_mm</code> and <code>body_mass_g</code>) we could use:</p>
 <div class="sourceCode" id="cb207"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb207-1"><a href="working-with-variables.html#cb207-1" aria-hidden="true" tabindex="-1"></a><span class="fu">select</span>(penguins, bill_length_mm<span class="sc">:</span>body_mass_g)</span></code></pre></div>
-<pre><code>## # A tibble: 344 x 4
+<pre><code>## # A tibble: 344 × 4
 ##    bill_length_mm bill_depth_mm flipper_length_mm body_mass_g
 ##             &lt;dbl&gt;         &lt;dbl&gt;             &lt;int&gt;       &lt;int&gt;
 ##  1           39.1          18.7               181        3750
@@ -528,10 +532,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##  8           39.2          19.6               195        4675
 ##  9           34.1          18.1               193        3475
 ## 10           42            20.2               190        4250
-## # … with 334 more rows</code></pre>
+## # ℹ 334 more rows</code></pre>
 <p>The <code>:</code> operator can also be combined with <code>!</code> if we need to drop a series of variables according to their position in a data frame or tibble. For example, we can use this trick to get the complement of the previous example, i.e. throw away the morphometric variables:</p>
 <div class="sourceCode" id="cb209"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb209-1"><a href="working-with-variables.html#cb209-1" aria-hidden="true" tabindex="-1"></a><span class="fu">select</span>(penguins, <span class="sc">!</span>bill_length_mm<span class="sc">:</span>body_mass_g)</span></code></pre></div>
-<pre><code>## # A tibble: 344 x 4
+<pre><code>## # A tibble: 344 × 4
 ##    species island    sex     year
 ##    &lt;chr&gt;   &lt;chr&gt;     &lt;chr&gt;  &lt;int&gt;
 ##  1 Adelie  Torgersen male    2007
@@ -544,14 +548,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##  8 Adelie  Torgersen male    2007
 ##  9 Adelie  Torgersen &lt;NA&gt;    2007
 ## 10 Adelie  Torgersen &lt;NA&gt;    2007
-## # … with 334 more rows</code></pre>
+## # ℹ 334 more rows</code></pre>
 </div>
-<div id="renaming-variables-with-select-and-rename" class="section level3" number="7.2.2">
-<h3><span class="header-section-number">7.2.2</span> Renaming variables with <code>select</code> and <code>rename</code></h3>
+<div id="renaming-variables-with-select-and-rename" class="section level3 hasAnchor" number="7.2.2">
+<h3><span class="header-section-number">7.2.2</span> Renaming variables with <code>select</code> and <code>rename</code><a href="working-with-variables.html#renaming-variables-with-select-and-rename" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>The <code>select</code> function can also rename variables at the same time as selecting them. To do this, we name the arguments using the <code>name = value</code> construct, where the name of the selected variable is placed on the right-hand side (<code>value</code>), and the new name goes on the left-hand side (<code>name</code>).</p>
 <p>For example, to select the<code>species</code>, <code>bill_length_mm</code> and <code>bill_depth_mm</code> variables from <code>penguins</code>, and in the process, rename <code>bill_length_mm</code> and <code>bill_depth_mm</code> to <code>BillLength</code> and <code>BillDepth</code>, use:</p>
 <div class="sourceCode" id="cb211"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb211-1"><a href="working-with-variables.html#cb211-1" aria-hidden="true" tabindex="-1"></a><span class="fu">select</span>(penguins, species, <span class="at">BillLength =</span> bill_length_mm, <span class="at">BillDepth =</span> bill_depth_mm)</span></code></pre></div>
-<pre><code>## # A tibble: 344 x 3
+<pre><code>## # A tibble: 344 × 3
 ##    species BillLength BillDepth
 ##    &lt;chr&gt;        &lt;dbl&gt;     &lt;dbl&gt;
 ##  1 Adelie        39.1      18.7
@@ -564,35 +568,35 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##  8 Adelie        39.2      19.6
 ##  9 Adelie        34.1      18.1
 ## 10 Adelie        42        20.2
-## # … with 334 more rows</code></pre>
+## # ℹ 334 more rows</code></pre>
 <p>Renaming the variables is a common task. What should we do if the only thing we want to achieve is to rename variables, rather than rename <em>and</em> select them? <strong>dplyr</strong> provides an additional function called <code>rename</code> for exactly this purpose. This function renames some variables while retaining all others. It works like <code>select</code>. For example, to rename <code>bill_length_mm</code> and <code>bill_depth_mm</code> to <code>BillLength</code> and <code>BillDepth</code> but keep all the variables, use:</p>
 <div class="sourceCode" id="cb213"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb213-1"><a href="working-with-variables.html#cb213-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rename</span>(penguins, <span class="at">BillLength =</span> bill_length_mm, <span class="at">BillDepth =</span> bill_depth_mm)</span></code></pre></div>
-<pre><code>## # A tibble: 344 x 8
-##    species island  BillLength BillDepth flipper_length_… body_mass_g sex    year
-##    &lt;chr&gt;   &lt;chr&gt;        &lt;dbl&gt;     &lt;dbl&gt;            &lt;int&gt;       &lt;int&gt; &lt;chr&gt; &lt;int&gt;
-##  1 Adelie  Torger…       39.1      18.7              181        3750 male   2007
-##  2 Adelie  Torger…       39.5      17.4              186        3800 fema…  2007
-##  3 Adelie  Torger…       40.3      18                195        3250 fema…  2007
-##  4 Adelie  Torger…       NA        NA                 NA          NA &lt;NA&gt;   2007
-##  5 Adelie  Torger…       36.7      19.3              193        3450 fema…  2007
-##  6 Adelie  Torger…       39.3      20.6              190        3650 male   2007
-##  7 Adelie  Torger…       38.9      17.8              181        3625 fema…  2007
-##  8 Adelie  Torger…       39.2      19.6              195        4675 male   2007
-##  9 Adelie  Torger…       34.1      18.1              193        3475 &lt;NA&gt;   2007
-## 10 Adelie  Torger…       42        20.2              190        4250 &lt;NA&gt;   2007
-## # … with 334 more rows</code></pre>
+<pre><code>## # A tibble: 344 × 8
+##    species island BillLength BillDepth flipper_length_mm body_mass_g sex    year
+##    &lt;chr&gt;   &lt;chr&gt;       &lt;dbl&gt;     &lt;dbl&gt;             &lt;int&gt;       &lt;int&gt; &lt;chr&gt; &lt;int&gt;
+##  1 Adelie  Torge…       39.1      18.7               181        3750 male   2007
+##  2 Adelie  Torge…       39.5      17.4               186        3800 fema…  2007
+##  3 Adelie  Torge…       40.3      18                 195        3250 fema…  2007
+##  4 Adelie  Torge…       NA        NA                  NA          NA &lt;NA&gt;   2007
+##  5 Adelie  Torge…       36.7      19.3               193        3450 fema…  2007
+##  6 Adelie  Torge…       39.3      20.6               190        3650 male   2007
+##  7 Adelie  Torge…       38.9      17.8               181        3625 fema…  2007
+##  8 Adelie  Torge…       39.2      19.6               195        4675 male   2007
+##  9 Adelie  Torge…       34.1      18.1               193        3475 &lt;NA&gt;   2007
+## 10 Adelie  Torge…       42        20.2               190        4250 &lt;NA&gt;   2007
+## # ℹ 334 more rows</code></pre>
 <p>Notice <code>rename</code> also preserves the order of the variables found in the original data.</p>
 </div>
 </div>
-<div id="creating-variables-with-mutate" class="section level2" number="7.3">
-<h2><span class="header-section-number">7.3</span> Creating variables with <code>mutate</code></h2>
+<div id="creating-variables-with-mutate" class="section level2 hasAnchor" number="7.3">
+<h2><span class="header-section-number">7.3</span> Creating variables with <code>mutate</code><a href="working-with-variables.html#creating-variables-with-mutate" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>We use <code>mutate</code> to <strong>add new variables</strong> to a data frame or tibble. This is useful if we need to construct one or more derived variables to support an analysis. Basic usage of <code>mutate</code> looks like this:</p>
 <div class="sourceCode" id="cb215"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb215-1"><a href="working-with-variables.html#cb215-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mutate</span>(<span class="sc">&lt;</span>data<span class="sc">&gt;</span>, <span class="sc">&lt;</span>expression<span class="dv">-1</span><span class="sc">&gt;</span>, <span class="sc">&lt;</span>expression<span class="dv">-2</span><span class="sc">&gt;</span>, ...)</span></code></pre></div>
 <p>Again, this is not an example we can run—it’s pseudocode highlighting how to use <code>mutate</code> in abstract terms.</p>
 <p>The first argument, <code>&lt;data&gt;</code>, must be the name of the object containing our data. We then include a series of one or more additional arguments, where each of these is a valid R expression involving one or more variables in <code>&lt;data&gt;</code>. We’ve have expressed these as <code>&lt;expression-1&gt;, &lt;expression-2&gt;</code>, where <code>&lt;expression-1&gt;</code> and <code>&lt;expression-2&gt;</code> represent the first two expressions, and the <code>...</code> is acting as a placeholder for the remaining expressions. These can be any valid R code that refers to variables in <code>&lt;data&gt;</code>. This is often a simple calculation (e.g. involving arithmetic), but it can be arbitrarily complex.</p>
 <p>To see <code>mutate</code> in action, let’s construct a new version of <code>penguins</code> that contains one extra variable—body mass measured in kilograms:</p>
 <div class="sourceCode" id="cb216"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb216-1"><a href="working-with-variables.html#cb216-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mutate</span>(penguins, body_mass_g <span class="sc">/</span> <span class="dv">1000</span>)</span></code></pre></div>
-<pre><code>## # A tibble: 344 x 9
+<pre><code>## # A tibble: 344 × 9
 ##    species island    bill_length_mm bill_depth_mm flipper_length_mm body_mass_g
 ##    &lt;chr&gt;   &lt;chr&gt;              &lt;dbl&gt;         &lt;dbl&gt;             &lt;int&gt;       &lt;int&gt;
 ##  1 Adelie  Torgersen           39.1          18.7               181        3750
@@ -605,17 +609,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##  8 Adelie  Torgersen           39.2          19.6               195        4675
 ##  9 Adelie  Torgersen           34.1          18.1               193        3475
 ## 10 Adelie  Torgersen           42            20.2               190        4250
-## # … with 334 more rows, and 3 more variables: sex &lt;chr&gt;, year &lt;int&gt;,
-## #   body_mass_g/1000 &lt;dbl&gt;</code></pre>
+## # ℹ 334 more rows
+## # ℹ 3 more variables: sex &lt;chr&gt;, year &lt;int&gt;, `body_mass_g/1000` &lt;dbl&gt;</code></pre>
 <p>This creates a copy of <code>penguins</code> with a new column called <code>body_mass_g/1000</code> (look at the bottom of the printed output). That is not a very good name but do not worry—we will improve on it in a moment. Most of the rules that apply to <code>select</code> also apply to <code>mutate</code>:</p>
 <ul>
-<li>Quotes must not be placed around an expression that performs a calculation.  This makes sense because the expression is meant to be evaluated so that it “does something.” It is not a value.</li>
+<li>Quotes must not be placed around an expression that performs a calculation.  This makes sense because the expression is meant to be evaluated so that it “does something”. It is not a value.</li>
 <li>The <code>mutate</code> function does not have side effects, meaning it does not change the original <code>penguins</code> in any way. In the example, we printed the result produced by <code>mutate</code> rather than assigning it a name using <code>&lt;-</code>, which means we have no way to access the result.</li>
 <li>The <code>mutate</code> function returns the same kind of object as the one it is working on: a data frame if our data was originally in a data frame, a tibble if it was a tibble.</li>
 </ul>
 <p>Creating a variable called something like <code>body_mass_g/1000</code> is not ideal because that is a difficult name to work with. Fortunately, the <code>mutate</code> function can name new variables at the same time as it creates them. We just name the arguments using <code>=</code>, placing the name on the left-hand side. Look at how to use this construct to name the new area variable <code>body_mass_kg</code>:</p>
 <div class="sourceCode" id="cb218"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb218-1"><a href="working-with-variables.html#cb218-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mutate</span>(penguins, <span class="at">body_mass_kg =</span> body_mass_g <span class="sc">/</span> <span class="dv">1000</span>)</span></code></pre></div>
-<pre><code>## # A tibble: 344 x 9
+<pre><code>## # A tibble: 344 × 9
 ##    species island    bill_length_mm bill_depth_mm flipper_length_mm body_mass_g
 ##    &lt;chr&gt;   &lt;chr&gt;              &lt;dbl&gt;         &lt;dbl&gt;             &lt;int&gt;       &lt;int&gt;
 ##  1 Adelie  Torgersen           39.1          18.7               181        3750
@@ -628,13 +632,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##  8 Adelie  Torgersen           39.2          19.6               195        4675
 ##  9 Adelie  Torgersen           34.1          18.1               193        3475
 ## 10 Adelie  Torgersen           42            20.2               190        4250
-## # … with 334 more rows, and 3 more variables: sex &lt;chr&gt;, year &lt;int&gt;,
-## #   body_mass_kg &lt;dbl&gt;</code></pre>
+## # ℹ 334 more rows
+## # ℹ 3 more variables: sex &lt;chr&gt;, year &lt;int&gt;, body_mass_kg &lt;dbl&gt;</code></pre>
 <p>We can create more than one variable by supplying <code>mutate</code> multiple (named) arguments:</p>
 <div class="sourceCode" id="cb220"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb220-1"><a href="working-with-variables.html#cb220-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mutate</span>(penguins, </span>
 <span id="cb220-2"><a href="working-with-variables.html#cb220-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">bill_size =</span> bill_depth_mm <span class="sc">*</span> bill_length_mm,</span>
 <span id="cb220-3"><a href="working-with-variables.html#cb220-3" aria-hidden="true" tabindex="-1"></a>       <span class="at">scaled_bill_size =</span> bill_size <span class="sc">/</span> body_mass_g)</span></code></pre></div>
-<pre><code>## # A tibble: 344 x 10
+<pre><code>## # A tibble: 344 × 10
 ##    species island    bill_length_mm bill_depth_mm flipper_length_mm body_mass_g
 ##    &lt;chr&gt;   &lt;chr&gt;              &lt;dbl&gt;         &lt;dbl&gt;             &lt;int&gt;       &lt;int&gt;
 ##  1 Adelie  Torgersen           39.1          18.7               181        3750
@@ -647,17 +651,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##  8 Adelie  Torgersen           39.2          19.6               195        4675
 ##  9 Adelie  Torgersen           34.1          18.1               193        3475
 ## 10 Adelie  Torgersen           42            20.2               190        4250
-## # … with 334 more rows, and 4 more variables: sex &lt;chr&gt;, year &lt;int&gt;,
-## #   bill_size &lt;dbl&gt;, scaled_bill_size &lt;dbl&gt;</code></pre>
+## # ℹ 334 more rows
+## # ℹ 4 more variables: sex &lt;chr&gt;, year &lt;int&gt;, bill_size &lt;dbl&gt;,
+## #   scaled_bill_size &lt;dbl&gt;</code></pre>
 <p>Notice that we placed each calculation on a new line, remembering to use a comma to separate arguments. We can do this because R ignores white space. Splitting long a function call across multiple lines in this way is helpful because it makes it easier to read and understand the sequence of calculations.</p>
 <p>This last example reveals a nice feature of <code>mutate</code>—we can use newly created variables in further calculations. Here we constructed a synthetic bill size variable, and used that to calculate a second variable representing the ratio of bill size to body mass.</p>
-<div id="transforming-and-dropping-variables" class="section level3" number="7.3.1">
-<h3><span class="header-section-number">7.3.1</span> Transforming and dropping variables</h3>
+<div id="transforming-and-dropping-variables" class="section level3 hasAnchor" number="7.3.1">
+<h3><span class="header-section-number">7.3.1</span> Transforming and dropping variables<a href="working-with-variables.html#transforming-and-dropping-variables" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Occasionally we need to construct one or more new variables and then drop all the other ones in the original dataset. The <code>transmute</code> function is designed to do this. It works exactly like <code>mutate</code>, but it has a slightly different behaviour:</p>
 <div class="sourceCode" id="cb222"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb222-1"><a href="working-with-variables.html#cb222-1" aria-hidden="true" tabindex="-1"></a><span class="fu">transmute</span>(penguins, </span>
 <span id="cb222-2"><a href="working-with-variables.html#cb222-2" aria-hidden="true" tabindex="-1"></a>          <span class="at">bill_size =</span> bill_depth_mm <span class="sc">*</span> bill_length_mm,</span>
 <span id="cb222-3"><a href="working-with-variables.html#cb222-3" aria-hidden="true" tabindex="-1"></a>          <span class="at">scaled_bill_size =</span> bill_size <span class="sc">/</span> body_mass_g)</span></code></pre></div>
-<pre><code>## # A tibble: 344 x 2
+<pre><code>## # A tibble: 344 × 2
 ##    bill_size scaled_bill_size
 ##        &lt;dbl&gt;            &lt;dbl&gt;
 ##  1      731.            0.195
@@ -670,13 +675,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##  8      768.            0.164
 ##  9      617.            0.178
 ## 10      848.            0.200
-## # … with 334 more rows</code></pre>
+## # ℹ 334 more rows</code></pre>
 <p>Here we repeated the previous example, but now only the new variables were retained in the resulting tibble. If we also want to retain additional variables without altering them, we can pass them as unnamed arguments. For example, to retain <code>species</code> identity in the output, use:</p>
 <div class="sourceCode" id="cb224"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb224-1"><a href="working-with-variables.html#cb224-1" aria-hidden="true" tabindex="-1"></a><span class="fu">transmute</span>(penguins,</span>
 <span id="cb224-2"><a href="working-with-variables.html#cb224-2" aria-hidden="true" tabindex="-1"></a>          species,</span>
 <span id="cb224-3"><a href="working-with-variables.html#cb224-3" aria-hidden="true" tabindex="-1"></a>          <span class="at">bill_size =</span> bill_depth_mm <span class="sc">*</span> bill_length_mm,</span>
 <span id="cb224-4"><a href="working-with-variables.html#cb224-4" aria-hidden="true" tabindex="-1"></a>          <span class="at">scaled_bill_size =</span> bill_size <span class="sc">/</span> body_mass_g)</span></code></pre></div>
-<pre><code>## # A tibble: 344 x 3
+<pre><code>## # A tibble: 344 × 3
 ##    species bill_size scaled_bill_size
 ##    &lt;chr&gt;       &lt;dbl&gt;            &lt;dbl&gt;
 ##  1 Adelie       731.            0.195
@@ -689,7 +694,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##  8 Adelie       768.            0.164
 ##  9 Adelie       617.            0.178
 ## 10 Adelie       848.            0.200
-## # … with 334 more rows</code></pre>
+## # ℹ 334 more rows</code></pre>
 
 </div>
 </div>
@@ -704,7 +709,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
@@ -723,6 +727,7 @@ gitbook.start({
 "weibo": false,
 "instapaper": false,
 "vk": false,
+"whatsapp": false,
 "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
@@ -743,6 +748,10 @@ gitbook.start({
 "text": null
 },
 "download": ["intro-bio-data-book.pdf", "intro-bio-data-book.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
 "toc": {
 "collapse": "section"
 }
@@ -756,7 +765,7 @@ gitbook.start({
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:")
       if (/^https?:/.test(src))
         src = src.replace(/^https?:/, '');

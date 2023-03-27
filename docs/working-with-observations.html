@@ -6,11 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 8 Working with observations | Exploratory Data Analysis with R</title>
   <meta name="description" content="This is the Exploratory Data Analysis in R book provided by the School of Biosciences at the University of Sheffield." />
-  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.33 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 8 Working with observations | Exploratory Data Analysis with R" />
   <meta property="og:type" content="book" />
-  
   
   <meta property="og:description" content="This is the Exploratory Data Analysis in R book provided by the School of Biosciences at the University of Sheffield." />
   
@@ -24,7 +23,7 @@
 <meta name="author" content="Dylan Childs" />
 
 
-<meta name="date" content="2021-05-03" />
+<meta name="date" content="2023-03-27" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,8 +32,8 @@
   
 <link rel="prev" href="working-with-variables.html"/>
 <link rel="next" href="summarising-and-grouping.html"/>
-<script src="libs/header-attrs-2.7/header-attrs.js"></script>
-<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -50,7 +49,9 @@
 
 
 
-
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 <link href="libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet" />
 <script src="libs/pagedtable-1.1/js/pagedtable.js"></script>
 
@@ -93,7 +94,7 @@ code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
 code span.at { color: #7d9029; } /* Attribute */
 code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
+code span.bu { color: #008000; } /* BuiltIn */
 code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
 code span.ch { color: #4070a0; } /* Char */
 code span.cn { color: #880000; } /* Constant */
@@ -106,7 +107,7 @@ code span.er { color: #ff0000; font-weight: bold; } /* Error */
 code span.ex { } /* Extension */
 code span.fl { color: #40a070; } /* Float */
 code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
+code span.im { color: #008000; font-weight: bold; } /* Import */
 code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 code span.kw { color: #007020; font-weight: bold; } /* Keyword */
 code span.op { color: #666666; } /* Operator */
@@ -119,6 +120,7 @@ code span.va { color: #19177c; } /* Variable */
 code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
+
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
@@ -275,7 +277,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="10" data-path="building-pipelines.html"><a href="building-pipelines.html"><i class="fa fa-check"></i><b>10</b> Building pipelines</a>
 <ul>
-<li class="chapter" data-level="10.1" data-path="building-pipelines.html"><a href="building-pipelines.html#why-do-we-need-pipes"><i class="fa fa-check"></i><b>10.1</b> Why do we need ‘pipes?’</a></li>
+<li class="chapter" data-level="10.1" data-path="building-pipelines.html"><a href="building-pipelines.html#why-do-we-need-pipes"><i class="fa fa-check"></i><b>10.1</b> Why do we need ‘pipes’?</a></li>
 <li class="chapter" data-level="10.2" data-path="building-pipelines.html"><a href="building-pipelines.html#using-pipes"><i class="fa fa-check"></i><b>10.2</b> Using pipes (<code>%&gt;%</code>)</a></li>
 </ul></li>
 <li class="chapter" data-level="11" data-path="helper-functions.html"><a href="helper-functions.html"><i class="fa fa-check"></i><b>11</b> Helper functions</a>
@@ -409,25 +411,25 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="working-with-observations" class="section level1" number="8">
-<h1><span class="header-section-number">Chapter 8</span> Working with observations</h1>
-<div id="introduction-4" class="section level2" number="8.1">
-<h2><span class="header-section-number">8.1</span> Introduction</h2>
+<div id="working-with-observations" class="section level1 hasAnchor" number="8">
+<h1><span class="header-section-number">Chapter 8</span> Working with observations<a href="working-with-observations.html#working-with-observations" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="introduction-4" class="section level2 hasAnchor" number="8.1">
+<h2><span class="header-section-number">8.1</span> Introduction<a href="working-with-observations.html#introduction-4" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>This chapter will explore the <code>filter</code> and <code>arrange</code> verbs. We discuss these functions together because they manipulate observations (i.e. rows) of a data frame or tibble:</p>
 <ul>
 <li>The <code>filter</code> function extracts a subset of observations based on supplied criteria.</li>
 <li>The <code>arrange</code> function reorders the rows according to the values in one or more variables.</li>
 </ul>
-<div id="getting-ready-1" class="section level3" number="8.1.1">
-<h3><span class="header-section-number">8.1.1</span> Getting ready</h3>
+<div id="getting-ready-1" class="section level3 hasAnchor" number="8.1.1">
+<h3><span class="header-section-number">8.1.1</span> Getting ready<a href="working-with-observations.html#getting-ready-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>We’ll be using the <strong>dplyr</strong> package, so we need to remember to load and attach the package in the current session:</p>
 <div class="sourceCode" id="cb226"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb226-1"><a href="working-with-observations.html#cb226-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;dplyr&quot;</span>)</span></code></pre></div>
 <p>We’ll use the Palmer penguins data again to illustrate the ideas in this chapter. The examples below assume those data been read into R as a tibble with the name <code>penguins</code>.</p>
 </div>
 </div>
-<div id="relational-and-logical-operators" class="section level2" number="8.2">
-<h2><span class="header-section-number">8.2</span> Relational and logical operators</h2>
-<p>Most <code>filter</code> operations rely on some combination of <strong>relational and logical operators</strong>. Relational operators allow us to ask questions like, “are the values of ‘x’ greater than those of ‘y’: <code>x &gt; y</code>.” These sorts of comparisons are used by R to express whether or not a particular condition is met (because they generate a logical vector of TRUE/FALSE values). Logical operators allow us to combine such conditions, thereby building up complex conditions from simpler ones.</p>
+<div id="relational-and-logical-operators" class="section level2 hasAnchor" number="8.2">
+<h2><span class="header-section-number">8.2</span> Relational and logical operators<a href="working-with-observations.html#relational-and-logical-operators" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Most <code>filter</code> operations rely on some combination of <strong>relational and logical operators</strong>. Relational operators allow us to ask questions like, “are the values of ‘x’ greater than those of ‘y’: <code>x &gt; y</code>”. These sorts of comparisons are used by R to express whether or not a particular condition is met (because they generate a logical vector of TRUE/FALSE values). Logical operators allow us to combine such conditions, thereby building up complex conditions from simpler ones.</p>
 <p>This is best understood by example. We’ll do that in a moment. For now, simply make a mental note of the different relational and logical operators:</p>
 <ol style="list-style-type: decimal">
 <li><p>Use <strong>relational operators</strong> to make comparisons between a pair of variables on the basis of conditions like ‘less than’ or ‘equal to’:</p>
@@ -445,13 +447,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><code>x | y</code>: is x OR y true?</li>
 </ul></li>
 </ol>
-<div id="double-or-single" class="section level4 unnumbered infobox warning">
-<h4>Double <code>==</code> or single <code>=</code>?</h4>
+<div id="double-or-single" class="section level4 unnumbered hasAnchor infobox warning">
+<h4>Double <code>==</code> or single <code>=</code>?<a href="working-with-observations.html#double-or-single" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>Remember to use ‘double equals’ <code>==</code> when testing for equivalence between <code>x</code> and <code>y</code>. We all forget this from time to time and use ‘single equals’ <code>=</code> instead. This will lead to an error. <strong>dplyr</strong> is pretty good at spotting this mistake these days and will warn you in its error message that you used <code>=</code> when you meant to use <code>==</code>. Of course, if you don’t read the error messages, you won’t benefit from this helpful behaviour.</p>
 </div>
 </div>
-<div id="subset-observations-with-filter" class="section level2" number="8.3">
-<h2><span class="header-section-number">8.3</span> Subset observations with <code>filter</code></h2>
+<div id="subset-observations-with-filter" class="section level2 hasAnchor" number="8.3">
+<h2><span class="header-section-number">8.3</span> Subset observations with <code>filter</code><a href="working-with-observations.html#subset-observations-with-filter" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>We use <code>filter</code> to <strong>subset observations</strong> in a data frame or tibble containing our data. This is useful when we want to limit an analysis to a particular group of observations. Basic usage of <code>filter</code> looks something like this:</p>
 <div class="sourceCode" id="cb227"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb227-1"><a href="working-with-observations.html#cb227-1" aria-hidden="true" tabindex="-1"></a><span class="fu">filter</span>(<span class="sc">&lt;</span>data<span class="sc">&gt;</span>, <span class="sc">&lt;</span>expression<span class="dv">-1</span><span class="sc">&gt;</span>, <span class="sc">&lt;</span>expression<span class="dv">-2</span><span class="sc">&gt;</span>, ...)</span></code></pre></div>
 <p>Yes, this is pseudocode again. Let’s review the arguments:</p>
@@ -461,20 +463,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul>
 <p>To see <code>filter</code> in action, we’ll use it to subset observations in the <code>penguins</code> dataset, based on two relational criteria:</p>
 <div class="sourceCode" id="cb228"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb228-1"><a href="working-with-observations.html#cb228-1" aria-hidden="true" tabindex="-1"></a><span class="fu">filter</span>(penguins, bill_length_mm <span class="sc">&gt;</span> <span class="dv">45</span>, bill_depth_mm <span class="sc">&gt;</span> <span class="dv">18</span>)</span></code></pre></div>
-<pre><code>## # A tibble: 44 x 8
-##    species   island    bill_length_mm bill_depth_mm flipper_length_… body_mass_g
-##    &lt;chr&gt;     &lt;chr&gt;              &lt;dbl&gt;         &lt;dbl&gt;            &lt;int&gt;       &lt;int&gt;
-##  1 Adelie    Torgersen           46            21.5              194        4200
-##  2 Adelie    Torgersen           45.8          18.9              197        4150
-##  3 Adelie    Biscoe              45.6          20.3              191        4600
-##  4 Chinstrap Dream               50            19.5              196        3900
-##  5 Chinstrap Dream               51.3          19.2              193        3650
-##  6 Chinstrap Dream               45.4          18.7              188        3525
-##  7 Chinstrap Dream               52.7          19.8              197        3725
-##  8 Chinstrap Dream               46.1          18.2              178        3250
-##  9 Chinstrap Dream               51.3          18.2              197        3750
-## 10 Chinstrap Dream               46            18.9              195        4150
-## # … with 34 more rows, and 2 more variables: sex &lt;chr&gt;, year &lt;int&gt;</code></pre>
+<pre><code>## # A tibble: 44 × 8
+##    species   island   bill_length_mm bill_depth_mm flipper_length_mm body_mass_g
+##    &lt;chr&gt;     &lt;chr&gt;             &lt;dbl&gt;         &lt;dbl&gt;             &lt;int&gt;       &lt;int&gt;
+##  1 Adelie    Torgers…           46            21.5               194        4200
+##  2 Adelie    Torgers…           45.8          18.9               197        4150
+##  3 Adelie    Biscoe             45.6          20.3               191        4600
+##  4 Chinstrap Dream              50            19.5               196        3900
+##  5 Chinstrap Dream              51.3          19.2               193        3650
+##  6 Chinstrap Dream              45.4          18.7               188        3525
+##  7 Chinstrap Dream              52.7          19.8               197        3725
+##  8 Chinstrap Dream              46.1          18.2               178        3250
+##  9 Chinstrap Dream              51.3          18.2               197        3750
+## 10 Chinstrap Dream              46            18.9               195        4150
+## # ℹ 34 more rows
+## # ℹ 2 more variables: sex &lt;chr&gt;, year &lt;int&gt;</code></pre>
 <p>In this example, we’ve created a subset of <code>penguins</code> that only includes observations where the <code>bill_length_mm</code> variable is greater than 45 <strong>and</strong> the <code>bill_depth_mm</code> variable is greater than 45, i.e. both conditions must be met for an observation to be retained. This is probably starting to feel repetitious, but there are a few features of <code>filter</code> that we should be aware of:</p>
 <ul>
 <li>We do not surround each expression with quotes. The expression is meant to be evaluated—it is not ’a value.</li>
@@ -483,24 +486,25 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul>
 <p>Notice that including are two conditions separated by a comma means both conditions have to be met. There is another way to achieve the exact same result:</p>
 <div class="sourceCode" id="cb230"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb230-1"><a href="working-with-observations.html#cb230-1" aria-hidden="true" tabindex="-1"></a><span class="fu">filter</span>(penguins, bill_length_mm <span class="sc">&gt;</span> <span class="dv">45</span> <span class="sc">&amp;</span> bill_depth_mm <span class="sc">&gt;</span> <span class="dv">18</span>)</span></code></pre></div>
-<pre><code>## # A tibble: 44 x 8
-##    species   island    bill_length_mm bill_depth_mm flipper_length_… body_mass_g
-##    &lt;chr&gt;     &lt;chr&gt;              &lt;dbl&gt;         &lt;dbl&gt;            &lt;int&gt;       &lt;int&gt;
-##  1 Adelie    Torgersen           46            21.5              194        4200
-##  2 Adelie    Torgersen           45.8          18.9              197        4150
-##  3 Adelie    Biscoe              45.6          20.3              191        4600
-##  4 Chinstrap Dream               50            19.5              196        3900
-##  5 Chinstrap Dream               51.3          19.2              193        3650
-##  6 Chinstrap Dream               45.4          18.7              188        3525
-##  7 Chinstrap Dream               52.7          19.8              197        3725
-##  8 Chinstrap Dream               46.1          18.2              178        3250
-##  9 Chinstrap Dream               51.3          18.2              197        3750
-## 10 Chinstrap Dream               46            18.9              195        4150
-## # … with 34 more rows, and 2 more variables: sex &lt;chr&gt;, year &lt;int&gt;</code></pre>
+<pre><code>## # A tibble: 44 × 8
+##    species   island   bill_length_mm bill_depth_mm flipper_length_mm body_mass_g
+##    &lt;chr&gt;     &lt;chr&gt;             &lt;dbl&gt;         &lt;dbl&gt;             &lt;int&gt;       &lt;int&gt;
+##  1 Adelie    Torgers…           46            21.5               194        4200
+##  2 Adelie    Torgers…           45.8          18.9               197        4150
+##  3 Adelie    Biscoe             45.6          20.3               191        4600
+##  4 Chinstrap Dream              50            19.5               196        3900
+##  5 Chinstrap Dream              51.3          19.2               193        3650
+##  6 Chinstrap Dream              45.4          18.7               188        3525
+##  7 Chinstrap Dream              52.7          19.8               197        3725
+##  8 Chinstrap Dream              46.1          18.2               178        3250
+##  9 Chinstrap Dream              51.3          18.2               197        3750
+## 10 Chinstrap Dream              46            18.9               195        4150
+## # ℹ 34 more rows
+## # ℹ 2 more variables: sex &lt;chr&gt;, year &lt;int&gt;</code></pre>
 <p>This version links the two parts with the logical <code>&amp;</code> operator. That is, rather than supplying <code>bill_length_mm &gt; 45</code> and <code>bill_depth_mm &gt; 18</code> as two arguments, we used a single R expression, combining them with the <code>&amp;</code>.</p>
 <p>We’re pointing this out because we sometimes need to create filtering criteria that cannot be expressed as ‘condition 1’ <strong>and</strong> ‘condition 2’ <strong>and</strong> ‘condition 3’… etc. Under those conditions we have to use logical operators to connect conditions. A simple instance of this situation is where we need to subset on an <strong>either/or</strong> basis. For example:</p>
 <div class="sourceCode" id="cb232"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb232-1"><a href="working-with-observations.html#cb232-1" aria-hidden="true" tabindex="-1"></a><span class="fu">filter</span>(penguins, bill_length_mm <span class="sc">&lt;</span> <span class="dv">36</span> <span class="sc">|</span> bill_length_mm <span class="sc">&gt;</span> <span class="dv">54</span>)</span></code></pre></div>
-<pre><code>## # A tibble: 29 x 8
+<pre><code>## # A tibble: 29 × 8
 ##    species island    bill_length_mm bill_depth_mm flipper_length_mm body_mass_g
 ##    &lt;chr&gt;   &lt;chr&gt;              &lt;dbl&gt;         &lt;dbl&gt;             &lt;int&gt;       &lt;int&gt;
 ##  1 Adelie  Torgersen           34.1          18.1               193        3475
@@ -513,12 +517,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##  8 Adelie  Biscoe              35.7          16.9               185        3150
 ##  9 Adelie  Biscoe              35.5          16.2               195        3350
 ## 10 Adelie  Torgersen           35.9          16.6               190        3050
-## # … with 19 more rows, and 2 more variables: sex &lt;chr&gt;, year &lt;int&gt;</code></pre>
+## # ℹ 19 more rows
+## # ℹ 2 more variables: sex &lt;chr&gt;, year &lt;int&gt;</code></pre>
 <p>This creates a subset of <code>penguins</code> that only includes observation where <code>bill_length_mm</code> is less than 36 <strong>or</strong> (<code>|</code>) greater than 54. This creates a subset of the data associated with the more ‘extreme’ values of bill length (unusually small or large).</p>
 <p>We’re not limited to using relational and logical operators when working with <code>filter</code>. The conditions specified in the <code>filter</code> function can be any expression that returns a logical vector. The only constraint is that the output vector’s length has to equal its input’s length, or be a single logical values (<code>TRUE</code> or <code>FALSE</code>).</p>
 <p>Here’s an example. The <strong>dplyr</strong> <code>between</code> function is used to determine whether the values of a numeric vector fall in a specified range. It has three arguments: the numeric vector to filter on and the lower and upper and boundary values. For example:</p>
 <div class="sourceCode" id="cb234"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb234-1"><a href="working-with-observations.html#cb234-1" aria-hidden="true" tabindex="-1"></a><span class="fu">filter</span>(penguins, <span class="fu">between</span>(bill_length_mm, <span class="dv">36</span>, <span class="dv">54</span>))</span></code></pre></div>
-<pre><code>## # A tibble: 313 x 8
+<pre><code>## # A tibble: 313 × 8
 ##    species island    bill_length_mm bill_depth_mm flipper_length_mm body_mass_g
 ##    &lt;chr&gt;   &lt;chr&gt;              &lt;dbl&gt;         &lt;dbl&gt;             &lt;int&gt;       &lt;int&gt;
 ##  1 Adelie  Torgersen           39.1          18.7               181        3750
@@ -531,29 +536,31 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##  8 Adelie  Torgersen           42            20.2               190        4250
 ##  9 Adelie  Torgersen           37.8          17.1               186        3300
 ## 10 Adelie  Torgersen           37.8          17.3               180        3700
-## # … with 303 more rows, and 2 more variables: sex &lt;chr&gt;, year &lt;int&gt;</code></pre>
+## # ℹ 303 more rows
+## # ℹ 2 more variables: sex &lt;chr&gt;, year &lt;int&gt;</code></pre>
 </div>
-<div id="reordering-observations-with-arrange" class="section level2" number="8.4">
-<h2><span class="header-section-number">8.4</span> Reordering observations with <code>arrange</code></h2>
+<div id="reordering-observations-with-arrange" class="section level2 hasAnchor" number="8.4">
+<h2><span class="header-section-number">8.4</span> Reordering observations with <code>arrange</code><a href="working-with-observations.html#reordering-observations-with-arrange" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>We use <code>arrange</code> to <strong>reorder the rows</strong> of a data frame or tibble. Basic usage of <code>arrange</code> looks like this:</p>
 <div class="sourceCode" id="cb236"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb236-1"><a href="working-with-observations.html#cb236-1" aria-hidden="true" tabindex="-1"></a><span class="fu">arrange</span>(<span class="sc">&lt;</span>data<span class="sc">&gt;</span>, <span class="sc">&lt;</span>variable<span class="dv">-1</span><span class="sc">&gt;</span>, <span class="sc">&lt;</span>variable<span class="dv">-2</span><span class="sc">&gt;</span>, ...)</span></code></pre></div>
 <p>Yes, this is pseudocode. As always, the first argument, <code>&lt;data&gt;</code>, is the name of the object containing our data. We then include a series of one or more additional arguments, where each of these is the name of a variable in <code>&lt;data&gt;</code>: <code>&lt;variable-1&gt;</code> and <code>&lt;variable-2&gt;</code> are names of the first two ordering variables, and the <code>...</code> is acting as a placeholder for the remaining variables.</p>
 <p>To see <code>arrange</code> in action, let’s construct a new version of <code>penguins</code> where the rows have been reordered first by <code>flipper_length_mm</code>, and then by <code>body_mass_g</code>:</p>
 <div class="sourceCode" id="cb237"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb237-1"><a href="working-with-observations.html#cb237-1" aria-hidden="true" tabindex="-1"></a><span class="fu">arrange</span>(penguins, flipper_length_mm, body_mass_g)</span></code></pre></div>
-<pre><code>## # A tibble: 344 x 8
-##    species   island    bill_length_mm bill_depth_mm flipper_length_… body_mass_g
-##    &lt;chr&gt;     &lt;chr&gt;              &lt;dbl&gt;         &lt;dbl&gt;            &lt;int&gt;       &lt;int&gt;
-##  1 Adelie    Biscoe              37.9          18.6              172        3150
-##  2 Adelie    Biscoe              37.8          18.3              174        3400
-##  3 Adelie    Torgersen           40.2          17                176        3450
-##  4 Adelie    Dream               33.1          16.1              178        2900
-##  5 Adelie    Dream               39.5          16.7              178        3250
-##  6 Chinstrap Dream               46.1          18.2              178        3250
-##  7 Adelie    Dream               37.2          18.1              178        3900
-##  8 Adelie    Dream               37.5          18.9              179        2975
-##  9 Adelie    Dream               42.2          18.5              180        3550
-## 10 Adelie    Biscoe              37.7          18.7              180        3600
-## # … with 334 more rows, and 2 more variables: sex &lt;chr&gt;, year &lt;int&gt;</code></pre>
+<pre><code>## # A tibble: 344 × 8
+##    species   island   bill_length_mm bill_depth_mm flipper_length_mm body_mass_g
+##    &lt;chr&gt;     &lt;chr&gt;             &lt;dbl&gt;         &lt;dbl&gt;             &lt;int&gt;       &lt;int&gt;
+##  1 Adelie    Biscoe             37.9          18.6               172        3150
+##  2 Adelie    Biscoe             37.8          18.3               174        3400
+##  3 Adelie    Torgers…           40.2          17                 176        3450
+##  4 Adelie    Dream              33.1          16.1               178        2900
+##  5 Adelie    Dream              39.5          16.7               178        3250
+##  6 Chinstrap Dream              46.1          18.2               178        3250
+##  7 Adelie    Dream              37.2          18.1               178        3900
+##  8 Adelie    Dream              37.5          18.9               179        2975
+##  9 Adelie    Dream              42.2          18.5               180        3550
+## 10 Adelie    Biscoe             37.7          18.7               180        3600
+## # ℹ 334 more rows
+## # ℹ 2 more variables: sex &lt;chr&gt;, year &lt;int&gt;</code></pre>
 <p>This creates a new version of <code>penguins</code> where the rows are sorted according to the values of by <code>flipper_length_mm</code> and <code>body_mass_g</code> in ascending order – i.e. from smallest to largest. Look at the cases where flipper length is 178 mm. What do these show? Since <code>flipper_length_mm</code> was placed before <code>body_mass_g</code> in the arguments, the values of <code>body_mass_g</code> are only used to break ties within any particular value of <code>flipper_length_mm</code>.</p>
 <p>For the sake of avoiding doubt about how <code>arrange</code> works, we will quickly review its behaviour. It works the same as every other <strong>dplyr</strong> verb we have looked at:</p>
 <ul>
@@ -563,20 +570,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul>
 <p><code>arrange</code> sorts variables in ascending order by default. If we need it to sort a variable in descending order, we wrap the variable name in the <strong>dplyr</strong> <code>desc</code> function:</p>
 <div class="sourceCode" id="cb239"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb239-1"><a href="working-with-observations.html#cb239-1" aria-hidden="true" tabindex="-1"></a><span class="fu">arrange</span>(penguins, flipper_length_mm, <span class="fu">desc</span>(body_mass_g))</span></code></pre></div>
-<pre><code>## # A tibble: 344 x 8
-##    species   island    bill_length_mm bill_depth_mm flipper_length_… body_mass_g
-##    &lt;chr&gt;     &lt;chr&gt;              &lt;dbl&gt;         &lt;dbl&gt;            &lt;int&gt;       &lt;int&gt;
-##  1 Adelie    Biscoe              37.9          18.6              172        3150
-##  2 Adelie    Biscoe              37.8          18.3              174        3400
-##  3 Adelie    Torgersen           40.2          17                176        3450
-##  4 Adelie    Dream               37.2          18.1              178        3900
-##  5 Adelie    Dream               39.5          16.7              178        3250
-##  6 Chinstrap Dream               46.1          18.2              178        3250
-##  7 Adelie    Dream               33.1          16.1              178        2900
-##  8 Adelie    Dream               37.5          18.9              179        2975
-##  9 Adelie    Biscoe              40.5          18.9              180        3950
-## 10 Adelie    Biscoe              38.8          17.2              180        3800
-## # … with 334 more rows, and 2 more variables: sex &lt;chr&gt;, year &lt;int&gt;</code></pre>
+<pre><code>## # A tibble: 344 × 8
+##    species   island   bill_length_mm bill_depth_mm flipper_length_mm body_mass_g
+##    &lt;chr&gt;     &lt;chr&gt;             &lt;dbl&gt;         &lt;dbl&gt;             &lt;int&gt;       &lt;int&gt;
+##  1 Adelie    Biscoe             37.9          18.6               172        3150
+##  2 Adelie    Biscoe             37.8          18.3               174        3400
+##  3 Adelie    Torgers…           40.2          17                 176        3450
+##  4 Adelie    Dream              37.2          18.1               178        3900
+##  5 Adelie    Dream              39.5          16.7               178        3250
+##  6 Chinstrap Dream              46.1          18.2               178        3250
+##  7 Adelie    Dream              33.1          16.1               178        2900
+##  8 Adelie    Dream              37.5          18.9               179        2975
+##  9 Adelie    Biscoe             40.5          18.9               180        3950
+## 10 Adelie    Biscoe             38.8          17.2               180        3800
+## # ℹ 334 more rows
+## # ℹ 2 more variables: sex &lt;chr&gt;, year &lt;int&gt;</code></pre>
 <p>This creates a new version of <code>penguins</code> where the rows are sorted according to the values of <code>flipper_length_mm</code> and <code>body_mass_g</code>, in ascending and descending order, respectively. Look carefully at the values in the <code>flipper_length_mm</code> and <code>body_mass_g</code> columns to see the difference between this example and the previous one.</p>
 
 </div>
@@ -591,7 +599,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
@@ -610,6 +617,7 @@ gitbook.start({
 "weibo": false,
 "instapaper": false,
 "vk": false,
+"whatsapp": false,
 "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
@@ -630,6 +638,10 @@ gitbook.start({
 "text": null
 },
 "download": ["intro-bio-data-book.pdf", "intro-bio-data-book.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
 "toc": {
 "collapse": "section"
 }
@@ -643,7 +655,7 @@ gitbook.start({
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:")
       if (/^https?:/.test(src))
         src = src.replace(/^https?:/, '');

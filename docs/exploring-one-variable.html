@@ -6,11 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 15 Exploring one variable | Exploratory Data Analysis with R</title>
   <meta name="description" content="This is the Exploratory Data Analysis in R book provided by the School of Biosciences at the University of Sheffield." />
-  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.33 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 15 Exploring one variable | Exploratory Data Analysis with R" />
   <meta property="og:type" content="book" />
-  
   
   <meta property="og:description" content="This is the Exploratory Data Analysis in R book provided by the School of Biosciences at the University of Sheffield." />
   
@@ -24,7 +23,7 @@
 <meta name="author" content="Dylan Childs" />
 
 
-<meta name="date" content="2021-05-03" />
+<meta name="date" content="2023-03-27" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,8 +32,8 @@
   
 <link rel="prev" href="chapter-customise-ggplot2.html"/>
 <link rel="next" href="exploring-associations.html"/>
-<script src="libs/header-attrs-2.7/header-attrs.js"></script>
-<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -50,7 +49,9 @@
 
 
 
-
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 <link href="libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet" />
 <script src="libs/pagedtable-1.1/js/pagedtable.js"></script>
 
@@ -93,7 +94,7 @@ code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
 code span.at { color: #7d9029; } /* Attribute */
 code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
+code span.bu { color: #008000; } /* BuiltIn */
 code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
 code span.ch { color: #4070a0; } /* Char */
 code span.cn { color: #880000; } /* Constant */
@@ -106,7 +107,7 @@ code span.er { color: #ff0000; font-weight: bold; } /* Error */
 code span.ex { } /* Extension */
 code span.fl { color: #40a070; } /* Float */
 code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
+code span.im { color: #008000; font-weight: bold; } /* Import */
 code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 code span.kw { color: #007020; font-weight: bold; } /* Keyword */
 code span.op { color: #666666; } /* Operator */
@@ -119,6 +120,7 @@ code span.va { color: #19177c; } /* Variable */
 code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
+
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
@@ -275,7 +277,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="10" data-path="building-pipelines.html"><a href="building-pipelines.html"><i class="fa fa-check"></i><b>10</b> Building pipelines</a>
 <ul>
-<li class="chapter" data-level="10.1" data-path="building-pipelines.html"><a href="building-pipelines.html#why-do-we-need-pipes"><i class="fa fa-check"></i><b>10.1</b> Why do we need ‘pipes?’</a></li>
+<li class="chapter" data-level="10.1" data-path="building-pipelines.html"><a href="building-pipelines.html#why-do-we-need-pipes"><i class="fa fa-check"></i><b>10.1</b> Why do we need ‘pipes’?</a></li>
 <li class="chapter" data-level="10.2" data-path="building-pipelines.html"><a href="building-pipelines.html#using-pipes"><i class="fa fa-check"></i><b>10.2</b> Using pipes (<code>%&gt;%</code>)</a></li>
 </ul></li>
 <li class="chapter" data-level="11" data-path="helper-functions.html"><a href="helper-functions.html"><i class="fa fa-check"></i><b>11</b> Helper functions</a>
@@ -409,14 +411,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="exploring-one-variable" class="section level1" number="15">
-<h1><span class="header-section-number">Chapter 15</span> Exploring one variable</h1>
+<div id="exploring-one-variable" class="section level1 hasAnchor" number="15">
+<h1><span class="header-section-number">Chapter 15</span> Exploring one variable<a href="exploring-one-variable.html#exploring-one-variable" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p>This chapter will consider how to go about exploring a single variable. Using the <code>penguins</code> data, we’ll review some basic visualisations for exploring the sample distribution of numeric and categorical variables.</p>
-<div id="explore-numeric" class="section level2" number="15.1">
-<h2><span class="header-section-number">15.1</span> Exploring numerical variables</h2>
+<div id="explore-numeric" class="section level2 hasAnchor" number="15.1">
+<h2><span class="header-section-number">15.1</span> Exploring numerical variables<a href="exploring-one-variable.html#explore-numeric" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>We’ll work with flipper length (<code>flipper_length_mm</code>) and body mass (<code>body_mass_g</code>) to demonstrate how to explore numeric variables.</p>
-<div id="what-kind-of-numeric-variable" class="section level3" number="15.1.1">
-<h3><span class="header-section-number">15.1.1</span> What kind of numeric variable?</h3>
+<div id="what-kind-of-numeric-variable" class="section level3 hasAnchor" number="15.1.1">
+<h3><span class="header-section-number">15.1.1</span> What kind of numeric variable?<a href="exploring-one-variable.html#what-kind-of-numeric-variable" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>The simplest way to explore data is to view it in its raw form. Take a quick look at the first 100 values of <code>flipper_length_mm</code> and <code>body_mass_g</code>. We can get these by extracting them with the <code>$</code> operator and using the <code>head</code> function:</p>
 <p><strong>flipper length</strong> —</p>
 <div class="sourceCode" id="cb346"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb346-1"><a href="exploring-one-variable.html#cb346-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(penguins<span class="sc">$</span>flipper_length_mm, <span class="dv">50</span>)</span></code></pre></div>
@@ -437,19 +439,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Notice that even though body mass is a continuous variable <code>body_mass_g</code> looks discrete because body mass measurements have been taken to the nearest 25 grams. This reflects methodological limitations—presumably, weighing a live penguin to more than 25 grams precision in the field is challenging. This illustrates an important idea: we can’t just look at the values a numeric variable takes to determine whether it is discrete or continuous.</p>
 <p>Whether we treat a variable as continuous or discrete is sometimes an analysis decision. We have to decide based on knowledge of a variable’s true nature and the measurement process. For example, if we were only able to measure body mass to the nearest 500 grams, we would only “see” a few different body mass categories. It might then be reasonable to treat the <code>body_mass_g</code> variable as an ordinal, categorical variable.</p>
 </div>
-<div id="histograms" class="section level3" number="15.1.2">
-<h3><span class="header-section-number">15.1.2</span> Histograms</h3>
+<div id="histograms" class="section level3 hasAnchor" number="15.1.2">
+<h3><span class="header-section-number">15.1.2</span> Histograms<a href="exploring-one-variable.html#histograms" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>We only looked at the first 50 values of the <code>flipper_length_mm</code> and <code>body_mass_g</code> variables because the <code>penguins</code> data set is a bit too big to view everything at once easily. It’s hard to say much about the sample distribution of a numeric variable by looking at the raw data because there are so many unique values. Those first 50 are also not representative of the whole sample.</p>
-<p>What else might we do? One useful tool is ‘binning.’ The idea behind binning a numeric variable is very simple. It involves two steps.</p>
+<p>What else might we do? One useful tool is ‘binning’. The idea behind binning a numeric variable is very simple. It involves two steps.</p>
 <ol style="list-style-type: decimal">
-<li>Divide the number line into equal-sized, non-overlapping intervals. These are the ‘bins.’ We pick the interval size to ensure bins (typically) include at least a few cases.</li>
+<li>Divide the number line into equal-sized, non-overlapping intervals. These are the ‘bins’. We pick the interval size to ensure bins (typically) include at least a few cases.</li>
 <li>We then have to count up the number of times the variable falls inside each bin. The resulting set of counts summarises the sample distribution of the numeric variable.</li>
 </ol>
 <p>Binning is very tedious to do by hand. Fortunately, R can do this for us. This shows how to use the <code>cut</code> function with the <strong>dplyr</strong> <code>transmute</code> and <code>count</code> verbs to bin the <code>flipper_length_mm</code> variable into 5 mm intervals:</p>
 <div class="sourceCode" id="cb350"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb350-1"><a href="exploring-one-variable.html#cb350-1" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">%&gt;%</span> </span>
 <span id="cb350-2"><a href="exploring-one-variable.html#cb350-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">transmute</span>(<span class="at">bins =</span> <span class="fu">cut</span>(flipper_length_mm, <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">170</span>, <span class="dv">235</span>, <span class="at">by =</span> <span class="dv">5</span>))) <span class="sc">%&gt;%</span></span>
 <span id="cb350-3"><a href="exploring-one-variable.html#cb350-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(bins)</span></code></pre></div>
-<pre><code>## # A tibble: 14 x 2
+<pre><code>## # A tibble: 14 × 2
 ##    bins          n
 ##    &lt;fct&gt;     &lt;int&gt;
 ##  1 (170,175]     2
@@ -526,8 +528,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb358-6"><a href="exploring-one-variable.html#cb358-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Flipper length (mm)&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Count&quot;</span>)</span></code></pre></div>
 <p><img src="intro-bio-data-book_files/figure-html/unnamed-chunk-221-1.png" width="336" style="display: block; margin: auto;" /></p>
 <p>Notice that the effect of increasing the bin width is to ‘smooth’ the histogram, i.e. this version looks less jagged than the last. Whether or not that colour scheme is an improvement is a matter of taste. Mostly we wanted to demonstrate how the <code>fill</code> and <code>colour</code> arguments change the output— <code>fill</code> sets the fill colour of the bar and <code>colour</code> deals with the line around each bar.</p>
-<div id="choose-your-own-bin-widths" class="section level4 unnumbered infobox warning">
-<h4>Choose your own bin widths</h4>
+<div id="choose-your-own-bin-widths" class="section level4 unnumbered hasAnchor infobox warning">
+<h4>Choose your own bin widths<a href="exploring-one-variable.html#choose-your-own-bin-widths" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>It is good practice to experiment with <code>binwidth</code> because the value selected by <strong>ggplot2</strong> is seldom optimal. Finding a ‘good’ value is as much art as science. One way of doing this is to start with a value that is probably too large and then refine it down. For example, we could work out the approximate range of the data by eye and then use 1/10<sup>th</sup> of that range as an initial value for <code>binwidth</code>. Unless the data set is very small, this will result in a histogram that aggregates too much information. Once we have that rough starting value, we then reduce <code>binwidth</code> in small steps, re-rendering the plot each time until we end up with something that summarises the distribution well.</p>
 </div>
 <p>We can use pretty much the same R code to produce a histogram summarising the body mass sample distribution:</p>
@@ -550,11 +552,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><img src="intro-bio-data-book_files/figure-html/unnamed-chunk-223-1.png" width="336" style="display: block; margin: auto;" /></p>
 <p>We end up with gaps in the histogram because many bins do not include any data. The take-home message is that we have to pay attention to our data to produce meaningful summaries.</p>
 </div>
-<div id="dot-plots" class="section level3" number="15.1.3">
-<h3><span class="header-section-number">15.1.3</span> Dot plots</h3>
+<div id="dot-plots" class="section level3 hasAnchor" number="15.1.3">
+<h3><span class="header-section-number">15.1.3</span> Dot plots<a href="exploring-one-variable.html#dot-plots" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Histograms are good for visualising sample distributions when we have a reasonably large sample size, e.g. &gt;100 observations. They are less effective when a sample is small. In this ‘small data’ situation, it is better to use something called a <strong>dot plot</strong><a href="#fn9" class="footnote-ref" id="fnref9"><sup>9</sup></a>.</p>
 <p>We have created subset of <code>penguins</code> that only retains female Adelie penguin observations from 2007, called <code>penguins_small</code>. This is considerably smaller than the original:</p>
-<pre><code>## # A tibble: 22 x 8
+<pre><code>## # A tibble: 22 × 8
 ##    species island    bill_length_mm bill_depth_mm flipper_length_mm body_mass_g
 ##    &lt;chr&gt;   &lt;chr&gt;              &lt;dbl&gt;         &lt;dbl&gt;             &lt;int&gt;       &lt;int&gt;
 ##  1 Adelie  Torgersen           39.5          17.4               186        3800
@@ -567,7 +569,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##  8 Adelie  Torgersen           34.4          18.4               184        3325
 ##  9 Adelie  Biscoe              37.8          18.3               174        3400
 ## 10 Adelie  Biscoe              35.9          19.2               189        3800
-## # … with 12 more rows, and 2 more variables: sex &lt;chr&gt;, year &lt;int&gt;</code></pre>
+## # ℹ 12 more rows
+## # ℹ 2 more variables: sex &lt;chr&gt;, year &lt;int&gt;</code></pre>
 <p>This is about the right size for using a dot plot. Constructing a dot plot with <strong>ggplot2</strong> is easy once you understand the histogram case. The code is are very similar:</p>
 <div class="sourceCode" id="cb362"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb362-1"><a href="exploring-one-variable.html#cb362-1" aria-hidden="true" tabindex="-1"></a><span class="co"># display body mass dot plot</span></span>
 <span id="cb362-2"><a href="exploring-one-variable.html#cb362-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins_small, <span class="fu">aes</span>(<span class="at">x =</span> body_mass_g)) <span class="sc">+</span> </span>
@@ -582,11 +585,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>The <code>theme</code> part of that example is entirely optional.It removes the grid lines and y-axis labels because these are not meaningful when the number of stacked dots represents ’ height’. It is unfortunate that <strong>ggplot2</strong> displays them. But then, no package is perfect.</p>
 </div>
 </div>
-<div id="explore-categorical" class="section level2" number="15.2">
-<h2><span class="header-section-number">15.2</span> Exploring categorical variables</h2>
+<div id="explore-categorical" class="section level2 hasAnchor" number="15.2">
+<h2><span class="header-section-number">15.2</span> Exploring categorical variables<a href="exploring-one-variable.html#explore-categorical" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>We will work with the penguin species (<code>species</code>) and observation year (<code>year</code>) variables to demonstrate how to explore categorical variables.</p>
-<div id="what-kind-of-categorical-variable" class="section level3" number="15.2.1">
-<h3><span class="header-section-number">15.2.1</span> What kind of categorical variable?</h3>
+<div id="what-kind-of-categorical-variable" class="section level3 hasAnchor" number="15.2.1">
+<h3><span class="header-section-number">15.2.1</span> What kind of categorical variable?<a href="exploring-one-variable.html#what-kind-of-categorical-variable" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Exploring categorical variables is generally simpler than the numeric case. The simplest thing we can do is examine the set of categories. For example, we can print these by extracting a variable with the <code>$</code> operator and using the <code>unique</code> function:</p>
 <p><strong>species</strong> —</p>
 <div class="sourceCode" id="cb363"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb363-1"><a href="exploring-one-variable.html#cb363-1" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(penguins<span class="sc">$</span>species)</span></code></pre></div>
@@ -599,11 +602,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>This once again illustrates an important idea—the classification of a variable sometimes depends on the analysis goals. The decision matters because it influences how we choose to summarise a variable, how we interpret its relationship with other variables, and whether a specific statistical model is appropriate for our data or not.</p>
 <p>For now, let’s assume it’s fine to treat <code>year</code> as a nominal variable.</p>
 </div>
-<div id="bar-plots" class="section level3" number="15.2.2">
-<h3><span class="header-section-number">15.2.2</span> Bar plots</h3>
+<div id="bar-plots" class="section level3 hasAnchor" number="15.2.2">
+<h3><span class="header-section-number">15.2.2</span> Bar plots<a href="exploring-one-variable.html#bar-plots" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>We can’t say anything about the sample distribution of a categorical variable by just looking at the possible categories. We need to explore the relative frequency of those categories. There is no need to carry out anything as complicated as binning. Instead, we simply count up the number of times each category occurs in the data. The <strong>dplyr</strong> <code>count</code> verb will does this:</p>
 <div class="sourceCode" id="cb367"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb367-1"><a href="exploring-one-variable.html#cb367-1" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">%&gt;%</span> <span class="fu">count</span>(species)</span></code></pre></div>
-<pre><code>## # A tibble: 3 x 2
+<pre><code>## # A tibble: 3 × 2
 ##   species       n
 ##   &lt;chr&gt;     &lt;int&gt;
 ## 1 Adelie      152
@@ -642,7 +645,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##     vars: function
 ##     super:  &lt;ggproto object: Class FacetNull, Facet, gg&gt;
 ## -----------------------------------
-## geom_bar: width = NULL, na.rm = FALSE, orientation = NA
+## geom_bar: just = 0.5, width = NULL, na.rm = FALSE, orientation = NA
 ## stat_count: width = NULL, na.rm = FALSE, orientation = NA
 ## position_stack</code></pre>
 <p>Look at the layer information below <code>----</code>. The <code>geom_bar</code> function uses <code>stat_count</code>. This means <strong>ggplot2</strong> summed the number of observations associated with each category of <code>species</code>. Counting a categorical variable is analogous to binning a numeric variable. The only difference is that there is no need to specify bin widths because <code>species</code> is categorical. Here’s the resulting figure:</p>
@@ -672,7 +675,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb376-7"><a href="exploring-one-variable.html#cb376-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># set the the x- and y-axis labels</span></span>
 <span id="cb376-8"><a href="exploring-one-variable.html#cb376-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Species&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Number of Observations&quot;</span>)</span></code></pre></div>
 <p><img src="intro-bio-data-book_files/figure-html/unnamed-chunk-236-1.png" width="211.2" style="display: block; margin: auto;" /></p>
-<p>We had to use one of the <code>scale_x_YY</code> functions to change the way the ‘x’ aesthetic appears. We use <code>scale_x_discrete</code> because ‘discrete’ is <strong>ggplot2</strong>-speak for ‘categorical.’</p>
+<p>We had to use one of the <code>scale_x_YY</code> functions to change the way the ‘x’ aesthetic appears. We use <code>scale_x_discrete</code> because ‘discrete’ is <strong>ggplot2</strong>-speak for ‘categorical’.</p>
 <p>Is there anything else we might want to change? Sometimes it is clearer to plot horizontal bars, particularly if the categorical axis labels are all bunched together (not really the case here). Flipping the x and y axes makes a horizontal bar chart, which we can achieve with the <code>coord_flip</code> function (this is new):</p>
 <div class="sourceCode" id="cb377"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb377-1"><a href="exploring-one-variable.html#cb377-1" aria-hidden="true" tabindex="-1"></a><span class="co"># display bar plot of species counts</span></span>
 <span id="cb377-2"><a href="exploring-one-variable.html#cb377-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins, <span class="fu">aes</span>(<span class="at">x =</span> species)) <span class="sc">+</span> </span>
@@ -717,7 +720,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="footnotes">
 <hr />
 <ol start="9">
-<li id="fn9"><p>Not to be confused with the ‘Cleveland dot plot.’ A standard dot plot summarises a sample distribution. The Cleveland dot plot is something quite different, which summarises the frequencies of a categorical variable. It’s meant to serve as a simple alternative to bar charts and pie charts.<a href="exploring-one-variable.html#fnref9" class="footnote-back">↩︎</a></p></li>
+<li id="fn9"><p>Not to be confused with the ‘Cleveland dot plot’. A standard dot plot summarises a sample distribution. The Cleveland dot plot is something quite different, which summarises the frequencies of a categorical variable. It’s meant to serve as a simple alternative to bar charts and pie charts.<a href="exploring-one-variable.html#fnref9" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>
@@ -730,7 +733,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
@@ -749,6 +751,7 @@ gitbook.start({
 "weibo": false,
 "instapaper": false,
 "vk": false,
+"whatsapp": false,
 "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
@@ -769,6 +772,10 @@ gitbook.start({
 "text": null
 },
 "download": ["intro-bio-data-book.pdf", "intro-bio-data-book.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
 "toc": {
 "collapse": "section"
 }
@@ -782,7 +789,7 @@ gitbook.start({
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:")
       if (/^https?:/.test(src))
         src = src.replace(/^https?:/, '');

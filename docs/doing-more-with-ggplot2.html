@@ -6,11 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 17 Doing more with ggplot2 | Exploratory Data Analysis with R</title>
   <meta name="description" content="This is the Exploratory Data Analysis in R book provided by the School of Biosciences at the University of Sheffield." />
-  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.33 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 17 Doing more with ggplot2 | Exploratory Data Analysis with R" />
   <meta property="og:type" content="book" />
-  
   
   <meta property="og:description" content="This is the Exploratory Data Analysis in R book provided by the School of Biosciences at the University of Sheffield." />
   
@@ -24,7 +23,7 @@
 <meta name="author" content="Dylan Childs" />
 
 
-<meta name="date" content="2021-05-03" />
+<meta name="date" content="2023-03-27" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,8 +32,8 @@
   
 <link rel="prev" href="exploring-associations.html"/>
 <link rel="next" href="getting-help.html"/>
-<script src="libs/header-attrs-2.7/header-attrs.js"></script>
-<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -50,7 +49,9 @@
 
 
 
-
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 <link href="libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet" />
 <script src="libs/pagedtable-1.1/js/pagedtable.js"></script>
 
@@ -93,7 +94,7 @@ code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
 code span.at { color: #7d9029; } /* Attribute */
 code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
+code span.bu { color: #008000; } /* BuiltIn */
 code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
 code span.ch { color: #4070a0; } /* Char */
 code span.cn { color: #880000; } /* Constant */
@@ -106,7 +107,7 @@ code span.er { color: #ff0000; font-weight: bold; } /* Error */
 code span.ex { } /* Extension */
 code span.fl { color: #40a070; } /* Float */
 code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
+code span.im { color: #008000; font-weight: bold; } /* Import */
 code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 code span.kw { color: #007020; font-weight: bold; } /* Keyword */
 code span.op { color: #666666; } /* Operator */
@@ -119,6 +120,7 @@ code span.va { color: #19177c; } /* Variable */
 code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
+
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
@@ -275,7 +277,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="10" data-path="building-pipelines.html"><a href="building-pipelines.html"><i class="fa fa-check"></i><b>10</b> Building pipelines</a>
 <ul>
-<li class="chapter" data-level="10.1" data-path="building-pipelines.html"><a href="building-pipelines.html#why-do-we-need-pipes"><i class="fa fa-check"></i><b>10.1</b> Why do we need ‘pipes?’</a></li>
+<li class="chapter" data-level="10.1" data-path="building-pipelines.html"><a href="building-pipelines.html#why-do-we-need-pipes"><i class="fa fa-check"></i><b>10.1</b> Why do we need ‘pipes’?</a></li>
 <li class="chapter" data-level="10.2" data-path="building-pipelines.html"><a href="building-pipelines.html#using-pipes"><i class="fa fa-check"></i><b>10.2</b> Using pipes (<code>%&gt;%</code>)</a></li>
 </ul></li>
 <li class="chapter" data-level="11" data-path="helper-functions.html"><a href="helper-functions.html"><i class="fa fa-check"></i><b>11</b> Helper functions</a>
@@ -409,12 +411,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="doing-more-with-ggplot2" class="section level1" number="17">
-<h1><span class="header-section-number">Chapter 17</span> Doing more with <strong>ggplot2</strong></h1>
+<div id="doing-more-with-ggplot2" class="section level1 hasAnchor" number="17">
+<h1><span class="header-section-number">Chapter 17</span> Doing more with <strong>ggplot2</strong><a href="doing-more-with-ggplot2.html#doing-more-with-ggplot2" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p>We have now seen a range of different ways to visualise and explore data using <strong>ggplot2</strong>. This last chapter will cover a few bits of miscellanea that don’t particularly fit anywhere else. That doesn’t mean the ideas aren’t important!</p>
-<div id="summaries" class="section level2" number="17.1">
-<h2><span class="header-section-number">17.1</span> Comparing descriptive statistics</h2>
-<p>So far, we have focussed on displaying the raw data (e.g. scatter plots) or a distributional summary (e.g. box plots). What other types of quantities might we need to visualise? Descriptive statistics, such as the sample mean, are one possibility. These often feature in data analysis when ‘comparing groups.’</p>
+<div id="summaries" class="section level2 hasAnchor" number="17.1">
+<h2><span class="header-section-number">17.1</span> Comparing descriptive statistics<a href="doing-more-with-ggplot2.html#summaries" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>So far, we have focussed on displaying the raw data (e.g. scatter plots) or a distributional summary (e.g. box plots). What other types of quantities might we need to visualise? Descriptive statistics, such as the sample mean, are one possibility. These often feature in data analysis when ‘comparing groups’.</p>
 <p>We need to know how to construct plots that display such summaries. Let’s start with a simple question: how does the (arithmetic) mean body mass vary by sex and across penguin species? One option is to produce a bar plot for which the lengths of bars represent the mean body mass in each category.</p>
 <p>There are two different routes to produce this kind of plot with <strong>ggplot2</strong>. One way is to break the problem into two steps.</p>
 <p>In the first step, we calculate whatever it is we want to display. In our example, that is the set of species- and sex-specific mean body masses. <strong>dplyr</strong> is a good tool for this step:</p>
@@ -425,11 +427,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb394-5"><a href="doing-more-with-ggplot2.html#cb394-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mean_mass =</span> <span class="fu">mean</span>(body_mass_g)) <span class="sc">%&gt;%</span> </span>
 <span id="cb394-6"><a href="doing-more-with-ggplot2.html#cb394-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># remove rows generated by sex = NA cases</span></span>
 <span id="cb394-7"><a href="doing-more-with-ggplot2.html#cb394-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">na.omit</span>()</span></code></pre></div>
-<pre><code>## `summarise()` has grouped output by &#39;species&#39;. You can override using the `.groups` argument.</code></pre>
+<pre><code>## `summarise()` has grouped output by &#39;species&#39;. You can override using the `.groups`
+## argument.</code></pre>
 <p>We used <code>group_by</code> and <code>summarise</code> to calculate the set of means, which we decided to call <code>mean_mass</code>. Notice that we used <code>na.omit</code> to exclude the <code>NA</code> categories that arise when sex is unknown. The resulting <code>penguins_summary</code> object is a small 6 row by 3 column tibble:</p>
 <div class="sourceCode" id="cb396"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb396-1"><a href="doing-more-with-ggplot2.html#cb396-1" aria-hidden="true" tabindex="-1"></a><span class="co"># show the summary data</span></span>
 <span id="cb396-2"><a href="doing-more-with-ggplot2.html#cb396-2" aria-hidden="true" tabindex="-1"></a>penguins_summary</span></code></pre></div>
-<pre><code>## # A tibble: 6 x 3
+<pre><code>## # A tibble: 6 × 3
 ## # Groups:   species [3]
 ##   species   sex    mean_mass
 ##   &lt;chr&gt;     &lt;chr&gt;      &lt;dbl&gt;
@@ -451,12 +454,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><img src="intro-bio-data-book_files/figure-html/unnamed-chunk-261-1.png" width="384" style="display: block; margin: auto;" /></p>
 <p>Two points about this are worth noting:</p>
 <ol style="list-style-type: decimal">
-<li>We used <code>geom_col</code> instead of <code>geom_bar</code>. <code>geom_bar</code> counts the observations in each category by default. Using <code>geom_col</code> tells <strong>ggplot2</strong> to plot the information in <code>mean_mass</code> ‘as is.’</li>
+<li>We used <code>geom_col</code> instead of <code>geom_bar</code>. <code>geom_bar</code> counts the observations in each category by default. Using <code>geom_col</code> tells <strong>ggplot2</strong> to plot the information in <code>mean_mass</code> ‘as is’.</li>
 <li>We paid close attention to the names of things. The plotting data lives in <code>penguins_summary</code> which means the y aesthetic must be associated with <code>mean_mass</code> rather than <code>body_mass_g</code>.</li>
 </ol>
 <p>It is possible to produce this plot with less code by using <strong>ggplot2</strong>’s built-in ‘stat’ facility (see box). We recommend the long-winded way when starting out with R because it makes it a bit easier to fix mistakes—we can check whether the right information is in a summary data set before plotting it.</p>
-<div id="using-ggplot2-stats" class="section level4 unnumbered infobox information">
-<h4>Using <strong>ggplot2</strong> ‘stats’</h4>
+<div id="using-ggplot2-stats" class="section level4 unnumbered hasAnchor infobox information">
+<h4>Using <strong>ggplot2</strong> ‘stats’<a href="doing-more-with-ggplot2.html#using-ggplot2-stats" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>Another way to arrive at the above bar plot is by using the built-in <strong>ggplot2</strong> <code>stat</code> facility:</p>
 <div class="sourceCode" id="cb399"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb399-1"><a href="doing-more-with-ggplot2.html#cb399-1" aria-hidden="true" tabindex="-1"></a><span class="co"># display bar plot of body mass means</span></span>
 <span id="cb399-2"><a href="doing-more-with-ggplot2.html#cb399-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="fu">na.omit</span>(penguins), <span class="co"># &lt;- remove missing values</span></span>
@@ -474,12 +477,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul>
 <p>Notice that this works on the raw data (<code>penguins</code>)—there is no need to manually calculate the means because that happens inside <strong>ggplot2</strong>.</p>
 </div>
-<div id="error-bars" class="section level3" number="17.1.1">
-<h3><span class="header-section-number">17.1.1</span> Error bars</h3>
+<div id="error-bars" class="section level3 hasAnchor" number="17.1.1">
+<h3><span class="header-section-number">17.1.1</span> Error bars<a href="doing-more-with-ggplot2.html#error-bars" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>A descriptive statistic like the mean isn’t much use on its own. To properly interpret means we also need to know something about their uncertainty. There are many ways to quantify the uncertainty of an estimate. Whichever one we are using, displaying the uncertainty typically involves adding <strong>error bars</strong> to a plot.</p>
 <p>We’ll demonstrate how to do this by extending the previous example to show the mean and standard error of body mass for each species.</p>
-<div id="er.-standard-error" class="section level4 unnumbered infobox information">
-<h4>Er…. standard error?</h4>
+<div id="er.-standard-error" class="section level4 unnumbered hasAnchor infobox information">
+<h4>Er…. standard error?<a href="doing-more-with-ggplot2.html#er.-standard-error" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>The standard error is a measure of how precise an estimate like the sample mean is. A small standard error indicates that we can have more confidence the estimate reflects the ‘true’ value. The standard error of the mean can be calculated from a well-known formula: <span class="math display">\[
 \text{Standard Error} = \frac{\text{Standard Deviation}}{\sqrt{(\text{Sample Size})}} = \frac{\sigma}{\sqrt{n}}
 \]</span></p>
@@ -500,11 +503,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb401-10"><a href="doing-more-with-ggplot2.html#cb401-10" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span> </span>
 <span id="cb401-11"><a href="doing-more-with-ggplot2.html#cb401-11" aria-hidden="true" tabindex="-1"></a>  <span class="co"># remove rows generated by sex = NA cases</span></span>
 <span id="cb401-12"><a href="doing-more-with-ggplot2.html#cb401-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">na.omit</span>()</span></code></pre></div>
-<pre><code>## `summarise()` has grouped output by &#39;species&#39;. You can override using the `.groups` argument.</code></pre>
+<pre><code>## `summarise()` has grouped output by &#39;species&#39;. You can override using the `.groups`
+## argument.</code></pre>
 <p>We use <strong>dplyr</strong> to calculate the means and standard errors of each species’ body mass, which we called <code>mean_mass</code> and <code>ster_mass</code>, respectively. Again, we used <code>na.omit</code> to exclude the <code>NA</code> categories cases. The new <code>penguins_summary</code> object is a 6 row by 4 column tibble:</p>
 <div class="sourceCode" id="cb403"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb403-1"><a href="doing-more-with-ggplot2.html#cb403-1" aria-hidden="true" tabindex="-1"></a><span class="co"># show the new summary data</span></span>
 <span id="cb403-2"><a href="doing-more-with-ggplot2.html#cb403-2" aria-hidden="true" tabindex="-1"></a>penguins_summary</span></code></pre></div>
-<pre><code>## # A tibble: 6 x 4
+<pre><code>## # A tibble: 6 × 4
 ## # Groups:   species [3]
 ##   species   sex    mean_mass ster_mass
 ##   &lt;chr&gt;     &lt;chr&gt;      &lt;dbl&gt;     &lt;dbl&gt;
@@ -535,14 +539,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>We used the <code>width</code> argument of <code>geom_errorbar</code> to set the width of the ‘hat’ on each error bar (entirely optional). A value of zero gets rid of these altogether.</li>
 <li>The position now has to be set in two places: <code>geom_col</code> and <code>geom_errorbar</code>. For a bar plot, we use the not-very-intuitive <code>position = position_dodge(0.9)</code> to locate the error bars at the centre of each bar.</li>
 </ul>
-<div id="warning-1" class="section level4 unnumbered infobox warning">
-<h4>Warning!</h4>
+<div id="warning-1" class="section level4 unnumbered hasAnchor infobox warning">
+<h4>Warning!<a href="doing-more-with-ggplot2.html#warning-1" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>Data visualisations can include many different kinds of ‘error bar’— standard deviation, standard error, 95% confidence intervals, etc. When we include any error bars on a plot, we must remember to state which kind was used in the figure legend. Otherwise, readers will have no way of knowing how to interpret the plot.</p>
 </div>
 <!-- Showing data and descriptive statistics--dropped as too much  -->
 </div>
-<div id="alternatives-to-bar-plots" class="section level3" number="17.1.2">
-<h3><span class="header-section-number">17.1.2</span> Alternatives to bar plots</h3>
+<div id="alternatives-to-bar-plots" class="section level3 hasAnchor" number="17.1.2">
+<h3><span class="header-section-number">17.1.2</span> Alternatives to bar plots<a href="doing-more-with-ggplot2.html#alternatives-to-bar-plots" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Do we have to use a bar plot to display means? Certainly not. In some ways bar plots are a bit old-fashioned, and many people often prefer to show a set of means as points and error bars these days. This kind of visualisation is also easier to make than a bar plot because we can use a single geom (<code>geom_pointrange</code>) to add both the points and error bars as a single layer:</p>
 <div class="sourceCode" id="cb406"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb406-1"><a href="doing-more-with-ggplot2.html#cb406-1" aria-hidden="true" tabindex="-1"></a><span class="co"># display points plot of body mass means + SE&#39;s</span></span>
 <span id="cb406-2"><a href="doing-more-with-ggplot2.html#cb406-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins_summary, </span>
@@ -566,8 +570,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>That’s it!</p>
 </div>
 </div>
-<div id="adding-text-annotations" class="section level2" number="17.2">
-<h2><span class="header-section-number">17.2</span> Adding text annotations</h2>
+<div id="adding-text-annotations" class="section level2 hasAnchor" number="17.2">
+<h2><span class="header-section-number">17.2</span> Adding text annotations<a href="doing-more-with-ggplot2.html#adding-text-annotations" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>We often need to include text annotations on a plot. For example, we might want to show sample sizes or highlight ‘statistically significant’ differences. Adding text is no different from adding other kinds of objects to a plot—we use an appropriate geom (e.g. <code>geom_text</code>) to include textual information. Let’s see how this works by adding sample size labels the bar chart we’ve been building.</p>
 <p>We start by placing the labels we want to use in a data frame (or tibble) alongside any other variables used in aesthetic mappings. This can be distinct from the data set used to construct the plot but its often simplest to put everything together in one place. Let’s do that by rebuilding the <code>penguins_summary</code> data set to include the mean body mass, standard error and sample size for each group.</p>
 <div class="sourceCode" id="cb407"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb407-1"><a href="doing-more-with-ggplot2.html#cb407-1" aria-hidden="true" tabindex="-1"></a>penguins_summary <span class="ot">&lt;-</span> penguins <span class="sc">%&gt;%</span> </span>
@@ -584,7 +588,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb407-12"><a href="doing-more-with-ggplot2.html#cb407-12" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span> </span>
 <span id="cb407-13"><a href="doing-more-with-ggplot2.html#cb407-13" aria-hidden="true" tabindex="-1"></a>  <span class="co"># remove rows generated by sex = NA cases</span></span>
 <span id="cb407-14"><a href="doing-more-with-ggplot2.html#cb407-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">na.omit</span>()</span></code></pre></div>
-<pre><code>## `summarise()` has grouped output by &#39;species&#39;. You can override using the `.groups` argument.</code></pre>
+<pre><code>## `summarise()` has grouped output by &#39;species&#39;. You can override using the `.groups`
+## argument.</code></pre>
 <p>Then we add the text showing the sample size to our plot using the function <code>geom_text</code>:</p>
 <div class="sourceCode" id="cb409"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb409-1"><a href="doing-more-with-ggplot2.html#cb409-1" aria-hidden="true" tabindex="-1"></a><span class="co"># display bar plot of body mass means + SE&#39;s + sample sizes</span></span>
 <span id="cb409-2"><a href="doing-more-with-ggplot2.html#cb409-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins_summary, </span>
@@ -606,20 +611,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><img src="intro-bio-data-book_files/figure-html/unnamed-chunk-270-1.png" width="384" style="display: block; margin: auto;" /></p>
 <p>The <code>y = mean_mass + ster_mass + 200</code> aesthetic mapping in <code>geom_text</code> positions each number just above the error bar. This works because we placed the textual information in the plotting data set, meaning we can use the x/y variables to set the position of the annotations. We also have to use the correct position adjustment to ensure the annotations are located at each bar’s centre. Everything else inside <code>geom_text</code> is adjusting the appearance of the actual text.</p>
 </div>
-<div id="saving-plots" class="section level2" number="17.3">
-<h2><span class="header-section-number">17.3</span> Saving plots</h2>
+<div id="saving-plots" class="section level2 hasAnchor" number="17.3">
+<h2><span class="header-section-number">17.3</span> Saving plots<a href="doing-more-with-ggplot2.html#saving-plots" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Plots can be saved using the <strong>Export</strong> button in the RStudio <strong>Plots</strong> tab. However, saving plots this way often leads to a pixelated, low resolution image. The <code>ggsave</code> function in <strong>ggplot2</strong> produces much better output and supports a wide range of image file types. There’s not much to it. Using <code>ggsave</code> looks like this:</p>
 <div class="sourceCode" id="cb410"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb410-1"><a href="doing-more-with-ggplot2.html#cb410-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">&quot;penguins-plot.pdf&quot;</span>, <span class="at">height =</span> <span class="dv">5</span>, <span class="at">width =</span> <span class="dv">5</span>)</span></code></pre></div>
 <p>By default, <code>ggsave</code> will save the last plot we made to file. If we had made the bar chart and then ran that <code>ggsave</code> line, R would save a copy of the plot to as a PDF file called <a href="images/penguins-plot.pdf">penguins-plot.pdf</a>.</p>
 <p>Here is a quick summary of how the function works:</p>
 <ul>
 <li><p>The first argument is the path and name of the file we want to create. This example would save the plot to a file called <u>penguins-plot.pdf</u>. Because we only provide a file name, <code>ggsave</code> would save it to the current working directory.</p></li>
-<li><p><code>ggsave</code> supports many different formats (e.g. “pdf,” “jpeg,” “png,” “svg”). This can be set via the <code>device</code> argument (e.g. <code>device = "jpeg"</code>). Alternatively, if we don’t set the format, <strong>ggplot2</strong> will guess it from the file extension.</p></li>
+<li><p><code>ggsave</code> supports many different formats (e.g. “pdf”, “jpeg”, “png”, “svg”). This can be set via the <code>device</code> argument (e.g. <code>device = "jpeg"</code>). Alternatively, if we don’t set the format, <strong>ggplot2</strong> will guess it from the file extension.</p></li>
 <li><p>The <code>width</code> and <code>height</code> arguments specify the plot dimensions. These usually require a bit of experimentation to get right. If we do not specify them, <code>ggsave</code> will use the current size of the plotting window.</p></li>
 </ul>
 </div>
-<div id="multi-panel-plots" class="section level2" number="17.4">
-<h2><span class="header-section-number">17.4</span> Multi-panel plots</h2>
+<div id="multi-panel-plots" class="section level2 hasAnchor" number="17.4">
+<h2><span class="header-section-number">17.4</span> Multi-panel plots<a href="doing-more-with-ggplot2.html#multi-panel-plots" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>We have seen how to use <code>facet_wrap</code> and <code>facet_grid</code> to produce multi-panel plots. These functions are useful when a plot needs to show the same visualisation for different subsets of data. How do we produce a figure that shows a different visualisation in each panel?</p>
 <p>There are many ways to do this using an external add-on package. We’ll examine the framework provided by the <a href="https://wilkelab.org/cowplot/articles/index.html"><strong>cowplot</strong> package</a>. Cowplot provides various features that help create high-quality figures, including custom themes and facilities to arrange plots into multi-panel figures.</p>
 <p>Constructing a multi-panel plot with <strong>cowplot</strong> happens in two stages. First, make the individual component plots using <strong>ggplot2</strong> as usual, but instead of ‘printing’ them, assign each graphical object a name. Then use the <code>plot_grid</code> function from <strong>cowplot</strong> to construct the multi-panel plot from the stored objects.</p>
@@ -676,7 +681,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
@@ -695,6 +699,7 @@ gitbook.start({
 "weibo": false,
 "instapaper": false,
 "vk": false,
+"whatsapp": false,
 "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
@@ -715,6 +720,10 @@ gitbook.start({
 "text": null
 },
 "download": ["intro-bio-data-book.pdf", "intro-bio-data-book.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
 "toc": {
 "collapse": "section"
 }
@@ -728,7 +737,7 @@ gitbook.start({
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:")
       if (/^https?:/.test(src))
         src = src.replace(/^https?:/, '');

@@ -6,11 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 14 Customising plots | Exploratory Data Analysis with R</title>
   <meta name="description" content="This is the Exploratory Data Analysis in R book provided by the School of Biosciences at the University of Sheffield." />
-  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.33 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 14 Customising plots | Exploratory Data Analysis with R" />
   <meta property="og:type" content="book" />
-  
   
   <meta property="og:description" content="This is the Exploratory Data Analysis in R book provided by the School of Biosciences at the University of Sheffield." />
   
@@ -24,7 +23,7 @@
 <meta name="author" content="Dylan Childs" />
 
 
-<meta name="date" content="2021-05-03" />
+<meta name="date" content="2023-03-27" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,8 +32,8 @@
   
 <link rel="prev" href="chapter-ggplot2-intro.html"/>
 <link rel="next" href="exploring-one-variable.html"/>
-<script src="libs/header-attrs-2.7/header-attrs.js"></script>
-<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -50,7 +49,9 @@
 
 
 
-
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 <link href="libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet" />
 <script src="libs/pagedtable-1.1/js/pagedtable.js"></script>
 
@@ -93,7 +94,7 @@ code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
 code span.at { color: #7d9029; } /* Attribute */
 code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
+code span.bu { color: #008000; } /* BuiltIn */
 code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
 code span.ch { color: #4070a0; } /* Char */
 code span.cn { color: #880000; } /* Constant */
@@ -106,7 +107,7 @@ code span.er { color: #ff0000; font-weight: bold; } /* Error */
 code span.ex { } /* Extension */
 code span.fl { color: #40a070; } /* Float */
 code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
+code span.im { color: #008000; font-weight: bold; } /* Import */
 code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 code span.kw { color: #007020; font-weight: bold; } /* Keyword */
 code span.op { color: #666666; } /* Operator */
@@ -119,6 +120,7 @@ code span.va { color: #19177c; } /* Variable */
 code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
+
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
@@ -275,7 +277,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="10" data-path="building-pipelines.html"><a href="building-pipelines.html"><i class="fa fa-check"></i><b>10</b> Building pipelines</a>
 <ul>
-<li class="chapter" data-level="10.1" data-path="building-pipelines.html"><a href="building-pipelines.html#why-do-we-need-pipes"><i class="fa fa-check"></i><b>10.1</b> Why do we need ‘pipes?’</a></li>
+<li class="chapter" data-level="10.1" data-path="building-pipelines.html"><a href="building-pipelines.html#why-do-we-need-pipes"><i class="fa fa-check"></i><b>10.1</b> Why do we need ‘pipes’?</a></li>
 <li class="chapter" data-level="10.2" data-path="building-pipelines.html"><a href="building-pipelines.html#using-pipes"><i class="fa fa-check"></i><b>10.2</b> Using pipes (<code>%&gt;%</code>)</a></li>
 </ul></li>
 <li class="chapter" data-level="11" data-path="helper-functions.html"><a href="helper-functions.html"><i class="fa fa-check"></i><b>11</b> Helper functions</a>
@@ -409,8 +411,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="chapter-customise-ggplot2" class="section level1" number="14">
-<h1><span class="header-section-number">Chapter 14</span> Customising plots</h1>
+<div id="chapter-customise-ggplot2" class="section level1 hasAnchor" number="14">
+<h1><span class="header-section-number">Chapter 14</span> Customising plots<a href="chapter-customise-ggplot2.html#chapter-customise-ggplot2" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p>The default formatting used by <strong>ggplot2</strong> has been carefully chosen to ensure the information in a plot is easy to discern. For example, by default, plots include a pale grey background and include grid lines. This is designed to emphasise the data while supporting comparisons. The grey highlights colour differences and ensures the grid lines have little visual impact beyond aiding in the assessment of position. Perfect for exploratory analysis!</p>
 <p>Although we can justify these sorts of choices on the grounds they improve the readability of a plot, the fact remains they are somewhat unconventional and not much-loved by many users. For this reason, we often need to change the appearance of a plot before we include it in a document or presentation—e.g. most published figures use a white, rather than grey, background.</p>
 <p>This chapter will demonstrate how to customise <strong>ggplot2</strong> plots. We are not going to cover every possible permutation. That would need its <a href="https://ggplot2-book.org/">own book</a>. Instead, we will explore the main routes to customisation so that we can use these as we review different visualisations later. Using the <code>penguins</code> data once again, we’ll work on improving the following scatter plot from the <a href="chapter-ggplot2-intro.html#chapter-ggplot2-intro">Introduction to <strong>ggplot2</strong></a> chapter:</p>
@@ -421,8 +423,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb335-5"><a href="chapter-customise-ggplot2.html#cb335-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># add points layer</span></span>
 <span id="cb335-6"><a href="chapter-customise-ggplot2.html#cb335-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
 <p><img src="intro-bio-data-book_files/figure-html/unnamed-chunk-198-1.png" width="432" style="display: block; margin: auto;" /></p>
-<div id="geom-properties" class="section level2" number="14.1">
-<h2><span class="header-section-number">14.1</span> Geom properties</h2>
+<div id="geom-properties" class="section level2 hasAnchor" number="14.1">
+<h2><span class="header-section-number">14.1</span> Geom properties<a href="chapter-customise-ggplot2.html#geom-properties" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>One common way to change a plot’s appearance is by altering the properties of one or more geometric objects, such as points, lines, bars or polygons. How do we change the properties of the geom associated with a particular layer? We set those properties by specifying the appropriate arguments in the defining <code>geom_NAME</code> function.</p>
 <p>For example, how might we change properties like the size or shape of points in our scatter plot? We used the <code>geom_point</code> function to add points to the scatter plot, which means we have to set the arguments of <code>geom_point</code> to change the point properties. We can use this idea to rebuild the example scatter plot, setting the shape, size and transparency of points:</p>
 <div class="sourceCode" id="cb336"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb336-1"><a href="chapter-customise-ggplot2.html#cb336-1" aria-hidden="true" tabindex="-1"></a><span class="co"># display bill morphology scatter plot</span></span>
@@ -435,11 +437,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>The point shape is set with the <code>shape</code> argument. There are a few different ways to specify point shapes in R. We used the numeric coding system in this example (17 = triangle). Unfortunately, the numeric codes aren’t at all intuitive. Here are the more common ones:</p>
 <p><img src="intro-bio-data-book_files/figure-html/unnamed-chunk-200-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>The point size is specified by the <code>size</code> argument. This has a baseline default value of 1. We assigned <code>size</code> a value of 1.5, thereby increasing the point size relative to the default. We could make the points smaller by using a value less than 1.</p>
-<p>We made the points semi-transparent by setting the value of the <code>alpha</code> argument to be less than 1. In graphical systems, the ‘alpha channel’ specifies transparency—a value of 0 is taken to mean ‘completely invisible,’ and a value of 1 means ‘completely opaque.’</p>
+<p>We made the points semi-transparent by setting the value of the <code>alpha</code> argument to be less than 1. In graphical systems, the ‘alpha channel’ specifies transparency—a value of 0 is taken to mean ‘completely invisible’, and a value of 1 means ‘completely opaque’.</p>
 <p>There are other arguments—such as <code>fill</code> and <code>colour</code>—that can also be used to adjust the way the points are rendered. We’ll look at these later.</p>
 <p>The key message to take away from this customisation example is this—if we need to alter the properties of a geometric object (points, lines, ect), we do so by specifying the appropriate arguments in the <code>geom_NAME</code> function that defines the layer it belongs to.</p>
-<div id="relationship-between-aesthetic-mappings-and-geom-properties" class="section level3" number="14.1.1">
-<h3><span class="header-section-number">14.1.1</span> Relationship between aesthetic mappings and geom properties</h3>
+<div id="relationship-between-aesthetic-mappings-and-geom-properties" class="section level3 hasAnchor" number="14.1.1">
+<h3><span class="header-section-number">14.1.1</span> Relationship between aesthetic mappings and geom properties<a href="chapter-customise-ggplot2.html#relationship-between-aesthetic-mappings-and-geom-properties" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>In the previous chapter, we saw that we could introduce information into a plot by setting aesthetic mappings in the <code>aes</code> part of its specification. In the scatter plot example, we included information about species identity by mapping the <code>species</code> variable to the colour aesthetic. What happens if we also try to set the colour within the <code>geom_point</code> part?</p>
 <div class="sourceCode" id="cb337"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb337-1"><a href="chapter-customise-ggplot2.html#cb337-1" aria-hidden="true" tabindex="-1"></a><span class="co"># display bill morphology scatter plot</span></span>
 <span id="cb337-2"><a href="chapter-customise-ggplot2.html#cb337-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins, </span>
@@ -449,8 +451,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb337-6"><a href="chapter-customise-ggplot2.html#cb337-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">colour =</span> <span class="st">&quot;skyblue&quot;</span>, <span class="at">shape =</span> <span class="dv">17</span>, <span class="at">size =</span> <span class="fl">1.5</span>, <span class="at">alpha =</span> <span class="fl">0.85</span>)</span></code></pre></div>
 <p><img src="intro-bio-data-book_files/figure-html/unnamed-chunk-201-1.png" width="355.2" style="display: block; margin: auto;" /></p>
 <p>All the points are now one colour (‘sky blue’) which means we have lost the species information. What does this example demonstrate? When we set the properties of a geom, this will override any aesthetic mappings that conflict with our choice of customisation. Try to remember that—failing to do so is a good way to become frustrated.</p>
-<div id="built-in-colours-in-r" class="section level4 unnumbered infobox information">
-<h4>Built-in colours in R</h4>
+<div id="built-in-colours-in-r" class="section level4 unnumbered hasAnchor infobox information">
+<h4>Built-in colours in R<a href="chapter-customise-ggplot2.html#built-in-colours-in-r" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>There is nothing special about ‘skyblue’ other than the fact that it is colour name known to R. There are over 650 built-in colour names. To see them, use a function called <code>colours</code> to print them all to the Console. Here are 25 selected at random:</p>
 <div class="sourceCode" id="cb338"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb338-1"><a href="chapter-customise-ggplot2.html#cb338-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sample</span>(<span class="fu">colours</span>(), <span class="at">size =</span> <span class="dv">25</span>, <span class="at">replace =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
 <pre><code>##  [1] &quot;slateblue3&quot;    &quot;lavender&quot;      &quot;gray8&quot;         &quot;pink&quot;         
@@ -463,8 +465,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 </div>
-<div id="plot-scales" class="section level2" number="14.2">
-<h2><span class="header-section-number">14.2</span> Plot scales</h2>
+<div id="plot-scales" class="section level2 hasAnchor" number="14.2">
+<h2><span class="header-section-number">14.2</span> Plot scales<a href="chapter-customise-ggplot2.html#plot-scales" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Setting the arguments of a <code>geom_</code> function applies changes in a layer-specific manner. Other kinds of customisation affect every layer in a plot. Remember what we said about <strong>scales</strong> in the previous chapter:</p>
 <blockquote>
 <p>The scale part of a <strong>ggplot2</strong> object controls how the information in a variable is mapped to the aesthetic properties. A scale takes the data and converts it into variation we can perceive, such as an x/y location or the colour and size of points in a plot.</p>
@@ -527,9 +529,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul>
 <p>Scales are one of the hardest aspects of <strong>ggplot2</strong> to master. There are many different scale functions, each controlled by its own unique set of arguments. Fortunately, the default scales used by <strong>ggplot2</strong> are often good enough to arrive at a reasonable plot without having to manipulate the scales.</p>
 </div>
-<div id="labels" class="section level2" number="14.3">
-<h2><span class="header-section-number">14.3</span> Labels</h2>
-<p>What else might we like to tweak? Look at the x and y-axis labels. These are the names of the variables used in the x/y aesthetic mappings. These labels aren’t too bad, but they could be nicer to look at. We know ‘bill_depth_mm’ stands for ‘bill depth (measured in mm),’ so why not use an axis label more like that?</p>
+<div id="labels" class="section level2 hasAnchor" number="14.3">
+<h2><span class="header-section-number">14.3</span> Labels<a href="chapter-customise-ggplot2.html#labels" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>What else might we like to tweak? Look at the x and y-axis labels. These are the names of the variables used in the x/y aesthetic mappings. These labels aren’t too bad, but they could be nicer to look at. We know ‘bill_depth_mm’ stands for ‘bill depth (measured in mm)’, so why not use an axis label more like that?</p>
 <p>The axes labels are a feature of the whole plot—i.e. they do not belong to a particular layer. This means we can’t alter axis labels by passing arguments to the function that built a layer (<code>geom_point</code>). We have to use the labelling function: <code>labs</code>. This sets the label of any mapped aesthetics. For example, to set the labels of the x and y axes and the label associated with the colour mapping (i.e. the <code>species</code> legend title), use:</p>
 <div class="sourceCode" id="cb343"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb343-1"><a href="chapter-customise-ggplot2.html#cb343-1" aria-hidden="true" tabindex="-1"></a><span class="co"># display bill morphology scatter plot</span></span>
 <span id="cb343-2"><a href="chapter-customise-ggplot2.html#cb343-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins, </span>
@@ -552,8 +554,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Using <code>labs</code> is easy—if a mapping was set up in <code>aes</code> we can change its label via ‘<code>&lt;name&gt; = &lt;value&gt;</code>’ construct in <code>labs</code>, where <code>&lt;name&gt;</code> is the name of the aesthetic and <code>&lt;value&gt;</code> is the (character string) label we want to use.</p>
 <p>Another way to set the axis labels is via the more specialised <code>xlab</code> and <code>ylab</code>. However, we tend not to use these because <code>labs</code> deals with all our labelling needs. Why waste effort remembering three things if you only need to remember one?</p>
 </div>
-<div id="themes" class="section level2" number="14.4">
-<h2><span class="header-section-number">14.4</span> Themes</h2>
+<div id="themes" class="section level2 hasAnchor" number="14.4">
+<h2><span class="header-section-number">14.4</span> Themes<a href="chapter-customise-ggplot2.html#themes" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>The final route to customisation happens via the ‘theme’ of a plot. We haven’t considered the <strong>ggplot2</strong> theme system at all yet. A <strong>ggplot2</strong> theme deals with all the visual elements of a plot that aren’t directly handled by adjusting geom properties or scales. These are essentially the ‘non-data’ parts of a plot—features such as the colour of the plotting region and the grid lines, whether or not those grid lines are even displayed, the position of labels, the font used in labels, and so on.</p>
 <p>Here’s a short example that adjusts the legend of the example plot:</p>
 <div class="sourceCode" id="cb344"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb344-1"><a href="chapter-customise-ggplot2.html#cb344-1" aria-hidden="true" tabindex="-1"></a><span class="co"># display bill morphology scatter plot</span></span>
@@ -613,8 +615,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>There aren’t that many themes built into <strong>ggplot2</strong>. Here’s a quick look at them:</p>
 <p><img src="intro-bio-data-book_files/figure-html/unnamed-chunk-210-1.png" width="33.3%" /><img src="intro-bio-data-book_files/figure-html/unnamed-chunk-210-2.png" width="33.3%" /><img src="intro-bio-data-book_files/figure-html/unnamed-chunk-210-3.png" width="33.3%" /><img src="intro-bio-data-book_files/figure-html/unnamed-chunk-210-4.png" width="33.3%" /><img src="intro-bio-data-book_files/figure-html/unnamed-chunk-210-5.png" width="33.3%" /><img src="intro-bio-data-book_files/figure-html/unnamed-chunk-210-6.png" width="33.3%" /></p>
 </div>
-<div id="advice-for-making-plots" class="section level2" number="14.5">
-<h2><span class="header-section-number">14.5</span> Advice for making plots</h2>
+<div id="advice-for-making-plots" class="section level2 hasAnchor" number="14.5">
+<h2><span class="header-section-number">14.5</span> Advice for making plots<a href="chapter-customise-ggplot2.html#advice-for-making-plots" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>We’ll end this section with a bit of advice about making your own plots with <strong>ggplot2</strong>. Look at the code we ended up with for the final scatter plot above. It’s complicated! However, we didn’t make that in one go. We built up to it slowly, tweaking one thing at a time. That’s the trick—<strong>start with a basic skeleton and gradually increase the level of customisation.</strong> Begin by getting the aesthetic mappings and the faceting correct so that all the relevant variables are represented. Then introduce one bit of customisation and review the plot to ensure it worked and everything looks right. Keep doing this, one bit of customisation at a time, until the plot looks right.</p>
 <!--# remember to switch warnings on again -->
 
@@ -630,7 +632,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
@@ -649,6 +650,7 @@ gitbook.start({
 "weibo": false,
 "instapaper": false,
 "vk": false,
+"whatsapp": false,
 "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
@@ -669,6 +671,10 @@ gitbook.start({
 "text": null
 },
 "download": ["intro-bio-data-book.pdf", "intro-bio-data-book.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
 "toc": {
 "collapse": "section"
 }
@@ -682,7 +688,7 @@ gitbook.start({
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:")
       if (/^https?:/.test(src))
         src = src.replace(/^https?:/, '');
