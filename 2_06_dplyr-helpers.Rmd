@@ -2,11 +2,11 @@
 
 ## Introduction
 
-In addition to the main **dplyr** verbs, the package provides quite a few **helper functions**. Helper functions are used in conjunction with the main verbs to make specific tasks and calculations a bit easier. Many of these are summarised in the **dplyr** [cheat sheat](https://github.com/rstudio/cheatsheets/raw/master/data-transformation.pdf) (under *Manipulate Variables*, *Vector Functions* and *Summary Functions*). We are not going to review every single one of them in this chapter. Instead, we aim to point out where helper functions tend to be used and highlight a few of the more useful ones.
+In addition to the main **dplyr** verbs, the package provides quite a few **helper functions**. Helper functions are used in conjunction with the main verbs to make specific tasks and calculations a bit easier. Many of these are summarised in the **dplyr** [cheat sheet](https://posit.co/resources/cheatsheets/) --- find the 'Data transformation with dplyr' cheat sheet and look under its *Manipulate Variables*, *Vector Functions* and *Summary Functions* sections. We are not going to review every single one of them in this chapter. Instead, we aim to point out where helper functions tend to be used and highlight a few of the more useful ones.
 
 ## Working with `select`
 
-There are a few helper functions that can be used with `select`. Their job is to make it easier to match variable names according to various criteria. We'll look at the three simplest of these---look at the examples in the help file for `select` and the [cheat sheat](https://github.com/rstudio/cheatsheets/raw/master/data-transformation.pdf) to see what else is available.
+There are a few helper functions that can be used with `select`. Their job is to make it easier to match variable names according to various criteria. We'll look at the three simplest of these---look at the examples in the help file for `select` and the 'Data transformation with dplyr' cheat sheet to see what else is available.
 
 We can select variables according to the sequence of characters used at the start of their name with the `starts_with` function. For example, to select all the variables in `penguins` that begin with the word "bill", we use:
 
@@ -36,7 +36,7 @@ When we apply more than one selection criteria like this, the `select` function 
 
 ## Working with `mutate` and `transmute`
 
-There are quite a few **helper functions** that can be used with `mutate`. These make it easier to carry out certain calculations that aren't easy to do with base R. We won't explore these here as they tend to be needed only in quite specific circumstances. However, in situations where we need to construct an unusual variable, it's worth looking at that [handy cheat sheat](https://github.com/rstudio/cheatsheets/raw/master/data-transformation.pdf) to see what options might be available.
+There are quite a few **helper functions** that can be used with `mutate`. These make it easier to carry out certain calculations that aren't easy to do with base R. We won't explore these here as they tend to be needed only in quite specific circumstances. However, in situations where we need to construct an unusual variable, it's worth looking at that 'Data transformation with dplyr' cheat sheet to see what options might be available.
 
 We will look at one particularly useful helper function that's used a lot when we need to recode a particular variable using `mutate`. The function is called `case_when`. It works by setting up a series of paired matching criteria and replacement values. For example, imagine that we want to replace the names in `species` with three-letter shortcodes for each species. This is how to achieve that using `case_when` with `mutate`:
 

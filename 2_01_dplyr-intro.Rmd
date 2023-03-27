@@ -135,7 +135,7 @@ Apart from being easy to use, **dplyr** is also fast. This doesn't matter for sm
 ::: {.infobox .information data-latex="{information}"}
 #### A **dplyr** cheat sheet {.unnumbered}
 
-The developers of RStudio have produced a very usable [cheat sheat](http://www.rstudio.com/resources/cheatsheets/) that summarises the main data wrangling tools provided by **dplyr**.
+The developers of RStudio have produced a very usable [cheat sheat](https://posit.co/resources/cheatsheets/) that summarises the main data wrangling tools provided by **dplyr** (find the one called 'Data transformation with dplyr').
 
 ```{r, echo=FALSE}
 knitr::include_graphics(path = "images/data-transformation.jpg")
